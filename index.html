@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grit — 작은 반복을 갈아버리는 미니 도구 모음</title>
+<meta name="description" content="설치 없이 브라우저에서 바로 쓰는 개발자용 미니 도구 모음. 반복되는 작은 불편을 빠르게 해결합니다. 픽셀 좌표 추출, 파일 변환 등.">
+<meta name="keywords" content="개발자 도구, 미니 툴, 픽셀 좌표, 브라우저 도구, 무료 도구, DWIN, HMI, 반복 작업">
+<meta property="og:title" content="Grit — 작은 반복을 갈아버리는 도구 모음">
+<meta property="og:description" content="설치 없이, 로그인 없이. 귀찮은 반복 작업을 해결하는 미니 도구들.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg0: #0c0c0c;
+  --bg1: #111113;
+  --bg2: #181819;
+  --bg3: #202022;
+  --bg4: #2a2a2c;
+  --amber: #e8a020;
+  --amber-dim: #a86e12;
+  --amber-glow: rgba(232,160,32,.12);
+  --text: #d0d0d0;
+  --text-dim: #777;
+  --text-muted: #444;
+  --border: #282828;
+  --border-lit: #383838;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg0);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: var(--amber); text-decoration: none; }
+a:hover { color: #f5c060; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 54px;
+  background: rgba(12,12,12,.95);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 18px; font-weight: 700;
+  color: var(--amber);
+  letter-spacing: -.04em;
+}
+.logo sup {
+  font-size: 9px; font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: .05em;
+  margin-left: 4px;
+  vertical-align: top;
+  margin-top: 5px;
+  display: inline-block;
+}
+.nav-r { display: flex; align-items: center; gap: 24px; }
+.nav-r a { font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--text-dim); transition: color .2s; }
+.nav-r a:hover { color: var(--text); }
+
+/* ── HERO ── */
+.hero {
+  padding: 100px 40px 80px;
+  max-width: 860px; margin: 0 auto;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -40px; right: -40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
+  opacity: .4;
+}
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; letter-spacing: .15em;
+  color: var(--amber-dim);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  color: #e8e8e8;
+  margin-bottom: 8px;
+}
+.hero-title .amber { color: var(--amber); }
+.hero-sub-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 400;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  letter-spacing: -.01em;
+}
+.hero-desc {
+  font-size: 15px;
+  color: var(--text-dim);
+  max-width: 500px;
+  line-height: 1.9;
+  margin-bottom: 44px;
+}
+.hero-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 48px;
+}
+.pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  border: 1px solid var(--border-lit);
+  color: var(--text-dim);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+.pill.on { border-color: var(--amber-dim); color: var(--amber); background: var(--amber-glow); }
+
+/* ── 광고 영역 ── */
+.ad-zone {
+  background: var(--bg2);
+  border: 1px dashed var(--border-lit);
+  border-radius: 3px;
+  padding: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .04em;
+}
+.ad-wrap { max-width: 860px; margin: 0 auto; padding: 0 40px 40px; }
+
+/* ── TOOL HUB ── */
+.hub { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; }
+.category {
+  margin-bottom: 56px;
+}
+.cat-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.cat-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.cat-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  background: var(--bg3);
+  color: var(--text-muted);
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+/* ── TOOL CARD ── */
+.tool-card {
+  display: block;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 20px 20px 16px;
+  transition: border-color .2s, background .2s;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+}
+.tool-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.tool-card:hover {
+  border-color: var(--border-lit);
+  background: var(--bg3);
+  color: inherit;
+}
+.tool-card:hover::after { transform: scaleX(1); }
+
+.tool-card.soon {
+  opacity: .45;
+  cursor: default;
+  pointer-events: none;
+}
+.tool-icon {
+  width: 34px; height: 34px;
+  background: var(--bg4);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.tool-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px; font-weight: 500;
+  color: #ccc;
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.badge-new {
+  font-size: 9px; font-weight: 700;
+  background: var(--amber-glow);
+  color: var(--amber);
+  border: 1px solid var(--amber-dim);
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.badge-soon {
+  font-size: 9px; font-weight: 500;
+  background: var(--bg4);
+  color: var(--text-muted);
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.tool-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.tool-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex; gap: 12px;
+}
+.tool-meta span::before { content: '// '; color: var(--amber-dim); opacity: .6; }
+
+/* ── MANIFESTO ── */
+.manifesto {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 40px;
+  max-width: 860px; margin: 0 auto;
+}
+.manifesto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+.mani-item {
+  background: var(--bg0);
+  padding: 28px 24px;
+}
+.mani-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--amber-dim);
+  margin-bottom: 10px; letter-spacing: .08em;
+}
+.mani-text {
+  font-size: 13px; color: var(--text-dim);
+  line-height: 1.7;
+}
+.mani-text b { color: #ccc; font-weight: 500; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px; font-weight: 700;
+  color: var(--amber);
+}
+.footer-right { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  nav { padding: 0 20px; }
+  .hero, .hub, .ad-wrap, .manifesto { padding-left: 20px; padding-right: 20px; }
+  footer { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Grit<sup>tools</sup></div>
+  <div class="nav-r">
+    <a href="#image">이미지</a>
+    <a href="#text">텍스트</a>
+    <a href="#file">파일</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <p class="eyebrow">// 귀찮은 반복을 갈아버리는 도구 모음</p>
+  <h1 class="hero-title"><span class="amber">Grit</span> Tools</h1>
+  <p class="hero-sub-title">Small tasks. Done fast.</p>
+  <p class="hero-desc">
+    설치 없이, 로그인 없이.<br>
+    개발하다 부딪히는 작고 귀찮은 반복 작업들을<br>
+    브라우저에서 바로 해결합니다.
+  </p>
+  <div class="hero-pills">
+    <span class="pill on">설치 불필요</span>
+    <span class="pill on">로그인 없음</span>
+    <span class="pill on">로컬 처리 (보안)</span>
+    <span class="pill on">완전 무료</span>
+    <span class="pill">툴 계속 추가 중</span>
+  </div>
+</header>
+
+<!-- 광고 상단 -->
+<div class="ad-wrap">
+  <div class="ad-zone">[ Google AdSense — 광고 상단 ]</div>
+</div>
+
+<!-- TOOL HUB -->
+<main class="hub">
+
+  <!-- 이미지 카테고리 -->
+  <section class="category" id="image">
+    <div class="cat-header">
+      <span class="cat-name">Image</span>
+      <span class="cat-count">1 / 4+</span>
+    </div>
+    <div class="tool-grid">
+
+      <a class="tool-card" href="pixel-coords.html">
+        <div class="tool-icon">🎯</div>
+        <div class="tool-name">
+          Pixel Coords
+          <span class="badge-new">NEW</span>
+        </div>
+        <p class="tool-desc">이미지 위를 클릭해 픽셀 좌표를 추출. 방향키 1px 조정 · C 코드 템플릿 자동 복사. HMI / 임베디드 UI 개발에 최적화.</p>
+        <div class="tool-meta">
+          <span>이미지 클릭</span>
+          <span>코드 복사</span>
+        </div>
+      </a>
+
+      <div class="tool-card soon">
+        <div class="tool-icon">✂️</div>
+        <div class="tool-name">Sprite Slicer <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">스프라이트 이미지를 격자 단위로 잘라 개별 파일로 저장.</p>
+        <div class="tool-meta"><span>스프라이트</span><span>슬라이서</span></div>
+      </div>
+
+      <div class="tool-card soon">
+        <div class="tool-icon">🎨</div>
+        <div class="tool-name">Color Picker <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">이미지에서 원하는 색상을 클릭해 HEX / RGB / HSL 복사.</p>
+        <div class="tool-meta"><span>색상 추출</span><span>코드 복사</span></div>
+      </div>
+
+      <div class="tool-card soon">
+        <div class="tool-icon">📐</div>
+        <div class="tool-name">Px Ruler <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">이미지 위 두 점 사이 거리를 픽셀 단위로 측정.</p>
+        <div class="tool-meta"><span>거리 측정</span><span>픽셀 단위</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 텍스트 카테고리 -->
+  <section class="category" id="text">
+    <div class="cat-header">
+      <span class="cat-name">Text</span>
+      <span class="cat-count">준비 중</span>
+    </div>
+    <div class="tool-grid">
+
+      <div class="tool-card soon">
+        <div class="tool-icon">🔄</div>
+        <div class="tool-name">Case Converter <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">camelCase, snake_case, UPPER_SNAKE 등 케이스 일괄 변환.</p>
+        <div class="tool-meta"><span>케이스 변환</span></div>
+      </div>
+
+      <div class="tool-card soon">
+        <div class="tool-icon">🧹</div>
+        <div class="tool-name">Text Cleaner <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">불필요한 공백, 줄바꿈, 특수문자 일괄 제거 및 정리.</p>
+        <div class="tool-meta"><span>텍스트 정리</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 파일 카테고리 -->
+  <section class="category" id="file">
+    <div class="cat-header">
+      <span class="cat-name">File</span>
+      <span class="cat-count">준비 중</span>
+    </div>
+    <div class="tool-grid">
+
+      <div class="tool-card soon">
+        <div class="tool-icon">🏷️</div>
+        <div class="tool-name">Batch Rename <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">패턴·규칙을 지정해 여러 파일을 한 번에 이름 변경.</p>
+        <div class="tool-meta"><span>파일 일괄 처리</span></div>
+      </div>
+
+      <div class="tool-card soon">
+        <div class="tool-icon">📦</div>
+        <div class="tool-name">JSON Formatter <span class="badge-soon">SOON</span></div>
+        <p class="tool-desc">JSON 포맷 · 압축 · 유효성 검사. 붙여넣기만 하면 끝.</p>
+        <div class="tool-meta"><span>JSON 정리</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 광고 중간 -->
+  <div class="ad-zone" style="margin-bottom:56px;">[ Google AdSense — 광고 중간 ]</div>
+
+</main>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-grid">
+    <div class="mani-item">
+      <div class="mani-num">01 // 철학</div>
+      <p class="mani-text"><b>작은 것도 불편하면 큰 것입니다.</b> 하루에 10번 반복되는 작업이라면 1년이면 3,650번입니다.</p>
+    </div>
+    <div class="mani-item">
+      <div class="mani-num">02 // 원칙</div>
+      <p class="mani-text"><b>설치도, 로그인도, 광고도 없습니다.</b> 도구 페이지에서는 오직 작업에만 집중합니다.</p>
+    </div>
+    <div class="mani-item">
+      <div class="mani-num">03 // 보안</div>
+      <p class="mani-text"><b>모든 처리는 브라우저 안에서.</b> 파일이나 이미지가 서버로 전송되지 않습니다.</p>
+    </div>
+    <div class="mani-item">
+      <div class="mani-num">04 // 확장</div>
+      <p class="mani-text"><b>불편한 게 생기면 도구가 됩니다.</b> 필요한 툴이 있다면 알려주세요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Grit</div>
+  <div class="footer-right">작은 반복을 갈아버리는 도구 모음 · 무료 · 오픈소스</div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
