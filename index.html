@@ -3,150 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grit — 작은 반복을 갈아버리는 미니 도구 모음</title>
-<meta name="description" content="설치 없이 브라우저에서 바로 쓰는 개발자용 미니 도구 모음. 반복되는 작은 불편을 빠르게 해결합니다. 픽셀 좌표 추출, 파일 변환 등.">
-<meta name="keywords" content="개발자 도구, 미니 툴, 픽셀 좌표, 브라우저 도구, 무료 도구, DWIN, HMI, 반복 작업">
-<meta property="og:title" content="Grit — 작은 반복을 갈아버리는 도구 모음">
-<meta property="og:description" content="설치 없이, 로그인 없이. 귀찮은 반복 작업을 해결하는 미니 도구들.">
-<meta property="og:type" content="website">
+<title>Grit Tools — 브라우저용 개발·계산 도구</title>
+<meta name="description" content="브라우저에서 바로 실행하는 도구 모음. 이미지 좌표 계산기(픽셀 좌표 추출), 복리·단리 계산기 등. 모든 처리는 브라우저 안에서 이뤄집니다.">
+<meta name="keywords" content="개발자 도구, 픽셀 좌표, 복리 계산기, 단리 계산기, 이자 계산기, 브라우저 도구, HMI, 임베디드 UI">
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="Grit Tools — 브라우저용 개발·계산 도구">
+<meta property="og:description" content="이미지 픽셀 좌표 추출, 복리·단리 계산기 등 브라우저에서 바로 쓰는 도구 모음.">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grit Tools — 브라우저용 개발 도구">
+<meta name="twitter:description" content="이미지 픽셀 좌표 추출 등 브라우저에서 바로 쓰는 개발 도구.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
 :root {
-  --bg0: #0c0c0c;
-  --bg1: #111113;
-  --bg2: #181819;
-  --bg3: #202022;
-  --bg4: #2a2a2c;
-  --amber: #e8a020;
-  --amber-dim: #a86e12;
-  --amber-glow: rgba(232,160,32,.12);
-  --text: #d0d0d0;
-  --text-dim: #777;
-  --text-muted: #444;
-  --border: #282828;
-  --border-lit: #383838;
+  /* 색 — Seline "Crisp Data Canvas" (light) */
+  --bg:        #fafaf9;   /* Canvas Fog — 페이지 */
+  --surface:   #ffffff;   /* Cloud White — 카드/사이드바 */
+  --surface-2: #f3f1f0;   /* 옅은 칩/패널 틴트 */
+  --blue:      #3ba6f1;   /* Chartwell Blue — 강조 */
+  --blue-dark: #1f93e6;
+  --blue-soft: rgba(59,166,241,.12);
+  --text:      #0c0a09;   /* Slate */
+  --text-dim:  #524d48;   /* 진한 보조 — 선명한 대비 */
+  --text-muted:#8a847e;   /* 3차 */
+  --border:    #e2e1df;   /* 또렷한 경계 */
+  --border-lit:#cdc9c4;
+
+  --radius-card: 10px;
+  --radius-pill: 9999px;
+  --shadow-card:   0 1px 3px rgba(12,10,9,.12), 0 1px 2px rgba(12,10,9,.07);
+  --shadow-subtle: 0 1px 2px rgba(12,10,9,.07);
+  --shadow-xl:     0 8px 28px rgba(12,10,9,.16);
+
+  --sidebar-w: 268px;
+  --font-display: 'roobert', 'Inter', 'Pretendard', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Inter', 'Pretendard', ui-sans-serif, system-ui, sans-serif;
+
+  /* 언어 스위처(i18n.js)를 테마에 맞춤 */
+  --lang-border: var(--border-lit);
+  --lang-fg: var(--text-dim);
+  --lang-accent: var(--blue);
+  --lang-menu-bg: var(--surface);
+  --lang-opt-fg: var(--text);
+  --lang-opt-hover: var(--surface-2);
+  --lang-opt-hover-fg: var(--text);
 }
+/* 다크 모드 (가이드는 라이트 전용 — 동일 강조색으로 적응한 다크) */
+html[data-theme="dark"] {
+  --bg:        #0f1115;
+  --surface:   #171a21;
+  --surface-2: #1e222b;
+  --blue:      #54b0f7;
+  --blue-dark: #7cc3fa;
+  --blue-soft: rgba(84,176,247,.16);
+  --text:      #f2f4f7;
+  --text-dim:  #9aa3b2;
+  --text-muted:#646e7e;
+  --border:    #2b313c;
+  --border-lit:#3a4250;
+  --shadow-card:   0 1px 3px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.4);
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-xl:     0 8px 28px rgba(0,0,0,.55);
+}
+html { color-scheme: light dark; scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
 body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg0);
+  font-family: var(--font-body);
+  background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
 }
-a { color: var(--amber); text-decoration: none; }
-a:hover { color: #f5c060; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { color: var(--blue-dark); }
 
-/* ── NAV ── */
-nav {
-  position: sticky; top: 0; z-index: 100;
+/* 아이콘 공통 — 기본 Ash, 강조 시 Blue */
+svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; display: block; }
+
+.layout { display: flex; align-items: flex-start; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: sticky; top: 0;
+  width: var(--sidebar-w); min-width: var(--sidebar-w);
+  height: 100vh;
+  display: flex; flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 22px 0;
+  overflow-y: auto;
+}
+.side-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px; height: 54px;
-  background: rgba(12,12,12,.95);
-  border-bottom: 1px solid var(--border);
+  padding: 0 22px 4px;
 }
-.logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 18px; font-weight: 700;
-  color: var(--amber);
-  letter-spacing: -.04em;
+.side-logo {
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 600;
+  color: var(--blue);
+  letter-spacing: -.017em;
 }
-.logo sup {
-  font-size: 9px; font-weight: 400;
-  color: var(--text-dim);
-  letter-spacing: .05em;
-  margin-left: 4px;
-  vertical-align: top;
-  margin-top: 5px;
-  display: inline-block;
-}
-.nav-r { display: flex; align-items: center; gap: 24px; }
-.nav-r a { font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: var(--text-dim); transition: color .2s; }
-.nav-r a:hover { color: var(--text); }
-
-/* ── HERO ── */
-.hero {
-  padding: 100px 40px 80px;
-  max-width: 860px; margin: 0 auto;
-  position: relative;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -40px; right: -40px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--amber-dim), transparent);
-  opacity: .4;
-}
-.eyebrow {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; letter-spacing: .15em;
-  color: var(--amber-dim);
-  text-transform: uppercase;
-  margin-bottom: 20px;
-}
-.hero-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -.04em;
-  color: #e8e8e8;
-  margin-bottom: 8px;
-}
-.hero-title .amber { color: var(--amber); }
-.hero-sub-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: clamp(14px, 2vw, 18px);
-  font-weight: 400;
-  color: var(--text-dim);
-  margin-bottom: 28px;
-  letter-spacing: -.01em;
-}
-.hero-desc {
-  font-size: 15px;
-  color: var(--text-dim);
-  max-width: 500px;
-  line-height: 1.9;
-  margin-bottom: 44px;
-}
-.hero-pills {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin-bottom: 48px;
-}
-.pill {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  border: 1px solid var(--border-lit);
-  color: var(--text-dim);
-  padding: 4px 10px;
-  border-radius: 2px;
-}
-.pill.on { border-color: var(--amber-dim); color: var(--amber); background: var(--amber-glow); }
-
-/* ── 광고 영역 ── */
-.ad-zone {
-  background: var(--bg2);
-  border: 1px dashed var(--border-lit);
-  border-radius: 3px;
-  padding: 16px;
-  text-align: center;
+.side-logo sup {
+  font-size: 9px; font-weight: 500;
   color: var(--text-muted);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
   letter-spacing: .04em;
+  margin-left: 4px; vertical-align: top;
 }
-.ad-wrap { max-width: 860px; margin: 0 auto; padding: 0 40px 40px; }
+.theme-toggle {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-pill); cursor: pointer;
+  color: var(--blue);
+  transition: background .15s, border-color .15s;
+}
+.theme-toggle:hover { background: var(--blue-soft); border-color: var(--blue); }
+.theme-toggle svg { width: 17px; height: 17px; }
+.theme-toggle .ic-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .ic-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
+
+.side-tag {
+  font-size: 12px; color: var(--text-muted);
+  padding: 0 22px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.nav-group { margin-bottom: 18px; }
+.nav-group-title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-display);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 22px 8px;
+}
+.nav-group-title .gc {
+  font-size: 10px; font-weight: 500;
+  background: var(--surface-2); color: var(--text-dim);
+  padding: 1px 8px; border-radius: var(--radius-pill);
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 22px;
+  font-size: 14px; color: var(--text-dim);
+  border-left: 2px solid transparent;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.nav-item:hover {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  border-left-color: var(--blue);
+}
+.nav-item .ni-icon { width: 18px; height: 18px; flex: 0 0 18px; display: flex; align-items: center; justify-content: center; }
+.nav-item .ni-icon svg { width: 17px; height: 17px; stroke: var(--text-dim); }
+.nav-item:hover .ni-icon svg { stroke: var(--blue); }
+.ni-badge {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 9px; font-weight: 600;
+  letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: var(--radius-pill);
+  background: var(--surface-2); color: var(--text-muted);
+}
+.ni-badge.new { background: var(--blue-soft); color: var(--blue); }
+
+.side-foot {
+  margin-top: auto;
+  padding: 18px 22px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: 11px; color: var(--text-muted);
+  line-height: 1.6;
+}
+.side-foot .lang-mount { margin-bottom: 12px; }
+.side-foot .lang-switch { font-family: var(--font-display); }
+
+/* ── CONTENT ── */
+.content { flex: 1; min-width: 0; }
 
 /* ── TOOL HUB ── */
-.hub { max-width: 860px; margin: 0 auto; padding: 0 40px 80px; }
-.category {
-  margin-bottom: 56px;
-}
+.hub { max-width: 820px; padding: 44px 56px 64px; }
+.category { margin-bottom: 48px; }
 .cat-header {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 20px;
@@ -154,34 +204,35 @@ nav {
   border-bottom: 1px solid var(--border);
 }
 .cat-name {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; font-weight: 500;
-  letter-spacing: .12em;
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--text-dim);
 }
 .cat-count {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  background: var(--bg3);
-  color: var(--text-muted);
-  padding: 2px 7px;
-  border-radius: 2px;
+  font-family: var(--font-display);
+  font-size: 11px;
+  background: var(--surface-2);
+  color: var(--text-dim);
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
 }
 .tool-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 10px;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 /* ── TOOL CARD ── */
 .tool-card {
   display: block;
-  background: var(--bg2);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 20px 20px 16px;
-  transition: border-color .2s, background .2s;
+  border-radius: var(--radius-card);
+  padding: 22px 22px 18px;
+  box-shadow: var(--shadow-subtle);
+  transition: box-shadow .2s, transform .2s, border-color .2s;
   color: inherit;
   position: relative;
   overflow: hidden;
@@ -190,294 +241,314 @@ nav {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--amber);
+  height: 3px;
+  background: var(--blue);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .25s ease;
 }
 .tool-card:hover {
   border-color: var(--border-lit);
-  background: var(--bg3);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
   color: inherit;
 }
 .tool-card:hover::after { transform: scaleX(1); }
-
-.tool-card.soon {
-  opacity: .45;
-  cursor: default;
-  pointer-events: none;
-}
 .tool-icon {
-  width: 34px; height: 34px;
-  background: var(--bg4);
-  border-radius: 4px;
+  width: 38px; height: 38px;
+  background: var(--blue);
+  border-radius: var(--radius-card);
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
   margin-bottom: 14px;
 }
+.tool-icon svg.ic { width: 21px; height: 21px; stroke: #fff; }
 .tool-name {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 14px; font-weight: 500;
-  color: #ccc;
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 600;
+  color: var(--text);
   margin-bottom: 6px;
   display: flex; align-items: center; gap: 8px;
+  letter-spacing: -.01em;
 }
 .badge-new {
-  font-size: 9px; font-weight: 700;
-  background: var(--amber-glow);
-  color: var(--amber);
-  border: 1px solid var(--amber-dim);
-  padding: 1px 6px;
-  border-radius: 2px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-}
-.badge-soon {
-  font-size: 9px; font-weight: 500;
-  background: var(--bg4);
-  color: var(--text-muted);
-  padding: 1px 6px;
-  border-radius: 2px;
-  letter-spacing: .06em;
+  font-size: 9px; font-weight: 600;
+  background: var(--blue-soft);
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: .05em;
   text-transform: uppercase;
 }
 .tool-desc {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-dim);
-  line-height: 1.7;
+  line-height: 1.54;
   margin-bottom: 14px;
 }
 .tool-meta {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
+  font-family: var(--font-display);
+  font-size: 11px;
   color: var(--text-muted);
   display: flex; gap: 12px;
 }
-.tool-meta span::before { content: '// '; color: var(--amber-dim); opacity: .6; }
+.tool-meta span::before { content: '— '; color: var(--blue); opacity: .8; }
 
-/* ── MANIFESTO ── */
-.manifesto {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 60px 40px;
-  max-width: 860px; margin: 0 auto;
+/* ── 모바일 토글 ── */
+.menu-toggle {
+  display: none;
+  position: fixed; top: 14px; left: 14px; z-index: 120;
+  width: 40px; height: 40px;
+  background: var(--surface); border: 1px solid var(--border-lit);
+  border-radius: var(--radius-pill); cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+  align-items: center; justify-content: center;
 }
-.manifesto-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1px;
-  background: var(--border);
-}
-.mani-item {
-  background: var(--bg0);
-  padding: 28px 24px;
-}
-.mani-num {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; color: var(--amber-dim);
-  margin-bottom: 10px; letter-spacing: .08em;
-}
-.mani-text {
-  font-size: 13px; color: var(--text-dim);
-  line-height: 1.7;
-}
-.mani-text b { color: #ccc; font-weight: 500; }
+.menu-toggle svg { width: 20px; height: 20px; stroke-width: 1.8; }
+.scrim { display: none; }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 32px 40px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+@media (max-width: 880px) {
+  .menu-toggle { display: flex; }
+  .sidebar {
+    position: fixed; top: 0; left: 0; z-index: 110;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    box-shadow: var(--shadow-xl);
+  }
+  body.nav-open .sidebar { transform: translateX(0); }
+  body.nav-open .scrim {
+    display: block; position: fixed; inset: 0; z-index: 105;
+    background: rgba(20,30,50,.4);
+  }
+  .hub { padding: 64px 28px 44px; }
 }
-.footer-logo {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 15px; font-weight: 700;
-  color: var(--amber);
-}
-.footer-right { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-muted); }
-
-@media (max-width: 600px) {
-  nav { padding: 0 20px; }
-  .hero, .hub, .ad-wrap, .manifesto { padding-left: 20px; padding-right: 20px; }
-  footer { padding: 24px 20px; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 </style>
+<!-- 구조화 데이터 (Google 검색 이해도 향상) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Grit Tools — 이미지 좌표 계산기",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web browser",
+  "description": "이미지 위를 클릭해 픽셀 좌표를 추출하고 #define·함수 등 코드 포맷으로 자동 복사하는 브라우저용 개발 도구. HMI·임베디드 UI 좌표 작업에 적합.",
+  "inLanguage": ["ko", "en", "ja", "zh"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">Grit<sup>tools</sup></div>
-  <div class="nav-r">
-    <a href="#image">이미지</a>
-    <a href="#text">텍스트</a>
-    <a href="#file">파일</a>
-  </div>
-</nav>
+<button class="menu-toggle" id="menuToggle" aria-label="메뉴 열기">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+</button>
+<div class="scrim" id="scrim"></div>
 
-<!-- HERO -->
-<header class="hero">
-  <p class="eyebrow">// 귀찮은 반복을 갈아버리는 도구 모음</p>
-  <h1 class="hero-title"><span class="amber">Grit</span> Tools</h1>
-  <p class="hero-sub-title">Small tasks. Done fast.</p>
-  <p class="hero-desc">
-    설치 없이, 로그인 없이.<br>
-    개발하다 부딪히는 작고 귀찮은 반복 작업들을<br>
-    브라우저에서 바로 해결합니다.
-  </p>
-  <div class="hero-pills">
-    <span class="pill on">설치 불필요</span>
-    <span class="pill on">로그인 없음</span>
-    <span class="pill on">로컬 처리 (보안)</span>
-    <span class="pill on">완전 무료</span>
-    <span class="pill">툴 계속 추가 중</span>
-  </div>
-</header>
+<div class="layout">
 
-<!-- 광고 상단 -->
-<div class="ad-wrap">
-  <div class="ad-zone">[ Google AdSense — 광고 상단 ]</div>
+  <!-- SIDEBAR : 툴 리스트 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="side-logo">Grit<sup>tools</sup></div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환" title="라이트/다크 전환" data-i18n-title="homeThemeTitle">
+        <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+        <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z"/></svg>
+      </button>
+    </div>
+    <div class="side-tag" data-i18n="homeTag">브라우저에서 바로 쓰는 개발 도구</div>
+
+    <nav>
+      <div class="nav-group">
+        <div class="nav-group-title">Image <span class="gc">1</span></div>
+        <a class="nav-item" href="tools/image/pixel-coords.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v4.5M12 17v4.5M2.5 12h4.5M17 12h4.5"/></svg></span>
+          <span data-i18n="navPixel">이미지 좌표 계산기</span> <span class="ni-badge new">New</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">Calculator <span class="gc">2</span></div>
+        <a class="nav-item" href="tools/calc/compound-interest.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 13v4M15 13v4M12 13v4"/></svg></span>
+          <span data-i18n="navCompound">복리 계산기</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/calc/simple-interest.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M8 14h8"/></svg></span>
+          <span data-i18n="navSimple">단리 계산기</span> <span class="ni-badge new">New</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="side-foot">
+      <div class="lang-mount" id="langMount"></div>
+      <span data-i18n="homeFoot">Grit · 오픈소스 도구 모음</span>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <h1 class="visually-hidden" data-i18n="homeH1">Grit Tools — 브라우저에서 바로 쓰는 도구 모음. 이미지 픽셀 좌표 추출, 복리·단리 계산기</h1>
+
+    <!-- TOOL HUB -->
+    <main class="hub">
+
+      <!-- 이미지 카테고리 -->
+      <section class="category" id="image">
+        <div class="cat-header">
+          <span class="cat-name">Image</span>
+          <span class="cat-count">1</span>
+        </div>
+        <div class="tool-grid">
+
+          <a class="tool-card" href="tools/image/pixel-coords.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v4.5M12 17v4.5M2.5 12h4.5M17 12h4.5"/></svg></div>
+            <div class="tool-name">
+              <span data-i18n="navPixel">이미지 좌표 계산기</span>
+              <span class="badge-new">NEW</span>
+            </div>
+            <p class="tool-desc" data-i18n="homePcDesc">이미지 위를 클릭해 픽셀 좌표를 뽑아내는 도구. 방향키로 1px씩 정밀하게 맞추고, #define·함수 등 원하는 코드 포맷으로 좌표를 자동 복사합니다. HMI·임베디드 UI 좌표 작업에 맞췄어요.</p>
+            <div class="tool-meta">
+              <span data-i18n="homePcMeta1">이미지 클릭</span>
+              <span data-i18n="homePcMeta2">코드 복사</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 계산기 카테고리 -->
+      <section class="category" id="calc">
+        <div class="cat-header">
+          <span class="cat-name">Calculator</span>
+          <span class="cat-count">2</span>
+        </div>
+        <div class="tool-grid">
+
+          <a class="tool-card" href="tools/calc/compound-interest.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 13v4M15 13v4M12 13v4"/></svg></div>
+            <div class="tool-name">
+              <span data-i18n="navCompound">복리 계산기</span>
+              <span class="badge-new">NEW</span>
+            </div>
+            <p class="tool-desc" data-i18n="homeCiDesc">원금·이율·기간으로 복리 최종 금액과 이자를 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.</p>
+            <div class="tool-meta">
+              <span data-i18n="homeCiMeta1">그래프</span>
+              <span data-i18n="homeCiMeta2">엑셀 저장</span>
+            </div>
+          </a>
+
+          <a class="tool-card" href="tools/calc/simple-interest.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M8 14h8"/></svg></div>
+            <div class="tool-name">
+              <span data-i18n="navSimple">단리 계산기</span>
+              <span class="badge-new">NEW</span>
+            </div>
+            <p class="tool-desc" data-i18n="homeSiDesc">원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.</p>
+            <div class="tool-meta">
+              <span data-i18n="homeSiMeta1">그래프</span>
+              <span data-i18n="homeSiMeta2">엑셀 저장</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
 </div>
 
-<!-- TOOL HUB -->
-<main class="hub">
-
-  <!-- 이미지 카테고리 -->
-  <section class="category" id="image">
-    <div class="cat-header">
-      <span class="cat-name">Image</span>
-      <span class="cat-count">1 / 4+</span>
-    </div>
-    <div class="tool-grid">
-
-      <a class="tool-card" href="pixel-coords.html">
-        <div class="tool-icon">🎯</div>
-        <div class="tool-name">
-          Pixel Coords
-          <span class="badge-new">NEW</span>
-        </div>
-        <p class="tool-desc">이미지 위를 클릭해 픽셀 좌표를 추출. 방향키 1px 조정 · C 코드 템플릿 자동 복사. HMI / 임베디드 UI 개발에 최적화.</p>
-        <div class="tool-meta">
-          <span>이미지 클릭</span>
-          <span>코드 복사</span>
-        </div>
-      </a>
-
-      <div class="tool-card soon">
-        <div class="tool-icon">✂️</div>
-        <div class="tool-name">Sprite Slicer <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">스프라이트 이미지를 격자 단위로 잘라 개별 파일로 저장.</p>
-        <div class="tool-meta"><span>스프라이트</span><span>슬라이서</span></div>
-      </div>
-
-      <div class="tool-card soon">
-        <div class="tool-icon">🎨</div>
-        <div class="tool-name">Color Picker <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">이미지에서 원하는 색상을 클릭해 HEX / RGB / HSL 복사.</p>
-        <div class="tool-meta"><span>색상 추출</span><span>코드 복사</span></div>
-      </div>
-
-      <div class="tool-card soon">
-        <div class="tool-icon">📐</div>
-        <div class="tool-name">Px Ruler <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">이미지 위 두 점 사이 거리를 픽셀 단위로 측정.</p>
-        <div class="tool-meta"><span>거리 측정</span><span>픽셀 단위</span></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 텍스트 카테고리 -->
-  <section class="category" id="text">
-    <div class="cat-header">
-      <span class="cat-name">Text</span>
-      <span class="cat-count">준비 중</span>
-    </div>
-    <div class="tool-grid">
-
-      <div class="tool-card soon">
-        <div class="tool-icon">🔄</div>
-        <div class="tool-name">Case Converter <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">camelCase, snake_case, UPPER_SNAKE 등 케이스 일괄 변환.</p>
-        <div class="tool-meta"><span>케이스 변환</span></div>
-      </div>
-
-      <div class="tool-card soon">
-        <div class="tool-icon">🧹</div>
-        <div class="tool-name">Text Cleaner <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">불필요한 공백, 줄바꿈, 특수문자 일괄 제거 및 정리.</p>
-        <div class="tool-meta"><span>텍스트 정리</span></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 파일 카테고리 -->
-  <section class="category" id="file">
-    <div class="cat-header">
-      <span class="cat-name">File</span>
-      <span class="cat-count">준비 중</span>
-    </div>
-    <div class="tool-grid">
-
-      <div class="tool-card soon">
-        <div class="tool-icon">🏷️</div>
-        <div class="tool-name">Batch Rename <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">패턴·규칙을 지정해 여러 파일을 한 번에 이름 변경.</p>
-        <div class="tool-meta"><span>파일 일괄 처리</span></div>
-      </div>
-
-      <div class="tool-card soon">
-        <div class="tool-icon">📦</div>
-        <div class="tool-name">JSON Formatter <span class="badge-soon">SOON</span></div>
-        <p class="tool-desc">JSON 포맷 · 압축 · 유효성 검사. 붙여넣기만 하면 끝.</p>
-        <div class="tool-meta"><span>JSON 정리</span></div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 광고 중간 -->
-  <div class="ad-zone" style="margin-bottom:56px;">[ Google AdSense — 광고 중간 ]</div>
-
-</main>
-
-<!-- MANIFESTO -->
-<section class="manifesto">
-  <div class="manifesto-grid">
-    <div class="mani-item">
-      <div class="mani-num">01 // 철학</div>
-      <p class="mani-text"><b>작은 것도 불편하면 큰 것입니다.</b> 하루에 10번 반복되는 작업이라면 1년이면 3,650번입니다.</p>
-    </div>
-    <div class="mani-item">
-      <div class="mani-num">02 // 원칙</div>
-      <p class="mani-text"><b>설치도, 로그인도, 광고도 없습니다.</b> 도구 페이지에서는 오직 작업에만 집중합니다.</p>
-    </div>
-    <div class="mani-item">
-      <div class="mani-num">03 // 보안</div>
-      <p class="mani-text"><b>모든 처리는 브라우저 안에서.</b> 파일이나 이미지가 서버로 전송되지 않습니다.</p>
-    </div>
-    <div class="mani-item">
-      <div class="mani-num">04 // 확장</div>
-      <p class="mani-text"><b>불편한 게 생기면 도구가 됩니다.</b> 필요한 툴이 있다면 알려주세요.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Grit</div>
-  <div class="footer-right">작은 반복을 갈아버리는 도구 모음 · 무료 · 오픈소스</div>
-</footer>
-
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+(function(){
+  var body = document.body;
+  var toggle = document.getElementById("menuToggle");
+  var scrim = document.getElementById("scrim");
+  function close(){ body.classList.remove("nav-open"); }
+  toggle.addEventListener("click", function(){ body.classList.toggle("nav-open"); });
+  scrim.addEventListener("click", close);
+  // 모바일에서 툴 링크 클릭 시 메뉴 닫기
+  document.querySelectorAll(".sidebar a").forEach(function(a){
+    a.addEventListener("click", close);
   });
+
+  // 테마 (기본: 라이트)
+  var root = document.documentElement;
+  try { if (localStorage.getItem("theme") === "dark") root.setAttribute("data-theme", "dark"); } catch (e) {}
+  document.getElementById("themeToggle").addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark";
+    if (dark) root.removeAttribute("data-theme"); else root.setAttribute("data-theme", "dark");
+    try { localStorage.setItem("theme", dark ? "light" : "dark"); } catch (e) {}
+  });
+})();
+</script>
+
+<!-- 다국어 — 도구와 동일한 GritI18n(localStorage "gritLang") 공유 -->
+<script src="i18n.js"></script>
+<script>
+GritI18n.register({
+  ko:{
+    docTitle:"Grit Tools — 브라우저용 개발·계산 도구",
+    homeH1:"Grit Tools — 브라우저에서 바로 쓰는 도구 모음. 이미지 픽셀 좌표 추출, 복리·단리 계산기",
+    homeTag:"브라우저에서 바로 쓰는 개발 도구",
+    homeFoot:"Grit · 오픈소스 도구 모음",
+    homePcDesc:"이미지 위를 클릭해 픽셀 좌표를 뽑아내는 도구. 방향키로 1px씩 정밀하게 맞추고, #define·함수 등 원하는 코드 포맷으로 좌표를 자동 복사합니다. HMI·임베디드 UI 좌표 작업에 맞췄어요.",
+    homePcMeta1:"이미지 클릭", homePcMeta2:"코드 복사",
+    navPixel:"이미지 좌표 계산기", navCompound:"복리 계산기", navSimple:"단리 계산기",
+    homeCiDesc:"원금·이율·기간으로 복리 최종 금액과 이자를 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.",
+    homeCiMeta1:"그래프", homeCiMeta2:"엑셀 저장",
+    homeSiDesc:"원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.",
+    homeSiMeta1:"그래프", homeSiMeta2:"엑셀 저장",
+    homeThemeTitle:"라이트/다크 전환"
+  },
+  en:{
+    docTitle:"Grit Tools — Developer & calculator tools in your browser",
+    homeH1:"Grit Tools — tools that run in your browser. Pixel coordinate extraction, compound & simple interest calculators",
+    homeTag:"Developer tools, right in the browser",
+    homeFoot:"Grit · Open-source tools",
+    homePcDesc:"Click on an image to pull out pixel coordinates. Fine-tune 1px at a time with the arrow keys and auto-copy each point in the code format you want — coords, #define, or a function. Built for HMI / embedded UI coordinate work.",
+    homePcMeta1:"Click image", homePcMeta2:"Copy code",
+    navPixel:"Image Coordinate Tool", navCompound:"Compound Interest", navSimple:"Simple Interest",
+    homeCiDesc:"Instantly compute the compounded final amount and interest from principal, rate and number of periods. Shows a per-period balance chart and exports the table to Excel.",
+    homeCiMeta1:"Chart", homeCiMeta2:"Excel export",
+    homeSiDesc:"Instantly compute simple interest and the total from principal, rate and number of periods. Shows a per-period balance chart and exports the table to Excel.",
+    homeSiMeta1:"Chart", homeSiMeta2:"Excel export",
+    homeThemeTitle:"Toggle light/dark"
+  },
+  ja:{
+    docTitle:"Grit Tools — ブラウザーで使う開発・計算ツール",
+    homeH1:"Grit Tools — ブラウザーで動くツール集。画像のピクセル座標抽出、複利・単利計算機",
+    homeTag:"ブラウザーで使える開発ツール",
+    homeFoot:"Grit · オープンソースのツール",
+    homePcDesc:"画像をクリックしてピクセル座標を取り出すツール。矢印キーで1pxずつ微調整し、#define・関数など好きなコード形式で座標を自動コピー。HMI・組み込みUIの座標作業に合わせています。",
+    homePcMeta1:"画像クリック", homePcMeta2:"コードコピー",
+    navPixel:"画像座標ツール", navCompound:"複利計算機", navSimple:"単利計算機",
+    homeCiDesc:"元金・利率・回数から複利の最終金額と利息をすぐに計算。回数ごとの残高グラフを表示し、表をExcelファイルで保存できます。",
+    homeCiMeta1:"グラフ", homeCiMeta2:"Excel保存",
+    homeSiDesc:"元金・利率・回数から単利の利息と総額をすぐに計算。回数ごとの残高グラフを表示し、表をExcelファイルで保存できます。",
+    homeSiMeta1:"グラフ", homeSiMeta2:"Excel保存",
+    homeThemeTitle:"ライト／ダーク切替"
+  },
+  zh:{
+    docTitle:"Grit Tools — 浏览器里的开发与计算工具",
+    homeH1:"Grit Tools — 在浏览器中运行的工具集。图像像素坐标提取、复利与单利计算器",
+    homeTag:"在浏览器中使用的开发工具",
+    homeFoot:"Grit · 开源工具",
+    homePcDesc:"点击图像即可提取像素坐标的工具。用方向键逐像素微调，并以 #define、函数等你想要的代码格式自动复制坐标。专为 HMI / 嵌入式 UI 的坐标工作打造。",
+    homePcMeta1:"点击图像", homePcMeta2:"复制代码",
+    navPixel:"图像坐标工具", navCompound:"复利计算器", navSimple:"单利计算器",
+    homeCiDesc:"输入本金、利率和次数，立即计算复利的最终金额和利息。显示逐次余额图表，并可将表格导出为 Excel 文件。",
+    homeCiMeta1:"图表", homeCiMeta2:"导出 Excel",
+    homeSiDesc:"输入本金、利率和次数，立即计算单利的利息和总额。显示逐次余额图表，并可将表格导出为 Excel 文件。",
+    homeSiMeta1:"图表", homeSiMeta2:"导出 Excel",
+    homeThemeTitle:"切换浅色/深色"
+  }
 });
+GritI18n.init({ mount: document.getElementById("langMount"), inline: true });
 </script>
 </body>
 </html>

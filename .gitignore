@@ -11,6 +11,10 @@ desktop.ini
 # Logs / temp
 *.log
 *.tmp
+temp/
+
+# Local tooling (Claude Code)
+.claude/
 
 # Dependencies (향후 빌드 도구 도입 시)
 node_modules/

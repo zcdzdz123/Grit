@@ -7,10 +7,11 @@
 
 ## 구성
 
-| 파일 | 설명 |
+| 경로 | 설명 |
 |------|------|
 | `index.html` | 랜딩/허브 페이지 — 도구 카탈로그 |
-| `pixel-coords.html` | 픽셀 좌표 추출기 (HMI / 임베디드 UI 개발용) |
+| `tools/` | 도구 모음 (카테고리별 하위 폴더: `image`, `text`, `file`) |
+| `tools/image/pixel-coords.html` | 픽셀 좌표 추출기 (HMI / 임베디드 UI 개발용) |
 
 ## 실행
 
