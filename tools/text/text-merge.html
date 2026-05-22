@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>텍스트 파일 합치기 — Grit Tools</title>
+<meta name="description" content="여러 개의 텍스트 파일(.txt·.md·.csv·.log·.json)을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·UTF-8 BOM 옵션 지원. 모든 처리는 브라우저에서 끝나며 파일은 서버로 전송되지 않습니다.">
+<meta name="keywords" content="텍스트 파일 합치기, txt 합치기, 파일 병합 도구, merge text files, text combiner">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="텍스트 파일 합치기 — Grit Tools">
+<meta property="og:description" content="여러 텍스트 파일을 순서대로 하나로 병합. 구분자·파일명 헤더·BOM 옵션. 100% 브라우저 처리.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:400px 1fr; grid-template-areas:"left right"; }
+  .left-col { grid-area:left; display:flex; flex-direction:column; gap:18px; min-height:0; overflow:hidden; }
+  .right-col { grid-area:right; min-height:0; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 14px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .files-panel { flex:1 1 auto; }
+  .opt-panel { flex:0 0 auto; max-height:46%; overflow:auto; }
+
+  /* 드롭존 */
+  .drop { flex:0 0 auto; border:2px dashed var(--border-lit); border-radius:10px; padding:16px; text-align:center; color:var(--text-muted); font-size:13px; line-height:1.55; cursor:pointer; transition:border-color .15s,background .15s,color .15s; margin-bottom:12px; }
+  .drop:hover { border-color:var(--blue); color:var(--text-dim); }
+  .drop.over { border-color:var(--blue); background:var(--blue-soft); color:var(--blue-dark); }
+  .drop b { color:var(--blue); font-weight:600; }
+  .drop .dz-sub { display:block; margin-top:5px; font-size:11px; color:var(--text-muted); }
+
+  /* 파일 목록 */
+  .list-wrap { flex:1 1 auto; min-height:60px; overflow:auto; border:1px solid var(--border); border-radius:9px; }
+  .empty { color:var(--text-muted); text-align:center; padding:28px 14px; font-size:13px; line-height:1.6; }
+  .fitem { display:flex; align-items:center; gap:8px; padding:8px 10px; border-bottom:1px solid var(--border); }
+  .fitem:last-child { border-bottom:none; }
+  .fitem .fnum { flex:0 0 auto; width:20px; text-align:right; font-family:var(--font-mono); font-size:11px; color:var(--text-muted); }
+  .fitem .fmeta { flex:1 1 auto; min-width:0; }
+  .fitem .fname { font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fitem .fsize { font-size:11px; color:var(--text-muted); font-family:var(--font-mono); margin-top:1px; }
+  .fitem .fbtns { flex:0 0 auto; display:flex; gap:3px; }
+  .ibtn { width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; background:var(--surface); border:1px solid var(--border); color:var(--text-dim); border-radius:6px; cursor:pointer; font-size:12px; line-height:1; padding:0; font-family:var(--font-mono); }
+  .ibtn:hover { border-color:var(--blue); color:var(--blue); }
+  .ibtn:disabled { opacity:.35; cursor:default; }
+  .ibtn:disabled:hover { border-color:var(--border); color:var(--text-dim); }
+  .ibtn.rm:hover { border-color:#e0564f; color:#e0564f; }
+
+  /* 옵션 폼 */
+  .field { margin-bottom:14px; }
+  .field:last-child { margin-bottom:0; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:6px; }
+  .field select, .field input[type=text] { width:100%; padding:9px 11px; font-size:13px; border:1px solid var(--border-lit); border-radius:8px; background:var(--surface); color:var(--text); font-family:var(--font-mono); }
+  .field select:focus, .field input[type=text]:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .chk { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-dim); cursor:pointer; margin-bottom:14px; }
+  .chk:last-child { margin-bottom:0; }
+  .chk input { width:16px; height:16px; accent-color:var(--blue); cursor:pointer; }
+  .sub-field { margin:8px 0 0; }
+
+  .btn { background:var(--blue); color:#fff; border:none; padding:6px 12px; border-radius:var(--radius-pill); cursor:pointer; font-size:11px; font-weight:500; font-family:var(--font-ui); }
+  .btn:hover { background:var(--blue-dark); }
+  .btn.sm { padding:4px 11px; font-size:11px; background:var(--surface); color:var(--text-dim); border:1px solid var(--border-lit); }
+  .btn.sm:hover { background:var(--surface-2); border-color:var(--blue); color:var(--blue); }
+
+  /* 출력 패널 */
+  .out-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .out-head .stats { font-family:var(--font-mono); font-size:11px; color:var(--text-muted); text-transform:none; letter-spacing:0; font-weight:400; }
+  .out-actions { display:flex; gap:8px; margin-left:auto; }
+  .act-btn { background:var(--blue); color:#fff; border:none; padding:7px 14px; border-radius:var(--radius-pill); font:inherit; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:background .15s; }
+  .act-btn:hover { background:var(--blue-dark); }
+  .act-btn.ghost { background:var(--surface); color:var(--text-dim); border:1px solid var(--border-lit); }
+  .act-btn.ghost:hover { background:var(--surface-2); border-color:var(--blue); color:var(--blue); }
+  .act-btn svg { width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  #preview { flex:1 1 auto; min-height:0; width:100%; resize:none; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); color:var(--text); font-family:var(--font-mono); font-size:13px; line-height:1.55; padding:14px; white-space:pre; overflow:auto; }
+  #preview:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .privacy { flex:0 0 auto; margin:10px 0 0; font-size:11px; color:var(--text-muted); display:flex; align-items:center; gap:6px; }
+  .privacy svg { width:13px; height:13px; stroke:var(--text-muted); fill:none; stroke-width:1.6; }
+
+  /* 좁은 화면: 스크롤 스택 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .panels { grid-template-columns:1fr; grid-template-areas:"left" "right"; }
+    .left-col { overflow:visible; }
+    .opt-panel { max-height:none; }
+    .files-panel .list-wrap { max-height:340px; }
+    .right-col #preview { min-height:360px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:8px 16px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:600; box-shadow:var(--shadow-card); }
+  #toast.show { opacity:1; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "텍스트 파일 합치기",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "description": "여러 개의 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합하는 도구. 구분자·파일명 헤더·UTF-8 BOM 옵션을 지원하며 모든 처리는 브라우저에서 끝납니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="txTool">텍스트 파일 합치기</span><button type="button" id="helpBtn" class="g-help" data-i18n="txHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="txAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="txTitle">텍스트 파일 합치기</h1>
+    <p class="calc-sub" data-i18n="txSub">여러 텍스트 파일을 끌어다 놓고 순서를 정해 하나로 병합합니다.</p>
+  </div>
+
+  <div class="panels">
+
+    <div class="left-col">
+
+      <section class="panel files-panel">
+        <h2>
+          <span data-i18n="txFilesTitle">파일 목록</span>
+          <button type="button" class="btn sm" id="clearBtn" data-i18n="txClear">비우기</button>
+        </h2>
+        <div class="drop" id="drop">
+          <span data-i18n-html="txDrop">텍스트 파일을 <b>끌어다 놓거나</b> 클릭해서 선택<span class="dz-sub">.txt · .md · .csv · .log · .json</span></span>
+          <input id="fileInput" type="file" multiple accept=".txt,.md,.csv,.log,.json,text/*" style="display:none;">
+        </div>
+        <div class="list-wrap">
+          <div id="fileList"><div class="empty" data-i18n="txEmpty">아직 파일이 없습니다.</div></div>
+        </div>
+      </section>
+
+      <section class="panel opt-panel">
+        <h2 data-i18n="txOptTitle">병합 옵션</h2>
+
+        <div class="field">
+          <label for="sep" data-i18n="txSep">파일 사이 구분자</label>
+          <select id="sep">
+            <option value="none" data-i18n="txSepNone">없음</option>
+            <option value="nl" selected data-i18n="txSepNl">줄바꿈</option>
+            <option value="blank" data-i18n="txSepBlank">빈 줄</option>
+            <option value="custom" data-i18n="txSepCustom">사용자 지정</option>
+          </select>
+          <div class="sub-field" id="sepCustomWrap" style="display:none;">
+            <input id="sepCustom" type="text" value="----------" data-i18n-ph="txSepCustomPh" placeholder="구분자 텍스트">
+          </div>
+        </div>
+
+        <label class="chk"><input type="checkbox" id="useHeader"><span data-i18n="txHeader">파일명 헤더 추가</span></label>
+        <div class="field" id="headerWrap" style="display:none;">
+          <label for="headerTpl" data-i18n="txHeaderTpl">헤더 형식 ({name} = 파일명)</label>
+          <input id="headerTpl" type="text" value="===== {name} =====">
+        </div>
+
+        <label class="chk"><input type="checkbox" id="useBom"><span data-i18n="txBom">UTF-8 BOM 추가</span></label>
+
+        <div class="field">
+          <label for="outName" data-i18n="txOutName">출력 파일 이름</label>
+          <input id="outName" type="text" value="merged.txt">
+        </div>
+      </section>
+
+    </div>
+
+    <section class="panel right-col">
+      <h2 class="out-head">
+        <span data-i18n="txOutTitle">병합 미리보기</span>
+        <span class="stats" id="stats">0 B · 0 lines</span>
+        <span class="out-actions">
+          <button type="button" class="act-btn ghost" id="copyBtn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+            <span data-i18n="txCopy">복사</span>
+          </button>
+          <button type="button" class="act-btn" id="dlBtn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+            <span data-i18n="txDownload">병합 다운로드</span>
+          </button>
+        </span>
+      </h2>
+      <textarea id="preview" readonly spellcheck="false" data-i18n-ph="txPreviewPh" placeholder="파일을 추가하면 병합 결과가 여기에 표시됩니다."></textarea>
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"/></svg>
+        <span data-i18n="txPrivacy">파일은 서버로 전송되지 않습니다. 모든 처리는 브라우저에서 끝납니다.</span>
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="txHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="txGuideTitle">텍스트 파일 합치기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="txStep1T">파일 추가</span></div>
+        <p class="hs-d" data-i18n="txStep1D">텍스트 파일을 드롭존에 끌어다 놓거나 클릭해서 여러 개 선택하세요. .txt·.md·.csv·.log·.json 등 텍스트 파일을 UTF-8로 읽습니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="txStep2T">순서·옵션 설정</span></div>
+        <p class="hs-d" data-i18n-html="txStep2D">▲▼ 로 순서를 바꾸고 ✕ 로 제거합니다. 파일 사이 구분자, 파일명 헤더(<code>{name}</code> 치환), UTF-8 BOM을 켤 수 있어요.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="txStep3T">복사·다운로드</span></div>
+        <p class="hs-d" data-i18n="txStep3D">오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+
+  var files=[];           // {name, size, text}
+  var helpModal=$("helpModal");
+  var listEl=$("fileList"), preview=$("preview"), statsEl=$("stats");
+  var dropEl=$("drop"), fileInput=$("fileInput");
+
+  /* ---------- 사용법 모달 ---------- */
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* ---------- 유틸 ---------- */
+  function fmtBytes(n){
+    if(n<1024) return n+" B";
+    if(n<1048576) return (n/1024).toFixed(1)+" KB";
+    return (n/1048576).toFixed(2)+" MB";
+  }
+  function baseName(p){ var s=(p||"").split(/[\\/]/); return s[s.length-1]; }
+  function countLines(s){ if(s==="") return 0; return s.split("\n").length; }
+  function byteLen(s){
+    // UTF-8 byte length
+    try{ return unescape(encodeURIComponent(s)).length; }catch(e){ return s.length; }
+  }
+
+  /* ---------- 파일 읽기 ---------- */
+  var ACCEPT=/\.(txt|md|csv|log|json|text|ini|conf|cfg|yml|yaml|tsv|xml|html?|js|css)$/i;
+  function looksText(f){
+    if(f.type && f.type.indexOf("text")===0) return true;
+    if(f.type==="application/json") return true;
+    return ACCEPT.test(f.name);
+  }
+  function addFiles(fl){
+    var arr=[]; for(var i=0;i<fl.length;i++){ if(looksText(fl[i])) arr.push(fl[i]); }
+    if(!arr.length){ toast(T("txNoText")); return; }
+    var pending=arr.length;
+    arr.forEach(function(f){
+      var reader=new FileReader();
+      reader.onload=function(){
+        files.push({ name:baseName(f.name), size:f.size, text:String(reader.result) });
+        pending--; if(pending===0){ renderList(); render(); }
+      };
+      reader.onerror=function(){ pending--; if(pending===0){ renderList(); render(); } };
+      reader.readAsText(f, "UTF-8");
+    });
+  }
+
+  fileInput.addEventListener("change", function(e){
+    addFiles(e.target.files||[]); e.target.value="";
+  });
+  dropEl.addEventListener("click", function(){ fileInput.click(); });
+  dropEl.addEventListener("dragenter", function(e){ e.preventDefault(); dropEl.classList.add("over"); });
+  dropEl.addEventListener("dragover", function(e){ e.preventDefault(); dropEl.classList.add("over"); });
+  dropEl.addEventListener("dragleave", function(e){ if(e.target===dropEl) dropEl.classList.remove("over"); });
+  dropEl.addEventListener("drop", function(e){
+    e.preventDefault(); dropEl.classList.remove("over");
+    if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+  // 페이지 전체에서 기본 드롭(파일 열림) 방지
+  ["dragover","drop"].forEach(function(ev){ window.addEventListener(ev, function(e){ if(e.target!==dropEl) e.preventDefault(); }); });
+
+  /* ---------- 목록 렌더 ---------- */
+  function renderList(){
+    if(!files.length){ listEl.innerHTML='<div class="empty">'+esc(T("txEmpty"))+'</div>'; return; }
+    listEl.innerHTML="";
+    files.forEach(function(f,i){
+      var row=document.createElement("div"); row.className="fitem";
+
+      var num=document.createElement("span"); num.className="fnum"; num.textContent=(i+1);
+
+      var meta=document.createElement("div"); meta.className="fmeta";
+      var nm=document.createElement("div"); nm.className="fname"; nm.textContent=f.name; nm.title=f.name;
+      var sz=document.createElement("div"); sz.className="fsize"; sz.textContent=fmtBytes(f.size)+" · "+countLines(f.text)+" "+T("txLinesShort");
+      meta.appendChild(nm); meta.appendChild(sz);
+
+      var btns=document.createElement("div"); btns.className="fbtns";
+      var up=document.createElement("button"); up.type="button"; up.className="ibtn"; up.innerHTML="&#9650;"; up.title=T("txMoveUp"); up.disabled=(i===0);
+      var dn=document.createElement("button"); dn.type="button"; dn.className="ibtn"; dn.innerHTML="&#9660;"; dn.title=T("txMoveDown"); dn.disabled=(i===files.length-1);
+      var rm=document.createElement("button"); rm.type="button"; rm.className="ibtn rm"; rm.innerHTML="&#10005;"; rm.title=T("txRemove");
+      up.addEventListener("click", function(){ swap(i,i-1); });
+      dn.addEventListener("click", function(){ swap(i,i+1); });
+      rm.addEventListener("click", function(){ files.splice(i,1); renderList(); render(); });
+      btns.appendChild(up); btns.appendChild(dn); btns.appendChild(rm);
+
+      row.appendChild(num); row.appendChild(meta); row.appendChild(btns);
+      listEl.appendChild(row);
+    });
+  }
+  function swap(a,b){
+    if(b<0||b>=files.length) return;
+    var t=files[a]; files[a]=files[b]; files[b]=t;
+    renderList(); render();
+  }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  $("clearBtn").addEventListener("click", function(){
+    if(files.length && !confirm(T("txClearConfirm"))) return;
+    files=[]; renderList(); render();
+  });
+
+  /* ---------- 옵션 토글 ---------- */
+  $("sep").addEventListener("change", function(){
+    $("sepCustomWrap").style.display = (this.value==="custom") ? "block" : "none";
+    render();
+  });
+  $("sepCustom").addEventListener("input", render);
+  $("useHeader").addEventListener("change", function(){
+    $("headerWrap").style.display = this.checked ? "block" : "none";
+    render();
+  });
+  $("headerTpl").addEventListener("input", render);
+  $("useBom").addEventListener("change", render);
+
+  /* ---------- 병합 ---------- */
+  function separator(){
+    var v=$("sep").value;
+    if(v==="none") return "";
+    if(v==="nl") return "\n";
+    if(v==="blank") return "\n\n";
+    return "\n"+($("sepCustom").value)+"\n";
+  }
+  function buildMerged(){
+    var sep=separator(), useH=$("useHeader").checked, tpl=$("headerTpl").value || "===== {name} =====";
+    var parts=[];
+    for(var i=0;i<files.length;i++){
+      var chunk="";
+      if(useH){ chunk += tpl.replace(/\{name\}/g, files[i].name) + "\n"; }
+      chunk += files[i].text;
+      parts.push(chunk);
+    }
+    return parts.join(sep);
+  }
+
+  function render(){
+    var merged=buildMerged();
+    if(!files.length){
+      preview.value="";
+      statsEl.textContent="0 B · 0 "+T("txLinesShort");
+      return;
+    }
+    preview.value=merged;
+    statsEl.textContent=fmtBytes(byteLen(merged))+" · "+countLines(merged)+" "+T("txLinesShort");
+  }
+
+  /* ---------- 다운로드 ---------- */
+  function safeName(){
+    var n=($("outName").value||"").replace(/^\s+|\s+$/g,"");
+    if(!n) n="merged.txt";
+    if(!/\.[a-z0-9]{1,8}$/i.test(n)) n+=".txt";
+    return n;
+  }
+  $("dlBtn").addEventListener("click", function(){
+    if(!files.length){ toast(T("txNoFiles")); return; }
+    var text=buildMerged();
+    var parts = $("useBom").checked ? ["﻿", text] : [text];
+    var blob=new Blob(parts, {type:"text/plain;charset=utf-8"});
+    var name=safeName();
+    if(navigator.msSaveBlob){ navigator.msSaveBlob(blob, name); return; }
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download=name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 0);
+  });
+
+  /* ---------- 복사 ---------- */
+  function doCopy(text){
+    var ta=document.createElement("textarea"); ta.value=text;
+    ta.style.position="fixed"; ta.style.left="-9999px"; ta.style.top="0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    var ok=false; try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  $("copyBtn").addEventListener("click", function(){
+    if(!files.length){ toast(T("txNoFiles")); return; }
+    var text=buildMerged();
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(
+        function(){ toast(T("txCopied")); },
+        function(){ toast(doCopy(text)?T("txCopied"):T("txCopyFail")); }
+      );
+    }else{
+      toast(doCopy(text)?T("txCopied"):T("txCopyFail"));
+    }
+  });
+
+  /* ---------- 토스트 ---------- */
+  var toastT;
+  function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.remove("show"); },1200); }
+
+  /* ---------- 다국어 ---------- */
+  GritI18n.register({
+    ko:{
+      docTitle:"텍스트 파일 합치기 — Grit Tools",
+      txTool:"텍스트 파일 합치기", txAllTools:"← 모든 도구",
+      txTitle:"텍스트 파일 합치기",
+      txSub:"여러 텍스트 파일을 끌어다 놓고 순서를 정해 하나로 병합합니다.",
+      txFilesTitle:"파일 목록", txClear:"비우기",
+      txDrop:"텍스트 파일을 <b>끌어다 놓거나</b> 클릭해서 선택<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"아직 파일이 없습니다.",
+      txOptTitle:"병합 옵션",
+      txSep:"파일 사이 구분자",
+      txSepNone:"없음", txSepNl:"줄바꿈", txSepBlank:"빈 줄", txSepCustom:"사용자 지정", txSepCustomPh:"구분자 텍스트",
+      txHeader:"파일명 헤더 추가", txHeaderTpl:"헤더 형식 ({name} = 파일명)",
+      txBom:"UTF-8 BOM 추가", txOutName:"출력 파일 이름",
+      txOutTitle:"병합 미리보기", txCopy:"복사", txDownload:"병합 다운로드",
+      txPreviewPh:"파일을 추가하면 병합 결과가 여기에 표시됩니다.",
+      txPrivacy:"파일은 서버로 전송되지 않습니다. 모든 처리는 브라우저에서 끝납니다.",
+      txLinesShort:"줄", txMoveUp:"위로", txMoveDown:"아래로", txRemove:"제거",
+      txNoText:"텍스트 파일이 아닙니다.", txNoFiles:"먼저 파일을 추가하세요.",
+      txClearConfirm:"파일 목록을 모두 비울까요?",
+      txCopied:"복사됨!", txCopyFail:"복사 실패",
+      txHelpBtn:"사용법", txHelpClose:"닫기", txGuideTitle:"텍스트 파일 합치기 사용법",
+      txStep1T:"파일 추가", txStep1D:"텍스트 파일을 드롭존에 끌어다 놓거나 클릭해서 여러 개 선택하세요. .txt·.md·.csv·.log·.json 등 텍스트 파일을 UTF-8로 읽습니다.",
+      txStep2T:"순서·옵션 설정", txStep2D:"▲▼ 로 순서를 바꾸고 ✕ 로 제거합니다. 파일 사이 구분자, 파일명 헤더(<code>{name}</code> 치환), UTF-8 BOM을 켤 수 있어요.",
+      txStep3T:"복사·다운로드", txStep3D:"오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다."
+    },
+    en:{
+      docTitle:"Merge Text Files — Grit Tools",
+      txTool:"Merge Text Files", txAllTools:"← All tools",
+      txTitle:"Merge Text Files",
+      txSub:"Drop several text files, reorder them, and merge into one.",
+      txFilesTitle:"Files", txClear:"Clear",
+      txDrop:"<b>Drag &amp; drop</b> text files or click to choose<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"No files yet.",
+      txOptTitle:"Merge options",
+      txSep:"Separator between files",
+      txSepNone:"None", txSepNl:"Newline", txSepBlank:"Blank line", txSepCustom:"Custom", txSepCustomPh:"separator text",
+      txHeader:"Insert filename header", txHeaderTpl:"Header template ({name} = filename)",
+      txBom:"Add UTF-8 BOM", txOutName:"Output file name",
+      txOutTitle:"Merged preview", txCopy:"Copy", txDownload:"Download merged",
+      txPreviewPh:"Add files and the merged result will appear here.",
+      txPrivacy:"Files are never uploaded. Everything runs in your browser.",
+      txLinesShort:"lines", txMoveUp:"Move up", txMoveDown:"Move down", txRemove:"Remove",
+      txNoText:"Not a text file.", txNoFiles:"Add files first.",
+      txClearConfirm:"Clear the entire file list?",
+      txCopied:"Copied!", txCopyFail:"Copy failed",
+      txHelpBtn:"How to use", txHelpClose:"Close", txGuideTitle:"How to merge text files",
+      txStep1T:"Add files", txStep1D:"Drag text files onto the drop zone or click to select several. .txt, .md, .csv, .log, .json and other text files are read as UTF-8.",
+      txStep2T:"Order & options", txStep2D:"Reorder with ▲▼ and remove with ✕. Set the separator between files, a filename header (<code>{name}</code> token) and a UTF-8 BOM.",
+      txStep3T:"Copy or download", txStep3D:"Check the preview on the right, then click ‘Copy’ or ‘Download merged’. Your files are never uploaded."
+    },
+    ja:{
+      docTitle:"テキストファイル結合 — Grit Tools",
+      txTool:"テキストファイル結合", txAllTools:"← すべてのツール",
+      txTitle:"テキストファイル結合",
+      txSub:"複数のテキストファイルをドロップして並べ替え、1つに結合します。",
+      txFilesTitle:"ファイル一覧", txClear:"クリア",
+      txDrop:"テキストファイルを<b>ドラッグ＆ドロップ</b>、またはクリックで選択<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"まだファイルがありません。",
+      txOptTitle:"結合オプション",
+      txSep:"ファイル間の区切り",
+      txSepNone:"なし", txSepNl:"改行", txSepBlank:"空行", txSepCustom:"カスタム", txSepCustomPh:"区切りテキスト",
+      txHeader:"ファイル名ヘッダーを挿入", txHeaderTpl:"ヘッダー形式 ({name} = ファイル名)",
+      txBom:"UTF-8 BOM を追加", txOutName:"出力ファイル名",
+      txOutTitle:"結合プレビュー", txCopy:"コピー", txDownload:"結合をダウンロード",
+      txPreviewPh:"ファイルを追加すると結合結果がここに表示されます。",
+      txPrivacy:"ファイルはサーバーに送信されません。すべてブラウザ内で処理されます。",
+      txLinesShort:"行", txMoveUp:"上へ", txMoveDown:"下へ", txRemove:"削除",
+      txNoText:"テキストファイルではありません。", txNoFiles:"先にファイルを追加してください。",
+      txClearConfirm:"ファイル一覧をすべてクリアしますか？",
+      txCopied:"コピーしました！", txCopyFail:"コピー失敗",
+      txHelpBtn:"使い方", txHelpClose:"閉じる", txGuideTitle:"テキストファイル結合の使い方",
+      txStep1T:"ファイルを追加", txStep1D:"テキストファイルをドロップゾーンにドラッグするか、クリックして複数選択します。.txt・.md・.csv・.log・.json などのテキストファイルを UTF-8 で読み込みます。",
+      txStep2T:"並び順・オプション", txStep2D:"▲▼ で並べ替え、✕ で削除。ファイル間の区切り、ファイル名ヘッダー（<code>{name}</code> を置換）、UTF-8 BOM を設定できます。",
+      txStep3T:"コピー・ダウンロード", txStep3D:"右のプレビューで結果を確認し、「コピー」または「結合をダウンロード」を押します。ファイルはサーバーに送信されません。"
+    },
+    zh:{
+      docTitle:"文本文件合并 — Grit Tools",
+      txTool:"文本文件合并", txAllTools:"← 所有工具",
+      txTitle:"文本文件合并",
+      txSub:"拖入多个文本文件，调整顺序后合并为一个。",
+      txFilesTitle:"文件列表", txClear:"清空",
+      txDrop:"<b>拖放</b>文本文件，或点击选择<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"还没有文件。",
+      txOptTitle:"合并选项",
+      txSep:"文件之间的分隔符",
+      txSepNone:"无", txSepNl:"换行", txSepBlank:"空行", txSepCustom:"自定义", txSepCustomPh:"分隔符文本",
+      txHeader:"插入文件名标题", txHeaderTpl:"标题格式 ({name} = 文件名)",
+      txBom:"添加 UTF-8 BOM", txOutName:"输出文件名",
+      txOutTitle:"合并预览", txCopy:"复制", txDownload:"下载合并文件",
+      txPreviewPh:"添加文件后，合并结果将显示在此处。",
+      txPrivacy:"文件不会上传到服务器，所有处理都在浏览器中完成。",
+      txLinesShort:"行", txMoveUp:"上移", txMoveDown:"下移", txRemove:"移除",
+      txNoText:"不是文本文件。", txNoFiles:"请先添加文件。",
+      txClearConfirm:"清空整个文件列表？",
+      txCopied:"已复制！", txCopyFail:"复制失败",
+      txHelpBtn:"使用方法", txHelpClose:"关闭", txGuideTitle:"文本文件合并使用方法",
+      txStep1T:"添加文件", txStep1D:"将文本文件拖到拖放区，或点击选择多个文件。.txt、.md、.csv、.log、.json 等文本文件以 UTF-8 读取。",
+      txStep2T:"顺序与选项", txStep2D:"用 ▲▼ 调整顺序，用 ✕ 移除。可设置文件之间的分隔符、文件名标题（替换 <code>{name}</code>）和 UTF-8 BOM。",
+      txStep3T:"复制或下载", txStep3D:"在右侧预览中查看结果，然后点击“复制”或“下载合并文件”。文件不会上传到服务器。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ renderList(); render(); } });
+})();
+</script>
+</body>
+</html>

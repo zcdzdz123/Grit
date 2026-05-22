@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>연봉 실수령액 계산기 — Grit Tools</title>
+<meta name="description" content="연봉·비과세·부양가족·자녀 수를 넣으면 국민연금·건강보험·소득세 등 공제를 빼고 월 실수령액과 연 실수령액을 추정해 주는 계산기. 모든 계산은 브라우저에서 처리됩니다.">
+<meta name="keywords" content="연봉 실수령액 계산기, 실수령액, 세후 월급, 4대보험, 소득세, net salary calculator korea">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="연봉 실수령액 계산기 — Grit Tools">
+<meta property="og:description" content="연봉·비과세·부양가족으로 4대보험·세금을 빼고 월/연 실수령액을 즉시 추정. 엑셀 저장 지원.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:380px 1fr; grid-template-areas:"input table"; }
+  .input-panel { grid-area:input; overflow:auto; }
+  .input-panel .actions { margin-top:auto; }
+  .table-panel { grid-area:table; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  .field { margin-bottom:18px; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:7px; }
+  .inp { position:relative; display:flex; align-items:center; }
+  .inp input { width:100%; padding:13px 14px; font-size:16px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-mono); }
+  .inp input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .inp .unit { position:absolute; right:14px; font-size:14px; color:var(--text-muted); font-family:var(--font-mono); pointer-events:none; }
+  .inp.has-unit input { padding-right:48px; }
+
+  .actions { margin-top:20px; display:flex; }
+  .act-btn { width:100%; justify-content:center; background:var(--blue); color:#fff; border:none; padding:13px 16px; border-radius:var(--radius-pill); font:inherit; font-size:14px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s; }
+  .act-btn:hover { background:var(--blue-dark); }
+  .act-btn svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .formula { margin:14px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+  .formula code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  .tbl-wrap { flex:1 1 auto; min-height:0; overflow:auto; border:1px solid var(--border); border-radius:9px; }
+  table.tbl { width:100%; border-collapse:collapse; font-size:14px; }
+  table.tbl th, table.tbl td { padding:12px 16px; text-align:right; border-bottom:1px solid var(--border); font-family:var(--font-mono); white-space:nowrap; }
+  table.tbl th { position:sticky; top:0; z-index:1; background:var(--surface-2); color:var(--text-dim); font-weight:600; font-family:var(--font-ui); }
+  table.tbl th:first-child, table.tbl td:first-child { text-align:left; font-family:var(--font-ui); }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl tbody tr:hover td { background:var(--surface-2); }
+  table.tbl tr.total td { font-weight:600; color:var(--text); border-top:2px solid var(--border-lit); }
+  table.tbl tr.net td { background:var(--blue-soft); }
+  table.tbl tr.net td:last-child { font-size:18px; font-weight:600; color:var(--blue-dark); }
+  table.tbl tr.net td:first-child { font-weight:600; color:var(--text); }
+
+  /* 좁은 화면: 앱 고정 해제 → 스크롤 스택 */
+  @media (max-width:880px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .panels { grid-template-columns:1fr; grid-template-areas:"input" "table"; }
+    .input-panel { overflow:visible; }
+    .table-panel .tbl-wrap { max-height:560px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(12,10,9,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "연봉 실수령액 계산기",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web browser",
+  "description": "연봉·비과세·부양가족·자녀 수로 국민연금·건강보험·소득세 등을 빼고 월/연 실수령액을 추정하고 엑셀로 저장할 수 있는 도구. 2025년 한국 기준.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="snTool">연봉 실수령액 계산기</span><button type="button" id="helpBtn" class="g-help" data-i18n="snHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="snAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="snTitle">연봉 실수령액 계산기</h1>
+    <p class="calc-sub" data-i18n="snSub">연봉·비과세·부양가족을 넣으면 4대보험과 세금을 빼고 월 실수령액을 추정합니다.</p>
+  </div>
+
+  <div class="panels">
+
+    <section class="panel input-panel">
+      <h2 data-i18n="snInputTitle">값 입력</h2>
+      <div class="field">
+        <label for="salary" data-i18n="snSalary">연봉</label>
+        <div class="inp has-unit"><input id="salary" type="number" inputmode="decimal" min="0" step="any" value="40000000"><span class="unit" data-i18n="snWon">원</span></div>
+      </div>
+      <div class="field">
+        <label for="nontax" data-i18n="snNonTax">월 비과세액 (식대 등)</label>
+        <div class="inp has-unit"><input id="nontax" type="number" inputmode="decimal" min="0" step="any" value="200000"><span class="unit" data-i18n="snWon">원</span></div>
+      </div>
+      <div class="field">
+        <label for="deps" data-i18n="snDeps">부양가족 수 (본인 포함)</label>
+        <div class="inp has-unit"><input id="deps" type="number" inputmode="numeric" min="1" step="1" value="1"><span class="unit" data-i18n="snPersonUnit">명</span></div>
+      </div>
+      <div class="field">
+        <label for="kids" data-i18n="snKids">20세 이하 자녀 수</label>
+        <div class="inp has-unit"><input id="kids" type="number" inputmode="numeric" min="0" step="1" value="0"><span class="unit" data-i18n="snPersonUnit">명</span></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="act-btn" id="exportBtn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          <span data-i18n="snExport">엑셀로 저장</span>
+        </button>
+      </div>
+      <p class="formula" data-i18n-html="snFormula">※ 결과는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>입니다. 신용카드·연금·보험료 등 특별공제는 반영하지 않으므로 실제 급여명세서와 다를 수 있습니다. (2025년 기준)</p>
+    </section>
+
+    <section class="panel table-panel">
+      <h2 data-i18n="snTableTitle">공제 내역 (월 기준, 추정치)</h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr>
+            <th data-i18n="snColItem">항목</th>
+            <th data-i18n="snColAmount">금액</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="snHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="snGuideTitle">연봉 실수령액 계산기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="snStep1T">값 입력</span></div>
+        <p class="hs-d" data-i18n="snStep1D">연봉, 월 비과세액(식대 등), 부양가족 수(본인 포함), 20세 이하 자녀 수를 입력하세요.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="snStep2T">자동 계산 (공제 내역)</span></div>
+        <p class="hs-d" data-i18n="snStep2D">입력하는 즉시 국민연금·건강보험·장기요양·고용보험·소득세·지방소득세와 월/연 실수령액이 표로 갱신됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="snStep3T">엑셀 저장 · 추정치 안내</span></div>
+        <p class="hs-d" data-i18n-html="snStep3D">‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>이며 특별공제는 빠져 있어 실제와 다를 수 있습니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  function num(id){ var v=parseFloat($(id).value); return isNaN(v)?0:v; }
+  function fmtWon(n){ return isFinite(n) ? (Math.round(n).toLocaleString(undefined,{maximumFractionDigits:0})+" "+T("snWon")) : "—"; }
+
+  /* 근로소득공제 (연 총급여 기준) */
+  function earnedIncomeDeduction(g){
+    if(g<=5000000) return g*0.7;
+    if(g<=15000000) return 3500000 + (g-5000000)*0.4;
+    if(g<=45000000) return 7500000 + (g-15000000)*0.15;
+    if(g<=100000000) return 12000000 + (g-45000000)*0.05;
+    return 14750000 + (g-100000000)*0.02;
+  }
+  /* 종합소득세 산출세액 (과세표준 기준) */
+  function progressiveTax(base){
+    if(base<=14000000) return base*0.06;
+    if(base<=50000000) return 840000 + (base-14000000)*0.15;
+    if(base<=88000000) return 6240000 + (base-50000000)*0.24;
+    if(base<=150000000) return 15360000 + (base-88000000)*0.35;
+    if(base<=300000000) return 37060000 + (base-150000000)*0.38;
+    if(base<=500000000) return 94060000 + (base-300000000)*0.40;
+    if(base<=1000000000) return 174060000 + (base-500000000)*0.42;
+    return 384060000 + (base-1000000000)*0.45;
+  }
+
+  function compute(){
+    var salary=num("salary"), nonTax=num("nontax");
+    var deps=Math.max(1, Math.floor(num("deps")));
+    var kids=Math.max(0, Math.floor(num("kids")));
+
+    var grossMonthly = salary/12;
+    var taxableMonthly = Math.max(0, grossMonthly - nonTax);
+
+    /* 4대보험 */
+    var pensionBase = Math.min(Math.max(taxableMonthly, 390000), 6170000);
+    var pension = Math.round(pensionBase * 0.045);
+    var health = Math.round(taxableMonthly * 0.03545);
+    var care = Math.round(health * 0.1295);
+    var employ = Math.round(taxableMonthly * 0.009);
+
+    /* 소득세 (연간 기준 근사 후 /12) */
+    var annualTaxableGross = Math.max(0, (grossMonthly - nonTax) * 12);
+    var eid = earnedIncomeDeduction(annualTaxableGross);
+    var earnedIncome = annualTaxableGross - eid;
+    var personalDed = 1500000 * deps;
+    var taxBase = Math.max(0, earnedIncome - personalDed);
+    var computedTax = progressiveTax(taxBase);
+
+    /* 근로소득세액공제 */
+    var credit = computedTax<=1300000 ? computedTax*0.55 : 715000 + (computedTax-1300000)*0.30;
+    var cap;
+    if(annualTaxableGross<=33000000) cap=740000;
+    else if(annualTaxableGross<=70000000) cap=Math.max(660000, 740000 - (annualTaxableGross-33000000)*0.008);
+    else cap=Math.max(500000, 660000 - (annualTaxableGross-70000000)*0.5);
+    credit=Math.min(credit, cap);
+
+    /* 자녀세액공제 (연) */
+    var childCredit=0;
+    if(kids>=1){
+      if(kids===1) childCredit=150000;
+      else if(kids===2) childCredit=350000;
+      else childCredit=350000 + (kids-2)*300000;
+    }
+
+    var annualDecidedTax = Math.max(0, computedTax - credit - childCredit);
+    var incomeTax = Math.round(annualDecidedTax / 12);
+    var localTax = Math.round(incomeTax * 0.10);
+
+    var totalDed = pension + health + care + employ + incomeTax + localTax;
+    var grossR = Math.round(grossMonthly);
+    var netMonthly = grossR - totalDed;
+    var netAnnual = netMonthly * 12;
+
+    return {
+      gross:grossR, pension:pension, health:health, care:care, employ:employ,
+      incomeTax:incomeTax, localTax:localTax, totalDed:totalDed,
+      netMonthly:netMonthly, netAnnual:netAnnual
+    };
+  }
+
+  function rows(){
+    var r=compute();
+    return [
+      { key:"snRowGross",   label:T("snRowGross"),   value:r.gross,      cls:"" },
+      { key:"snRowPension", label:T("snRowPension"), value:r.pension,    cls:"" },
+      { key:"snRowHealth",  label:T("snRowHealth"),  value:r.health,     cls:"" },
+      { key:"snRowCare",    label:T("snRowCare"),    value:r.care,       cls:"" },
+      { key:"snRowEmploy",  label:T("snRowEmploy"),  value:r.employ,     cls:"" },
+      { key:"snRowIncome",  label:T("snRowIncome"),  value:r.incomeTax,  cls:"" },
+      { key:"snRowLocal",   label:T("snRowLocal"),   value:r.localTax,   cls:"" },
+      { key:"snRowTotal",   label:T("snRowTotal"),   value:r.totalDed,   cls:"total" },
+      { key:"snRowNet",     label:T("snRowNet"),     value:r.netMonthly, cls:"net" },
+      { key:"snRowNetYear", label:T("snRowNetYear"), value:r.netAnnual,  cls:"" }
+    ];
+  }
+
+  function calc(){
+    var rs=rows(), html="";
+    for(var i=0;i<rs.length;i++){
+      html+='<tr'+(rs[i].cls?' class="'+rs[i].cls+'"':'')+'><td>'+rs[i].label+'</td><td>'+fmtWon(rs[i].value)+'</td></tr>';
+    }
+    $("tbody").innerHTML=html;
+  }
+  ["salary","nontax","deps","kids"].forEach(function(id){ $(id).addEventListener("input", calc); });
+
+  /* 엑셀(.xls, SpreadsheetML) 저장 — 외부 라이브러리 없음 */
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function cell(v){ var isNum=(typeof v==="number" && isFinite(v)); return '<Cell><Data ss:Type="'+(isNum?"Number":"String")+'">'+esc(v)+'</Data></Cell>'; }
+  function rowXml(arr){ var c=""; for(var i=0;i<arr.length;i++) c+=cell(arr[i]); return "<Row>"+c+"</Row>"; }
+  function exportExcel(){
+    var rs=rows(), body="";
+    body+=rowXml([T("snColItem"), T("snColAmount")]);
+    for(var i=0;i<rs.length;i++){ body+=rowXml([rs[i].label, rs[i].value]); }
+    var xml='<?xml version="1.0"?>\n<?mso-application progid="Excel.Sheet"?>\n'
+      +'<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">'
+      +'<Worksheet ss:Name="'+esc(T("snSheet"))+'"><Table>'+body+'</Table></Worksheet></Workbook>';
+    var blob=new Blob(["﻿"+xml], {type:"application/vnd.ms-excel"});
+    if(navigator.msSaveBlob){ navigator.msSaveBlob(blob, "salary-net.xls"); return; }
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download="salary-net.xls";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 0);
+  }
+  $("exportBtn").addEventListener("click", exportExcel);
+
+  GritI18n.register({
+    ko:{
+      docTitle:"연봉 실수령액 계산기 — Grit Tools",
+      snTool:"연봉 실수령액 계산기", snAllTools:"← 모든 도구",
+      snTitle:"연봉 실수령액 계산기",
+      snSub:"연봉·비과세·부양가족을 넣으면 4대보험과 세금을 빼고 월 실수령액을 추정합니다.",
+      snWon:"원", snPersonUnit:"명",
+      snSalary:"연봉", snNonTax:"월 비과세액 (식대 등)", snDeps:"부양가족 수 (본인 포함)", snKids:"20세 이하 자녀 수",
+      snInputTitle:"값 입력", snTableTitle:"공제 내역 (월 기준, 추정치)", snExport:"엑셀로 저장",
+      snColItem:"항목", snColAmount:"금액", snSheet:"실수령액",
+      snRowGross:"월 급여 (세전)", snRowPension:"국민연금", snRowHealth:"건강보험", snRowCare:"장기요양보험",
+      snRowEmploy:"고용보험", snRowIncome:"소득세", snRowLocal:"지방소득세", snRowTotal:"공제 합계",
+      snRowNet:"월 실수령액", snRowNetYear:"연 실수령액",
+      snFormula:"※ 결과는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>입니다. 신용카드·연금·보험료 등 특별공제는 반영하지 않으므로 실제 급여명세서와 다를 수 있습니다. (2025년 기준)",
+      snHelpBtn:"사용법", snHelpClose:"닫기", snGuideTitle:"연봉 실수령액 계산기 사용법",
+      snStep1T:"값 입력", snStep1D:"연봉, 월 비과세액(식대 등), 부양가족 수(본인 포함), 20세 이하 자녀 수를 입력하세요.",
+      snStep2T:"자동 계산 (공제 내역)", snStep2D:"입력하는 즉시 국민연금·건강보험·장기요양·고용보험·소득세·지방소득세와 월/연 실수령액이 표로 갱신됩니다.",
+      snStep3T:"엑셀 저장 · 추정치 안내", snStep3D:"‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>이며 특별공제는 빠져 있어 실제와 다를 수 있습니다."
+    },
+    en:{
+      docTitle:"Korea Net Salary Calculator — Grit Tools",
+      snTool:"Net Salary (Korea)", snAllTools:"← All tools",
+      snTitle:"Korea Net Salary Calculator",
+      snSub:"Estimates monthly take-home pay after Korean social insurance and income tax, from your annual gross salary.",
+      snWon:"won", snPersonUnit:"",
+      snSalary:"Annual gross salary", snNonTax:"Monthly non-taxable (e.g. meals)", snDeps:"Dependents (incl. self)", snKids:"Children aged 20 or under",
+      snInputTitle:"Inputs", snTableTitle:"Deductions (monthly, estimate)", snExport:"Export to Excel",
+      snColItem:"Item", snColAmount:"Amount", snSheet:"Net salary",
+      snRowGross:"Gross monthly", snRowPension:"National Pension", snRowHealth:"Health insurance", snRowCare:"Long-term care",
+      snRowEmploy:"Employment insurance", snRowIncome:"Income tax", snRowLocal:"Local income tax", snRowTotal:"Total deductions",
+      snRowNet:"Net monthly", snRowNetYear:"Net annual",
+      snFormula:"※ This is a Korea-specific <b>estimate</b> approximating the <code>simplified withholding tax table</code>. Special deductions (credit cards, pension, insurance, etc.) are excluded, so your actual payslip may differ. (2025 rates)",
+      snHelpBtn:"How to use", snHelpClose:"Close", snGuideTitle:"How to use the net salary calculator",
+      snStep1T:"Enter values", snStep1D:"Enter the annual gross salary, monthly non-taxable amount (e.g. meals), number of dependents (including yourself) and children aged 20 or under.",
+      snStep2T:"Auto calculation (deductions)", snStep2D:"As you type, National Pension, health, long-term care, employment insurance, income tax, local tax and the monthly/annual net pay update in the table.",
+      snStep3T:"Export & estimate note", snStep3D:"‘Export to Excel’ downloads the deduction breakdown. Income tax approximates Korea's <code>simplified withholding tax table</code> and excludes special deductions, so it is an <b>estimate</b> and may differ from reality."
+    },
+    ja:{
+      docTitle:"韓国 手取り給与計算機 — Grit Tools",
+      snTool:"手取り給与（韓国）", snAllTools:"← すべてのツール",
+      snTitle:"韓国 手取り給与計算機",
+      snSub:"年俸から韓国の社会保険と所得税を差し引いた毎月の手取り額を概算します。",
+      snWon:"ウォン", snPersonUnit:"人",
+      snSalary:"年俸（税込）", snNonTax:"月の非課税額（食事代など）", snDeps:"扶養家族数（本人を含む）", snKids:"20歳以下の子の数",
+      snInputTitle:"入力", snTableTitle:"控除内訳（月額・概算）", snExport:"Excelで保存",
+      snColItem:"項目", snColAmount:"金額", snSheet:"手取り額",
+      snRowGross:"月給（税引前）", snRowPension:"国民年金", snRowHealth:"健康保険", snRowCare:"長期療養保険",
+      snRowEmploy:"雇用保険", snRowIncome:"所得税", snRowLocal:"地方所得税", snRowTotal:"控除合計",
+      snRowNet:"月の手取り額", snRowNetYear:"年の手取り額",
+      snFormula:"※ 本結果は韓国の<code>勤労所得簡易税額表</code>を近似した<b>概算</b>です。クレジットカード・年金・保険料などの特別控除は反映しないため、実際の給与明細と異なる場合があります。（2025年基準）",
+      snHelpBtn:"使い方", snHelpClose:"閉じる", snGuideTitle:"手取り給与計算機の使い方",
+      snStep1T:"値を入力", snStep1D:"年俸、月の非課税額（食事代など）、扶養家族数（本人を含む）、20歳以下の子の数を入力します。",
+      snStep2T:"自動計算（控除内訳）", snStep2D:"入力するたびに国民年金・健康保険・長期療養・雇用保険・所得税・地方所得税と月/年の手取り額が表で更新されます。",
+      snStep3T:"Excel保存・概算の注意", snStep3D:"「Excelで保存」を押すと控除内訳をExcelファイルで保存します。所得税は韓国の<code>勤労所得簡易税額表</code>を近似した<b>概算</b>で、特別控除を含まないため実際と異なる場合があります。"
+    },
+    zh:{
+      docTitle:"韩国实发工资计算器 — Grit Tools",
+      snTool:"实发工资（韩国）", snAllTools:"← 所有工具",
+      snTitle:"韩国实发工资计算器",
+      snSub:"根据年薪扣除韩国社会保险与所得税后，估算每月的实发工资。",
+      snWon:"韩元", snPersonUnit:"人",
+      snSalary:"年薪（税前）", snNonTax:"每月免税额（餐补等）", snDeps:"赡养家属人数（含本人）", snKids:"20岁以下子女数",
+      snInputTitle:"输入", snTableTitle:"扣除明细（月，估算）", snExport:"导出 Excel",
+      snColItem:"项目", snColAmount:"金额", snSheet:"实发工资",
+      snRowGross:"月薪（税前）", snRowPension:"国民年金", snRowHealth:"健康保险", snRowCare:"长期疗养保险",
+      snRowEmploy:"雇佣保险", snRowIncome:"所得税", snRowLocal:"地方所得税", snRowTotal:"扣除合计",
+      snRowNet:"月实发工资", snRowNetYear:"年实发工资",
+      snFormula:"※ 本结果是近似韩国<code>劳动所得简易税额表</code>的<b>估算值</b>。信用卡、年金、保险费等特别扣除未计入，因此可能与实际工资单不同。（2025 年基准）",
+      snHelpBtn:"使用方法", snHelpClose:"关闭", snGuideTitle:"实发工资计算器使用方法",
+      snStep1T:"输入数值", snStep1D:"输入年薪、每月免税额（餐补等）、赡养家属人数（含本人）以及 20 岁以下子女数。",
+      snStep2T:"自动计算（扣除明细）", snStep2D:"输入时国民年金、健康保险、长期疗养、雇佣保险、所得税、地方所得税以及月/年实发工资会即时在表格中更新。",
+      snStep3T:"导出 Excel · 估算说明", snStep3D:"点击“导出 Excel”可下载扣除明细。所得税近似韩国<code>劳动所得简易税额表</code>，未含特别扣除，为<b>估算值</b>，可能与实际不同。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: calc });
+})();
+</script>
+</body>
+</html>

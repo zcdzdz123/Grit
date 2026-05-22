@@ -27,24 +27,24 @@
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
 :root {
-  /* 색 — Seline "Crisp Data Canvas" (light) */
-  --bg:        #fafaf9;   /* Canvas Fog — 페이지 */
-  --surface:   #ffffff;   /* Cloud White — 카드/사이드바 */
-  --surface-2: #f3f1f0;   /* 옅은 칩/패널 틴트 */
-  --blue:      #3ba6f1;   /* Chartwell Blue — 강조 */
-  --blue-dark: #1f93e6;
-  --blue-soft: rgba(59,166,241,.12);
-  --text:      #0c0a09;   /* Slate */
-  --text-dim:  #524d48;   /* 진한 보조 — 선명한 대비 */
-  --text-muted:#8a847e;   /* 3차 */
-  --border:    #e2e1df;   /* 또렷한 경계 */
-  --border-lit:#cdc9c4;
+  /* 색 — 다크 전용 */
+  --bg:        #0f1115;
+  --surface:   #171a21;
+  --surface-2: #1e222b;
+  --blue:      #54b0f7;
+  --blue-dark: #7cc3fa;
+  --blue-soft: rgba(84,176,247,.16);
+  --text:      #f2f4f7;
+  --text-dim:  #9aa3b2;
+  --text-muted:#646e7e;
+  --border:    #2b313c;
+  --border-lit:#3a4250;
 
   --radius-card: 10px;
   --radius-pill: 9999px;
-  --shadow-card:   0 1px 3px rgba(12,10,9,.12), 0 1px 2px rgba(12,10,9,.07);
-  --shadow-subtle: 0 1px 2px rgba(12,10,9,.07);
-  --shadow-xl:     0 8px 28px rgba(12,10,9,.16);
+  --shadow-card:   0 1px 3px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.4);
+  --shadow-subtle: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-xl:     0 8px 28px rgba(0,0,0,.55);
 
   --sidebar-w: 268px;
   --font-display: 'roobert', 'Inter', 'Pretendard', ui-sans-serif, system-ui, sans-serif;
@@ -59,24 +59,7 @@
   --lang-opt-hover: var(--surface-2);
   --lang-opt-hover-fg: var(--text);
 }
-/* 다크 모드 (가이드는 라이트 전용 — 동일 강조색으로 적응한 다크) */
-html[data-theme="dark"] {
-  --bg:        #0f1115;
-  --surface:   #171a21;
-  --surface-2: #1e222b;
-  --blue:      #54b0f7;
-  --blue-dark: #7cc3fa;
-  --blue-soft: rgba(84,176,247,.16);
-  --text:      #f2f4f7;
-  --text-dim:  #9aa3b2;
-  --text-muted:#646e7e;
-  --border:    #2b313c;
-  --border-lit:#3a4250;
-  --shadow-card:   0 1px 3px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.4);
-  --shadow-subtle: 0 1px 2px rgba(0,0,0,.4);
-  --shadow-xl:     0 8px 28px rgba(0,0,0,.55);
-}
-html { color-scheme: light dark; scroll-behavior: smooth; }
+html { color-scheme: dark; scroll-behavior: smooth; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: var(--font-body);
@@ -106,39 +89,21 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 }
 .side-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 22px 4px;
+  padding: 4px 22px 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
 }
 .side-logo {
   font-family: var(--font-display);
-  font-size: 20px; font-weight: 600;
+  font-size: 30px; font-weight: 600;
   color: var(--blue);
-  letter-spacing: -.017em;
+  letter-spacing: -.02em;
 }
 .side-logo sup {
-  font-size: 9px; font-weight: 500;
+  font-size: 10px; font-weight: 500;
   color: var(--text-muted);
   letter-spacing: .04em;
-  margin-left: 4px; vertical-align: top;
-}
-.theme-toggle {
-  width: 32px; height: 32px;
-  display: flex; align-items: center; justify-content: center;
-  background: transparent; border: 1px solid var(--border);
-  border-radius: var(--radius-pill); cursor: pointer;
-  color: var(--blue);
-  transition: background .15s, border-color .15s;
-}
-.theme-toggle:hover { background: var(--blue-soft); border-color: var(--blue); }
-.theme-toggle svg { width: 17px; height: 17px; }
-.theme-toggle .ic-moon { display: none; }
-html[data-theme="dark"] .theme-toggle .ic-sun { display: none; }
-html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
-
-.side-tag {
-  font-size: 12px; color: var(--text-muted);
-  padding: 0 22px 20px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 16px;
+  margin-left: 5px; vertical-align: top;
 }
 
 .nav-group { margin-bottom: 18px; }
@@ -195,8 +160,8 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
 .content { flex: 1; min-width: 0; }
 
 /* ── TOOL HUB ── */
-.hub { max-width: 820px; padding: 44px 56px 64px; }
-.category { margin-bottom: 48px; }
+.hub { max-width: 1600px; padding: 36px 44px 56px; }
+.category { margin-bottom: 30px; }
 .cat-header {
   display: flex; align-items: center; gap: 12px;
   margin-bottom: 20px;
@@ -220,9 +185,14 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
 }
 .tool-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
 }
+@media (max-width: 1400px){ .tool-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 1150px){ .tool-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 920px){  .tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 680px){  .tool-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px){  .tool-grid { grid-template-columns: 1fr; } }
 
 /* ── TOOL CARD ── */
 .tool-card {
@@ -230,7 +200,7 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  padding: 22px 22px 18px;
+  padding: 16px 18px 14px;
   box-shadow: var(--shadow-subtle);
   transition: box-shadow .2s, transform .2s, border-color .2s;
   color: inherit;
@@ -255,18 +225,18 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
 }
 .tool-card:hover::after { transform: scaleX(1); }
 .tool-icon {
-  width: 38px; height: 38px;
+  width: 32px; height: 32px;
   background: var(--blue);
-  border-radius: var(--radius-card);
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
-.tool-icon svg.ic { width: 21px; height: 21px; stroke: #fff; }
+.tool-icon svg.ic { width: 18px; height: 18px; stroke: #fff; }
 .tool-name {
   font-family: var(--font-display);
-  font-size: 15px; font-weight: 600;
+  font-size: 14px; font-weight: 600;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 5px;
   display: flex; align-items: center; gap: 8px;
   letter-spacing: -.01em;
 }
@@ -280,16 +250,20 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
   text-transform: uppercase;
 }
 .tool-desc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-dim);
-  line-height: 1.54;
-  margin-bottom: 14px;
+  line-height: 1.5;
+  margin-bottom: 11px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .tool-meta {
   font-family: var(--font-display);
   font-size: 11px;
   color: var(--text-muted);
-  display: flex; gap: 12px;
+  display: flex; flex-wrap: wrap; gap: 4px 12px;
 }
 .tool-meta span::before { content: '— '; color: var(--blue); opacity: .8; }
 
@@ -354,30 +328,86 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
   <aside class="sidebar" id="sidebar">
     <div class="side-head">
       <div class="side-logo">Grit<sup>tools</sup></div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환" title="라이트/다크 전환" data-i18n-title="homeThemeTitle">
-        <svg class="ic ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
-        <svg class="ic ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a7 7 0 1 0 10.5 10.5z"/></svg>
-      </button>
     </div>
-    <div class="side-tag" data-i18n="homeTag">브라우저에서 바로 쓰는 개발 도구</div>
 
     <nav>
       <div class="nav-group">
-        <div class="nav-group-title">Image <span class="gc">1</span></div>
+        <div class="nav-group-title">Image <span class="gc">3</span></div>
         <a class="nav-item" href="tools/image/pixel-coords.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v4.5M12 17v4.5M2.5 12h4.5M17 12h4.5"/></svg></span>
-          <span data-i18n="navPixel">이미지 좌표 계산기</span> <span class="ni-badge new">New</span>
+          <span data-i18n="navPixel">이미지 좌표 계산기</span>
+        </a>
+        <a class="nav-item" href="tools/image/image-resize.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6"/></svg></span>
+          <span data-i18n="navResize">이미지 리사이즈</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/image/color-picker.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2l4 4-11 11H7v-4z"/><path d="M3 21h7"/></svg></span>
+          <span data-i18n="navCp">이미지 색상 추출</span> <span class="ni-badge new">New</span>
         </a>
       </div>
       <div class="nav-group">
-        <div class="nav-group-title">Calculator <span class="gc">2</span></div>
+        <div class="nav-group-title">Text <span class="gc">3</span></div>
+        <a class="nav-item" href="tools/text/table-to-markdown.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></span>
+          <span data-i18n="navTm">표 → Markdown</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/text/address-romanize.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span>
+          <span data-i18n="navAddr">영어주소 변환기</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/text/text-merge.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6M9 16h6M9 10h3"/></svg></span>
+          <span data-i18n="navTx">텍스트 파일 병합</span> <span class="ni-badge new">New</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">Calculator <span class="gc">5</span></div>
         <a class="nav-item" href="tools/calc/compound-interest.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 13v4M15 13v4M12 13v4"/></svg></span>
-          <span data-i18n="navCompound">복리 계산기</span> <span class="ni-badge new">New</span>
+          <span data-i18n="navCompound">복리 계산기</span>
         </a>
         <a class="nav-item" href="tools/calc/simple-interest.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M8 14h8"/></svg></span>
-          <span data-i18n="navSimple">단리 계산기</span> <span class="ni-badge new">New</span>
+          <span data-i18n="navSimple">단리 계산기</span>
+        </a>
+        <a class="nav-item" href="tools/calc/salary-net.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 9l4 6 4-6M8 13h8"/></svg></span>
+          <span data-i18n="navSalary">연봉 실수령액</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/calc/d-day.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>
+          <span data-i18n="navDday">D-Day 계산기</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/calc/currency.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></span>
+          <span data-i18n="navFx">환율 계산기</span> <span class="ni-badge new">New</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">PDF <span class="gc">3</span></div>
+        <a class="nav-item" href="tools/pdf/pdf-split.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M12 3v18"/></svg></span>
+          <span data-i18n="navPs">PDF 분할</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/pdf/pdf-merge.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l4 4v12H5V8z"/><path d="M9 13h6M12 10v6"/></svg></span>
+          <span data-i18n="navPm">PDF 병합</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/pdf/pdf-to-image.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M20 16l-5-5-7 7"/></svg></span>
+          <span data-i18n="navPi">PDF → 이미지</span> <span class="ni-badge new">New</span>
+        </a>
+      </div>
+      <div class="nav-group">
+        <div class="nav-group-title">File <span class="gc">2</span></div>
+        <a class="nav-item" href="tools/file/excel-split.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></span>
+          <span data-i18n="navXs">엑셀 시트 분할</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/file/batch-rename.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10l5 5-5 5H4z"/></svg></span>
+          <span data-i18n="navBr">파일명 일괄 변경</span> <span class="ni-badge new">New</span>
         </a>
       </div>
     </nav>
@@ -396,64 +426,134 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
     <!-- TOOL HUB -->
     <main class="hub">
 
-      <!-- 이미지 카테고리 -->
+      <!-- 이미지 -->
       <section class="category" id="image">
-        <div class="cat-header">
-          <span class="cat-name">Image</span>
-          <span class="cat-count">1</span>
-        </div>
+        <div class="cat-header"><span class="cat-name">Image</span><span class="cat-count">3</span></div>
         <div class="tool-grid">
-
           <a class="tool-card" href="tools/image/pixel-coords.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v4.5M12 17v4.5M2.5 12h4.5M17 12h4.5"/></svg></div>
-            <div class="tool-name">
-              <span data-i18n="navPixel">이미지 좌표 계산기</span>
-              <span class="badge-new">NEW</span>
-            </div>
-            <p class="tool-desc" data-i18n="homePcDesc">이미지 위를 클릭해 픽셀 좌표를 뽑아내는 도구. 방향키로 1px씩 정밀하게 맞추고, #define·함수 등 원하는 코드 포맷으로 좌표를 자동 복사합니다. HMI·임베디드 UI 좌표 작업에 맞췄어요.</p>
-            <div class="tool-meta">
-              <span data-i18n="homePcMeta1">이미지 클릭</span>
-              <span data-i18n="homePcMeta2">코드 복사</span>
-            </div>
+            <div class="tool-name"><span data-i18n="navPixel">이미지 좌표 계산기</span></div>
+            <p class="tool-desc" data-i18n="homePcDesc">이미지 위를 클릭해 픽셀 좌표를 뽑아내는 도구. 방향키로 1px씩 정밀하게 맞추고, #define·함수 등 원하는 코드 포맷으로 좌표를 자동 복사합니다.</p>
+            <div class="tool-meta"><span data-i18n="homePcMeta1">이미지 클릭</span><span data-i18n="homePcMeta2">코드 복사</span></div>
           </a>
-
+          <a class="tool-card" href="tools/image/image-resize.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 15v5h-5M4 4l6 6M20 20l-6-6"/></svg></div>
+            <div class="tool-name"><span data-i18n="navResize">이미지 리사이즈</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeResizeDesc">이미지를 브라우저 안에서 크기 조절·압축한 뒤 바로 내려받기. 서버로 전송되지 않습니다.</p>
+            <div class="tool-meta"><span data-i18n="metaDragDrop">드래그&드롭</span><span data-i18n="metaNoUpload">서버 전송 없음</span></div>
+          </a>
+          <a class="tool-card" href="tools/image/color-picker.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2l4 4-11 11H7v-4z"/><path d="M3 21h7"/></svg></div>
+            <div class="tool-name"><span data-i18n="navCp">이미지 색상 추출</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeCpDesc">이미지를 올리고 스포이드로 픽셀 색을 찍어 HEX·RGB·HSL 값을 복사. 확대 루페로 정밀하게, 서버 전송 없음.</p>
+            <div class="tool-meta"><span data-i18n="metaCopy">복사</span><span data-i18n="metaNoUpload">서버 전송 없음</span></div>
+          </a>
         </div>
       </section>
 
-      <!-- 계산기 카테고리 -->
-      <section class="category" id="calc">
-        <div class="cat-header">
-          <span class="cat-name">Calculator</span>
-          <span class="cat-count">2</span>
-        </div>
+      <!-- 텍스트 -->
+      <section class="category" id="text">
+        <div class="cat-header"><span class="cat-name">Text</span><span class="cat-count">3</span></div>
         <div class="tool-grid">
+          <a class="tool-card" href="tools/text/table-to-markdown.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></div>
+            <div class="tool-name"><span data-i18n="navTm">표 → Markdown</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeTmDesc">엑셀·구글 시트·노션 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환하고 미리보기를 보여줍니다.</p>
+            <div class="tool-meta"><span data-i18n="metaInstant">즉시 변환</span><span data-i18n="metaPreview">미리보기</span></div>
+          </a>
+          <a class="tool-card" href="tools/text/address-romanize.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></div>
+            <div class="tool-name"><span data-i18n="navAddr">영어주소 변환기</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeAddrDesc">한글 주소를 국제 배송 양식에 쓸 영문·로마자 주소로 바로 변환. 로마자 표기법 기반 참고용입니다.</p>
+            <div class="tool-meta"><span data-i18n="metaInstant">즉시 변환</span><span data-i18n="metaCopy">복사</span></div>
+          </a>
+          <a class="tool-card" href="tools/text/text-merge.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6M9 16h6M9 10h3"/></svg></div>
+            <div class="tool-name"><span data-i18n="navTx">텍스트 파일 병합</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeTxDesc">여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원.</p>
+            <div class="tool-meta"><span data-i18n="metaDragDrop">드래그&드롭</span><span data-i18n="metaDownload">다운로드</span></div>
+          </a>
+        </div>
+      </section>
 
+      <!-- 계산기 -->
+      <section class="category" id="calc">
+        <div class="cat-header"><span class="cat-name">Calculator</span><span class="cat-count">5</span></div>
+        <div class="tool-grid">
           <a class="tool-card" href="tools/calc/compound-interest.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 13v4M15 13v4M12 13v4"/></svg></div>
-            <div class="tool-name">
-              <span data-i18n="navCompound">복리 계산기</span>
-              <span class="badge-new">NEW</span>
-            </div>
+            <div class="tool-name"><span data-i18n="navCompound">복리 계산기</span></div>
             <p class="tool-desc" data-i18n="homeCiDesc">원금·이율·기간으로 복리 최종 금액과 이자를 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.</p>
-            <div class="tool-meta">
-              <span data-i18n="homeCiMeta1">그래프</span>
-              <span data-i18n="homeCiMeta2">엑셀 저장</span>
-            </div>
+            <div class="tool-meta"><span data-i18n="homeCiMeta1">그래프</span><span data-i18n="homeCiMeta2">엑셀 저장</span></div>
           </a>
-
           <a class="tool-card" href="tools/calc/simple-interest.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M8 14h8"/></svg></div>
-            <div class="tool-name">
-              <span data-i18n="navSimple">단리 계산기</span>
-              <span class="badge-new">NEW</span>
-            </div>
+            <div class="tool-name"><span data-i18n="navSimple">단리 계산기</span></div>
             <p class="tool-desc" data-i18n="homeSiDesc">원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.</p>
-            <div class="tool-meta">
-              <span data-i18n="homeSiMeta1">그래프</span>
-              <span data-i18n="homeSiMeta2">엑셀 저장</span>
-            </div>
+            <div class="tool-meta"><span data-i18n="homeSiMeta1">그래프</span><span data-i18n="homeSiMeta2">엑셀 저장</span></div>
           </a>
+          <a class="tool-card" href="tools/calc/salary-net.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 9l4 6 4-6M8 13h8"/></svg></div>
+            <div class="tool-name"><span data-i18n="navSalary">연봉 실수령액</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeSalaryDesc">연봉·비과세·부양가족으로 국민연금·건강보험·소득세 등을 빼고 월/연 실수령액을 추정합니다 (2025년 기준).</p>
+            <div class="tool-meta"><span data-i18n="metaEstimate">추정치</span><span data-i18n="metaExcel">엑셀 저장</span></div>
+          </a>
+          <a class="tool-card" href="tools/calc/d-day.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></div>
+            <div class="tool-name"><span data-i18n="navDday">D-Day 계산기</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeDdayDesc">D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 요일과 정확한 일수까지 즉시 계산합니다.</p>
+            <div class="tool-meta"><span data-i18n="metaInstant">즉시 변환</span><span data-i18n="metaCopy">복사</span></div>
+          </a>
+          <a class="tool-card" href="tools/calc/currency.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></div>
+            <div class="tool-name"><span data-i18n="navFx">환율 계산기</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeFxDesc">ECB 기준 실시간 환율로 통화를 즉시 변환하고 주요 통화 환산표를 보여주는 환율 계산기.</p>
+            <div class="tool-meta"><span data-i18n="metaLive">실시간</span><span data-i18n="metaInstant">즉시 변환</span></div>
+          </a>
+        </div>
+      </section>
 
+      <!-- PDF -->
+      <section class="category" id="pdf">
+        <div class="cat-header"><span class="cat-name">PDF</span><span class="cat-count">3</span></div>
+        <div class="tool-grid">
+          <a class="tool-card" href="tools/pdf/pdf-split.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M12 3v18"/></svg></div>
+            <div class="tool-name"><span data-i18n="navPs">PDF 분할</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homePsDesc">PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 PDF로 저장. 100% 브라우저 처리, 서버 전송 없음.</p>
+            <div class="tool-meta"><span data-i18n="metaNoUpload">서버 전송 없음</span><span data-i18n="metaDownload">다운로드</span></div>
+          </a>
+          <a class="tool-card" href="tools/pdf/pdf-merge.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l4 4v12H5V8z"/><path d="M9 13h6M12 10v6"/></svg></div>
+            <div class="tool-name"><span data-i18n="navPm">PDF 병합</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homePmDesc">여러 PDF를 원하는 순서로 정렬해 하나로 합치는 도구. 100% 브라우저 처리, 업로드 없음.</p>
+            <div class="tool-meta"><span data-i18n="metaNoUpload">서버 전송 없음</span><span data-i18n="metaDownload">다운로드</span></div>
+          </a>
+          <a class="tool-card" href="tools/pdf/pdf-to-image.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="9" cy="9" r="1.5"/><path d="M20 16l-5-5-7 7"/></svg></div>
+            <div class="tool-name"><span data-i18n="navPi">PDF → 이미지</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homePiDesc">PDF의 각 페이지를 PNG·JPEG 이미지로 변환하고 페이지별 또는 전체를 한 번에 저장합니다.</p>
+            <div class="tool-meta"><span data-i18n="metaImage">이미지 저장</span><span data-i18n="metaNoUpload">서버 전송 없음</span></div>
+          </a>
+        </div>
+      </section>
+
+      <!-- 파일 -->
+      <section class="category" id="file">
+        <div class="cat-header"><span class="cat-name">File</span><span class="cat-count">2</span></div>
+        <div class="tool-grid">
+          <a class="tool-card" href="tools/file/excel-split.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div>
+            <div class="tool-name"><span data-i18n="navXs">엑셀 시트 분할</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeXsDesc">엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV로 저장 (브라우저에서만 처리).</p>
+            <div class="tool-meta"><span data-i18n="metaNoUpload">서버 전송 없음</span><span data-i18n="metaDownload">다운로드</span></div>
+          </a>
+          <a class="tool-card" href="tools/file/batch-rename.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10l5 5-5 5H4z"/></svg></div>
+            <div class="tool-name"><span data-i18n="navBr">파일명 일괄 변경</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homeBrDesc">찾기·바꾸기, 접두·접미, 연속 번호 규칙으로 파일명을 한 번에 바꾸고, 새 이름으로 다운로드하거나 .bat/.ps1/.sh 스크립트를 내보냅니다.</p>
+            <div class="tool-meta"><span data-i18n="metaScript">스크립트</span><span data-i18n="metaPreview">미리보기</span></div>
+          </a>
         </div>
       </section>
 
@@ -476,14 +576,6 @@ html[data-theme="dark"] .theme-toggle .ic-moon { display: block; }
     a.addEventListener("click", close);
   });
 
-  // 테마 (기본: 라이트)
-  var root = document.documentElement;
-  try { if (localStorage.getItem("theme") === "dark") root.setAttribute("data-theme", "dark"); } catch (e) {}
-  document.getElementById("themeToggle").addEventListener("click", function(){
-    var dark = root.getAttribute("data-theme") === "dark";
-    if (dark) root.removeAttribute("data-theme"); else root.setAttribute("data-theme", "dark");
-    try { localStorage.setItem("theme", dark ? "light" : "dark"); } catch (e) {}
-  });
 })();
 </script>
 
@@ -498,12 +590,30 @@ GritI18n.register({
     homeFoot:"Grit · 오픈소스 도구 모음",
     homePcDesc:"이미지 위를 클릭해 픽셀 좌표를 뽑아내는 도구. 방향키로 1px씩 정밀하게 맞추고, #define·함수 등 원하는 코드 포맷으로 좌표를 자동 복사합니다. HMI·임베디드 UI 좌표 작업에 맞췄어요.",
     homePcMeta1:"이미지 클릭", homePcMeta2:"코드 복사",
-    navPixel:"이미지 좌표 계산기", navCompound:"복리 계산기", navSimple:"단리 계산기",
+    navPixel:"이미지 좌표 추출기", navCompound:"복리 계산기", navSimple:"단리 계산기",
     homeCiDesc:"원금·이율·기간으로 복리 최종 금액과 이자를 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.",
     homeCiMeta1:"그래프", homeCiMeta2:"엑셀 저장",
     homeSiDesc:"원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 회차별 잔액 그래프를 보여주고, 표를 엑셀 파일로 저장할 수 있어요.",
     homeSiMeta1:"그래프", homeSiMeta2:"엑셀 저장",
-    homeThemeTitle:"라이트/다크 전환"
+    navResize:"이미지 크기·용량 줄이기", navCp:"이미지 색상 추출",
+    navTm:"표를 마크다운으로 변환", navAddr:"한글 주소 영문 변환",
+    navSalary:"연봉 실수령액 계산기", navDday:"디데이·날짜 계산기", navFx:"환율 계산기",
+    navPs:"PDF 나누기", navPm:"PDF 합치기", navPi:"PDF를 이미지로 변환",
+    navXs:"엑셀 시트별 나누기", navBr:"파일 이름 일괄 변경", navTx:"텍스트 파일 합치기",
+    metaNoUpload:"서버 전송 없음", metaCopy:"복사", metaDownload:"다운로드", metaDragDrop:"드래그&드롭", metaExcel:"엑셀 저장", metaInstant:"즉시 변환", metaPreview:"미리보기", metaEstimate:"추정치", metaLive:"실시간", metaScript:"스크립트", metaImage:"이미지 저장",
+    homeResizeDesc:"이미지를 브라우저 안에서 크기 조절·압축한 뒤 바로 내려받기. 서버로 전송되지 않습니다.",
+    homeCpDesc:"이미지를 올리고 스포이드로 픽셀 색을 찍어 HEX·RGB·HSL 값을 복사. 확대 루페로 정밀하게, 서버 전송 없음.",
+    homeTmDesc:"엑셀·구글 시트·노션 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환하고 미리보기를 보여줍니다.",
+    homeAddrDesc:"한글 주소를 국제 배송 양식에 쓸 영문·로마자 주소로 바로 변환. 로마자 표기법 기반 참고용입니다.",
+    homeSalaryDesc:"연봉·비과세·부양가족으로 국민연금·건강보험·소득세 등을 빼고 월/연 실수령액을 추정합니다 (2025년 기준).",
+    homeDdayDesc:"D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 요일과 정확한 일수까지 즉시 계산합니다.",
+    homeFxDesc:"ECB 기준 실시간 환율로 통화를 즉시 변환하고 주요 통화 환산표를 보여주는 환율 계산기.",
+    homePsDesc:"PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 PDF로 저장. 100% 브라우저 처리, 서버 전송 없음.",
+    homePmDesc:"여러 PDF를 원하는 순서로 정렬해 하나로 합치는 도구. 100% 브라우저 처리, 업로드 없음.",
+    homePiDesc:"PDF의 각 페이지를 PNG·JPEG 이미지로 변환하고 페이지별 또는 전체를 한 번에 저장합니다.",
+    homeXsDesc:"엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV로 저장 (브라우저에서만 처리).",
+    homeBrDesc:"찾기·바꾸기, 접두·접미, 연속 번호 규칙으로 파일명을 한 번에 바꾸고, 새 이름으로 다운로드하거나 .bat/.ps1/.sh 스크립트를 내보냅니다.",
+    homeTxDesc:"여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원."
   },
   en:{
     docTitle:"Grit Tools — Developer & calculator tools in your browser",
@@ -517,7 +627,25 @@ GritI18n.register({
     homeCiMeta1:"Chart", homeCiMeta2:"Excel export",
     homeSiDesc:"Instantly compute simple interest and the total from principal, rate and number of periods. Shows a per-period balance chart and exports the table to Excel.",
     homeSiMeta1:"Chart", homeSiMeta2:"Excel export",
-    homeThemeTitle:"Toggle light/dark"
+    navResize:"Image Resize & Compress", navCp:"Color Picker",
+    navTm:"Table → Markdown", navAddr:"Address Romanizer",
+    navSalary:"Net Salary (KR)", navDday:"D-Day Calculator", navFx:"Currency Converter",
+    navPs:"PDF Split", navPm:"PDF Merge", navPi:"PDF to Image",
+    navXs:"Excel Sheet Split", navBr:"Batch Rename", navTx:"Text File Merge",
+    metaNoUpload:"No upload", metaCopy:"Copy", metaDownload:"Download", metaDragDrop:"Drag & drop", metaExcel:"Excel export", metaInstant:"Instant", metaPreview:"Preview", metaEstimate:"Estimate", metaLive:"Live rates", metaScript:"Script", metaImage:"Save image",
+    homeResizeDesc:"Resize and compress images entirely in your browser, then download. Never uploaded to a server.",
+    homeCpDesc:"Upload an image and eyedrop any pixel to copy its HEX/RGB/HSL — with a zoom loupe. Never uploaded.",
+    homeTmDesc:"Paste a table from Excel, Google Sheets or Notion (or CSV) and instantly get a GitHub Markdown table with a live preview.",
+    homeAddrDesc:"Instantly convert a Korean address into an English/romanized address for shipping forms. A romanization aid.",
+    homeSalaryDesc:"Estimates Korean monthly/annual take-home pay after national pension, health insurance and income tax (2025 rates).",
+    homeDdayDesc:"D-Day, days between two dates, and date add/subtract — with weekday and exact day counts.",
+    homeFxDesc:"Convert currencies with live ECB reference rates and see a quick conversion table for major currencies.",
+    homePsDesc:"Split a PDF into single pages, page ranges, or every N pages. Runs 100% in your browser — never uploaded.",
+    homePmDesc:"Combine multiple PDFs into one in any order. 100% in-browser, no uploads.",
+    homePiDesc:"Convert each page of a PDF into PNG or JPEG images and save them one by one or all at once.",
+    homeXsDesc:"Split an Excel workbook into per-sheet files and save each as a separate XLSX or CSV (processed in your browser).",
+    homeBrDesc:"Rename many files at once with find & replace, prefix/suffix and numbering rules, then download them renamed or export a .bat/.ps1/.sh script.",
+    homeTxDesc:"Drag, reorder and merge multiple text files into one — with separator, filename-header and BOM options."
   },
   ja:{
     docTitle:"Grit Tools — ブラウザーで使う開発・計算ツール",
@@ -531,7 +659,25 @@ GritI18n.register({
     homeCiMeta1:"グラフ", homeCiMeta2:"Excel保存",
     homeSiDesc:"元金・利率・回数から単利の利息と総額をすぐに計算。回数ごとの残高グラフを表示し、表をExcelファイルで保存できます。",
     homeSiMeta1:"グラフ", homeSiMeta2:"Excel保存",
-    homeThemeTitle:"ライト／ダーク切替"
+    navResize:"画像リサイズ・圧縮", navCp:"色抽出（スポイト）",
+    navTm:"表 → Markdown", navAddr:"住所ローマ字変換",
+    navSalary:"手取り計算（韓国）", navDday:"D-Day計算機", navFx:"為替計算機",
+    navPs:"PDF分割", navPm:"PDF結合", navPi:"PDF → 画像",
+    navXs:"Excelシート分割", navBr:"ファイル名一括変更", navTx:"テキスト結合",
+    metaNoUpload:"送信なし", metaCopy:"コピー", metaDownload:"ダウンロード", metaDragDrop:"ドラッグ&ドロップ", metaExcel:"Excel保存", metaInstant:"即変換", metaPreview:"プレビュー", metaEstimate:"概算", metaLive:"リアルタイム", metaScript:"スクリプト", metaImage:"画像保存",
+    homeResizeDesc:"画像をブラウザ内でリサイズ・圧縮してすぐダウンロード。サーバーには送信されません。",
+    homeCpDesc:"画像をアップしてスポイトでピクセル色を取得し HEX・RGB・HSL をコピー。拡大ルーペ付き、送信なし。",
+    homeTmDesc:"Excel・Google スプレッドシート・Notion の表や CSV を貼り付けると GitHub Markdown 表に即変換し、プレビューを表示します。",
+    homeAddrDesc:"韓国語の住所を海外発送用の英語・ローマ字住所にすぐ変換。ローマ字表記法に基づく参考用です。",
+    homeSalaryDesc:"年俸から韓国の社会保険と所得税を差し引いた月/年の手取り額を概算します（2025年基準）。",
+    homeDdayDesc:"D-Day、2つの日付の間の日数、日付の加算・減算を曜日と正確な日数まで即時計算します。",
+    homeFxDesc:"ECB基準のリアルタイム為替レートで通貨を換算し、主要通貨の換算表を表示する為替計算機。",
+    homePsDesc:"PDFをページ単位・範囲・Nページごとに分割して個別保存。すべてブラウザ内で処理、アップロードなし。",
+    homePmDesc:"複数のPDFを好きな順に並べて1つに結合。すべてブラウザ内処理、アップロードなし。",
+    homePiDesc:"PDFの各ページをPNG・JPEG画像に変換し、1枚ずつまたは全ページをまとめて保存します。",
+    homeXsDesc:"Excelワークブックをシートごとに分割し、各シートを個別のXLSXまたはCSVとして保存（ブラウザ内処理）。",
+    homeBrDesc:"検索・置換、接頭辞・接尾辞、連番などのルールでファイル名を一括変更し、名前を変えてDLか .bat/.ps1/.sh スクリプトを書き出します。",
+    homeTxDesc:"複数のテキストファイルをドラッグ＆並べ替えて1つに結合。区切り・ファイル名ヘッダー・BOMに対応。"
   },
   zh:{
     docTitle:"Grit Tools — 浏览器里的开发与计算工具",
@@ -545,7 +691,25 @@ GritI18n.register({
     homeCiMeta1:"图表", homeCiMeta2:"导出 Excel",
     homeSiDesc:"输入本金、利率和次数，立即计算单利的利息和总额。显示逐次余额图表，并可将表格导出为 Excel 文件。",
     homeSiMeta1:"图表", homeSiMeta2:"导出 Excel",
-    homeThemeTitle:"切换浅色/深色"
+    navResize:"图片缩放·压缩", navCp:"颜色提取（吸管）",
+    navTm:"表格 → Markdown", navAddr:"韩文地址转换",
+    navSalary:"实发工资（韩）", navDday:"D-Day 计算器", navFx:"汇率计算器",
+    navPs:"PDF 拆分", navPm:"PDF 合并", navPi:"PDF 转图片",
+    navXs:"Excel 工作表拆分", navBr:"批量重命名", navTx:"文本文件合并",
+    metaNoUpload:"不上传", metaCopy:"复制", metaDownload:"下载", metaDragDrop:"拖放", metaExcel:"导出Excel", metaInstant:"即时转换", metaPreview:"预览", metaEstimate:"估算", metaLive:"实时汇率", metaScript:"脚本", metaImage:"保存图片",
+    homeResizeDesc:"在浏览器内缩放·压缩图片并即时下载，不上传到服务器。",
+    homeCpDesc:"上传图片用吸管拾取像素颜色并复制 HEX/RGB/HSL，带放大镜，不上传服务器。",
+    homeTmDesc:"粘贴 Excel、Google 表格、Notion 表格或 CSV，即时转换为 GitHub Markdown 表格并显示预览。",
+    homeAddrDesc:"把韩文地址即时转换为国际寄送用的英文·罗马字地址，基于罗马字表记法，仅供参考。",
+    homeSalaryDesc:"根据年薪扣除韩国社会保险与所得税，估算月/年实发工资（2025 年基准）。",
+    homeDdayDesc:"即时计算 D-Day、两个日期之间的天数及日期加减，并显示星期与精确天数。",
+    homeFxDesc:"使用 ECB 基准实时汇率换算货币，并显示主要货币换算表的汇率计算器。",
+    homePsDesc:"将 PDF 按单页、页码范围或每 N 页拆分并分别保存。全程在浏览器中处理，绝不上传。",
+    homePmDesc:"按任意顺序将多个 PDF 合并为一个。全程浏览器内处理，无需上传。",
+    homePiDesc:"将 PDF 的每一页转换为 PNG 或 JPEG 图片，可逐张或一次性保存全部。",
+    homeXsDesc:"将 Excel 工作簿按工作表拆分，并将每个工作表保存为单独的 XLSX 或 CSV（在浏览器中处理）。",
+    homeBrDesc:"用查找替换、前缀后缀、连续编号等规则一次性重命名多个文件，并以新名称下载或导出 .bat/.ps1/.sh 脚本。",
+    homeTxDesc:"拖入并排序多个文本文件合并为一个，支持分隔符、文件名标题与 BOM 选项。"
   }
 });
 GritI18n.init({ mount: document.getElementById("langMount"), inline: true });

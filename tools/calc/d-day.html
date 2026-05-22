@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>디데이·날짜 계산기 — Grit Tools</title>
+<meta name="description" content="목표일까지 D-Day를 계산하고, 두 날짜 사이의 일수, 날짜 더하기·빼기까지 한 번에. 요일과 정확한 일수를 바로 확인하는 날짜 계산기. 모든 계산은 브라우저에서 처리됩니다.">
+<meta name="keywords" content="D-Day 계산기, 디데이 계산기, 날짜 계산기, 날짜 사이 일수, 날짜 더하기 빼기, d-day calculator, date calculator, days between dates">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="디데이·날짜 계산기 — Grit Tools">
+<meta property="og:description" content="D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 즉시 계산. 요일과 정확한 일수까지.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  /* 모드 탭 */
+  .tabs { flex:0 0 auto; display:flex; gap:8px; flex-wrap:wrap; }
+  .tab { background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:13px; padding:8px 16px; border-radius:var(--radius-pill); cursor:pointer; transition:border-color .15s,color .15s,background .15s; }
+  .tab:hover { border-color:var(--blue); color:var(--blue); }
+  .tab.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:380px 1fr; grid-template-areas:"input result"; }
+  .input-panel { grid-area:input; overflow:auto; }
+  .result-panel { grid-area:result; overflow:auto; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  .field { margin-bottom:18px; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:7px; }
+  .inp { position:relative; display:flex; align-items:center; }
+  .inp input, .inp select { width:100%; padding:13px 14px; font-size:16px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-mono); }
+  .inp select { font-family:var(--font-ui); cursor:pointer; }
+  .inp input:focus, .inp select:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+
+  .check { display:flex; align-items:center; gap:9px; margin-bottom:18px; font-size:14px; color:var(--text-dim); cursor:pointer; }
+  .check input { width:17px; height:17px; accent-color:var(--blue); cursor:pointer; }
+
+  .mode-block { display:none; }
+  .mode-block.active { display:block; }
+
+  .results { margin-top:10px; border-top:1px solid var(--border); }
+  .rrow { display:flex; align-items:baseline; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); gap:12px; }
+  .rrow:last-child { border-bottom:none; }
+  .rrow .rk { font-size:14px; color:var(--text-dim); }
+  .rrow .rv { font-family:var(--font-mono); font-size:17px; font-weight:600; text-align:right; word-break:break-all; }
+  .rrow.total .rk { color:var(--text); font-weight:600; }
+  .rrow.total .rv { font-size:26px; color:var(--blue-dark); }
+
+  .bigday { text-align:center; padding:26px 16px 22px; border-bottom:1px solid var(--border); }
+  .bigday .bd-main { font-family:var(--font-mono); font-size:64px; font-weight:600; color:var(--blue-dark); line-height:1; letter-spacing:-.02em; }
+  .bigday .bd-sub { margin-top:12px; font-size:14px; color:var(--text-dim); }
+
+  .formula { margin:14px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+  .formula code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 좁은 화면: 앱 고정 해제 → 스크롤 스택 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .input-panel, .result-panel { overflow:visible; }
+  }
+  @media (max-width:680px){
+    .panels { grid-template-columns:1fr; grid-template-areas:"input" "result"; }
+    .bigday .bd-main { font-size:48px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "디데이·날짜 계산기",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "description": "목표일까지의 D-Day, 두 날짜 사이의 일수, 날짜 더하기·빼기를 즉시 계산하고 요일과 정확한 일수를 보여주는 날짜 계산기.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="ddTool">D-Day 계산기</span><button type="button" id="helpBtn" class="g-help" data-i18n="ddHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="ddAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="ddTitle">디데이·날짜 계산기</h1>
+    <p class="calc-sub" data-i18n="ddSub">D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 한 번에 계산합니다.</p>
+  </div>
+
+  <div class="tabs">
+    <button type="button" class="tab active" id="tab1" data-i18n="ddTab1">D-Day</button>
+    <button type="button" class="tab" id="tab2" data-i18n="ddTab2">날짜 사이 일수</button>
+    <button type="button" class="tab" id="tab3" data-i18n="ddTab3">날짜 더하기·빼기</button>
+  </div>
+
+  <div class="panels">
+
+    <section class="panel input-panel">
+      <h2 data-i18n="ddInputTitle">값 입력</h2>
+
+      <!-- 모드 1: D-Day -->
+      <div class="mode-block active" id="block1">
+        <div class="field">
+          <label for="m1Target" data-i18n="ddTargetDate">목표 날짜</label>
+          <div class="inp"><input id="m1Target" type="date"></div>
+        </div>
+      </div>
+
+      <!-- 모드 2: 날짜 사이 일수 -->
+      <div class="mode-block" id="block2">
+        <div class="field">
+          <label for="m2Start" data-i18n="ddStartDate">시작일</label>
+          <div class="inp"><input id="m2Start" type="date"></div>
+        </div>
+        <div class="field">
+          <label for="m2End" data-i18n="ddEndDate">종료일</label>
+          <div class="inp"><input id="m2End" type="date"></div>
+        </div>
+        <label class="check"><input type="checkbox" id="m2IncStart"><span data-i18n="ddIncludeStart">시작일 포함</span></label>
+      </div>
+
+      <!-- 모드 3: 날짜 더하기·빼기 -->
+      <div class="mode-block" id="block3">
+        <div class="field">
+          <label for="m3Base" data-i18n="ddBaseDate">기준 날짜</label>
+          <div class="inp"><input id="m3Base" type="date"></div>
+        </div>
+        <div class="field">
+          <label for="m3N" data-i18n="ddAmount">더하거나 뺄 값 (음수 가능)</label>
+          <div class="inp"><input id="m3N" type="number" step="1" value="30"></div>
+        </div>
+        <div class="field">
+          <label for="m3Unit" data-i18n="ddUnit">단위</label>
+          <div class="inp"><select id="m3Unit">
+            <option value="day" data-i18n="ddUnitDay">일</option>
+            <option value="week" data-i18n="ddUnitWeek">주</option>
+            <option value="month" data-i18n="ddUnitMonth">개월</option>
+            <option value="year" data-i18n="ddUnitYear">년</option>
+          </select></div>
+        </div>
+      </div>
+
+      <p class="formula" data-i18n-html="ddNote">날짜 계산은 시간대(DST) 영향을 받지 않도록 <code>UTC</code> 기준 일수로 처리됩니다.</p>
+    </section>
+
+    <section class="panel result-panel">
+      <h2 data-i18n="ddResultTitle">결과</h2>
+
+      <!-- 결과 1: D-Day -->
+      <div class="mode-block active" id="res1">
+        <div class="bigday">
+          <div class="bd-main" id="r1Main">—</div>
+          <div class="bd-sub" id="r1Sub">—</div>
+        </div>
+        <div class="results">
+          <div class="rrow"><span class="rk" data-i18n="ddToday">오늘</span><span class="rv" id="r1Today">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddTargetDate">목표 날짜</span><span class="rv" id="r1Target">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddWeekday">요일</span><span class="rv" id="r1Weekday">—</span></div>
+          <div class="rrow total"><span class="rk" data-i18n="ddDaysCount">남은/지난 일수</span><span class="rv" id="r1Days">—</span></div>
+        </div>
+      </div>
+
+      <!-- 결과 2: 날짜 사이 일수 -->
+      <div class="mode-block" id="res2">
+        <div class="results">
+          <div class="rrow total"><span class="rk" data-i18n="ddTotalDays">총 일수</span><span class="rv" id="r2Total">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddBreakdown">연·월·일</span><span class="rv" id="r2Break">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddWeeksDays">주 단위</span><span class="rv" id="r2Weeks">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddIncludeStart">시작일 포함</span><span class="rv" id="r2Inc">—</span></div>
+        </div>
+      </div>
+
+      <!-- 결과 3: 날짜 더하기·빼기 -->
+      <div class="mode-block" id="res3">
+        <div class="bigday">
+          <div class="bd-main" id="r3Main" style="font-size:34px">—</div>
+          <div class="bd-sub" id="r3Sub">—</div>
+        </div>
+        <div class="results">
+          <div class="rrow"><span class="rk" data-i18n="ddBaseDate">기준 날짜</span><span class="rv" id="r3Base">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddOperation">적용</span><span class="rv" id="r3Op">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddWeekday">요일</span><span class="rv" id="r3Weekday">—</span></div>
+          <div class="rrow"><span class="rk" data-i18n="ddDiffDays">기준과의 일수 차</span><span class="rv" id="r3Diff">—</span></div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="ddHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="ddGuideTitle">D-Day 계산기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="ddStep1T">모드 선택</span></div>
+        <p class="hs-d" data-i18n="ddStep1D">상단 탭에서 D-Day, 날짜 사이 일수, 날짜 더하기·빼기 중 원하는 계산을 고르세요.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="ddStep2T">날짜 입력</span></div>
+        <p class="hs-d" data-i18n="ddStep2D">날짜 칸을 채우면 됩니다. 처음에는 오늘 날짜가 들어가 있습니다. 입력하는 즉시 결과가 갱신됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="ddStep3T">결과 확인</span></div>
+        <p class="hs-d" data-i18n-html="ddStep3D">오른쪽에서 D-Day 표기(<code>D-30 / D-DAY / D+5</code>), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+  var DAY=86400000;
+  var mode=1;
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  function pad(n){ return n<10 ? "0"+n : ""+n; }
+  function todayStr(){
+    var d=new Date();
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  }
+  /* "YYYY-MM-DD" -> {y,m,d} 또는 null */
+  function parse(str){
+    if(!str) return null;
+    var parts=str.split("-");
+    if(parts.length!==3) return null;
+    var y=parseInt(parts[0],10), m=parseInt(parts[1],10), d=parseInt(parts[2],10);
+    if(isNaN(y)||isNaN(m)||isNaN(d)) return null;
+    return { y:y, m:m, d:d };
+  }
+  /* UTC 자정 기준 ms (DST 무관) */
+  function utc(o){ return Date.UTC(o.y, o.m-1, o.d); }
+  function todayUtc(){ var d=new Date(); return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function dayDiff(aMs, bMs){ return Math.round((bMs-aMs)/DAY); }
+
+  /* 요일: 0=일 ... 6=토 */
+  function weekday(o){ return new Date(utc(o)).getUTCDay(); }
+  function weekdayName(idx){
+    var k=T("ddWeekdays");
+    var arr=(typeof k==="string") ? k.split(",") : k;
+    return arr[idx];
+  }
+  /* 날짜를 현지화 문자열로 (UTC 기준 안전 출력) */
+  function localeFor(){
+    var c=GritI18n.current();
+    if(c==="ko") return "ko-KR";
+    if(c==="ja") return "ja-JP";
+    if(c==="zh") return "zh-CN";
+    return "en-US";
+  }
+  function fmtDate(o){
+    var d=new Date(utc(o));
+    try {
+      return d.toLocaleDateString(localeFor(), {timeZone:"UTC", year:"numeric", month:"long", day:"numeric"});
+    } catch(e){
+      return o.y+"-"+pad(o.m)+"-"+pad(o.d);
+    }
+  }
+  function fmtNum(n){ return n.toLocaleString(); }
+
+  /* UTC ms -> {y,m,d} */
+  function fromUtc(ms){ var d=new Date(ms); return { y:d.getUTCFullYear(), m:d.getUTCMonth()+1, d:d.getUTCDate() }; }
+  function daysInMonth(y, m){ return new Date(Date.UTC(y, m, 0)).getUTCDate(); }
+
+  /* 두 날짜의 연/월/일 분해 (a <= b 가정) */
+  function ymdBreakdown(a, b){
+    var y1=a.y, m1=a.m, d1=a.d, y2=b.y, m2=b.m, d2=b.d;
+    var years=y2-y1, months=m2-m1, days=d2-d1;
+    if(days<0){
+      months-=1;
+      var pm=m2-1, py=y2;
+      if(pm<1){ pm=12; py-=1; }
+      days+=daysInMonth(py, pm);
+    }
+    if(months<0){ years-=1; months+=12; }
+    return { years:years, months:months, days:days };
+  }
+
+  /* ---------- 모드 1: D-Day ---------- */
+  function calc1(){
+    var tgt=parse($("m1Target").value);
+    if(!tgt){ $("r1Main").textContent="—"; $("r1Sub").textContent="—"; $("r1Today").textContent="—"; $("r1Target").textContent="—"; $("r1Weekday").textContent="—"; $("r1Days").textContent="—"; return; }
+    var tMs=utc(tgt), nowMs=todayUtc();
+    var diff=dayDiff(nowMs, tMs); /* 미래면 양수 */
+    var main, sub;
+    if(diff>0){ main="D-"+fmtNum(diff); sub=T("ddSubFuture").replace("{n}", fmtNum(diff)); }
+    else if(diff===0){ main="D-DAY"; sub=T("ddSubToday"); }
+    else { main="D+"+fmtNum(-diff); sub=T("ddSubPast").replace("{n}", fmtNum(-diff)); }
+    $("r1Main").textContent=main;
+    $("r1Sub").textContent=sub;
+    $("r1Today").textContent=fmtDate(fromUtc(nowMs));
+    $("r1Target").textContent=fmtDate(tgt);
+    $("r1Weekday").textContent=weekdayName(weekday(tgt));
+    $("r1Days").textContent=fmtNum(Math.abs(diff))+" "+T("ddDaysUnit");
+  }
+
+  /* ---------- 모드 2: 날짜 사이 일수 ---------- */
+  function calc2(){
+    var a=parse($("m2Start").value), b=parse($("m2End").value);
+    if(!a||!b){ $("r2Total").textContent="—"; $("r2Break").textContent="—"; $("r2Weeks").textContent="—"; $("r2Inc").textContent="—"; return; }
+    var aMs=utc(a), bMs=utc(b);
+    var lo=aMs, hi=bMs, loO=a, hiO=b;
+    if(aMs>bMs){ lo=bMs; hi=aMs; loO=b; hiO=a; }
+    var raw=dayDiff(lo, hi);
+    var inc=$("m2IncStart").checked;
+    var total=raw + (inc?1:0);
+    var bd=ymdBreakdown(loO, hiO);
+    var weeks=Math.floor(raw/7), wd=raw%7;
+    $("r2Total").textContent=fmtNum(total)+" "+T("ddDaysUnit");
+    $("r2Break").textContent=T("ddYMD").replace("{y}", fmtNum(bd.years)).replace("{m}", fmtNum(bd.months)).replace("{d}", fmtNum(bd.days));
+    $("r2Weeks").textContent=T("ddWD").replace("{w}", fmtNum(weeks)).replace("{d}", fmtNum(wd));
+    $("r2Inc").textContent= inc ? T("ddOn") : T("ddOff");
+  }
+
+  /* ---------- 모드 3: 날짜 더하기·빼기 ---------- */
+  function calc3(){
+    var base=parse($("m3Base").value);
+    var nv=parseInt($("m3N").value,10); if(isNaN(nv)) nv=0;
+    var unit=$("m3Unit").value;
+    if(!base){ $("r3Main").textContent="—"; $("r3Sub").textContent="—"; $("r3Base").textContent="—"; $("r3Op").textContent="—"; $("r3Weekday").textContent="—"; $("r3Diff").textContent="—"; return; }
+    var res;
+    if(unit==="day"){ res=fromUtc(utc(base)+nv*DAY); }
+    else if(unit==="week"){ res=fromUtc(utc(base)+nv*7*DAY); }
+    else if(unit==="month"){
+      var tm=base.m-1+nv, ty=base.y+Math.floor(tm/12);
+      var mm=((tm%12)+12)%12;
+      var dd=Math.min(base.d, daysInMonth(ty, mm+1));
+      res={ y:ty, m:mm+1, d:dd };
+    } else { /* year */
+      var ny=base.y+nv;
+      var nd=Math.min(base.d, daysInMonth(ny, base.m));
+      res={ y:ny, m:base.m, d:nd };
+    }
+    var unitName=T(unit==="day"?"ddUnitDay":(unit==="week"?"ddUnitWeek":(unit==="month"?"ddUnitMonth":"ddUnitYear")));
+    var opWord = nv>=0 ? T("ddPlus") : T("ddMinus");
+    $("r3Main").textContent=fmtDate(res);
+    $("r3Sub").textContent=weekdayName(weekday(res));
+    $("r3Base").textContent=fmtDate(base);
+    $("r3Op").textContent=opWord+" "+fmtNum(Math.abs(nv))+" "+unitName;
+    $("r3Weekday").textContent=weekdayName(weekday(res));
+    $("r3Diff").textContent=fmtNum(dayDiff(utc(base), utc(res)))+" "+T("ddDaysUnit");
+  }
+
+  function recompute(){
+    if(mode===1) calc1();
+    else if(mode===2) calc2();
+    else calc3();
+  }
+
+  /* 탭 전환 */
+  function setMode(m){
+    mode=m;
+    $("tab1").classList.toggle("active", m===1);
+    $("tab2").classList.toggle("active", m===2);
+    $("tab3").classList.toggle("active", m===3);
+    $("block1").classList.toggle("active", m===1);
+    $("block2").classList.toggle("active", m===2);
+    $("block3").classList.toggle("active", m===3);
+    $("res1").classList.toggle("active", m===1);
+    $("res2").classList.toggle("active", m===2);
+    $("res3").classList.toggle("active", m===3);
+    recompute();
+  }
+  $("tab1").addEventListener("click", function(){ setMode(1); });
+  $("tab2").addEventListener("click", function(){ setMode(2); });
+  $("tab3").addEventListener("click", function(){ setMode(3); });
+
+  /* 기본값: 오늘 */
+  var t0=todayStr();
+  $("m1Target").value=t0;
+  $("m2Start").value=t0;
+  $("m2End").value=t0;
+  $("m3Base").value=t0;
+
+  ["m1Target","m2Start","m2End","m2IncStart","m3Base","m3N","m3Unit"].forEach(function(id){
+    var el=$(id);
+    el.addEventListener("input", recompute);
+    el.addEventListener("change", recompute);
+  });
+
+  GritI18n.register({
+    ko:{
+      docTitle:"디데이·날짜 계산기 — Grit Tools",
+      ddTool:"D-Day 계산기", ddAllTools:"← 모든 도구",
+      ddTitle:"디데이·날짜 계산기",
+      ddSub:"D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 한 번에 계산합니다.",
+      ddTab1:"D-Day", ddTab2:"날짜 사이 일수", ddTab3:"날짜 더하기·빼기",
+      ddInputTitle:"값 입력", ddResultTitle:"결과",
+      ddTargetDate:"목표 날짜", ddStartDate:"시작일", ddEndDate:"종료일", ddBaseDate:"기준 날짜",
+      ddIncludeStart:"시작일 포함", ddAmount:"더하거나 뺄 값 (음수 가능)", ddUnit:"단위",
+      ddUnitDay:"일", ddUnitWeek:"주", ddUnitMonth:"개월", ddUnitYear:"년",
+      ddNote:"날짜 계산은 시간대(DST) 영향을 받지 않도록 <code>UTC</code> 기준 일수로 처리됩니다.",
+      ddToday:"오늘", ddWeekday:"요일", ddDaysCount:"남은/지난 일수",
+      ddTotalDays:"총 일수", ddBreakdown:"연·월·일", ddWeeksDays:"주 단위",
+      ddOperation:"적용", ddDiffDays:"기준과의 일수 차",
+      ddDaysUnit:"일", ddOn:"적용함 (+1)", ddOff:"미적용",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"일요일,월요일,화요일,수요일,목요일,금요일,토요일",
+      ddSubFuture:"목표일까지 {n}일 남았습니다.",
+      ddSubToday:"바로 오늘입니다.",
+      ddSubPast:"목표일에서 {n}일 지났습니다.",
+      ddYMD:"{y}년 {m}개월 {d}일",
+      ddWD:"{w}주 {d}일",
+      ddHelpBtn:"사용법", ddHelpClose:"닫기", ddGuideTitle:"D-Day 계산기 사용법",
+      ddStep1T:"모드 선택", ddStep1D:"상단 탭에서 D-Day, 날짜 사이 일수, 날짜 더하기·빼기 중 원하는 계산을 고르세요.",
+      ddStep2T:"날짜 입력", ddStep2D:"날짜 칸을 채우면 됩니다. 처음에는 오늘 날짜가 들어가 있습니다. 입력하는 즉시 결과가 갱신됩니다.",
+      ddStep3T:"결과 확인", ddStep3D:"오른쪽에서 D-Day 표기(<code>D-30 / D-DAY / D+5</code>), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다."
+    },
+    en:{
+      docTitle:"D-Day Date Calculator — Grit Tools",
+      ddTool:"D-Day Calculator", ddAllTools:"← All tools",
+      ddTitle:"D-Day Date Calculator",
+      ddSub:"Calculate a D-Day, days between two dates, and date add/subtract — all in one.",
+      ddTab1:"D-Day", ddTab2:"Days between", ddTab3:"Add / subtract",
+      ddInputTitle:"Inputs", ddResultTitle:"Result",
+      ddTargetDate:"Target date", ddStartDate:"Start date", ddEndDate:"End date", ddBaseDate:"Base date",
+      ddIncludeStart:"Include start day", ddAmount:"Amount to add/subtract (negative ok)", ddUnit:"Unit",
+      ddUnitDay:"days", ddUnitWeek:"weeks", ddUnitMonth:"months", ddUnitYear:"years",
+      ddNote:"Date math is computed in <code>UTC</code> days so it is unaffected by daylight saving time.",
+      ddToday:"Today", ddWeekday:"Weekday", ddDaysCount:"Days remaining / past",
+      ddTotalDays:"Total days", ddBreakdown:"Years/months/days", ddWeeksDays:"In weeks",
+      ddOperation:"Applied", ddDiffDays:"Days from base",
+      ddDaysUnit:"days", ddOn:"On (+1)", ddOff:"Off",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday",
+      ddSubFuture:"{n} days left until the target.",
+      ddSubToday:"That's today.",
+      ddSubPast:"{n} days have passed since the target.",
+      ddYMD:"{y}y {m}mo {d}d",
+      ddWD:"{w}w {d}d",
+      ddHelpBtn:"How to use", ddHelpClose:"Close", ddGuideTitle:"How to use the D-Day calculator",
+      ddStep1T:"Pick a mode", ddStep1D:"Use the top tabs to choose D-Day, days between dates, or date add/subtract.",
+      ddStep2T:"Enter dates", ddStep2D:"Just fill in the date fields. They default to today. The result updates as you type.",
+      ddStep3T:"Read the result", ddStep3D:"On the right you'll see the D-Day notation (<code>D-30 / D-DAY / D+5</code>), the weekday and the exact day count. Everything runs in your browser only."
+    },
+    ja:{
+      docTitle:"D-Day 日付計算機 — Grit Tools",
+      ddTool:"D-Day 計算機", ddAllTools:"← すべてのツール",
+      ddTitle:"D-Day 日付計算機",
+      ddSub:"D-Day、2つの日付の間の日数、日付の加算・減算をまとめて計算します。",
+      ddTab1:"D-Day", ddTab2:"日付の間の日数", ddTab3:"日付の加算・減算",
+      ddInputTitle:"入力", ddResultTitle:"結果",
+      ddTargetDate:"目標日", ddStartDate:"開始日", ddEndDate:"終了日", ddBaseDate:"基準日",
+      ddIncludeStart:"開始日を含む", ddAmount:"加算・減算する値（マイナス可）", ddUnit:"単位",
+      ddUnitDay:"日", ddUnitWeek:"週", ddUnitMonth:"か月", ddUnitYear:"年",
+      ddNote:"日付計算は夏時間（DST）の影響を受けないよう <code>UTC</code> 基準の日数で処理します。",
+      ddToday:"今日", ddWeekday:"曜日", ddDaysCount:"残り/経過日数",
+      ddTotalDays:"合計日数", ddBreakdown:"年・月・日", ddWeeksDays:"週単位",
+      ddOperation:"適用", ddDiffDays:"基準日との日数差",
+      ddDaysUnit:"日", ddOn:"含む (+1)", ddOff:"含まない",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"日曜日,月曜日,火曜日,水曜日,木曜日,金曜日,土曜日",
+      ddSubFuture:"目標日まであと{n}日です。",
+      ddSubToday:"まさに今日です。",
+      ddSubPast:"目標日から{n}日が経過しました。",
+      ddYMD:"{y}年 {m}か月 {d}日",
+      ddWD:"{w}週 {d}日",
+      ddHelpBtn:"使い方", ddHelpClose:"閉じる", ddGuideTitle:"D-Day 計算機の使い方",
+      ddStep1T:"モードを選ぶ", ddStep1D:"上部のタブで D-Day、日付の間の日数、日付の加算・減算から選びます。",
+      ddStep2T:"日付を入力", ddStep2D:"日付欄を入力するだけ。最初は今日の日付が入っています。入力するたびに結果が更新されます。",
+      ddStep3T:"結果を確認", ddStep3D:"右側で D-Day 表記（<code>D-30 / D-DAY / D+5</code>）、曜日、正確な日数を確認できます。すべてブラウザ内で処理されます。"
+    },
+    zh:{
+      docTitle:"D-Day 日期计算器 — Grit Tools",
+      ddTool:"D-Day 计算器", ddAllTools:"← 所有工具",
+      ddTitle:"D-Day 日期计算器",
+      ddSub:"一站式计算 D-Day、两个日期之间的天数以及日期加减。",
+      ddTab1:"D-Day", ddTab2:"日期间隔天数", ddTab3:"日期加减",
+      ddInputTitle:"输入", ddResultTitle:"结果",
+      ddTargetDate:"目标日期", ddStartDate:"开始日期", ddEndDate:"结束日期", ddBaseDate:"基准日期",
+      ddIncludeStart:"包含开始日", ddAmount:"加减的数值（可为负）", ddUnit:"单位",
+      ddUnitDay:"天", ddUnitWeek:"周", ddUnitMonth:"个月", ddUnitYear:"年",
+      ddNote:"日期计算以 <code>UTC</code> 天数为准，不受夏令时（DST）影响。",
+      ddToday:"今天", ddWeekday:"星期", ddDaysCount:"剩余/已过天数",
+      ddTotalDays:"总天数", ddBreakdown:"年·月·日", ddWeeksDays:"按周",
+      ddOperation:"应用", ddDiffDays:"与基准的天数差",
+      ddDaysUnit:"天", ddOn:"已含 (+1)", ddOff:"未含",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"星期日,星期一,星期二,星期三,星期四,星期五,星期六",
+      ddSubFuture:"距离目标日还有{n}天。",
+      ddSubToday:"就是今天。",
+      ddSubPast:"距离目标日已过去{n}天。",
+      ddYMD:"{y}年 {m}个月 {d}天",
+      ddWD:"{w}周 {d}天",
+      ddHelpBtn:"使用方法", ddHelpClose:"关闭", ddGuideTitle:"D-Day 计算器使用方法",
+      ddStep1T:"选择模式", ddStep1D:"在顶部标签中选择 D-Day、日期间隔天数或日期加减。",
+      ddStep2T:"输入日期", ddStep2D:"填写日期框即可，默认是今天。输入时结果会即时更新。",
+      ddStep3T:"查看结果", ddStep3D:"右侧会显示 D-Day 表示（<code>D-30 / D-DAY / D+5</code>）、星期和精确天数。所有计算均在浏览器内完成。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: recompute });
+})();
+</script>
+</body>
+</html>

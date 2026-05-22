@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한글 주소 영문 변환 — Grit Tools</title>
+<meta name="description" content="한글 주소를 붙여넣으면 국제 배송 양식에 쓸 수 있는 영문·로마자 주소로 바로 변환합니다. 국어의 로마자 표기법 기반, 100% 브라우저 내 처리.">
+<meta name="keywords" content="영어주소 변환, 영문주소 변환기, 한글 주소 로마자, korean address romanizer, english address converter">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="한글 주소 영문 변환 — Grit Tools">
+<meta property="og:description" content="한글 주소를 영문·로마자 주소로 즉시 변환. 국제 배송 양식용 참고 변환.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px; grid-template-columns:1fr 1fr; }
+  .panels .panel { min-height:0; overflow:auto; }
+  @media (max-width:1080px){ body{overflow:auto;} .app{height:auto; overflow:visible;} .panels{grid-template-columns:1fr;} }
+
+  .panel { display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); }
+  .panel h2 { margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  .field { margin-bottom:0; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:7px; }
+  textarea.inp-ta { width:100%; min-height:84px; resize:vertical; padding:13px 14px; font-size:16px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-ui); line-height:1.5; }
+  textarea.inp-ta:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip { background:var(--surface-2); border:1px solid var(--border); color:var(--text-dim); font:inherit; font-size:12px; padding:6px 12px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  .chip:hover { border-color:var(--blue); color:var(--blue); }
+
+  .out-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 16px; }
+  .out-head h2 { margin:0; }
+  .copy-btn { background:var(--blue); color:#fff; border:none; padding:8px 16px; border-radius:var(--radius-pill); font:inherit; font-size:13px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:7px; transition:background .15s; }
+  .copy-btn:hover { background:var(--blue-dark); }
+  .copy-btn svg { width:14px; height:14px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .copy-btn.done { background:var(--blue-dark); }
+
+  .out-box { font-family:var(--font-mono); font-size:18px; line-height:1.55; color:var(--text); background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:16px 16px; min-height:58px; word-break:break-word; white-space:pre-wrap; }
+  .out-box:empty::before { content:"—"; color:var(--text-muted); }
+
+  .tokens { margin-top:16px; }
+  .tokens .tk-label { font-size:12px; color:var(--text-muted); letter-spacing:.04em; margin:0 0 8px; }
+  .tk-list { display:flex; flex-wrap:wrap; gap:6px; }
+  .tk { display:inline-flex; flex-direction:column; gap:2px; background:var(--surface-2); border:1px solid var(--border); border-radius:7px; padding:6px 10px; }
+  .tk .tk-ko { font-size:12px; color:var(--text-muted); }
+  .tk .tk-en { font-family:var(--font-mono); font-size:13px; color:var(--text-dim); }
+
+  .formula { margin:14px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+  .formula code, .formula a { font-family:var(--font-mono); color:var(--text-dim); }
+  .formula a { text-decoration:underline; }
+  .formula a:hover { color:var(--blue); }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(12,10,9,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "한글 주소 영문 변환",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "description": "한글 주소를 국제 배송 양식에 쓸 수 있는 영문·로마자 주소로 변환하는 도구. 국어의 로마자 표기법 기반, 모든 처리는 브라우저에서 이루어집니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="arTool">한글 주소 영문 변환</span><button type="button" id="helpBtn" class="g-help" data-i18n="arHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="arAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="arTitle">한글 주소 영문 변환</h1>
+    <p class="calc-sub" data-i18n="arSub">한글 주소를 붙여넣으면 국제 배송 양식에 쓸 영문·로마자 주소로 바로 바꿔줍니다.</p>
+  </div>
+
+  <div class="panels">
+  <section class="panel">
+    <h2 data-i18n="arInputTitle">한글 주소</h2>
+    <div class="field">
+      <label for="ko" data-i18n="arInputLabel">한글 주소를 입력하세요</label>
+      <textarea id="ko" class="inp-ta" spellcheck="false" data-i18n-ph="arPlaceholder" placeholder="예) 서울특별시 강남구 테헤란로 152"></textarea>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <section class="panel">
+    <div class="out-head">
+      <h2 data-i18n="arOutputTitle">영문 주소</h2>
+      <button type="button" class="copy-btn" id="copyBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v10H9zM5 15H4V4h11v1"/></svg>
+        <span id="copyLabel" data-i18n="arCopy">복사</span>
+      </button>
+    </div>
+    <div class="out-box" id="out"></div>
+    <div class="tokens">
+      <p class="tk-label" data-i18n="arTokensLabel">로마자 토큰</p>
+      <div class="tk-list" id="tokens"></div>
+    </div>
+    <p class="formula" data-i18n-html="arDisclaimer">참고용: ‘국어의 로마자 표기법’ 기반 자동 변환입니다. 공식 영문 주소는 <a href="https://www.juso.go.kr" target="_blank" rel="noopener">juso.go.kr</a>에서 확인하세요.</p>
+  </section>
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="arHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="arGuideTitle">한글 주소 영문 변환 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="arStep1T">한글 주소 입력</span></div>
+        <p class="hs-d" data-i18n="arStep1D">위 칸에 한글 주소를 붙여넣거나 입력하세요. 예시 칩을 눌러 바로 채울 수도 있습니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="arStep2T">실시간 변환</span></div>
+        <p class="hs-d" data-i18n="arStep2D">입력하는 즉시 큰 단위→작은 단위 순서를 뒤집어 영문 주소로 변환합니다. 우편번호는 끝에 붙고 ‘Republic of Korea’가 추가됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="arStep3T">복사해서 사용</span></div>
+        <p class="hs-d" data-i18n-html="arStep3D">‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 <b>참고용</b>이며 공식 영문 주소는 <code>juso.go.kr</code>에서 확인하세요.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* ── 로마자 변환 엔진 (국어의 로마자 표기법, 음절 단위) ── */
+  var CHO=["g","kk","n","d","tt","r","m","b","pp","s","ss","","j","jj","ch","k","t","p","h"];
+  var JUNG=["a","ae","ya","yae","eo","e","yeo","ye","o","wa","wae","oe","yo","u","wo","we","wi","yu","eu","ui","i"];
+  var JONG=["","k","k","ks","n","nj","nh","t","l","lg","lm","lb","ls","lt","lp","lh","m","p","ps","t","t","ng","t","t","k","t","p","h"];
+
+  function romanizeChar(c){
+    var code=c.charCodeAt(0);
+    if(code>=0xAC00 && code<=0xD7A3){
+      var s=code-0xAC00;
+      var cho=Math.floor(s/588), jung=Math.floor((s%588)/28), jong=s%28;
+      return CHO[cho]+JUNG[jung]+JONG[jong];
+    }
+    return c; /* 숫자, 공백, '-' 등은 그대로 */
+  }
+  function romanizeWord(w){
+    var out=""; for(var i=0;i<w.length;i++) out+=romanizeChar(w.charAt(i)); return out;
+  }
+  function cap(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
+
+  /* 광역시·도 (전체 토큰 우선 매칭) */
+  var METRO={
+    "서울특별시":"Seoul","부산광역시":"Busan","대구광역시":"Daegu","인천광역시":"Incheon",
+    "광주광역시":"Gwangju","대전광역시":"Daejeon","울산광역시":"Ulsan","세종특별자치시":"Sejong",
+    "경기도":"Gyeonggi-do","강원특별자치도":"Gangwon-do","강원도":"Gangwon-do",
+    "충청북도":"Chungcheongbuk-do","충청남도":"Chungcheongnam-do",
+    "전북특별자치도":"Jeonbuk-do","전라북도":"Jeonbuk-do","전라남도":"Jeollanam-do",
+    "경상북도":"Gyeongsangbuk-do","경상남도":"Gyeongsangnam-do",
+    "제주특별자치도":"Jeju-do","제주도":"Jeju-do"
+  };
+  /* 행정·도로 접미사 (긴 것 먼저 매칭) */
+  var SUFFIX=[
+    ["대로","-daero"],["번길","-beongil"],["로","-ro"],["길","-gil"],
+    ["특별자치시","-si"],["특별시","-si"],["광역시","-si"],["시","-si"],
+    ["도","-do"],["군","-gun"],["구","-gu"],["읍","-eup"],["면","-myeon"],
+    ["동","-dong"],["리","-ri"],["가","-ga"],["호","-ho"],["층","-F"]
+  ];
+
+  function hasHangul(w){ for(var i=0;i<w.length;i++){ var c=w.charCodeAt(i); if(c>=0xAC00&&c<=0xD7A3) return true; } return false; }
+
+  /* 한 토큰을 영문으로 — {ko, en} 반환 */
+  function convertToken(tok){
+    if(METRO.hasOwnProperty(tok)) return { ko:tok, en:METRO[tok] };
+    if(!hasHangul(tok)) return { ko:tok, en:tok }; /* 152, 152-3, B 등 */
+    for(var i=0;i<SUFFIX.length;i++){
+      var ko=SUFFIX[i][0], en=SUFFIX[i][1];
+      if(tok.length>ko.length && tok.slice(tok.length-ko.length)===ko){
+        var stem=tok.slice(0, tok.length-ko.length);
+        return { ko:tok, en:cap(romanizeWord(stem))+en };
+      }
+    }
+    return { ko:tok, en:cap(romanizeWord(tok)) };
+  }
+
+  function convert(){
+    var raw=($("ko").value||"").replace(/\s+/g," ").trim();
+    if(!raw){ $("out").textContent=""; $("tokens").innerHTML=""; return; }
+    var parts=raw.split(" ");
+    var zip=null;
+    if(parts.length>1 && /^\d{5}$/.test(parts[0])){ zip=parts[0]; parts=parts.slice(1); }
+    else if(parts.length>1 && /^\d{5}$/.test(parts[parts.length-1])){ zip=parts[parts.length-1]; parts=parts.slice(0,parts.length-1); }
+
+    var toks=[]; for(var i=0;i<parts.length;i++) toks.push(convertToken(parts[i]));
+
+    /* 작은 단위 → 큰 단위: 토큰 역순 */
+    var rev=[]; for(var j=toks.length-1;j>=0;j--) rev.push(toks[j].en);
+    var line=rev.join(", ");
+    if(line) line+=", Republic of Korea"; else line="Republic of Korea";
+    if(zip) line+=" "+zip;
+    $("out").textContent=line;
+
+    /* 토큰 표시 (입력 순서) */
+    var html="";
+    for(var k=0;k<toks.length;k++){
+      html+='<span class="tk"><span class="tk-ko">'+esc(toks[k].ko)+'</span><span class="tk-en">'+esc(toks[k].en)+'</span></span>';
+    }
+    if(zip) html+='<span class="tk"><span class="tk-ko">'+esc(zip)+'</span><span class="tk-en">'+esc(zip)+'</span></span>';
+    $("tokens").innerHTML=html;
+  }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  $("ko").addEventListener("input", convert);
+
+  /* 예시 칩 */
+  var EXAMPLES=[
+    "서울특별시 강남구 테헤란로 152",
+    "06236 서울특별시 강남구 테헤란로 152",
+    "경기도 성남시 분당구 판교역로 235",
+    "서울특별시 서초구 서초대로 396 101동 503호"
+  ];
+  function buildChips(){
+    var box=$("chips"); box.innerHTML="";
+    for(var i=0;i<EXAMPLES.length;i++){ (function(ex){
+      var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=ex;
+      b.addEventListener("click", function(){ $("ko").value=ex; convert(); });
+      box.appendChild(b);
+    })(EXAMPLES[i]); }
+  }
+  buildChips();
+
+  /* 복사 */
+  var copyTimer=null;
+  function copyOut(){
+    var txt=$("out").textContent||"";
+    if(!txt) return;
+    function done(){
+      var btn=$("copyBtn"), lbl=$("copyLabel");
+      btn.classList.add("done"); lbl.textContent=T("arCopied");
+      if(copyTimer) clearTimeout(copyTimer);
+      copyTimer=setTimeout(function(){ btn.classList.remove("done"); lbl.textContent=T("arCopy"); }, 1200);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ legacyCopy(txt); done(); });
+    } else { legacyCopy(txt); done(); }
+  }
+  function legacyCopy(txt){
+    var ta=document.createElement("textarea"); ta.value=txt;
+    ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  $("copyBtn").addEventListener("click", copyOut);
+
+  GritI18n.register({
+    ko:{
+      docTitle:"한글 주소 영문 변환 — Grit Tools",
+      arTool:"한글 주소 영문 변환", arAllTools:"← 모든 도구",
+      arTitle:"한글 주소 영문 변환",
+      arSub:"한글 주소를 붙여넣으면 국제 배송 양식에 쓸 영문·로마자 주소로 바로 바꿔줍니다.",
+      arInputTitle:"한글 주소", arInputLabel:"한글 주소를 입력하세요",
+      arPlaceholder:"예) 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"영문 주소", arCopy:"복사", arCopied:"복사됨!",
+      arTokensLabel:"로마자 토큰",
+      arDisclaimer:"참고용: ‘국어의 로마자 표기법’ 기반 자동 변환입니다. 공식 영문 주소는 <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>에서 확인하세요.",
+      arHelpBtn:"사용법", arHelpClose:"닫기", arGuideTitle:"한글 주소 영문 변환 사용법",
+      arStep1T:"한글 주소 입력", arStep1D:"위 칸에 한글 주소를 붙여넣거나 입력하세요. 예시 칩을 눌러 바로 채울 수도 있습니다.",
+      arStep2T:"실시간 변환", arStep2D:"입력하는 즉시 큰 단위→작은 단위 순서를 뒤집어 영문 주소로 변환합니다. 우편번호는 끝에 붙고 ‘Republic of Korea’가 추가됩니다.",
+      arStep3T:"복사해서 사용", arStep3D:"‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 <b>참고용</b>이며 공식 영문 주소는 <code>juso.go.kr</code>에서 확인하세요."
+    },
+    en:{
+      docTitle:"Korean Address Romanizer — Grit Tools",
+      arTool:"Address Romanizer", arAllTools:"← All tools",
+      arTitle:"Korean Address Romanizer",
+      arSub:"Paste a Korean address to instantly get an English / romanized address for international shipping forms.",
+      arInputTitle:"Korean address", arInputLabel:"Enter a Korean address",
+      arPlaceholder:"e.g. 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"English address", arCopy:"Copy", arCopied:"Copied!",
+      arTokensLabel:"Romanized tokens",
+      arDisclaimer:"Estimate: automatic conversion based on the Revised Romanization of Korean. Verify the official English address at <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"How to use", arHelpClose:"Close", arGuideTitle:"How to use the address romanizer",
+      arStep1T:"Enter a Korean address", arStep1D:"Paste or type a Korean address in the box above. You can also click an example chip to fill it instantly.",
+      arStep2T:"Live conversion", arStep2D:"As you type, the big-to-small order is reversed into an English address. A postal code is moved to the end and ‘Republic of Korea’ is appended.",
+      arStep3T:"Copy and use", arStep3D:"Use the ‘Copy’ button to put the result on the clipboard and paste it into a shipping form. This is an <b>estimate</b>; verify the official address at <code>juso.go.kr</code>."
+    },
+    ja:{
+      docTitle:"英語住所変換ツール — Grit Tools",
+      arTool:"英語住所変換", arAllTools:"← すべてのツール",
+      arTitle:"韓国語住所 英語変換ツール",
+      arSub:"韓国語の住所を貼り付けると、海外発送フォーム用の英語・ローマ字住所にすぐ変換します。",
+      arInputTitle:"韓国語の住所", arInputLabel:"韓国語の住所を入力してください",
+      arPlaceholder:"例) 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"英語の住所", arCopy:"コピー", arCopied:"コピーしました！",
+      arTokensLabel:"ローマ字トークン",
+      arDisclaimer:"参考用: 「韓国語のローマ字表記法」に基づく自動変換です。正式な英語住所は <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a> で確認してください。",
+      arHelpBtn:"使い方", arHelpClose:"閉じる", arGuideTitle:"英語住所変換ツールの使い方",
+      arStep1T:"韓国語の住所を入力", arStep1D:"上の欄に韓国語の住所を貼り付けるか入力します。例のチップを押すとすぐ入力できます。",
+      arStep2T:"リアルタイム変換", arStep2D:"入力するたびに、大きい単位→小さい単位の順序を逆にして英語住所へ変換します。郵便番号は末尾に置かれ「Republic of Korea」が追加されます。",
+      arStep3T:"コピーして使用", arStep3D:"「コピー」ボタンで結果をクリップボードに入れ、発送フォームに貼り付けます。表記法に基づく<b>参考用</b>のため、正式な住所は <code>juso.go.kr</code> で確認してください。"
+    },
+    zh:{
+      docTitle:"英文地址转换器 — Grit Tools",
+      arTool:"英文地址转换", arAllTools:"← 所有工具",
+      arTitle:"韩文地址英文转换器",
+      arSub:"粘贴韩文地址，立即转换为可用于国际寄送表单的英文·罗马字地址。",
+      arInputTitle:"韩文地址", arInputLabel:"请输入韩文地址",
+      arPlaceholder:"例) 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"英文地址", arCopy:"复制", arCopied:"已复制！",
+      arTokensLabel:"罗马字标记",
+      arDisclaimer:"仅供参考: 基于“韩国语罗马字表记法”的自动转换。请在 <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a> 核对官方英文地址。",
+      arHelpBtn:"使用方法", arHelpClose:"关闭", arGuideTitle:"英文地址转换器使用方法",
+      arStep1T:"输入韩文地址", arStep1D:"在上方框中粘贴或输入韩文地址。也可点击示例标签快速填入。",
+      arStep2T:"实时转换", arStep2D:"输入时即把大单位→小单位的顺序反转为英文地址。邮政编码会移到末尾并追加“Republic of Korea”。",
+      arStep3T:"复制使用", arStep3D:"用“复制”按钮把结果放入剪贴板，粘贴到寄送表单。基于表记法<b>仅供参考</b>，官方地址请在 <code>juso.go.kr</code> 核对。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: convert });
+
+  /* 로드 시 샘플로 채워 결과가 비어있지 않게 */
+  if(!$("ko").value){ $("ko").value=EXAMPLES[0]; }
+  convert();
+})();
+</script>
+</body>
+</html>

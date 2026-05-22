@@ -18,23 +18,16 @@
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
   :root{
-    --bg:#fafaf9; --surface:#ffffff; --surface-2:#f3f1f0;
-    --blue:#3ba6f1; --blue-dark:#1f93e6; --blue-soft:rgba(59,166,241,.12);
-    --text:#0c0a09; --text-dim:#524d48; --text-muted:#8a847e;
-    --border:#e2e1df; --border-lit:#cdc9c4;
-    --radius-pill:9999px;
-    --shadow-card:0 1px 3px rgba(12,10,9,.12),0 1px 2px rgba(12,10,9,.07);
-    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
-    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
-  }
-  html[data-theme="dark"]{
     --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
     --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
     --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
     --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
     --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
   }
-  html { color-scheme:light dark; }
+  html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow:hidden; }
@@ -123,9 +116,7 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
-</style>
-<script>try{ if(localStorage.getItem("theme")==="dark") document.documentElement.setAttribute("data-theme","dark"); }catch(e){}</script>
-<script type="application/ld+json">
+</style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",

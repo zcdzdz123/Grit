@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF 나누기 — Grit Tools</title>
+<meta name="description" content="PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 PDF로 저장하는 도구. 파일은 브라우저에서만 처리되며 서버로 전송되지 않습니다.">
+<meta name="keywords" content="PDF 나누기, PDF 나누기, PDF split, split pdf, PDF 페이지 분리">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="PDF 나누기 — Grit Tools">
+<meta property="og:description" content="PDF를 낱장·범위·N장 단위로 분할. 100% 브라우저에서 처리, 서버 전송 없음.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:380px 1fr; grid-template-areas:"input result"; }
+  .input-panel { grid-area:input; overflow:auto; }
+  .result-panel { grid-area:result; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  /* 드롭존 */
+  .drop { border:2px dashed var(--border-lit); border-radius:12px; padding:26px 18px; text-align:center; cursor:pointer; transition:border-color .15s,background .15s; color:var(--text-dim); }
+  .drop:hover, .drop.over { border-color:var(--blue); background:var(--blue-soft); color:var(--text); }
+  .drop svg { width:34px; height:34px; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; margin-bottom:8px; }
+  .drop .dt { font-size:14px; font-weight:500; }
+  .drop .dh { font-size:12px; color:var(--text-muted); margin-top:5px; }
+  .drop.over svg, .drop:hover svg { stroke:var(--blue); }
+
+  .fileinfo { display:none; margin-top:14px; padding:12px 14px; background:var(--surface-2); border:1px solid var(--border); border-radius:9px; font-size:13px; }
+  .fileinfo.show { display:block; }
+  .fileinfo .fn { font-weight:600; word-break:break-all; }
+  .fileinfo .fp { color:var(--text-dim); margin-top:4px; font-family:var(--font-mono); font-size:12px; }
+
+  .field { margin-top:18px; }
+  .field > .flabel { display:block; font-size:13px; color:var(--text-dim); margin-bottom:9px; font-weight:600; }
+  .modes { display:flex; flex-direction:column; gap:9px; }
+  .mode { display:flex; align-items:flex-start; gap:10px; padding:11px 13px; border:1px solid var(--border-lit); border-radius:9px; cursor:pointer; transition:border-color .15s,background .15s; }
+  .mode:hover { border-color:var(--blue); }
+  .mode.sel { border-color:var(--blue); background:var(--blue-soft); }
+  .mode input { margin:2px 0 0; accent-color:var(--blue); }
+  .mode .mt { font-size:14px; font-weight:500; display:block; }
+  .mode .md { font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.5; display:block; }
+  .mode-opt { margin-top:10px; display:none; }
+  .mode-opt.show { display:block; }
+  .mode-opt label { display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; }
+  .mode-opt input[type=text], .mode-opt input[type=number] { width:100%; padding:11px 13px; font-size:15px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-mono); }
+  .mode-opt input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+
+  .err { display:none; margin-top:12px; padding:10px 13px; border:1px solid #e0564f; background:rgba(224,86,79,.12); color:#ff9a93; border-radius:9px; font-size:13px; line-height:1.5; }
+  .err.show { display:block; }
+
+  .actions { margin-top:20px; display:flex; }
+  .act-btn { width:100%; justify-content:center; background:var(--blue); color:#fff; border:none; padding:13px 16px; border-radius:var(--radius-pill); font:inherit; font-size:14px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s; }
+  .act-btn:hover { background:var(--blue-dark); }
+  .act-btn:disabled { background:var(--surface-2); color:var(--text-muted); cursor:not-allowed; }
+  .act-btn svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  .privacy { margin:14px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; display:flex; align-items:center; gap:6px; }
+  .privacy svg { width:14px; height:14px; flex:0 0 14px; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* 결과 패널 */
+  .result-head { flex:0 0 auto; display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .result-head h2 { margin:0; }
+  .result-head .dl-all { margin-left:auto; }
+  .dl-all-btn { background:var(--surface); color:var(--text); border:1px solid var(--border-lit); padding:7px 14px; border-radius:var(--radius-pill); font:inherit; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:border-color .15s,color .15s; }
+  .dl-all-btn:hover { border-color:var(--blue); color:var(--blue); }
+  .dl-all-btn:disabled { opacity:.45; cursor:not-allowed; border-color:var(--border); color:var(--text-muted); }
+  .dl-all-btn svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  .res-wrap { flex:1 1 auto; min-height:0; overflow:auto; border:1px solid var(--border); border-radius:9px; }
+  .res-empty { color:var(--text-muted); text-align:center; padding:48px 20px; font-size:13px; line-height:1.7; }
+  .res-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid var(--border); }
+  .res-item:last-child { border-bottom:none; }
+  .res-item:hover { background:var(--surface-2); }
+  .res-item .ri-no { width:26px; height:26px; flex:0 0 26px; display:flex; align-items:center; justify-content:center; background:var(--surface-2); border:1px solid var(--border); color:var(--text-dim); border-radius:9999px; font-size:12px; font-family:var(--font-mono); }
+  .res-item .ri-main { flex:1 1 auto; min-width:0; }
+  .res-item .ri-name { font-size:13px; font-weight:500; font-family:var(--font-mono); word-break:break-all; }
+  .res-item .ri-meta { font-size:11px; color:var(--text-muted); margin-top:2px; }
+  .res-item .ri-dl { flex:0 0 auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); padding:6px 10px; border-radius:var(--radius-pill); font:inherit; font-size:11px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:border-color .15s,color .15s; }
+  .res-item .ri-dl:hover { border-color:var(--blue); color:var(--blue); }
+  .res-item .ri-dl svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* 좁은 화면 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .panels { grid-template-columns:1fr; grid-template-areas:"input" "result"; }
+    .input-panel { overflow:visible; }
+    .result-panel .res-wrap { max-height:480px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF 나누기",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "description": "PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 개의 PDF로 저장하는 도구. 모든 처리는 브라우저에서 이루어지며 파일은 서버로 전송되지 않습니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="psTool">PDF 나누기</span><button type="button" id="helpBtn" class="g-help" data-i18n="psHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="psAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="psTitle">PDF 나누기</h1>
+    <p class="calc-sub" data-i18n="psSub">PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 개의 PDF로 저장합니다.</p>
+  </div>
+
+  <div class="panels">
+
+    <section class="panel input-panel">
+      <h2 data-i18n="psInputTitle">PDF 선택</h2>
+
+      <div class="drop" id="drop" tabindex="0" role="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M5 16v3a1 1 0 001 1h12a1 1 0 001-1v-3"/></svg>
+        <div class="dt" data-i18n="psDropTitle">PDF 파일을 끌어다 놓거나 클릭하세요</div>
+        <div class="dh" data-i18n="psDropHint">PDF 파일 1개</div>
+        <input id="fileInput" type="file" accept="application/pdf" style="display:none;">
+      </div>
+
+      <div class="fileinfo" id="fileInfo">
+        <div class="fn" id="fiName">—</div>
+        <div class="fp" id="fiPages">—</div>
+      </div>
+
+      <div class="field">
+        <span class="flabel" data-i18n="psModeTitle">분할 방식</span>
+        <div class="modes">
+          <label class="mode" id="modeRow-each">
+            <input type="radio" name="mode" value="each" checked>
+            <span><span class="mt" data-i18n="psModeEachT">페이지별 낱장 분할</span><span class="md" data-i18n="psModeEachD">모든 페이지를 1장짜리 PDF로 각각 분리합니다.</span></span>
+          </label>
+          <label class="mode" id="modeRow-range">
+            <input type="radio" name="mode" value="range">
+            <span><span class="mt" data-i18n="psModeRangeT">범위 지정</span><span class="md" data-i18n="psModeRangeD">예: 1-3, 4, 5-8 — 각 범위가 하나의 PDF가 됩니다.</span>
+              <span class="mode-opt" id="opt-range">
+                <input type="text" id="rangeInput" placeholder="1-3, 4, 5-8" spellcheck="false">
+              </span>
+            </span>
+          </label>
+          <label class="mode" id="modeRow-chunk">
+            <input type="radio" name="mode" value="chunk">
+            <span><span class="mt" data-i18n="psModeChunkT">N장씩 분할</span><span class="md" data-i18n="psModeChunkD">N페이지마다 한 묶음으로 나눕니다.</span>
+              <span class="mode-opt" id="opt-chunk">
+                <label data-i18n="psChunkLabel">묶음당 페이지 수 (N)</label>
+                <input type="number" id="chunkInput" min="1" step="1" value="2">
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="err" id="err"></div>
+
+      <div class="actions">
+        <button type="button" class="act-btn" id="splitBtn" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3v4a1 1 0 001 1h4"/><path d="M5 21V5a2 2 0 012-2h8l5 5v13a2 2 0 01-2 2z"/></svg>
+          <span data-i18n="psSplit">분할하기</span>
+        </button>
+      </div>
+
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span data-i18n="psPrivacy">PDF는 서버로 전송되지 않습니다.</span>
+      </p>
+    </section>
+
+    <section class="panel result-panel">
+      <div class="result-head">
+        <h2 data-i18n="psResultTitle">결과</h2>
+        <span class="dl-all">
+          <button type="button" class="dl-all-btn" id="dlAllBtn" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+            <span data-i18n="psDownloadAll">전체 다운로드</span>
+          </button>
+        </span>
+      </div>
+      <div class="res-wrap" id="resWrap">
+        <div class="res-empty" id="resEmpty" data-i18n-html="psResEmpty">분할 결과가 여기에 표시됩니다.<br>PDF를 선택하고 ‘분할하기’를 누르세요.</div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="psHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="psGuideTitle">PDF 나누기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="psStep1T">PDF 열기</span></div>
+        <p class="hs-d" data-i18n="psStep1D">PDF 파일을 끌어다 놓거나 영역을 클릭해 선택하세요. 파일명과 총 페이지 수가 표시됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="psStep2T">분할 방식 선택</span></div>
+        <p class="hs-d" data-i18n-html="psStep2D">낱장 분할, 범위 지정(<code>1-3, 4, 5-8</code>), 또는 N장씩 중에서 고르세요.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="psStep3T">다운로드</span></div>
+        <p class="hs-d" data-i18n="psStep3D">‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  var libOK = (typeof PDFLib !== "undefined" && PDFLib && PDFLib.PDFDocument);
+
+  var srcBytes=null, srcDoc=null, srcName="document", pageCount=0;
+  var outputs=[];          // {name, blob, label, pages}
+  var dropEl=$("drop"), fileInfo=$("fileInfo"), errEl=$("err");
+  var splitBtn=$("splitBtn"), dlAllBtn=$("dlAllBtn");
+
+  function showErr(msg){ errEl.textContent=msg; errEl.classList.add("show"); }
+  function clearErr(){ errEl.textContent=""; errEl.classList.remove("show"); }
+
+  if(!libOK){
+    dropEl.style.pointerEvents="none"; dropEl.style.opacity=".5";
+  }
+
+  /* ---------- 분할 방식 UI ---------- */
+  function selectedMode(){
+    var rs=document.getElementsByName("mode");
+    for(var i=0;i<rs.length;i++) if(rs[i].checked) return rs[i].value;
+    return "each";
+  }
+  function syncModeUI(){
+    var m=selectedMode();
+    $("modeRow-each").classList.toggle("sel", m==="each");
+    $("modeRow-range").classList.toggle("sel", m==="range");
+    $("modeRow-chunk").classList.toggle("sel", m==="chunk");
+    $("opt-range").classList.toggle("show", m==="range");
+    $("opt-chunk").classList.toggle("show", m==="chunk");
+  }
+  var radios=document.getElementsByName("mode");
+  for(var i=0;i<radios.length;i++) radios[i].addEventListener("change", function(){ clearErr(); syncModeUI(); });
+  syncModeUI();
+
+  /* ---------- 파일 로드 ---------- */
+  function baseName(name){
+    var dot=name.lastIndexOf(".");
+    return dot>0 ? name.slice(0,dot) : name;
+  }
+  function readFile(file){
+    if(!file) return;
+    if(!libOK){ showErr(T("psLibError")); return; }
+    var lname=(file.name||"").toLowerCase();
+    if(file.type!=="application/pdf" && lname.indexOf(".pdf")!==(lname.length-4)){
+      showErr(T("psNotPdf")); return;
+    }
+    clearErr();
+    srcName=baseName(file.name||"document");
+    fileInfo.classList.remove("show");
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      srcBytes=new Uint8Array(ev.target.result);
+      PDFLib.PDFDocument.load(srcBytes, {ignoreEncryption:true}).then(function(doc){
+        srcDoc=doc; pageCount=doc.getPageCount();
+        $("fiName").textContent=file.name;
+        $("fiPages").textContent=T("psTotalPages").replace("{n}", pageCount);
+        fileInfo.classList.add("show");
+        splitBtn.disabled=false;
+        clearResults();
+      }).catch(function(e){
+        srcDoc=null; srcBytes=null; pageCount=0;
+        splitBtn.disabled=true;
+        showErr(T("psLoadFail"));
+      });
+    };
+    reader.onerror=function(){ showErr(T("psLoadFail")); };
+    reader.readAsArrayBuffer(file);
+  }
+
+  $("fileInput").addEventListener("change", function(e){
+    var f=(e.target.files&&e.target.files[0])||null;
+    readFile(f); e.target.value="";
+  });
+  dropEl.addEventListener("click", function(){ if(libOK) $("fileInput").click(); });
+  dropEl.addEventListener("keydown", function(e){ if((e.keyCode===13||e.keyCode===32)&&libOK){ e.preventDefault(); $("fileInput").click(); } });
+  dropEl.addEventListener("dragenter", function(e){ e.preventDefault(); dropEl.classList.add("over"); });
+  dropEl.addEventListener("dragover",  function(e){ e.preventDefault(); dropEl.classList.add("over"); });
+  dropEl.addEventListener("dragleave", function(e){ if(e.target===dropEl) dropEl.classList.remove("over"); });
+  dropEl.addEventListener("drop", function(e){
+    e.preventDefault(); dropEl.classList.remove("over");
+    if(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) readFile(e.dataTransfer.files[0]);
+  });
+  ["dragover","drop"].forEach(function(ev){ window.addEventListener(ev, function(e){ e.preventDefault(); }); });
+
+  /* ---------- 범위 파싱 : "1-3, 4, 5-8" -> [{from,to}] (1-based, 검증) ---------- */
+  function parseRanges(text, total){
+    var raw=String(text||"").trim();
+    if(!raw){ throw {key:"psErrEmptyRange"}; }
+    var parts=raw.split(",");
+    var groups=[];
+    for(var i=0;i<parts.length;i++){
+      var seg=parts[i].replace(/\s+/g,"");
+      if(seg==="") continue;
+      var m=seg.match(/^(\d+)(?:-(\d+))?$/);
+      if(!m){ throw {key:"psErrBadRange", token:parts[i].replace(/^\s+|\s+$/g,"")}; }
+      var a=parseInt(m[1],10);
+      var b=(m[2]!==undefined)?parseInt(m[2],10):a;
+      if(a<1||b<1||a>total||b>total){ throw {key:"psErrOutOfRange", token:seg, total:total}; }
+      if(a>b){ var tmp=a; a=b; b=tmp; }
+      groups.push({from:a,to:b});
+    }
+    if(!groups.length){ throw {key:"psErrEmptyRange"}; }
+    return groups;
+  }
+
+  /* ---------- 분할 계획 ---------- */
+  function pad(n, width){ var s=""+n; while(s.length<width) s="0"+s; return s; }
+
+  function buildPlan(){
+    var mode=selectedMode();
+    var plan=[]; // {indices:[0-based], name, label}
+    var width=(""+pageCount).length;
+    if(mode==="each"){
+      for(var p=1;p<=pageCount;p++){
+        plan.push({ indices:[p-1], name:srcName+"_p"+pad(p,width)+".pdf", label:T("psLabelPage").replace("{n}",p) });
+      }
+    } else if(mode==="range"){
+      var groups=parseRanges($("rangeInput").value, pageCount);
+      for(var g=0;g<groups.length;g++){
+        var gr=groups[g], idx=[];
+        for(var k=gr.from;k<=gr.to;k++) idx.push(k-1);
+        var tag=(gr.from===gr.to)?(""+gr.from):(gr.from+"-"+gr.to);
+        var lbl=(gr.from===gr.to)?T("psLabelPage").replace("{n}",gr.from)
+                                 :T("psLabelRange").replace("{a}",gr.from).replace("{b}",gr.to);
+        plan.push({ indices:idx, name:srcName+"_"+tag+".pdf", label:lbl });
+      }
+    } else { // chunk
+      var n=parseInt($("chunkInput").value,10);
+      if(isNaN(n)||n<1){ throw {key:"psErrBadChunk"}; }
+      for(var start=1; start<=pageCount; start+=n){
+        var end=Math.min(start+n-1, pageCount), ci=[];
+        for(var j=start;j<=end;j++) ci.push(j-1);
+        var ctag=(start===end)?(""+start):(start+"-"+end);
+        var clbl=(start===end)?T("psLabelPage").replace("{n}",start)
+                              :T("psLabelRange").replace("{a}",start).replace("{b}",end);
+        plan.push({ indices:ci, name:srcName+"_"+ctag+".pdf", label:clbl });
+      }
+    }
+    return plan;
+  }
+
+  function makePdf(indices){
+    return PDFLib.PDFDocument.create().then(function(outDoc){
+      return outDoc.copyPages(srcDoc, indices).then(function(copied){
+        for(var c=0;c<copied.length;c++) outDoc.addPage(copied[c]);
+        return outDoc.save();
+      }).then(function(bytes){
+        return new Blob([bytes], {type:"application/pdf"});
+      });
+    });
+  }
+
+  function errMsg(ex){
+    if(!ex||!ex.key) return T("psSplitFail");
+    var s=T(ex.key);
+    if(ex.token!==undefined) s=s.replace("{token}", ex.token);
+    if(ex.total!==undefined) s=s.replace("{total}", ex.total);
+    return s;
+  }
+
+  function doSplit(){
+    if(!srcDoc){ showErr(T("psNoFile")); return; }
+    clearErr();
+    var plan;
+    try{ plan=buildPlan(); }
+    catch(ex){ showErr(errMsg(ex)); return; }
+    if(!plan.length){ showErr(T("psErrEmptyRange")); return; }
+
+    var labelSpan=splitBtn.querySelector("span");
+    var prev=labelSpan.textContent;
+    splitBtn.disabled=true;
+    labelSpan.textContent=T("psWorking");
+    clearResults();
+
+    // 순차 생성 (메모리 안정)
+    outputs=[];
+    var idx=0;
+    function next(){
+      if(idx>=plan.length){
+        renderResults();
+        splitBtn.disabled=false;
+        labelSpan.textContent=prev;
+        dlAllBtn.disabled = outputs.length===0;
+        return;
+      }
+      var item=plan[idx];
+      makePdf(item.indices).then(function(blob){
+        outputs.push({ name:item.name, blob:blob, label:item.label, pages:item.indices.length });
+        idx++;
+        next();
+      }).catch(function(e){
+        showErr(T("psSplitFail"));
+        splitBtn.disabled=false;
+        labelSpan.textContent=prev;
+      });
+    }
+    next();
+  }
+  splitBtn.addEventListener("click", doSplit);
+
+  /* ---------- 결과 렌더 / 다운로드 ---------- */
+  function clearResults(){
+    outputs=[];
+    $("resWrap").innerHTML='<div class="res-empty">'+T("psResEmpty")+'</div>';
+    dlAllBtn.disabled=true;
+  }
+  function downloadBlob(item){
+    var url=URL.createObjectURL(item.blob);
+    var a=document.createElement("a");
+    a.href=url; a.download=item.name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+  function renderResults(){
+    var wrap=$("resWrap");
+    if(!outputs.length){ wrap.innerHTML='<div class="res-empty">'+T("psResEmpty")+'</div>'; return; }
+    wrap.innerHTML="";
+    outputs.forEach(function(item, i){
+      var row=document.createElement("div"); row.className="res-item";
+
+      var no=document.createElement("span"); no.className="ri-no"; no.textContent=(i+1);
+
+      var main=document.createElement("div"); main.className="ri-main";
+      var nm=document.createElement("div"); nm.className="ri-name"; nm.textContent=item.name; nm.title=item.name;
+      var meta=document.createElement("div"); meta.className="ri-meta";
+      meta.textContent=item.label+" · "+T("psPagesCount").replace("{n}", item.pages);
+      main.appendChild(nm); main.appendChild(meta);
+
+      var btn=document.createElement("button"); btn.type="button"; btn.className="ri-dl";
+      btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>'+T("psDownload")+'</span>';
+      btn.addEventListener("click", function(){ downloadBlob(item); });
+
+      row.appendChild(no); row.appendChild(main); row.appendChild(btn);
+      wrap.appendChild(row);
+    });
+  }
+  function downloadAll(){
+    if(!outputs.length) return;
+    var i=0;
+    (function step(){
+      if(i>=outputs.length) return;
+      downloadBlob(outputs[i]); i++;
+      setTimeout(step, 300);
+    })();
+  }
+  dlAllBtn.addEventListener("click", downloadAll);
+
+  /* ---------- 다국어 ---------- */
+  GritI18n.register({
+    ko:{
+      docTitle:"PDF 나누기 — Grit Tools",
+      psTool:"PDF 나누기", psAllTools:"← 모든 도구",
+      psTitle:"PDF 나누기",
+      psSub:"PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 개의 PDF로 저장합니다.",
+      psInputTitle:"PDF 선택", psResultTitle:"결과",
+      psDropTitle:"PDF 파일을 끌어다 놓거나 클릭하세요", psDropHint:"PDF 파일 1개",
+      psTotalPages:"총 {n}페이지",
+      psModeTitle:"분할 방식",
+      psModeEachT:"페이지별 낱장 분할", psModeEachD:"모든 페이지를 1장짜리 PDF로 각각 분리합니다.",
+      psModeRangeT:"범위 지정", psModeRangeD:"예: 1-3, 4, 5-8 — 각 범위가 하나의 PDF가 됩니다.",
+      psModeChunkT:"N장씩 분할", psModeChunkD:"N페이지마다 한 묶음으로 나눕니다.",
+      psChunkLabel:"묶음당 페이지 수 (N)",
+      psSplit:"분할하기", psWorking:"분할 중…",
+      psDownload:"다운로드", psDownloadAll:"전체 다운로드",
+      psPagesCount:"{n}페이지", psLabelPage:"{n}페이지", psLabelRange:"{a}–{b}페이지",
+      psPrivacy:"PDF는 서버로 전송되지 않습니다.",
+      psResEmpty:"분할 결과가 여기에 표시됩니다.<br>PDF를 선택하고 ‘분할하기’를 누르세요.",
+      psNotPdf:"PDF 파일만 선택할 수 있습니다.",
+      psLoadFail:"PDF를 읽지 못했습니다. 손상되었거나 암호가 걸린 파일일 수 있습니다.",
+      psNoFile:"먼저 PDF 파일을 선택하세요.",
+      psSplitFail:"분할 중 오류가 발생했습니다.",
+      psLibError:"PDF 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침하세요.",
+      psErrEmptyRange:"범위를 입력하세요. 예: 1-3, 4, 5-8",
+      psErrBadRange:"잘못된 범위입니다: “{token}”. 예: 1-3, 4, 5-8",
+      psErrOutOfRange:"범위 “{token}”가 페이지 수(1–{total})를 벗어났습니다.",
+      psErrBadChunk:"묶음당 페이지 수(N)는 1 이상의 정수여야 합니다.",
+      psHelpBtn:"사용법", psHelpClose:"닫기", psGuideTitle:"PDF 나누기 사용법",
+      psStep1T:"PDF 열기", psStep1D:"PDF 파일을 끌어다 놓거나 영역을 클릭해 선택하세요. 파일명과 총 페이지 수가 표시됩니다.",
+      psStep2T:"분할 방식 선택", psStep2D:"낱장 분할, 범위 지정(<code>1-3, 4, 5-8</code>), 또는 N장씩 중에서 고르세요.",
+      psStep3T:"다운로드", psStep3D:"‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다."
+    },
+    en:{
+      docTitle:"PDF Splitter — Grit Tools",
+      psTool:"PDF Splitter", psAllTools:"← All tools",
+      psTitle:"PDF Splitter",
+      psSub:"Split a PDF into single pages, page ranges, or fixed-size chunks and save each as its own PDF.",
+      psInputTitle:"Choose PDF", psResultTitle:"Results",
+      psDropTitle:"Drag & drop a PDF here, or click", psDropHint:"One PDF file",
+      psTotalPages:"{n} pages total",
+      psModeTitle:"Split mode",
+      psModeEachT:"Every page separately", psModeEachD:"Each page becomes its own 1-page PDF.",
+      psModeRangeT:"By ranges", psModeRangeD:"e.g. 1-3, 4, 5-8 — each range becomes one PDF.",
+      psModeChunkT:"Every N pages", psModeChunkD:"Split into chunks of N pages each.",
+      psChunkLabel:"Pages per chunk (N)",
+      psSplit:"Split", psWorking:"Splitting…",
+      psDownload:"Download", psDownloadAll:"Download all",
+      psPagesCount:"{n} pages", psLabelPage:"page {n}", psLabelRange:"pages {a}–{b}",
+      psPrivacy:"Your PDF is never uploaded to a server.",
+      psResEmpty:"Split results appear here.<br>Choose a PDF and press ‘Split’.",
+      psNotPdf:"Only PDF files are allowed.",
+      psLoadFail:"Could not read the PDF. It may be corrupted or password-protected.",
+      psNoFile:"Choose a PDF file first.",
+      psSplitFail:"An error occurred while splitting.",
+      psLibError:"Failed to load the PDF library. Check your connection and refresh.",
+      psErrEmptyRange:"Enter a range, e.g. 1-3, 4, 5-8",
+      psErrBadRange:"Invalid range: “{token}”. e.g. 1-3, 4, 5-8",
+      psErrOutOfRange:"Range “{token}” is outside the page count (1–{total}).",
+      psErrBadChunk:"Pages per chunk (N) must be an integer of 1 or more.",
+      psHelpBtn:"How to use", psHelpClose:"Close", psGuideTitle:"How to use the PDF splitter",
+      psStep1T:"Open a PDF", psStep1D:"Drag & drop a PDF or click the area to pick one. Its name and total page count appear.",
+      psStep2T:"Pick a split mode", psStep2D:"Choose every page, by ranges (<code>1-3, 4, 5-8</code>), or every N pages.",
+      psStep3T:"Download", psStep3D:"Press ‘Split’ to build the result list. Download each file, or all at once with ‘Download all’. Everything runs in your browser."
+    },
+    ja:{
+      docTitle:"PDF分割 — Grit Tools",
+      psTool:"PDF分割", psAllTools:"← すべてのツール",
+      psTitle:"PDF分割",
+      psSub:"PDFをページ単位・ページ範囲・Nページごとに分け、それぞれ別のPDFとして保存します。",
+      psInputTitle:"PDFを選択", psResultTitle:"結果",
+      psDropTitle:"PDFファイルをドラッグ＆ドロップ、またはクリック", psDropHint:"PDFファイル1個",
+      psTotalPages:"全{n}ページ",
+      psModeTitle:"分割方式",
+      psModeEachT:"ページごとに分割", psModeEachD:"すべてのページを1ページずつのPDFに分けます。",
+      psModeRangeT:"範囲を指定", psModeRangeD:"例: 1-3, 4, 5-8 — 各範囲が1つのPDFになります。",
+      psModeChunkT:"Nページごとに分割", psModeChunkD:"Nページごとにまとめて分割します。",
+      psChunkLabel:"1まとめあたりのページ数 (N)",
+      psSplit:"分割する", psWorking:"分割中…",
+      psDownload:"ダウンロード", psDownloadAll:"すべてダウンロード",
+      psPagesCount:"{n}ページ", psLabelPage:"{n}ページ", psLabelRange:"{a}–{b}ページ",
+      psPrivacy:"PDFはサーバーに送信されません。",
+      psResEmpty:"分割結果がここに表示されます。<br>PDFを選び「分割する」を押してください。",
+      psNotPdf:"PDFファイルのみ選択できます。",
+      psLoadFail:"PDFを読み込めませんでした。破損しているか、パスワード保護されている可能性があります。",
+      psNoFile:"先にPDFファイルを選択してください。",
+      psSplitFail:"分割中にエラーが発生しました。",
+      psLibError:"PDFライブラリを読み込めませんでした。接続を確認して再読み込みしてください。",
+      psErrEmptyRange:"範囲を入力してください。例: 1-3, 4, 5-8",
+      psErrBadRange:"無効な範囲です: 「{token}」。例: 1-3, 4, 5-8",
+      psErrOutOfRange:"範囲「{token}」がページ数(1–{total})を超えています。",
+      psErrBadChunk:"1まとめあたりのページ数(N)は1以上の整数にしてください。",
+      psHelpBtn:"使い方", psHelpClose:"閉じる", psGuideTitle:"PDF分割の使い方",
+      psStep1T:"PDFを開く", psStep1D:"PDFファイルをドラッグ＆ドロップするか、エリアをクリックして選択します。ファイル名と総ページ数が表示されます。",
+      psStep2T:"分割方式を選ぶ", psStep2D:"ページごと、範囲指定(<code>1-3, 4, 5-8</code>)、Nページごとから選びます。",
+      psStep3T:"ダウンロード", psStep3D:"「分割する」を押すと結果リストが作られます。ファイルごと、または「すべてダウンロード」で一括取得。処理はすべてブラウザ内で行われます。"
+    },
+    zh:{
+      docTitle:"PDF 拆分 — Grit Tools",
+      psTool:"PDF 拆分", psAllTools:"← 所有工具",
+      psTitle:"PDF 拆分",
+      psSub:"将 PDF 按单页、页码范围或每 N 页拆分，并分别保存为独立的 PDF。",
+      psInputTitle:"选择 PDF", psResultTitle:"结果",
+      psDropTitle:"拖放 PDF 文件到此处，或点击选择", psDropHint:"1 个 PDF 文件",
+      psTotalPages:"共 {n} 页",
+      psModeTitle:"拆分方式",
+      psModeEachT:"逐页拆分", psModeEachD:"每一页都拆成一个单页 PDF。",
+      psModeRangeT:"指定范围", psModeRangeD:"例如：1-3, 4, 5-8 —— 每个范围生成一个 PDF。",
+      psModeChunkT:"每 N 页拆分", psModeChunkD:"每 N 页归为一组进行拆分。",
+      psChunkLabel:"每组页数 (N)",
+      psSplit:"拆分", psWorking:"拆分中…",
+      psDownload:"下载", psDownloadAll:"全部下载",
+      psPagesCount:"{n} 页", psLabelPage:"第 {n} 页", psLabelRange:"第 {a}–{b} 页",
+      psPrivacy:"PDF 不会上传到服务器。",
+      psResEmpty:"拆分结果将显示在这里。<br>选择 PDF 并点击“拆分”。",
+      psNotPdf:"只能选择 PDF 文件。",
+      psLoadFail:"无法读取该 PDF，文件可能已损坏或设有密码。",
+      psNoFile:"请先选择一个 PDF 文件。",
+      psSplitFail:"拆分时发生错误。",
+      psLibError:"无法加载 PDF 库，请检查网络连接后刷新。",
+      psErrEmptyRange:"请输入范围，例如：1-3, 4, 5-8",
+      psErrBadRange:"无效范围：“{token}”。例如：1-3, 4, 5-8",
+      psErrOutOfRange:"范围“{token}”超出页数(1–{total})。",
+      psErrBadChunk:"每组页数 (N) 必须是不小于 1 的整数。",
+      psHelpBtn:"使用方法", psHelpClose:"关闭", psGuideTitle:"PDF 拆分使用方法",
+      psStep1T:"打开 PDF", psStep1D:"拖放 PDF 文件，或点击区域选择。会显示文件名和总页数。",
+      psStep2T:"选择拆分方式", psStep2D:"可选逐页、指定范围(<code>1-3, 4, 5-8</code>)或每 N 页。",
+      psStep3T:"下载", psStep3D:"点击“拆分”生成结果列表。可逐个下载，或用“全部下载”一次获取。所有处理都在浏览器中完成。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){
+    if(pageCount>0) $("fiPages").textContent=T("psTotalPages").replace("{n}", pageCount);
+    if(outputs.length) renderResults();
+    else { var re=document.querySelector(".res-empty"); if(re) re.innerHTML=T("psResEmpty"); }
+  }});
+
+  if(!libOK){ showErr(T("psLibError")); }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF를 이미지로 변환 — Grit Tools</title>
+<meta name="description" content="PDF 파일을 페이지별 PNG·JPEG 이미지로 변환합니다. 해상도와 품질을 고르고 한 페이지씩 또는 전체를 한 번에 저장하세요. 모든 변환은 브라우저에서 처리되며 PDF는 서버로 전송되지 않습니다.">
+<meta name="keywords" content="PDF 이미지 변환, PDF to image, PDF to PNG, PDF to JPG, PDF 이미지 추출, pdf converter">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="PDF를 이미지로 변환 — Grit Tools">
+<meta property="og:description" content="PDF를 페이지별 PNG·JPEG로 변환. 해상도·품질 설정, 전체 일괄 저장. 브라우저에서만 처리.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; min-height:0; overflow:hidden; }
+
+  /* 사이드바 */
+  #sidebar { width:330px; min-width:330px; display:flex; flex-direction:column; border-right:1px solid var(--border); background:var(--surface); overflow:auto; }
+  .side-pad { padding:22px 22px 24px; display:flex; flex-direction:column; gap:18px; }
+  .side-title { font-size:20px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .side-sub { font-size:13px; color:var(--text-dim); margin:5px 0 0; line-height:1.5; }
+
+  .drop { border:1.5px dashed var(--border-lit); border-radius:12px; padding:22px 16px; text-align:center; cursor:pointer; transition:border-color .15s,background .15s; color:var(--text-dim); }
+  .drop:hover { border-color:var(--blue); color:var(--text); }
+  .drop.over { border-color:var(--blue); background:var(--blue-soft); color:var(--text); }
+  .drop.disabled { opacity:.5; cursor:not-allowed; }
+  .drop .dz-icon { width:30px; height:30px; margin:0 auto 8px; display:block; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .drop .dz-main { font-size:13px; font-weight:500; }
+  .drop .dz-sub { font-size:11px; color:var(--text-muted); margin-top:5px; }
+
+  .fileinfo { background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:12px; display:none; }
+  .fileinfo.show { display:block; }
+  .fileinfo .fi-name { font-family:var(--font-mono); font-size:12px; color:var(--text); word-break:break-all; }
+  .fileinfo .fi-meta { color:var(--text-muted); margin-top:5px; }
+
+  .ctl { display:flex; flex-direction:column; gap:14px; }
+  .field label { display:block; font-size:12px; color:var(--text-dim); margin-bottom:7px; font-weight:500; }
+  select, .range-row { width:100%; }
+  select { padding:10px 12px; font-size:14px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-ui); appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa3b2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; padding-right:32px; }
+  select:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  select:disabled { opacity:.45; cursor:not-allowed; }
+  .range-row { display:flex; align-items:center; gap:10px; }
+  input[type=range] { flex:1 1 auto; accent-color:var(--blue); }
+  input[type=range]:disabled { opacity:.45; }
+  .range-val { flex:0 0 auto; min-width:42px; text-align:right; font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); }
+
+  .act-btn { width:100%; justify-content:center; background:var(--blue); color:#fff; border:none; padding:12px 16px; border-radius:var(--radius-pill); font:inherit; font-size:14px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s; }
+  .act-btn:hover { background:var(--blue-dark); }
+  .act-btn:disabled { opacity:.45; cursor:not-allowed; }
+  .act-btn svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  .privacy { font-size:11px; color:var(--text-muted); line-height:1.6; display:flex; gap:7px; align-items:flex-start; }
+  .privacy svg { width:14px; height:14px; flex:0 0 14px; margin-top:1px; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .err { font-size:12px; color:#ff8a82; line-height:1.5; background:rgba(255,90,80,.1); border:1px solid rgba(255,90,80,.3); border-radius:9px; padding:10px 12px; display:none; }
+  .err.show { display:block; }
+
+  /* 메인: 페이지 썸네일 리스트 */
+  #main { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  #mainHead { flex:0 0 auto; display:flex; align-items:center; gap:12px; padding:14px 22px; border-bottom:1px solid var(--border); background:var(--surface); }
+  #mainHead .mh-title { font-size:13px; font-weight:600; color:var(--text-dim); letter-spacing:.05em; text-transform:uppercase; }
+  #mainHead .mh-count { font-size:12px; color:var(--text-muted); font-family:var(--font-mono); }
+  #status { margin-left:auto; font-size:12px; color:var(--blue-dark); font-family:var(--font-mono); }
+
+  #pages { flex:1 1 auto; min-height:0; overflow:auto; padding:22px; display:grid; gap:18px; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); align-content:start; }
+  #placeholder { color:var(--text-muted); text-align:center; padding:60px 20px; font-size:13px; line-height:1.7; grid-column:1/-1; }
+  #placeholder svg { width:46px; height:46px; stroke:var(--border-lit); fill:none; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round; display:block; margin:0 auto 14px; }
+
+  .pcard { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:14px; box-shadow:var(--shadow-card); display:flex; flex-direction:column; gap:11px; }
+  .pcard .thumb-wrap { background:var(--surface-2); border:1px solid var(--border); border-radius:8px; min-height:160px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .pcard canvas { max-width:100%; height:auto; display:block; background:#fff; }
+  .pcard .thumb-loading { font-size:11px; color:var(--text-muted); font-family:var(--font-mono); }
+  .pcard .pc-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .pcard .pc-num { font-size:12px; font-weight:600; color:var(--text-dim); font-family:var(--font-mono); }
+  .pcard .pc-dim { font-size:11px; color:var(--text-muted); font-family:var(--font-mono); }
+  .pcard .pc-save { background:var(--surface-2); color:var(--text); border:1px solid var(--border-lit); padding:8px 12px; border-radius:var(--radius-pill); font:inherit; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:border-color .15s,color .15s; width:100%; }
+  .pcard .pc-save:hover { border-color:var(--blue); color:var(--blue); }
+  .pcard .pc-save:disabled { opacity:.5; cursor:not-allowed; }
+  .pcard .pc-save svg { width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* 좁은 화면: 스크롤 스택 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; flex-direction:column; }
+    #sidebar { width:auto; min-width:0; border-right:none; border-bottom:1px solid var(--border); overflow:visible; }
+    #pages { overflow:visible; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.6); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "PDF를 이미지로 변환",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web browser",
+  "description": "PDF 파일을 페이지별 PNG 또는 JPEG 이미지로 변환하는 도구. 해상도와 품질을 선택하고 페이지별 또는 전체 일괄 저장이 가능하며, 모든 변환은 브라우저에서 처리됩니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="piTool">PDF를 이미지로 변환</span><button type="button" id="helpBtn" class="g-help" data-i18n="piHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="piAllTools">← 모든 도구</a></div>
+
+<main class="app">
+
+  <aside id="sidebar">
+    <div class="side-pad">
+      <div>
+        <h1 class="side-title" data-i18n="piTitle">PDF를 이미지로 변환</h1>
+        <p class="side-sub" data-i18n="piSub">PDF의 각 페이지를 PNG·JPEG 이미지로 변환합니다.</p>
+      </div>
+
+      <div id="dropZone" class="drop">
+        <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
+        <div class="dz-main" data-i18n="piDropMain">PDF 파일을 끌어다 놓거나 클릭</div>
+        <div class="dz-sub" data-i18n="piDropSub">PDF 파일 한 개를 선택하세요</div>
+        <input id="fileInput" type="file" accept="application/pdf" style="display:none;">
+      </div>
+
+      <div id="fileInfo" class="fileinfo">
+        <div class="fi-name" id="fiName">—</div>
+        <div class="fi-meta" id="fiMeta">—</div>
+      </div>
+
+      <div id="errBox" class="err"></div>
+
+      <div class="ctl">
+        <div class="field">
+          <label for="fmt" data-i18n="piFormat">출력 형식</label>
+          <select id="fmt">
+            <option value="png">PNG</option>
+            <option value="jpeg">JPEG</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="quality" data-i18n="piQuality">품질 (JPEG)</label>
+          <div class="range-row">
+            <input id="quality" type="range" min="1" max="100" value="92" disabled>
+            <span class="range-val" id="qVal">92</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="scale" data-i18n="piScale">해상도</label>
+          <select id="scale">
+            <option value="1">1x (72 DPI)</option>
+            <option value="2" selected data-i18n="piScale2">2x · 고화질 (150 DPI)</option>
+            <option value="3">3x (216 DPI)</option>
+            <option value="4.1667">300 DPI</option>
+          </select>
+        </div>
+      </div>
+
+      <button type="button" class="act-btn" id="saveAllBtn" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+        <span data-i18n="piSaveAll">모든 페이지 저장</span>
+      </button>
+
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg>
+        <span data-i18n="piPrivacy">PDF는 서버로 전송되지 않습니다. 모든 변환은 이 브라우저 안에서만 처리됩니다.</span>
+      </p>
+    </div>
+  </aside>
+
+  <section id="main">
+    <div id="mainHead">
+      <span class="mh-title" data-i18n="piPagesTitle">페이지</span>
+      <span class="mh-count" id="pageCount"></span>
+      <span id="status"></span>
+    </div>
+    <div id="pages">
+      <div id="placeholder">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15a0 0 0 0 1 0 0H6a0 0 0 0 1 0 0V2z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        <span data-i18n="piPlaceholder">PDF 파일을 불러오면 페이지 미리보기가 여기에 표시됩니다.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="piHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="piGuideTitle">PDF를 이미지로 변환 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="piStep1T">PDF 불러오기</span></div>
+        <p class="hs-d" data-i18n="piStep1D">PDF 파일을 왼쪽 영역에 끌어다 놓거나 클릭해서 선택하세요. 페이지 미리보기가 바로 나타납니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="piStep2T">형식·해상도 선택</span></div>
+        <p class="hs-d" data-i18n="piStep2D">출력 형식(PNG/JPEG), 해상도(1x~300 DPI), JPEG 품질을 고릅니다. 해상도가 높을수록 이미지가 선명하지만 용량이 커집니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="piStep3T">이미지 저장</span></div>
+        <p class="hs-d" data-i18n-html="piStep3D">페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 <code>원본이름_p01.png</code> 형식입니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+  var dropZone=$("dropZone"), fileInput=$("fileInput");
+  var pagesEl=$("pages"), placeholder=$("placeholder");
+  var fmtSel=$("fmt"), qualityEl=$("quality"), qVal=$("qVal"), scaleSel=$("scale");
+  var saveAllBtn=$("saveAllBtn"), statusEl=$("status");
+  var fileInfo=$("fileInfo"), fiName=$("fiName"), fiMeta=$("fiMeta");
+  var errBox=$("errBox"), pageCountEl=$("pageCount");
+
+  /* ---------- pdf.js 가용성 가드 ---------- */
+  var pdfReady = (typeof window.pdfjsLib !== "undefined");
+  if(pdfReady){
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+  }
+
+  /* ---------- 사용법 모달 ---------- */
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* ---------- 상태 ---------- */
+  var pdfDoc=null, baseName="pdf", numPages=0;
+
+  function showError(msg){ errBox.textContent=msg; errBox.classList.add("show"); }
+  function clearError(){ errBox.textContent=""; errBox.classList.remove("show"); }
+
+  function disableDrop(){
+    dropZone.classList.add("disabled");
+    fileInput.disabled=true;
+  }
+
+  if(!pdfReady){
+    showError(T("piLibError"));
+    disableDrop();
+  }
+
+  /* ---------- 품질 슬라이더 ---------- */
+  qualityEl.addEventListener("input", function(){ qVal.textContent=qualityEl.value; });
+  function syncQuality(){
+    var isJpeg=(fmtSel.value==="jpeg");
+    qualityEl.disabled=!isJpeg;
+  }
+  fmtSel.addEventListener("change", syncQuality);
+  syncQuality();
+
+  /* ---------- 파일 입력 ---------- */
+  dropZone.addEventListener("click", function(){ if(pdfReady) fileInput.click(); });
+  fileInput.addEventListener("change", function(e){
+    var f=e.target.files && e.target.files[0];
+    if(f) loadPdf(f);
+    e.target.value="";
+  });
+
+  ["dragenter","dragover"].forEach(function(ev){
+    dropZone.addEventListener(ev, function(e){ e.preventDefault(); if(pdfReady) dropZone.classList.add("over"); });
+  });
+  ["dragleave","drop"].forEach(function(ev){
+    dropZone.addEventListener(ev, function(e){ e.preventDefault(); dropZone.classList.remove("over"); });
+  });
+  dropZone.addEventListener("drop", function(e){
+    e.preventDefault(); dropZone.classList.remove("over");
+    if(!pdfReady) return;
+    var fl=e.dataTransfer && e.dataTransfer.files;
+    if(fl && fl.length) loadPdf(fl[0]);
+  });
+  /* 페이지 전체 드롭도 허용 (사이드바 밖) */
+  ["dragenter","dragover"].forEach(function(ev){ window.addEventListener(ev, function(e){ e.preventDefault(); }); });
+  window.addEventListener("drop", function(e){
+    e.preventDefault();
+    if(!pdfReady) return;
+    if(e.target===dropZone || dropZone.contains(e.target)) return;
+    var fl=e.dataTransfer && e.dataTransfer.files;
+    if(fl && fl.length && /pdf/i.test(fl[0].type || fl[0].name)) loadPdf(fl[0]);
+  });
+
+  function stripExt(name){ return name.replace(/\.[^.]+$/, ""); }
+  function pad(n, total){
+    var s=String(n), width=String(total).length; if(width<2) width=2;
+    while(s.length<width) s="0"+s;
+    return s;
+  }
+  function fmtBytes(b){
+    if(b<1024) return b+" B";
+    if(b<1048576) return (b/1024).toFixed(1)+" KB";
+    return (b/1048576).toFixed(1)+" MB";
+  }
+
+  /* ---------- PDF 로드 ---------- */
+  function loadPdf(file){
+    if(!pdfReady) return;
+    if(!/pdf/i.test(file.type || file.name)){ showError(T("piNotPdf")); return; }
+    clearError();
+    baseName=stripExt(file.name) || "pdf";
+    statusEl.textContent=T("piLoading");
+    saveAllBtn.disabled=true;
+    placeholder.style.display="none";
+    pagesEl.innerHTML="";
+
+    var reader=new FileReader();
+    reader.onload=function(ev){
+      var data=new Uint8Array(ev.target.result);
+      pdfjsLib.getDocument({data:data}).promise.then(function(doc){
+        pdfDoc=doc; numPages=doc.numPages;
+        fileInfo.classList.add("show");
+        fiName.textContent=file.name;
+        fiMeta.textContent=fmtBytes(file.size)+" · "+numPages+" "+T("piPagesUnit");
+        pageCountEl.textContent=numPages+" "+T("piPagesUnit");
+        statusEl.textContent="";
+        saveAllBtn.disabled=false;
+        renderAllPages();
+      }).catch(function(err){
+        statusEl.textContent="";
+        showError(T("piLoadError")+" "+(err && err.message ? err.message : ""));
+      });
+    };
+    reader.onerror=function(){ statusEl.textContent=""; showError(T("piLoadError")); };
+    reader.readAsArrayBuffer(file);
+  }
+
+  /* ---------- 페이지 카드 생성 + 썸네일 렌더 ---------- */
+  var cards=[]; /* {pageNum, canvas, dimEl, btn} */
+  function renderAllPages(){
+    cards=[];
+    pagesEl.innerHTML="";
+    for(var i=1;i<=numPages;i++){
+      makeCard(i);
+    }
+    /* 썸네일은 순차적으로 렌더 (메모리 부담 완화) */
+    renderThumbsSequential(1);
+  }
+
+  function makeCard(pageNum){
+    var card=document.createElement("div"); card.className="pcard";
+
+    var tw=document.createElement("div"); tw.className="thumb-wrap";
+    var loading=document.createElement("span"); loading.className="thumb-loading"; loading.textContent="…";
+    tw.appendChild(loading);
+
+    var foot=document.createElement("div"); foot.className="pc-foot";
+    var num=document.createElement("span"); num.className="pc-num"; num.textContent="p"+pad(pageNum, numPages);
+    var dim=document.createElement("span"); dim.className="pc-dim"; dim.textContent="—";
+    foot.appendChild(num); foot.appendChild(dim);
+
+    var btn=document.createElement("button"); btn.type="button"; btn.className="pc-save"; btn.disabled=true;
+    btn.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>'+T("piSavePage")+'</span>';
+    btn.addEventListener("click", function(){ savePage(pageNum, btn); });
+
+    card.appendChild(tw); card.appendChild(foot); card.appendChild(btn);
+    pagesEl.appendChild(card);
+
+    cards.push({ pageNum:pageNum, wrap:tw, loading:loading, dimEl:dim, btn:btn });
+  }
+
+  function renderThumbsSequential(idx){
+    if(idx>numPages) return;
+    var card=cards[idx-1];
+    pdfDoc.getPage(idx).then(function(page){
+      /* 썸네일: 가로 약 200px 기준 */
+      var vp0=page.getViewport({scale:1});
+      var thumbScale=Math.min(2, 220/vp0.width);
+      if(thumbScale<=0) thumbScale=1;
+      var vp=page.getViewport({scale:thumbScale});
+      var canvas=document.createElement("canvas");
+      canvas.width=Math.max(1, Math.round(vp.width));
+      canvas.height=Math.max(1, Math.round(vp.height));
+      var ctx=canvas.getContext("2d");
+      return page.render({canvasContext:ctx, viewport:vp}).promise.then(function(){
+        card.wrap.innerHTML="";
+        card.wrap.appendChild(canvas);
+        /* 출력 차원(현재 해상도 기준) 표시 */
+        updateCardDim(card, page);
+        card.btn.disabled=false;
+        renderThumbsSequential(idx+1);
+      });
+    }).catch(function(){
+      card.loading.textContent="!";
+      renderThumbsSequential(idx+1);
+    });
+  }
+
+  function currentScale(){ var s=parseFloat(scaleSel.value); return (isNaN(s)||s<=0)?1:s; }
+
+  function updateCardDim(card, page){
+    var vp=page.getViewport({scale:currentScale()});
+    card.dimEl.textContent=Math.round(vp.width)+"×"+Math.round(vp.height);
+  }
+
+  /* 해상도 변경 시 모든 카드의 출력 차원 갱신 */
+  scaleSel.addEventListener("change", function(){
+    if(!pdfDoc) return;
+    for(var i=0;i<cards.length;i++){
+      (function(card){
+        pdfDoc.getPage(card.pageNum).then(function(page){ updateCardDim(card, page); });
+      })(cards[i]);
+    }
+  });
+
+  /* ---------- 풀해상도 렌더 → Blob ---------- */
+  function mimeOf(){ return fmtSel.value==="jpeg" ? "image/jpeg" : "image/png"; }
+  function extOf(){ return fmtSel.value==="jpeg" ? "jpg" : "png"; }
+  function qualityOf(){ return (parseInt(qualityEl.value,10)||92)/100; }
+
+  function renderPageToBlob(pageNum, cb){
+    pdfDoc.getPage(pageNum).then(function(page){
+      var vp=page.getViewport({scale:currentScale()});
+      var canvas=document.createElement("canvas");
+      canvas.width=Math.max(1, Math.round(vp.width));
+      canvas.height=Math.max(1, Math.round(vp.height));
+      var ctx=canvas.getContext("2d");
+      if(fmtSel.value!=="png"){ ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,canvas.width,canvas.height); }
+      page.render({canvasContext:ctx, viewport:vp}).promise.then(function(){
+        var mime=mimeOf();
+        if(canvas.toBlob){
+          canvas.toBlob(function(blob){ cb(blob, canvas.width, canvas.height); }, mime, mime==="image/jpeg"?qualityOf():undefined);
+        }else{
+          var durl=canvas.toDataURL(mime, mime==="image/jpeg"?qualityOf():undefined);
+          cb(dataURLtoBlob(durl), canvas.width, canvas.height);
+        }
+      }).catch(function(){ cb(null,0,0); });
+    }).catch(function(){ cb(null,0,0); });
+  }
+
+  function dataURLtoBlob(durl){
+    var parts=durl.split(","), mime=parts[0].match(/:(.*?);/)[1];
+    var bin=atob(parts[1]), n=bin.length, u8=new Uint8Array(n);
+    while(n--){ u8[n]=bin.charCodeAt(n); }
+    return new Blob([u8], {type:mime});
+  }
+
+  function downloadBlob(blob, filename){
+    if(!blob) return;
+    if(navigator.msSaveBlob){ navigator.msSaveBlob(blob, filename); return; }
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function fileNameFor(pageNum){ return baseName+"_p"+pad(pageNum, numPages)+"."+extOf(); }
+
+  /* ---------- 페이지별 저장 ---------- */
+  function savePage(pageNum, btn){
+    if(!pdfDoc) return;
+    var label=btn.querySelector("span");
+    var oldLabel=label.textContent;
+    btn.disabled=true; label.textContent=T("piSaving");
+    renderPageToBlob(pageNum, function(blob){
+      if(blob) downloadBlob(blob, fileNameFor(pageNum));
+      else showError(T("piRenderError"));
+      label.textContent=oldLabel; btn.disabled=false;
+    });
+  }
+
+  /* ---------- 전체 저장 (순차, ~300ms 간격) ---------- */
+  function saveAll(){
+    if(!pdfDoc) return;
+    saveAllBtn.disabled=true;
+    var i=1;
+    function step(){
+      if(i>numPages){
+        statusEl.textContent=T("piDone");
+        saveAllBtn.disabled=false;
+        setTimeout(function(){ if(statusEl.textContent===T("piDone")) statusEl.textContent=""; }, 2500);
+        return;
+      }
+      statusEl.textContent=T("piConverting")+" "+i+"/"+numPages;
+      renderPageToBlob(i, function(blob){
+        if(blob) downloadBlob(blob, fileNameFor(i));
+        i++;
+        setTimeout(step, 300);
+      });
+    }
+    step();
+  }
+  saveAllBtn.addEventListener("click", saveAll);
+
+  /* ---------- 다국어 ---------- */
+  GritI18n.register({
+    ko:{
+      docTitle:"PDF를 이미지로 변환 — Grit Tools",
+      piTool:"PDF를 이미지로 변환", piAllTools:"← 모든 도구",
+      piTitle:"PDF를 이미지로 변환",
+      piSub:"PDF의 각 페이지를 PNG·JPEG 이미지로 변환합니다.",
+      piDropMain:"PDF 파일을 끌어다 놓거나 클릭",
+      piDropSub:"PDF 파일 한 개를 선택하세요",
+      piFormat:"출력 형식", piQuality:"품질 (JPEG)", piScale:"해상도",
+      piScale2:"2x · 고화질 (150 DPI)",
+      piSaveAll:"모든 페이지 저장", piSavePage:"이미지 저장",
+      piPrivacy:"PDF는 서버로 전송되지 않습니다. 모든 변환은 이 브라우저 안에서만 처리됩니다.",
+      piPagesTitle:"페이지", piPagesUnit:"페이지",
+      piPlaceholder:"PDF 파일을 불러오면 페이지 미리보기가 여기에 표시됩니다.",
+      piLoading:"불러오는 중…", piConverting:"변환 중", piSaving:"저장 중…", piDone:"완료",
+      piNotPdf:"PDF 파일만 지원합니다.",
+      piLoadError:"PDF를 여는 중 오류가 발생했습니다.",
+      piRenderError:"페이지를 변환하는 중 오류가 발생했습니다.",
+      piLibError:"PDF 처리 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 새로고침하세요.",
+      piHelpBtn:"사용법", piHelpClose:"닫기", piGuideTitle:"PDF를 이미지로 변환 사용법",
+      piStep1T:"PDF 불러오기",
+      piStep1D:"PDF 파일을 왼쪽 영역에 끌어다 놓거나 클릭해서 선택하세요. 페이지 미리보기가 바로 나타납니다.",
+      piStep2T:"형식·해상도 선택",
+      piStep2D:"출력 형식(PNG/JPEG), 해상도(1x~300 DPI), JPEG 품질을 고릅니다. 해상도가 높을수록 이미지가 선명하지만 용량이 커집니다.",
+      piStep3T:"이미지 저장",
+      piStep3D:"페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 <code>원본이름_p01.png</code> 형식입니다."
+    },
+    en:{
+      docTitle:"PDF to Image Converter — Grit Tools",
+      piTool:"PDF to Image", piAllTools:"← All tools",
+      piTitle:"PDF to Image Converter",
+      piSub:"Convert each page of a PDF into a PNG or JPEG image.",
+      piDropMain:"Drag & drop a PDF or click",
+      piDropSub:"Choose a single PDF file",
+      piFormat:"Output format", piQuality:"Quality (JPEG)", piScale:"Resolution",
+      piScale2:"2x · High quality (150 DPI)",
+      piSaveAll:"Save all pages", piSavePage:"Save image",
+      piPrivacy:"Your PDF is never uploaded. All conversion happens entirely inside this browser.",
+      piPagesTitle:"Pages", piPagesUnit:"pages",
+      piPlaceholder:"Load a PDF and page previews will appear here.",
+      piLoading:"Loading…", piConverting:"Converting", piSaving:"Saving…", piDone:"Done",
+      piNotPdf:"Only PDF files are supported.",
+      piLoadError:"An error occurred while opening the PDF.",
+      piRenderError:"An error occurred while converting the page.",
+      piLibError:"Failed to load the PDF library. Check your internet connection and reload.",
+      piHelpBtn:"How to use", piHelpClose:"Close", piGuideTitle:"How to use the PDF to image converter",
+      piStep1T:"Load a PDF",
+      piStep1D:"Drag & drop a PDF onto the left panel, or click to pick one. Page previews appear right away.",
+      piStep2T:"Pick format & resolution",
+      piStep2D:"Choose the output format (PNG/JPEG), resolution (1x–300 DPI) and JPEG quality. Higher resolution is sharper but larger.",
+      piStep3T:"Save images",
+      piStep3D:"Use each page's ‘Save image’ button for one page, or ‘Save all pages’ for the whole document. Files are named <code>originalname_p01.png</code>."
+    },
+    ja:{
+      docTitle:"PDF → 画像変換 — Grit Tools",
+      piTool:"PDF → 画像変換", piAllTools:"← すべてのツール",
+      piTitle:"PDF → 画像変換",
+      piSub:"PDFの各ページをPNG・JPEG画像に変換します。",
+      piDropMain:"PDFファイルをドラッグ＆ドロップ、またはクリック",
+      piDropSub:"PDFファイルを1つ選択してください",
+      piFormat:"出力形式", piQuality:"品質 (JPEG)", piScale:"解像度",
+      piScale2:"2x · 高画質 (150 DPI)",
+      piSaveAll:"全ページを保存", piSavePage:"画像を保存",
+      piPrivacy:"PDFはサーバーに送信されません。すべての変換はこのブラウザ内だけで処理されます。",
+      piPagesTitle:"ページ", piPagesUnit:"ページ",
+      piPlaceholder:"PDFファイルを読み込むと、ページのプレビューがここに表示されます。",
+      piLoading:"読み込み中…", piConverting:"変換中", piSaving:"保存中…", piDone:"完了",
+      piNotPdf:"PDFファイルのみ対応しています。",
+      piLoadError:"PDFを開く際にエラーが発生しました。",
+      piRenderError:"ページの変換中にエラーが発生しました。",
+      piLibError:"PDF処理ライブラリを読み込めませんでした。インターネット接続を確認して再読み込みしてください。",
+      piHelpBtn:"使い方", piHelpClose:"閉じる", piGuideTitle:"PDF → 画像変換の使い方",
+      piStep1T:"PDFを読み込む",
+      piStep1D:"PDFファイルを左の領域にドラッグ＆ドロップするか、クリックして選択します。ページのプレビューがすぐに表示されます。",
+      piStep2T:"形式・解像度を選ぶ",
+      piStep2D:"出力形式（PNG/JPEG）、解像度（1x〜300 DPI）、JPEGの品質を選びます。解像度が高いほど鮮明ですが容量は大きくなります。",
+      piStep3T:"画像を保存",
+      piStep3D:"各ページの「画像を保存」で1枚ずつ、または「全ページを保存」で全体をダウンロードします。ファイル名は <code>元の名前_p01.png</code> 形式です。"
+    },
+    zh:{
+      docTitle:"PDF → 图片转换 — Grit Tools",
+      piTool:"PDF → 图片转换", piAllTools:"← 所有工具",
+      piTitle:"PDF → 图片转换",
+      piSub:"将 PDF 的每一页转换为 PNG 或 JPEG 图片。",
+      piDropMain:"拖放 PDF 文件或点击",
+      piDropSub:"请选择一个 PDF 文件",
+      piFormat:"输出格式", piQuality:"质量 (JPEG)", piScale:"分辨率",
+      piScale2:"2x · 高画质 (150 DPI)",
+      piSaveAll:"保存所有页面", piSavePage:"保存图片",
+      piPrivacy:"PDF 不会被上传。所有转换都只在此浏览器内完成。",
+      piPagesTitle:"页面", piPagesUnit:"页",
+      piPlaceholder:"载入 PDF 文件后，页面预览将显示在这里。",
+      piLoading:"载入中…", piConverting:"转换中", piSaving:"保存中…", piDone:"完成",
+      piNotPdf:"仅支持 PDF 文件。",
+      piLoadError:"打开 PDF 时发生错误。",
+      piRenderError:"转换页面时发生错误。",
+      piLibError:"未能加载 PDF 处理库。请检查网络连接后重新加载。",
+      piHelpBtn:"使用方法", piHelpClose:"关闭", piGuideTitle:"PDF → 图片转换使用方法",
+      piStep1T:"载入 PDF",
+      piStep1D:"将 PDF 文件拖放到左侧区域，或点击选择。页面预览会立即出现。",
+      piStep2T:"选择格式与分辨率",
+      piStep2D:"选择输出格式（PNG/JPEG）、分辨率（1x–300 DPI）和 JPEG 质量。分辨率越高越清晰，但文件越大。",
+      piStep3T:"保存图片",
+      piStep3D:"用每页的“保存图片”按钮逐张保存，或用“保存所有页面”下载整份文档。文件名格式为 <code>原名称_p01.png</code>。"
+    }
+  });
+
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){
+    /* 동적으로 만든 카드 버튼/차원 라벨 갱신 */
+    if(numPages){ pageCountEl.textContent=numPages+" "+T("piPagesUnit"); }
+    if(pdfDoc){ fiMeta.textContent=fiMeta.textContent; }
+    for(var i=0;i<cards.length;i++){
+      var sp=cards[i].btn.querySelector("span"); if(sp) sp.textContent=T("piSavePage");
+    }
+    if(!pdfReady){ errBox.textContent=T("piLibError"); }
+  }});
+})();
+</script>
+</body>
+</html>

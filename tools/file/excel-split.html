@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>엑셀 시트별 나누기 — Grit Tools</title>
+<meta name="description" content="엑셀(xlsx·xls·csv) 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV 파일로 저장하는 도구. 모든 처리는 브라우저에서만 이뤄지며 파일은 서버로 전송되지 않습니다.">
+<meta name="keywords" content="엑셀 시트별 나누기, 엑셀 분리, 시트별 저장, xlsx split, excel split sheets, csv 변환">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="엑셀 시트별 나누기 — Grit Tools">
+<meta property="og:description" content="엑셀 워크북을 시트별로 분리해 개별 XLSX·CSV로 저장. 파일은 브라우저에서만 처리됩니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:380px 1fr; grid-template-areas:"input list"; }
+  .input-panel { grid-area:input; overflow:auto; }
+  .list-panel { grid-area:list; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  /* 드롭존 */
+  #drop { flex:0 0 auto; border:1.5px dashed var(--border-lit); border-radius:11px; background:var(--surface-2); padding:26px 18px; text-align:center; cursor:pointer; transition:border-color .15s,background .15s; }
+  #drop.drag { border-color:var(--blue); background:var(--blue-soft); }
+  #drop .dz-ic { width:34px; height:34px; margin:0 auto 10px; display:block; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  #drop .dz-t { font-size:14px; color:var(--text-dim); }
+  #drop .dz-s { font-size:12px; color:var(--text-muted); margin-top:5px; }
+  #drop .dz-link { color:var(--blue-dark); text-decoration:underline; }
+
+  .meta { margin:16px 0 0; font-size:13px; color:var(--text-dim); line-height:1.6; word-break:break-all; }
+  .meta b { color:var(--text); font-weight:600; }
+
+  .field { margin-top:18px; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:7px; }
+  .sel { position:relative; }
+  .sel select { width:100%; padding:12px 14px; font-size:14px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-ui); cursor:pointer; -webkit-appearance:none; appearance:none; }
+  .sel select:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .sel::after { content:"▾"; position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--text-muted); font-size:12px; pointer-events:none; }
+
+  .actions { margin-top:20px; display:flex; }
+  .act-btn { width:100%; justify-content:center; background:var(--blue); color:#fff; border:none; padding:13px 16px; border-radius:var(--radius-pill); font:inherit; font-size:14px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:background .15s; }
+  .act-btn:hover { background:var(--blue-dark); }
+  .act-btn:disabled { background:var(--surface-2); color:var(--text-muted); cursor:not-allowed; }
+  .act-btn svg { width:16px; height:16px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .act-btn:disabled svg { stroke:var(--text-muted); }
+
+  .privacy { margin:14px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; display:flex; gap:7px; align-items:flex-start; }
+  .privacy svg { width:14px; height:14px; flex:0 0 14px; margin-top:1px; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* 시트 목록 */
+  .list-head { flex:0 0 auto; display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+  .list-head h2 { margin:0; }
+  .selall { font-size:12px; color:var(--text-dim); display:inline-flex; align-items:center; gap:6px; cursor:pointer; user-select:none; }
+  .sheet-wrap { flex:1 1 auto; min-height:0; overflow:auto; border:1px solid var(--border); border-radius:9px; }
+  .sheet-empty { color:var(--text-muted); text-align:center; padding:48px 20px; font-size:13px; line-height:1.7; }
+  .srow { display:flex; align-items:center; gap:12px; padding:12px 14px; border-bottom:1px solid var(--border); }
+  .srow:last-child { border-bottom:none; }
+  .srow:hover { background:var(--surface-2); }
+  .srow input[type=checkbox] { width:16px; height:16px; flex:0 0 16px; accent-color:var(--blue); cursor:pointer; }
+  .srow .s-name { flex:1 1 auto; min-width:0; font-size:14px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .srow .s-rows { flex:0 0 auto; font-family:var(--font-mono); font-size:12px; color:var(--text-muted); }
+  .srow .s-dl { flex:0 0 auto; background:var(--surface); border:1px solid var(--border-lit); color:var(--text-dim); border-radius:var(--radius-pill); padding:5px 12px; font:inherit; font-size:11px; cursor:pointer; display:inline-flex; align-items:center; gap:5px; transition:border-color .15s,color .15s; }
+  .srow .s-dl:hover { border-color:var(--blue); color:var(--blue); }
+  .srow .s-dl svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .srow .s-rm { flex:0 0 auto; background:transparent; border:none; color:var(--text-muted); font-size:18px; line-height:1; cursor:pointer; padding:2px 7px; border-radius:6px; transition:color .15s,background .15s; }
+  .srow .s-rm:hover { color:#e0564f; background:var(--surface-2); }
+
+  /* 좁은 화면: 앱 고정 해제 → 스크롤 스택 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .panels { grid-template-columns:1fr; grid-template-areas:"input" "list"; }
+    .input-panel { overflow:visible; }
+    .list-panel .sheet-wrap { max-height:520px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 토스트 */
+  #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:9px 18px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:600; max-width:80%; box-shadow:var(--shadow-card); }
+  #toast.show { opacity:1; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "엑셀 시트별 나누기",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web browser",
+  "description": "엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV 파일로 저장하는 도구. 모든 처리는 브라우저에서만 이뤄집니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="xsTool">엑셀 시트별 나누기</span><button type="button" id="helpBtn" class="g-help" data-i18n="xsHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="xsAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="xsTitle">엑셀 시트별 나누기</h1>
+    <p class="calc-sub" data-i18n="xsSub">엑셀 워크북을 시트별로 분리해 각각 개별 파일로 저장합니다.</p>
+  </div>
+
+  <div class="panels">
+
+    <section class="panel input-panel">
+      <h2 data-i18n="xsInputTitle">파일 불러오기</h2>
+
+      <div id="drop">
+        <svg class="dz-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M8 8l4-4 4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+        <div class="dz-t" data-i18n-html="xsDropTitle">엑셀 파일을 끌어다 놓거나 <span class="dz-link">파일 선택</span></div>
+        <div class="dz-s" data-i18n="xsDropSub">.xlsx · .xls · .csv</div>
+        <input id="fileInput" type="file" accept=".xlsx,.xls,.csv" style="display:none;">
+      </div>
+
+      <p class="meta" id="meta" style="display:none;"></p>
+
+      <div class="field">
+        <label for="fmt" data-i18n="xsFormatLabel">출력 형식</label>
+        <div class="sel">
+          <select id="fmt">
+            <option value="xlsx" data-i18n="xsFmtXlsx">분리된 XLSX (시트마다 .xlsx)</option>
+            <option value="csv" data-i18n="xsFmtCsv">CSV (시트마다 .csv)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="act-btn" id="dlAllBtn" disabled>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          <span data-i18n="xsDownloadAll">선택 시트 전체 다운로드</span>
+        </button>
+      </div>
+
+      <p class="privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span data-i18n="xsPrivacy">파일은 서버로 전송되지 않습니다. 모든 처리는 브라우저 안에서만 이뤄집니다.</span>
+      </p>
+    </section>
+
+    <section class="panel list-panel">
+      <div class="list-head">
+        <h2 data-i18n="xsSheetsTitle">시트 목록</h2>
+        <label class="selall" id="selAllWrap" style="display:none;">
+          <input type="checkbox" id="selAll" checked>
+          <span data-i18n="xsSelectAll">전체 선택</span>
+        </label>
+      </div>
+      <div class="sheet-wrap">
+        <div id="sheetList"><div class="sheet-empty" data-i18n-html="xsEmpty">엑셀 파일을 불러오면<br>시트 목록이 여기에 표시됩니다.</div></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div id="toast"></div>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="xsHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="xsGuideTitle">엑셀 시트별 나누기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="xsStep1T">파일 불러오기</span></div>
+        <p class="hs-d" data-i18n="xsStep1D">엑셀(.xlsx·.xls·.csv) 파일을 끌어다 놓거나 ‘파일 선택’으로 엽니다. 시트 이름과 행 수가 목록에 나타납니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="xsStep2T">시트·형식 고르기</span></div>
+        <p class="hs-d" data-i18n="xsStep2D">저장할 시트를 체크하고 출력 형식(분리된 XLSX 또는 CSV)을 고르세요. 기본은 모든 시트가 선택됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="xsStep3T">시트별 저장</span></div>
+        <p class="hs-d" data-i18n-html="xsStep3D">시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 <code>원본명__시트명</code> 형식입니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal"), dropEl=$("drop"), fileInput=$("fileInput");
+  var metaEl=$("meta"), listEl=$("sheetList"), fmtSel=$("fmt");
+  var dlAllBtn=$("dlAllBtn"), selAll=$("selAll"), selAllWrap=$("selAllWrap");
+
+  var workbook=null;   // XLSX workbook
+  var baseName="";     // 원본 파일명(확장자 제거)
+  var sheets=[];       // [{name, rows, checked}]
+
+  /* ---------- 사용법 모달 ---------- */
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* ---------- 토스트 ---------- */
+  var toastT;
+  function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.remove("show"); },1800); }
+
+  /* ---------- 라이브러리 로드 확인 ---------- */
+  function libReady(){
+    if(typeof XLSX==="undefined" || !XLSX || !XLSX.read){ toast(T("xsLibFail")); return false; }
+    return true;
+  }
+
+  /* ---------- 파일명 정리 ---------- */
+  function stripExt(name){ return String(name).replace(/\.[^.]+$/, ""); }
+  function sanitize(s){
+    // 파일명에 못 쓰는 문자 → _, 양끝 공백/점 정리
+    return String(s).replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, " ").replace(/^[. ]+|[. ]+$/g, "").slice(0,120) || "sheet";
+  }
+
+  /* ---------- 파일 불러오기 ---------- */
+  dropEl.addEventListener("click", function(){ fileInput.click(); });
+  fileInput.addEventListener("change", function(e){
+    var f=(e.target.files||[])[0];
+    if(f) readFile(f);
+    e.target.value="";
+  });
+  ["dragenter","dragover"].forEach(function(ev){
+    dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.add("drag"); });
+  });
+  ["dragleave","dragend"].forEach(function(ev){
+    dropEl.addEventListener(ev, function(e){ e.preventDefault(); dropEl.classList.remove("drag"); });
+  });
+  dropEl.addEventListener("drop", function(e){
+    e.preventDefault(); dropEl.classList.remove("drag");
+    if(e.dataTransfer){ var f=(e.dataTransfer.files||[])[0]; if(f) readFile(f); }
+  });
+  // 페이지 전체 드롭 방지(브라우저가 파일을 열어버리는 것 방지)
+  ["dragover","drop"].forEach(function(ev){
+    window.addEventListener(ev, function(e){ if(e.target!==dropEl && !dropEl.contains(e.target)) e.preventDefault(); });
+  });
+
+  function readFile(f){
+    if(!libReady()) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var data=new Uint8Array(rd.result);
+        workbook=XLSX.read(data, {type:"array", cellStyles:true, cellNF:true});
+      }catch(err){ toast(T("xsReadFail")); return; }
+      if(!workbook || !workbook.SheetNames || !workbook.SheetNames.length){ toast(T("xsNoSheets")); return; }
+      baseName=stripExt(f.name);
+      buildSheets();
+    };
+    rd.onerror=function(){ toast(T("xsReadFail")); };
+    rd.readAsArrayBuffer(f);
+  }
+
+  function rowCount(ws){
+    try{
+      var arr=XLSX.utils.sheet_to_json(ws, {header:1, blankrows:false});
+      return arr.length;
+    }catch(e){ return 0; }
+  }
+
+  function buildSheets(){
+    sheets=[];
+    for(var i=0;i<workbook.SheetNames.length;i++){
+      var nm=workbook.SheetNames[i];
+      sheets.push({ name:nm, rows:rowCount(workbook.Sheets[nm]), checked:true });
+    }
+    metaEl.style.display="block";
+    metaEl.innerHTML="";
+    var fileLabel=document.createElement("span");
+    fileLabel.appendChild(document.createTextNode(T("xsMetaFile")+" "));
+    var b1=document.createElement("b"); b1.textContent=baseName; fileLabel.appendChild(b1);
+    fileLabel.appendChild(document.createElement("br"));
+    fileLabel.appendChild(document.createTextNode(T("xsMetaSheets")+" "));
+    var b2=document.createElement("b"); b2.textContent=String(sheets.length); fileLabel.appendChild(b2);
+    metaEl.appendChild(fileLabel);
+
+    selAllWrap.style.display="inline-flex";
+    selAll.checked=true;
+    renderList();
+    syncAll();
+  }
+
+  /* ---------- 시트 목록 렌더 ---------- */
+  function renderList(){
+    if(!sheets.length){
+      listEl.innerHTML='<div class="sheet-empty">'+T("xsEmpty")+'</div>';
+      return;
+    }
+    listEl.innerHTML="";
+    var fmtIsCsv=(fmtSel.value==="csv");
+    var ext=fmtIsCsv?".csv":".xlsx";
+    sheets.forEach(function(s, i){
+      var row=document.createElement("div"); row.className="srow";
+
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=s.checked;
+      cb.addEventListener("change", function(){ s.checked=cb.checked; syncAll(); });
+
+      var nm=document.createElement("span"); nm.className="s-name"; nm.textContent=s.name; nm.title=s.name;
+
+      var rc=document.createElement("span"); rc.className="s-rows";
+      rc.textContent=fmtRows(s.rows);
+
+      var dl=document.createElement("button"); dl.type="button"; dl.className="s-dl";
+      dl.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>'+T("xsRowDownload")+ext+'</span>';
+      dl.addEventListener("click", function(){ downloadSheet(s.name); });
+
+      var rm=document.createElement("button"); rm.type="button"; rm.className="s-rm";
+      rm.title=T("xsRemove"); rm.setAttribute("aria-label", T("xsRemove")); rm.textContent="×";
+      rm.addEventListener("click", function(){ removeSheet(s.name); });
+
+      row.appendChild(cb); row.appendChild(nm); row.appendChild(rc); row.appendChild(dl); row.appendChild(rm);
+      listEl.appendChild(row);
+    });
+  }
+  function removeSheet(name){
+    for(var i=0;i<sheets.length;i++){ if(sheets[i].name===name){ sheets.splice(i,1); break; } }
+    renderList(); syncAll();
+  }
+  function fmtRows(n){ return n.toLocaleString() + " " + T("xsRowsUnit"); }
+
+  function syncAll(){
+    var any=false, all=sheets.length>0;
+    for(var i=0;i<sheets.length;i++){ if(sheets[i].checked) any=true; else all=false; }
+    selAll.checked=all;
+    dlAllBtn.disabled=!any;
+  }
+
+  selAll.addEventListener("change", function(){
+    for(var i=0;i<sheets.length;i++) sheets[i].checked=selAll.checked;
+    renderList(); syncAll();
+  });
+  fmtSel.addEventListener("change", renderList);
+
+  /* ---------- 다운로드 ---------- */
+  function triggerDownload(blob, filename){
+    if(navigator.msSaveBlob){ navigator.msSaveBlob(blob, filename); return; }
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 0);
+  }
+
+  function outName(sheetName){
+    var fmtIsCsv=(fmtSel.value==="csv");
+    return sanitize(baseName) + "__" + sanitize(sheetName) + (fmtIsCsv?".csv":".xlsx");
+  }
+
+  function downloadSheet(sheetName){
+    if(!workbook || !libReady()) return;
+    var ws=workbook.Sheets[sheetName];
+    if(!ws){ toast(T("xsReadFail")); return; }
+    var fmtIsCsv=(fmtSel.value==="csv");
+    var blob;
+    try{
+      if(fmtIsCsv){
+        var csv=XLSX.utils.sheet_to_csv(ws);
+        blob=new Blob(["﻿"+csv], {type:"text/csv;charset=utf-8"});
+      }else{
+        var wb=XLSX.utils.book_new();
+        // 시트 이름은 31자 제한 → 잘라서 안전하게
+        var safeName=String(sheetName).replace(/[\\/?*\[\]:]/g,"_").slice(0,31) || "Sheet1";
+        XLSX.utils.book_append_sheet(wb, ws, safeName);
+        var wbout=XLSX.write(wb, {bookType:"xlsx", type:"array", cellStyles:true});
+        blob=new Blob([wbout], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+      }
+    }catch(err){ toast(T("xsReadFail")); return; }
+    triggerDownload(blob, outName(sheetName));
+  }
+
+  dlAllBtn.addEventListener("click", function(){
+    if(!workbook || !libReady()) return;
+    var selected=[];
+    for(var i=0;i<sheets.length;i++) if(sheets[i].checked) selected.push(sheets[i].name);
+    if(!selected.length){ toast(T("xsNoneSelected")); return; }
+    // 순차 다운로드 (~300ms 간격) — 브라우저 다중 다운로드 차단 회피
+    var idx=0;
+    function next(){
+      if(idx>=selected.length){ toast(T("xsDoneAll").replace("{n}", selected.length)); return; }
+      downloadSheet(selected[idx]);
+      idx++;
+      setTimeout(next, 300);
+    }
+    next();
+  });
+
+  /* ---------- 다국어 ---------- */
+  GritI18n.register({
+    ko:{
+      docTitle:"엑셀 시트별 나누기 — Grit Tools",
+      xsTool:"엑셀 시트별 나누기", xsAllTools:"← 모든 도구",
+      xsTitle:"엑셀 시트별 나누기",
+      xsSub:"엑셀 워크북을 시트별로 분리해 각각 개별 파일로 저장합니다.",
+      xsInputTitle:"파일 불러오기",
+      xsDropTitle:"엑셀 파일을 끌어다 놓거나 <span class=\"dz-link\">파일 선택</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"출력 형식",
+      xsFmtXlsx:"분리된 XLSX (시트마다 .xlsx)",
+      xsFmtCsv:"CSV (시트마다 .csv)",
+      xsDownloadAll:"선택 시트 전체 다운로드",
+      xsPrivacy:"파일은 서버로 전송되지 않습니다. 모든 처리는 브라우저 안에서만 이뤄집니다.",
+      xsSheetsTitle:"시트 목록", xsSelectAll:"전체 선택",
+      xsEmpty:"엑셀 파일을 불러오면<br>시트 목록이 여기에 표시됩니다.",
+      xsRowsUnit:"행", xsRowDownload:"저장", xsRemove:"제거",
+      xsMetaFile:"원본 파일:", xsMetaSheets:"시트 수:",
+      xsDoneAll:"{n}개 시트를 저장했습니다.",
+      xsNoneSelected:"선택된 시트가 없습니다.",
+      xsLibFail:"엑셀 라이브러리를 불러오지 못했습니다. 네트워크를 확인하세요.",
+      xsReadFail:"파일을 읽지 못했습니다.",
+      xsNoSheets:"시트를 찾을 수 없습니다.",
+      xsHelpBtn:"사용법", xsHelpClose:"닫기", xsGuideTitle:"엑셀 시트별 나누기 사용법",
+      xsStep1T:"파일 불러오기",
+      xsStep1D:"엑셀(.xlsx·.xls·.csv) 파일을 끌어다 놓거나 ‘파일 선택’으로 엽니다. 시트 이름과 행 수가 목록에 나타납니다.",
+      xsStep2T:"시트·형식 고르기",
+      xsStep2D:"저장할 시트를 체크하고 출력 형식(분리된 XLSX 또는 CSV)을 고르세요. 기본은 모든 시트가 선택됩니다.",
+      xsStep3T:"시트별 저장",
+      xsStep3D:"시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 <code>원본명__시트명</code> 형식입니다."
+    },
+    en:{
+      docTitle:"Excel Sheet Splitter — Grit Tools",
+      xsTool:"Excel Sheet Splitter", xsAllTools:"← All tools",
+      xsTitle:"Excel Sheet Splitter",
+      xsSub:"Split a workbook into its sheets and save each one as a separate file.",
+      xsInputTitle:"Load file",
+      xsDropTitle:"Drag &amp; drop an Excel file or <span class=\"dz-link\">choose a file</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Output format",
+      xsFmtXlsx:"Separate XLSX (one .xlsx per sheet)",
+      xsFmtCsv:"CSV (one .csv per sheet)",
+      xsDownloadAll:"Download all selected sheets",
+      xsPrivacy:"Files are never uploaded. Everything is processed inside your browser.",
+      xsSheetsTitle:"Sheets", xsSelectAll:"Select all",
+      xsEmpty:"Load an Excel file and<br>its sheets will appear here.",
+      xsRowsUnit:"rows", xsRowDownload:"Save", xsRemove:"Remove",
+      xsMetaFile:"Source file:", xsMetaSheets:"Sheets:",
+      xsDoneAll:"Saved {n} sheet(s).",
+      xsNoneSelected:"No sheets selected.",
+      xsLibFail:"Failed to load the spreadsheet library. Check your network.",
+      xsReadFail:"Could not read the file.",
+      xsNoSheets:"No sheets found.",
+      xsHelpBtn:"How to use", xsHelpClose:"Close", xsGuideTitle:"How to use the Excel Sheet Splitter",
+      xsStep1T:"Load a file",
+      xsStep1D:"Drag &amp; drop an Excel (.xlsx · .xls · .csv) file or pick one with ‘choose a file’. Sheet names and row counts appear in the list.",
+      xsStep2T:"Pick sheets &amp; format",
+      xsStep2D:"Check the sheets you want and choose the output format (separate XLSX or CSV). All sheets are selected by default.",
+      xsStep3T:"Save per sheet",
+      xsStep3D:"Press ‘Save’ on each sheet, or use ‘Download all selected sheets’ at once. File names use the <code>original__sheet</code> pattern."
+    },
+    ja:{
+      docTitle:"Excelシート分割 — Grit Tools",
+      xsTool:"Excelシート分割", xsAllTools:"← すべてのツール",
+      xsTitle:"Excelシート分割",
+      xsSub:"ワークブックをシートごとに分割し、それぞれを個別のファイルとして保存します。",
+      xsInputTitle:"ファイル読み込み",
+      xsDropTitle:"Excelファイルをドラッグ＆ドロップ、または <span class=\"dz-link\">ファイルを選択</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"出力形式",
+      xsFmtXlsx:"分割XLSX（シートごとに .xlsx）",
+      xsFmtCsv:"CSV（シートごとに .csv）",
+      xsDownloadAll:"選択したシートを一括ダウンロード",
+      xsPrivacy:"ファイルはサーバーに送信されません。すべての処理はブラウザ内で行われます。",
+      xsSheetsTitle:"シート一覧", xsSelectAll:"すべて選択",
+      xsEmpty:"Excelファイルを読み込むと<br>シート一覧がここに表示されます。",
+      xsRowsUnit:"行", xsRowDownload:"保存", xsRemove:"削除",
+      xsMetaFile:"元ファイル:", xsMetaSheets:"シート数:",
+      xsDoneAll:"{n}件のシートを保存しました。",
+      xsNoneSelected:"シートが選択されていません。",
+      xsLibFail:"スプレッドシートライブラリを読み込めませんでした。ネットワークを確認してください。",
+      xsReadFail:"ファイルを読み込めませんでした。",
+      xsNoSheets:"シートが見つかりません。",
+      xsHelpBtn:"使い方", xsHelpClose:"閉じる", xsGuideTitle:"Excelシート分割の使い方",
+      xsStep1T:"ファイル読み込み",
+      xsStep1D:"Excel（.xlsx・.xls・.csv）ファイルをドラッグ＆ドロップするか「ファイルを選択」で開きます。シート名と行数が一覧に表示されます。",
+      xsStep2T:"シートと形式を選択",
+      xsStep2D:"保存したいシートにチェックを入れ、出力形式（分割XLSXまたはCSV）を選びます。初期状態ですべて選択されています。",
+      xsStep3T:"シートごとに保存",
+      xsStep3D:"各シートの「保存」を押すか、「選択したシートを一括ダウンロード」でまとめて保存します。ファイル名は <code>元名__シート名</code> 形式です。"
+    },
+    zh:{
+      docTitle:"Excel 工作表拆分 — Grit Tools",
+      xsTool:"Excel 工作表拆分", xsAllTools:"← 所有工具",
+      xsTitle:"Excel 工作表拆分",
+      xsSub:"将工作簿按工作表拆分，并将每个工作表保存为单独的文件。",
+      xsInputTitle:"载入文件",
+      xsDropTitle:"拖放 Excel 文件，或 <span class=\"dz-link\">选择文件</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"输出格式",
+      xsFmtXlsx:"拆分 XLSX（每个工作表一个 .xlsx）",
+      xsFmtCsv:"CSV（每个工作表一个 .csv）",
+      xsDownloadAll:"下载全部所选工作表",
+      xsPrivacy:"文件不会上传到服务器。所有处理都在浏览器中完成。",
+      xsSheetsTitle:"工作表列表", xsSelectAll:"全选",
+      xsEmpty:"载入 Excel 文件后<br>工作表列表会显示在这里。",
+      xsRowsUnit:"行", xsRowDownload:"保存", xsRemove:"移除",
+      xsMetaFile:"源文件:", xsMetaSheets:"工作表数:",
+      xsDoneAll:"已保存 {n} 个工作表。",
+      xsNoneSelected:"未选择任何工作表。",
+      xsLibFail:"无法加载表格库，请检查网络。",
+      xsReadFail:"无法读取文件。",
+      xsNoSheets:"未找到工作表。",
+      xsHelpBtn:"使用方法", xsHelpClose:"关闭", xsGuideTitle:"Excel 工作表拆分使用方法",
+      xsStep1T:"载入文件",
+      xsStep1D:"拖放 Excel（.xlsx·.xls·.csv）文件，或用“选择文件”打开。工作表名称和行数会显示在列表中。",
+      xsStep2T:"选择工作表与格式",
+      xsStep2D:"勾选要保存的工作表，并选择输出格式（拆分 XLSX 或 CSV）。默认全部选中。",
+      xsStep3T:"逐表保存",
+      xsStep3D:"点击各工作表的“保存”，或用“下载全部所选工作表”一次性保存。文件名采用 <code>原名__工作表名</code> 格式。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ if(sheets.length) renderList(); } });
+})();
+</script>
+</body>
+</html>

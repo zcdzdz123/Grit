@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이미지 색상 추출 (스포이드) — Grit Tools</title>
+<meta name="description" content="이미지를 끌어다 놓고 마우스로 픽셀을 찍어 HEX·RGB·HSL 색상값을 바로 복사하는 스포이드 도구. 돋보기 미리보기와 최근 색상 팔레트 제공. 이미지는 서버로 전송되지 않습니다.">
+<meta name="keywords" content="색상 추출, 스포이드, 컬러 픽커, 이미지 색 추출, HEX, RGB, HSL, color picker, eyedropper, image color picker">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="이미지 색상 추출 (스포이드) — Grit Tools">
+<meta property="og:description" content="이미지에서 픽셀을 찍어 HEX·RGB·HSL 값을 바로 복사. 돋보기와 최근 색상 팔레트 지원.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow:hidden; }
+  body { padding-top:38px; }
+  #app { display:flex; height:calc(100vh - 38px); }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(12,10,9,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:520px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; color:var(--text); }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; color:var(--text); }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 사이드바 */
+  #sidebar { width:320px; min-width:320px; display:flex; flex-direction:column; border-right:1px solid var(--border); background:var(--surface); overflow:auto; }
+  .sec-title { padding:9px 12px; font-size:12px; font-weight:500; color:var(--text-dim); background:var(--surface-2); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+  .btn { background:var(--blue); color:#fff; border:none; padding:6px 12px; border-radius:var(--radius-pill); cursor:pointer; font-size:12px; font-weight:500; font-family:var(--font-ui); }
+  .btn:hover { background:var(--blue-dark); }
+  .btn.sm { padding:4px 10px; font-size:11px; background:var(--surface); color:var(--text); border:1px solid var(--border); }
+  .btn.sm:hover { background:var(--surface-2); border-color:var(--border-lit); }
+
+  .pad { padding:14px 12px; }
+
+  /* 큰 색 미리보기 */
+  #pickedBig { width:100%; height:96px; border-radius:10px; border:1px solid var(--border-lit); background:var(--surface-2); box-shadow:inset 0 0 0 1px rgba(255,255,255,.03); }
+  #pickedHint { margin:10px 2px 0; font-size:12px; color:var(--text-muted); line-height:1.55; text-align:center; }
+
+  /* 값 행 */
+  .vrow { display:flex; align-items:center; gap:8px; margin-top:10px; }
+  .vrow .vlbl { flex:0 0 38px; font-size:11px; color:var(--text-muted); font-weight:600; letter-spacing:.04em; }
+  .vrow .vval { flex:1 1 auto; min-width:0; background:var(--surface); border:1px solid var(--border-lit); border-radius:6px; padding:7px 9px; font-family:var(--font-mono); font-size:13px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .vrow .copy { flex:0 0 auto; }
+
+  /* 라이브 미리보기 (커서 색) */
+  #liveBox { display:flex; align-items:center; gap:10px; padding:10px 12px; border-bottom:1px solid var(--border); background:var(--surface); }
+  #liveSw { width:34px; height:34px; flex:0 0 34px; border-radius:7px; border:1px solid var(--border-lit); background:var(--surface-2); }
+  #liveTxt { font-family:var(--font-mono); font-size:13px; color:var(--text-dim); }
+  #liveTxt b { color:var(--blue-dark); font-weight:600; }
+
+  /* 최근 색 팔레트 */
+  #swatches { display:flex; flex-wrap:wrap; gap:7px; padding:12px; }
+  #swatches .sw { width:30px; height:30px; border-radius:7px; border:1px solid var(--border-lit); cursor:pointer; position:relative; transition:transform .1s; }
+  #swatches .sw:hover { transform:scale(1.12); border-color:var(--blue); }
+  #swEmpty { padding:14px 12px; font-size:12px; color:var(--text-muted); line-height:1.55; }
+
+  .privacy { padding:12px; font-size:11px; color:var(--text-muted); line-height:1.55; border-top:1px solid var(--border); display:flex; gap:7px; align-items:flex-start; }
+  .privacy svg { width:14px; height:14px; flex:0 0 14px; margin-top:1px; stroke:var(--text-muted); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* 메인 / 캔버스 */
+  #main { flex:1; display:flex; flex-direction:column; min-width:0; }
+  #toolbar { display:flex; align-items:center; gap:8px; padding:7px 12px; background:var(--surface); border-bottom:1px solid var(--border); font-size:12px; }
+  #toolbar .zoomval { min-width:54px; text-align:center; font-family:var(--font-mono); color:var(--text-dim); }
+  #hint { color:var(--text-muted); }
+  #openLabel { cursor:pointer; }
+  #viewerWrap { flex:1; overflow:auto; background:var(--surface-2); position:relative; }
+  #stage { position:relative; transform-origin:0 0; }
+  #view { display:block; image-rendering:pixelated; image-rendering:crisp-edges; box-shadow:0 2px 14px rgba(12,10,9,.35); cursor:crosshair; }
+  #empty { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--text-muted); text-align:center; font-size:13px; line-height:1.7; padding:24px; }
+  #empty.hide { display:none; }
+  #empty .big { font-size:15px; color:var(--text-dim); margin-bottom:8px; }
+  #dropring { position:absolute; inset:14px; border:2px dashed var(--border-lit); border-radius:14px; pointer-events:none; }
+  #viewerWrap.dragover #dropring { border-color:var(--blue); background:var(--blue-soft); }
+
+  #loupe { position:fixed; width:170px; height:170px; border:2px solid var(--blue); background:#222; pointer-events:none; display:none; z-index:50; box-shadow:var(--shadow-card); border-radius:8px; }
+  #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:8px 16px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:60; max-width:70%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; box-shadow:var(--shadow-card); }
+  #toast.show { opacity:1; }
+
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    #app { height:auto; overflow:visible; flex-direction:column; }
+    #sidebar { width:100%; min-width:0; border-right:none; border-bottom:1px solid var(--border); }
+    #viewerWrap { min-height:60vh; }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "이미지 색상 추출 (스포이드)",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Web browser",
+  "description": "이미지에서 픽셀을 찍어 HEX·RGB·HSL 색상값을 바로 복사하는 스포이드 도구. 돋보기 미리보기와 최근 색상 팔레트 제공. 이미지는 서버로 전송되지 않습니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="cpTool">이미지 색상 추출</span><button type="button" id="helpBtn" class="g-help" data-i18n="cpHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="cpAllTools">← 모든 도구</a></div>
+
+  <div id="sidebar">
+    <div class="sec-title">
+      <span data-i18n="cpSecImage">이미지</span>
+      <label class="btn sm" id="openLabel" style="cursor:pointer;" data-i18n-title="cpOpenImageTitle"><span data-i18n="cpOpenImage">이미지 열기</span>
+        <input id="fileInput" type="file" accept="image/*" style="display:none;">
+      </label>
+    </div>
+
+    <div id="liveBox">
+      <div id="liveSw"></div>
+      <div id="liveTxt"><span data-i18n="cpLiveLabel">커서</span> <b id="liveHex">—</b></div>
+    </div>
+
+    <div class="sec-title"><span data-i18n="cpSecPicked">추출한 색상</span></div>
+    <div class="pad">
+      <div id="pickedBig"></div>
+      <div id="pickedVals" style="display:none;">
+        <div class="vrow"><span class="vlbl">HEX</span><span class="vval" id="vHex">—</span><button class="btn sm copy" data-copy="hex" data-i18n="cpCopy">복사</button></div>
+        <div class="vrow"><span class="vlbl">RGB</span><span class="vval" id="vRgb">—</span><button class="btn sm copy" data-copy="rgb" data-i18n="cpCopy">복사</button></div>
+        <div class="vrow"><span class="vlbl">HSL</span><span class="vval" id="vHsl">—</span><button class="btn sm copy" data-copy="hsl" data-i18n="cpCopy">복사</button></div>
+      </div>
+      <div id="pickedHint" data-i18n="cpPickHint">이미지 위를 클릭해 색을 추출하세요</div>
+    </div>
+
+    <div class="sec-title">
+      <span data-i18n="cpSecRecent">최근 색상</span>
+      <button class="btn sm" id="clearBtn" data-i18n="cpClear">비우기</button>
+    </div>
+    <div id="swEmpty" data-i18n="cpRecentEmpty">아직 추출한 색이 없습니다. 스와치를 클릭하면 다시 선택돼요.</div>
+    <div id="swatches" style="display:none;"></div>
+
+    <div class="privacy">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+      <span data-i18n="cpPrivacy">이미지는 서버로 전송되지 않습니다. 모든 처리는 브라우저에서만 이뤄집니다.</span>
+    </div>
+  </div>
+
+  <div id="main">
+    <div id="toolbar">
+      <button class="btn sm" id="zoomOut">−</button>
+      <span class="zoomval" id="zoomVal">100%</span>
+      <button class="btn sm" id="zoomIn">＋</button>
+      <button class="btn sm" id="fitBtn" data-i18n="cpFit">맞춤</button>
+      <button class="btn sm" id="oneBtn" data-i18n="cpOne">1:1</button>
+      <span id="hint" data-i18n="cpHint">| 마우스를 올려 색을 미리보고 클릭해서 추출하세요</span>
+    </div>
+    <div id="viewerWrap">
+      <div id="stage" style="display:none;">
+        <canvas id="view"></canvas>
+      </div>
+      <div id="empty">
+        <div class="big" data-i18n="cpEmptyBig">이미지를 끌어다 놓으세요</div>
+        <div data-i18n="cpEmptySub">또는 ‘이미지 열기’로 선택하세요</div>
+      </div>
+      <div id="dropring"></div>
+    </div>
+  </div>
+</div>
+
+<canvas id="loupe" width="170" height="170"></canvas>
+<div id="toast"></div>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="cpHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="cpGuideTitle">이미지 색상 추출 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="cpStep1T">이미지 열기</span></div>
+        <p class="hs-d" data-i18n="cpStep1D">‘이미지 열기’ 버튼으로 고르거나 이미지 파일을 화면에 끌어다 놓으세요. 이미지는 서버로 전송되지 않습니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="cpStep2T">올려서 미리보고 클릭해 추출</span></div>
+        <p class="hs-d" data-i18n="cpStep2D">이미지 위로 마우스를 움직이면 따라다니는 돋보기가 픽셀을 확대해 보여줍니다. 원하는 지점을 클릭하면 그 색이 추출됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="cpStep3T">값 복사 · 팔레트</span></div>
+        <p class="hs-d" data-i18n-html="cpStep3D">추출한 색의 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+
+  var view=$("view"), ctx=view.getContext("2d");
+  var stage=$("stage"), wrap=$("viewerWrap"), emptyEl=$("empty");
+  var loupe=$("loupe"), lctx=loupe.getContext("2d");
+  var zoomVal=$("zoomVal"), helpModal=$("helpModal");
+  var liveSw=$("liveSw"), liveHex=$("liveHex");
+  var pickedBig=$("pickedBig"), pickedVals=$("pickedVals"), pickedHint=$("pickedHint");
+  var swatchesEl=$("swatches"), swEmpty=$("swEmpty");
+  lctx.imageSmoothingEnabled=false;
+
+  /* 오프스크린 풀해상도 캔버스 (정확한 픽셀 읽기용) */
+  var off=document.createElement("canvas"), octx=off.getContext("2d");
+  var imgW=0, imgH=0, zoom=1, hasImg=false;
+  var current=null;          // 현재 추출한 색 {r,g,b}
+  var recent=[];             // 최근 색 hex 배열
+  var lastMouse={x:0,y:0};
+
+  /* ---------- 사용법 모달 ---------- */
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+
+  /* ---------- 색 변환 ---------- */
+  function hx(v){ var s=v.toString(16); return s.length<2 ? "0"+s : s; }
+  function toHex(c){ return "#"+hx(c.r)+hx(c.g)+hx(c.b); }
+  function toRgb(c){ return "rgb("+c.r+", "+c.g+", "+c.b+")"; }
+  function toHsl(c){
+    var r=c.r/255, g=c.g/255, b=c.b/255;
+    var mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn;
+    var h=0, s=0, l=(mx+mn)/2;
+    if(d!==0){
+      s = l>0.5 ? d/(2-mx-mn) : d/(mx+mn);
+      if(mx===r) h=(g-b)/d + (g<b?6:0);
+      else if(mx===g) h=(b-r)/d + 2;
+      else h=(r-g)/d + 4;
+      h/=6;
+    }
+    return "hsl("+Math.round(h*360)+", "+Math.round(s*100)+"%, "+Math.round(l*100)+"%)";
+  }
+
+  /* ---------- 복사 ---------- */
+  function doCopy(text){
+    var ok=false;
+    if(window.clipboardData && window.clipboardData.setData){
+      try{ window.clipboardData.setData("Text", text); ok=true; }catch(e){}
+    }
+    if(!ok){
+      var ta=document.createElement("textarea"); ta.value=text;
+      ta.style.position="fixed"; ta.style.left="-9999px"; ta.style.top="0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      try{ ta.setSelectionRange(0,text.length); }catch(e){}
+      try{ ok=document.execCommand("copy"); }catch(e){ ok=false; }
+      document.body.removeChild(ta);
+    }
+    return ok;
+  }
+  function copyText(text){
+    var ok=doCopy(text);
+    toast(ok ? (T("cpCopied")+": "+text) : T("cpCopyFail"));
+  }
+
+  /* ---------- 파일 불러오기 ---------- */
+  $("fileInput").addEventListener("change", function(e){
+    var f=(e.target.files||[])[0];
+    if(f) loadFile(f);
+    e.target.value="";
+  });
+  function loadFile(file){
+    if(!/^image\//.test(file.type) && !/\.(png|jpe?g|bmp|gif|webp|svg)$/i.test(file.name||"")){
+      toast(T("cpNotImage")); return;
+    }
+    var url=URL.createObjectURL(file);
+    var im=new Image();
+    im.onload=function(){
+      imgW=im.naturalWidth; imgH=im.naturalHeight;
+      off.width=imgW; off.height=imgH;
+      octx.clearRect(0,0,imgW,imgH);
+      octx.drawImage(im,0,0);
+      hasImg=true;
+      emptyEl.classList.add("hide");
+      stage.style.display="block";
+      fit();
+      URL.revokeObjectURL(url);
+    };
+    im.onerror=function(){ toast(T("cpLoadFail")); URL.revokeObjectURL(url); };
+    im.src=url;
+  }
+
+  ["dragenter","dragover"].forEach(function(ev){
+    wrap.addEventListener(ev, function(e){ e.preventDefault(); wrap.classList.add("dragover"); });
+  });
+  ["dragleave","drop"].forEach(function(ev){
+    wrap.addEventListener(ev, function(e){ e.preventDefault(); if(ev==="drop"||e.target===wrap||e.target.id==="dropring"||e.target.id==="empty") wrap.classList.remove("dragover"); });
+  });
+  wrap.addEventListener("drop", function(e){
+    e.preventDefault(); wrap.classList.remove("dragover");
+    if(e.dataTransfer){ var f=(e.dataTransfer.files||[])[0]; if(f) loadFile(f); }
+  });
+
+  /* ---------- 줌 ---------- */
+  function applyZoom(){
+    if(!hasImg) return;
+    var w=Math.round(imgW*zoom), h=Math.round(imgH*zoom);
+    view.width=imgW; view.height=imgH;          // 캔버스 내부 해상도 = 원본
+    ctx.clearRect(0,0,imgW,imgH);
+    ctx.drawImage(off,0,0);
+    view.style.width=w+"px"; view.style.height=h+"px";
+    stage.style.width=w+"px"; stage.style.height=h+"px";
+    zoomVal.textContent=Math.round(zoom*100)+"%";
+  }
+  function setZoom(z){ zoom=Math.max(0.05,Math.min(40,z)); applyZoom(); }
+  function fit(){
+    if(!hasImg) return;
+    var z=Math.min((wrap.clientWidth-32)/imgW, (wrap.clientHeight-32)/imgH);
+    setZoom(z>0 && z<1 ? z : 1);
+  }
+  $("zoomIn").onclick=function(){ setZoom(zoom*1.25); this.blur(); };
+  $("zoomOut").onclick=function(){ setZoom(zoom/1.25); this.blur(); };
+  $("oneBtn").onclick=function(){ setZoom(1); this.blur(); };
+  $("fitBtn").onclick=function(){ fit(); this.blur(); };
+  wrap.addEventListener("wheel", function(e){ if(e.ctrlKey){ e.preventDefault(); setZoom(zoom*(e.deltaY<0?1.15:1/1.15)); } }, {passive:false});
+
+  /* ---------- 좌표 → 픽셀 ---------- */
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+  function toPixel(e){
+    var r=view.getBoundingClientRect();
+    var sx=imgW/r.width, sy=imgH/r.height;       // 표시 좌표 → 원본 픽셀
+    return { x:clamp(Math.floor((e.clientX-r.left)*sx),0,imgW-1),
+             y:clamp(Math.floor((e.clientY-r.top )*sy),0,imgH-1) };
+  }
+  function colorAt(px,py){
+    try{
+      var d=octx.getImageData(px,py,1,1).data;
+      return { r:d[0], g:d[1], b:d[2] };
+    }catch(err){ return null; }
+  }
+
+  /* ---------- 마우스 이동: 라이브 + 돋보기 ---------- */
+  view.addEventListener("mousemove", function(e){
+    if(!hasImg) return;
+    lastMouse={x:e.clientX,y:e.clientY};
+    var p=toPixel(e), c=colorAt(p.x,p.y);
+    if(!c) return;
+    var hex=toHex(c);
+    liveSw.style.background=hex; liveHex.textContent=hex.toUpperCase();
+    drawLoupe(p.x,p.y,c);
+  });
+  view.addEventListener("mouseleave", function(){ loupe.style.display="none"; });
+
+  /* ---------- 클릭: 추출 ---------- */
+  view.addEventListener("click", function(e){
+    if(!hasImg) return;
+    var p=toPixel(e), c=colorAt(p.x,p.y);
+    if(!c) return;
+    pick(c);
+  });
+  function pick(c){
+    current=c;
+    var hex=toHex(c);
+    pickedBig.style.background=hex;
+    $("vHex").textContent=hex.toUpperCase();
+    $("vRgb").textContent=toRgb(c);
+    $("vHsl").textContent=toHsl(c);
+    pickedVals.style.display="block";
+    pickedHint.style.display="none";
+    addRecent(hex);
+  }
+
+  /* ---------- 값 복사 버튼 ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".copy"), function(b){
+    b.addEventListener("click", function(){
+      if(!current){ toast(T("cpPickFirst")); return; }
+      var kind=b.getAttribute("data-copy"), txt="";
+      if(kind==="hex") txt=toHex(current).toUpperCase();
+      else if(kind==="rgb") txt=toRgb(current);
+      else txt=toHsl(current);
+      copyText(txt);
+    });
+  });
+
+  /* ---------- 최근 색 팔레트 ---------- */
+  function addRecent(hex){
+    hex=hex.toUpperCase();
+    for(var i=0;i<recent.length;i++){ if(recent[i]===hex){ recent.splice(i,1); break; } }
+    recent.unshift(hex);
+    if(recent.length>24) recent.length=24;
+    renderRecent();
+  }
+  function renderRecent(){
+    if(!recent.length){ swEmpty.style.display="block"; swatchesEl.style.display="none"; swatchesEl.innerHTML=""; return; }
+    swEmpty.style.display="none"; swatchesEl.style.display="flex";
+    swatchesEl.innerHTML="";
+    recent.forEach(function(hex){
+      var d=document.createElement("div");
+      d.className="sw"; d.style.background=hex; d.title=hex+" — "+T("cpSwatchTitle");
+      d.addEventListener("click", function(){
+        var c={ r:parseInt(hex.substr(1,2),16), g:parseInt(hex.substr(3,2),16), b:parseInt(hex.substr(5,2),16) };
+        pick(c);
+        copyText(hex);
+      });
+      swatchesEl.appendChild(d);
+    });
+  }
+  $("clearBtn").onclick=function(){ recent=[]; renderRecent(); };
+
+  /* ---------- 돋보기 ---------- */
+  function drawLoupe(cx,cy,c){
+    if(!hasImg) return;
+    var span=15, half=(span-1)/2, size=170, cell=size/span;
+    loupe.style.display="block";
+    var lx=lastMouse.x+22, ly=lastMouse.y+22;
+    if(lx+178>window.innerWidth)  lx=lastMouse.x-198;
+    if(ly+178>window.innerHeight) ly=lastMouse.y-198;
+    loupe.style.left=lx+"px"; loupe.style.top=ly+"px";
+    lctx.fillStyle="#222"; lctx.fillRect(0,0,size,size);
+    try{ lctx.drawImage(off, cx-half, cy-half, span, span, 0,0,size,size); }catch(err){}
+    // 격자
+    lctx.strokeStyle="rgba(0,0,0,.22)"; lctx.lineWidth=1;
+    for(var i=0;i<=span;i++){ var p=Math.round(i*cell)+0.5;
+      lctx.beginPath(); lctx.moveTo(p,0); lctx.lineTo(p,size); lctx.stroke();
+      lctx.beginPath(); lctx.moveTo(0,p); lctx.lineTo(size,p); lctx.stroke(); }
+    // 중앙 십자/박스
+    lctx.strokeStyle="#54b0f7"; lctx.lineWidth=2;
+    lctx.strokeRect(half*cell, half*cell, cell, cell);
+    // 하단 HEX 라벨
+    var hex=toHex(c).toUpperCase();
+    lctx.fillStyle="rgba(15,17,21,.82)"; lctx.fillRect(0,size-22,size,22);
+    lctx.fillStyle="#f2f4f7"; lctx.font="12px Consolas, monospace"; lctx.textAlign="center"; lctx.textBaseline="middle";
+    lctx.fillText(hex, size/2, size-11);
+  }
+
+  /* ---------- 기타 ---------- */
+  var toastT;
+  function toast(msg){ var t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.remove("show"); },1500); }
+  window.addEventListener("resize", function(){ if(hasImg && Math.round(zoom*100)===Math.round(Math.min((wrap.clientWidth-32)/imgW,(wrap.clientHeight-32)/imgH)*100)) fit(); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* ---------- 다국어 ---------- */
+  GritI18n.register({
+    ko:{
+      docTitle:"이미지 색상 추출 (스포이드) — Grit Tools",
+      cpTool:"이미지 색상 추출", cpAllTools:"← 모든 도구",
+      cpSecImage:"이미지", cpOpenImage:"이미지 열기",
+      cpOpenImageTitle:"이미지 파일을 선택하세요 (PNG·JPG·WEBP 등)",
+      cpEmptyBig:"이미지를 끌어다 놓으세요", cpEmptySub:"또는 ‘이미지 열기’로 선택하세요",
+      cpLiveLabel:"커서",
+      cpSecPicked:"추출한 색상", cpCopy:"복사",
+      cpPickHint:"이미지 위를 클릭해 색을 추출하세요",
+      cpSecRecent:"최근 색상", cpClear:"비우기",
+      cpRecentEmpty:"아직 추출한 색이 없습니다. 스와치를 클릭하면 다시 선택돼요.",
+      cpSwatchTitle:"클릭하면 다시 선택·복사",
+      cpPrivacy:"이미지는 서버로 전송되지 않습니다. 모든 처리는 브라우저에서만 이뤄집니다.",
+      cpFit:"맞춤", cpOne:"1:1",
+      cpHint:"| 마우스를 올려 색을 미리보고 클릭해서 추출하세요",
+      cpCopied:"복사됨", cpCopyFail:"복사 실패",
+      cpPickFirst:"먼저 이미지에서 색을 추출하세요", cpPickFirst2:"",
+      cpNotImage:"이미지 파일이 아닙니다", cpLoadFail:"이미지를 불러오지 못했습니다",
+      cpHelpBtn:"사용법", cpHelpClose:"닫기",
+      cpGuideTitle:"이미지 색상 추출 사용법",
+      cpStep1T:"이미지 열기",
+      cpStep1D:"‘이미지 열기’ 버튼으로 고르거나 이미지 파일을 화면에 끌어다 놓으세요. 이미지는 서버로 전송되지 않습니다.",
+      cpStep2T:"올려서 미리보고 클릭해 추출",
+      cpStep2D:"이미지 위로 마우스를 움직이면 따라다니는 돋보기가 픽셀을 확대해 보여줍니다. 원하는 지점을 클릭하면 그 색이 추출됩니다.",
+      cpStep3T:"값 복사 · 팔레트",
+      cpStep3D:"추출한 색의 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다."
+    },
+    en:{
+      docTitle:"Image Color Picker (Eyedropper) — Grit Tools",
+      cpTool:"Image Color Picker", cpAllTools:"← All tools",
+      cpSecImage:"Image", cpOpenImage:"Open image",
+      cpOpenImageTitle:"Pick an image file (PNG, JPG, WEBP, …)",
+      cpEmptyBig:"Drag & drop an image", cpEmptySub:"or use ‘Open image’ to select one",
+      cpLiveLabel:"Cursor",
+      cpSecPicked:"Picked color", cpCopy:"Copy",
+      cpPickHint:"Click on the image to pick a color",
+      cpSecRecent:"Recent colors", cpClear:"Clear",
+      cpRecentEmpty:"No colors picked yet. Click a swatch to re-select it.",
+      cpSwatchTitle:"Click to re-select & copy",
+      cpPrivacy:"Your image is never uploaded. Everything runs in your browser.",
+      cpFit:"Fit", cpOne:"1:1",
+      cpHint:"| hover to preview a color, click to pick it",
+      cpCopied:"Copied", cpCopyFail:"Copy failed",
+      cpPickFirst:"Pick a color from the image first", cpPickFirst2:"",
+      cpNotImage:"Not an image file", cpLoadFail:"Failed to load the image",
+      cpHelpBtn:"How to use", cpHelpClose:"Close",
+      cpGuideTitle:"How to use the image color picker",
+      cpStep1T:"Open an image",
+      cpStep1D:"Pick a file with ‘Open image’ or drag & drop an image onto the page. Your image is never uploaded.",
+      cpStep2T:"Hover to preview, click to pick",
+      cpStep2D:"Move the mouse over the image and a loupe follows the cursor, zooming in pixel by pixel. Click any spot to pick that color.",
+      cpStep3T:"Copy values · palette",
+      cpStep3D:"Copy the picked color’s <code>HEX</code>, <code>RGB</code> and <code>HSL</code> values with each ‘Copy’ button. Picked colors stack in the ‘Recent colors’ palette — click a swatch to re-select it."
+    },
+    ja:{
+      docTitle:"画像カラーピッカー（スポイト） — Grit Tools",
+      cpTool:"画像カラーピッカー", cpAllTools:"← すべてのツール",
+      cpSecImage:"画像", cpOpenImage:"画像を開く",
+      cpOpenImageTitle:"画像ファイルを選択（PNG・JPG・WEBP など）",
+      cpEmptyBig:"画像をドラッグ＆ドロップ", cpEmptySub:"または「画像を開く」で選択",
+      cpLiveLabel:"カーソル",
+      cpSecPicked:"抽出した色", cpCopy:"コピー",
+      cpPickHint:"画像をクリックして色を抽出してください",
+      cpSecRecent:"最近の色", cpClear:"クリア",
+      cpRecentEmpty:"まだ抽出した色がありません。スウォッチをクリックで再選択できます。",
+      cpSwatchTitle:"クリックで再選択・コピー",
+      cpPrivacy:"画像はサーバーに送信されません。すべてブラウザ内で処理されます。",
+      cpFit:"フィット", cpOne:"1:1",
+      cpHint:"| マウスを乗せて色をプレビュー、クリックで抽出",
+      cpCopied:"コピーしました", cpCopyFail:"コピー失敗",
+      cpPickFirst:"先に画像から色を抽出してください", cpPickFirst2:"",
+      cpNotImage:"画像ファイルではありません", cpLoadFail:"画像を読み込めませんでした",
+      cpHelpBtn:"使い方", cpHelpClose:"閉じる",
+      cpGuideTitle:"画像カラーピッカーの使い方",
+      cpStep1T:"画像を開く",
+      cpStep1D:"「画像を開く」で選ぶか、画像ファイルを画面にドラッグ＆ドロップしてください。画像はサーバーに送信されません。",
+      cpStep2T:"乗せてプレビュー、クリックで抽出",
+      cpStep2D:"画像の上でマウスを動かすと、追従するルーペがピクセル単位で拡大表示します。好きな位置をクリックするとその色を抽出します。",
+      cpStep3T:"値をコピー・パレット",
+      cpStep3D:"抽出した色の <code>HEX</code>・<code>RGB</code>・<code>HSL</code> 値を、それぞれの「コピー」ボタンでクリップボードへ。抽出した色は「最近の色」パレットに溜まり、スウォッチをクリックで再選択できます。"
+    },
+    zh:{
+      docTitle:"图像取色器（吸管） — Grit Tools",
+      cpTool:"图像取色器", cpAllTools:"← 所有工具",
+      cpSecImage:"图像", cpOpenImage:"打开图像",
+      cpOpenImageTitle:"选择图像文件（PNG·JPG·WEBP 等）",
+      cpEmptyBig:"将图像拖放到此处", cpEmptySub:"或用“打开图像”选择",
+      cpLiveLabel:"光标",
+      cpSecPicked:"提取的颜色", cpCopy:"复制",
+      cpPickHint:"点击图像以提取颜色",
+      cpSecRecent:"最近颜色", cpClear:"清空",
+      cpRecentEmpty:"还没有提取颜色。点击色块可重新选择。",
+      cpSwatchTitle:"点击重新选择并复制",
+      cpPrivacy:"图像不会上传到服务器，所有处理都在浏览器中完成。",
+      cpFit:"适应", cpOne:"1:1",
+      cpHint:"| 悬停预览颜色，点击即可提取",
+      cpCopied:"已复制", cpCopyFail:"复制失败",
+      cpPickFirst:"请先从图像中提取颜色", cpPickFirst2:"",
+      cpNotImage:"不是图像文件", cpLoadFail:"无法加载图像",
+      cpHelpBtn:"使用方法", cpHelpClose:"关闭",
+      cpGuideTitle:"图像取色器使用方法",
+      cpStep1T:"打开图像",
+      cpStep1D:"用“打开图像”选择，或将图像文件拖放到页面上。图像不会上传到服务器。",
+      cpStep2T:"悬停预览，点击提取",
+      cpStep2D:"在图像上移动鼠标，跟随光标的放大镜会按像素放大显示。点击任意位置即可提取该处颜色。",
+      cpStep3T:"复制数值·调色板",
+      cpStep3D:"用各自的“复制”按钮复制所提取颜色的 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 值。提取的颜色会累加到“最近颜色”调色板，点击色块可重新选择。"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ renderRecent(); } });
+})();
+</script>
+</body>
+</html>

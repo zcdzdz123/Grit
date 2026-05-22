@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>환율 계산기 — Grit Tools</title>
+<meta name="description" content="유로화·달러·원·엔 등 실시간 환율을 무료로 변환하는 환율 계산기. ECB(유럽중앙은행) 기준 환율을 frankfurter.app에서 가져오며, 통화 코드만 전송하고 다른 정보는 보내지 않습니다.">
+<meta name="keywords" content="환율 계산기, 환율 변환, 실시간 환율, currency converter, exchange rate">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#3ba6f1">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="환율 계산기 — Grit Tools">
+<meta property="og:description" content="ECB 기준 실시간 환율로 통화를 즉시 변환. 무료·무가입·브라우저에서 처리.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  /* 풀스크린 앱 레이아웃 */
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px;
+    grid-template-columns:400px 1fr; grid-template-areas:"input table"; }
+  .input-panel { grid-area:input; overflow:auto; }
+  .table-panel { grid-area:table; }
+  .panel { display:flex; flex-direction:column; min-height:0; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); overflow:hidden; }
+  .panel h2 { flex:0 0 auto; margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  .field { margin-bottom:18px; }
+  .field label { display:block; font-size:13px; color:var(--text-dim); margin-bottom:7px; }
+  .inp { position:relative; display:flex; align-items:center; }
+  .inp input { width:100%; padding:13px 14px; font-size:16px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-mono); }
+  .inp input:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+  .inp select { width:100%; padding:13px 14px; font-size:15px; border:1px solid var(--border-lit); border-radius:9px; background:var(--surface); color:var(--text); font-family:var(--font-ui); cursor:pointer; }
+  .inp select:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px var(--blue-soft); }
+
+  /* From/To 행 + 스왑 버튼 */
+  .pair { display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:end; }
+  .pair .field { margin-bottom:0; }
+  .swap-btn { flex:0 0 auto; width:42px; height:48px; border:1px solid var(--border-lit); background:var(--surface-2); color:var(--blue); border-radius:9px; cursor:pointer; font-size:18px; line-height:1; transition:border-color .15s,color .15s,background .15s; }
+  .swap-btn:hover { border-color:var(--blue); color:var(--blue-dark); }
+
+  .results { margin-top:18px; border-top:1px solid var(--border); }
+  .rrow { display:flex; align-items:baseline; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); gap:12px; }
+  .rrow:last-child { border-bottom:none; }
+  .rrow .rk { font-size:14px; color:var(--text-dim); }
+  .rrow .rv { font-family:var(--font-mono); font-size:17px; font-weight:600; text-align:right; word-break:break-all; }
+  .rrow.total { flex-direction:column; align-items:stretch; gap:6px; }
+  .rrow.total .rk { color:var(--text); font-weight:600; }
+  .rrow.total .rv { font-size:30px; color:var(--blue-dark); text-align:left; }
+  .rate-line { font-family:var(--font-mono); font-size:14px; color:var(--text-dim); margin:2px 0 0; }
+  .rate-date { font-size:12px; color:var(--text-muted); margin:4px 0 0; }
+
+  /* 상태 / 오류 / 수동 입력 */
+  .status { margin-top:14px; font-size:13px; color:var(--text-muted); line-height:1.5; }
+  .status.err { color:#f7a08a; }
+  .manual { margin-top:16px; display:none; border:1px solid var(--border-lit); border-radius:9px; padding:14px; background:var(--surface-2); }
+  .manual.show { display:block; }
+  .manual .field { margin-bottom:0; }
+  .manual label { font-size:13px; color:var(--text-dim); }
+
+  .formula { margin:16px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+  .formula code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  .tbl-wrap { flex:1 1 auto; min-height:0; overflow:auto; border:1px solid var(--border); border-radius:9px; }
+  table.tbl { width:100%; border-collapse:collapse; font-size:14px; }
+  table.tbl th, table.tbl td { padding:11px 14px; text-align:right; border-bottom:1px solid var(--border); font-family:var(--font-mono); white-space:nowrap; }
+  table.tbl th { position:sticky; top:0; z-index:1; background:var(--surface-2); color:var(--text-dim); font-weight:600; font-family:var(--font-ui); }
+  table.tbl th:first-child, table.tbl td:first-child { text-align:left; }
+  table.tbl tr:last-child td { border-bottom:none; }
+  table.tbl tbody tr:hover td { background:var(--surface-2); }
+  table.tbl .ccy-name { color:var(--text-muted); font-family:var(--font-ui); font-size:12px; }
+
+  /* 좁은 화면: 앱 고정 해제 → 스크롤 스택 */
+  @media (max-width:1080px){
+    body { overflow:auto; }
+    .app { height:auto; overflow:visible; padding:24px; }
+    .panels { grid-template-columns:1fr; grid-template-areas:"input" "table"; }
+    .input-panel { overflow:visible; }
+    .table-panel .tbl-wrap { max-height:520px; }
+  }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(12,10,9,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+</style><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "환율 계산기",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web browser",
+  "description": "ECB(유럽중앙은행) 기준 실시간 환율로 통화를 즉시 변환하는 무료 환율 계산기. frankfurter.app에서 환율을 가져오며 통화 코드만 전송합니다.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="fxTool">환율 계산기</span><button type="button" id="helpBtn" class="g-help" data-i18n="fxHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="fxAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="fxTitle">환율 계산기</h1>
+    <p class="calc-sub" data-i18n="fxSub">금액과 통화를 선택하면 실시간 환율로 즉시 변환합니다.</p>
+  </div>
+
+  <div class="panels">
+
+    <section class="panel input-panel">
+      <h2 data-i18n="fxInputTitle">변환</h2>
+      <div class="field">
+        <label for="amount" data-i18n="fxAmount">금액</label>
+        <div class="inp"><input id="amount" type="number" inputmode="decimal" min="0" step="any" value="1"></div>
+      </div>
+      <div class="pair">
+        <div class="field">
+          <label for="from" data-i18n="fxFrom">기준 통화</label>
+          <div class="inp"><select id="from"></select></div>
+        </div>
+        <button type="button" class="swap-btn" id="swapBtn" data-i18n-title="fxSwap" title="통화 교환">⇄</button>
+        <div class="field">
+          <label for="to" data-i18n="fxTo">대상 통화</label>
+          <div class="inp"><select id="to"></select></div>
+        </div>
+      </div>
+
+      <div class="results">
+        <div class="rrow total">
+          <span class="rk" data-i18n="fxResult">변환 결과</span>
+          <span class="rv" id="rResult">—</span>
+        </div>
+      </div>
+      <p class="rate-line" id="rateLine">—</p>
+      <p class="rate-date" id="rateDate"></p>
+
+      <p class="status" id="status" data-i18n="fxLoading">환율을 불러오는 중…</p>
+
+      <div class="manual" id="manualBox">
+        <div class="field">
+          <label for="manualRate" id="manualLabel">수동 환율 (1 단위 기준 통화 = ? 대상 통화)</label>
+          <div class="inp"><input id="manualRate" type="number" inputmode="decimal" min="0" step="any" placeholder="예: 1320.5"></div>
+        </div>
+      </div>
+
+      <p class="formula" data-i18n="fxDisclaimer">환율은 frankfurter.app을 통한 ECB(유럽중앙은행) 기준 환율로, 참고용이며 실제 매매 호가가 아닙니다.</p>
+    </section>
+
+    <section class="panel table-panel">
+      <h2 data-i18n="fxTableTitle">빠른 환산표</h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr>
+            <th data-i18n="fxColCcy">통화</th>
+            <th data-i18n="fxColAmount">환산 금액</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="fxHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="fxGuideTitle">환율 계산기 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="fxStep1T">금액·통화 선택</span></div>
+        <p class="hs-d" data-i18n="fxStep1D">변환할 금액을 입력하고 기준 통화와 대상 통화를 선택하세요. ⇄ 버튼으로 두 통화를 바꿀 수 있습니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="fxStep2T">즉시 변환</span></div>
+        <p class="hs-d" data-i18n="fxStep2D">입력하는 즉시 실시간 환율로 변환 결과와 단위 환율, 기준 일자가 표시됩니다. 오른쪽 표에는 주요 통화 환산값이 함께 나옵니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="fxStep3T">오프라인 대비</span></div>
+        <p class="hs-d" data-i18n-html="fxStep3D">네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 <code>금액 × 환율</code>로 계산합니다.</p>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+  var QUICK=["USD","EUR","JPY","CNY","KRW","GBP"];
+  var API="https://api.frankfurter.app";
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* 상태 */
+  var currencies=null;       /* {code:name} */
+  var rateCache={};          /* base -> {date:..., rates:{...}} */
+  var debounceTimer=null;
+  var manualMode=false;
+
+  function num(id){ var v=parseFloat($(id).value); return isNaN(v)?0:v; }
+  function fmt(n){ return isFinite(n) ? n.toLocaleString(undefined,{maximumFractionDigits:2}) : "—"; }
+  function fmtRate(n){ return isFinite(n) ? n.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:6}) : "—"; }
+
+  /* ---- HTTP (ES5: XMLHttpRequest) ---- */
+  function getJSON(url, ok, fail){
+    var xhr=new XMLHttpRequest();
+    try{
+      xhr.open("GET", url, true);
+      xhr.onreadystatechange=function(){
+        if(xhr.readyState!==4) return;
+        if(xhr.status>=200 && xhr.status<300){
+          try{ ok(JSON.parse(xhr.responseText)); }
+          catch(e){ fail(); }
+        } else { fail(); }
+      };
+      xhr.onerror=function(){ fail(); };
+      xhr.ontimeout=function(){ fail(); };
+      xhr.timeout=12000;
+      xhr.send();
+    } catch(e){ fail(); }
+  }
+
+  function setStatus(key, isErr){
+    var el=$("status");
+    el.style.display = key ? "block" : "none";
+    if(key){ el.textContent=T(key); }
+    if(isErr) el.classList.add("err"); else el.classList.remove("err");
+  }
+
+  function enterManual(){
+    manualMode=true;
+    $("manualBox").classList.add("show");
+    setStatus("fxErr", true);
+    $("manualRate").addEventListener("input", recompute);
+    recompute();
+  }
+
+  /* ---- 셀렉트 채우기 ---- */
+  function fillSelects(){
+    var codes=[]; for(var c in currencies){ if(currencies.hasOwnProperty(c)) codes.push(c); }
+    codes.sort();
+    var optsHtml="";
+    for(var i=0;i<codes.length;i++){
+      var code=codes[i];
+      optsHtml+='<option value="'+code+'">'+code+' — '+currencies[code]+'</option>';
+    }
+    $("from").innerHTML=optsHtml;
+    $("to").innerHTML=optsHtml;
+    $("from").value = currencies.USD ? "USD" : codes[0];
+    $("to").value   = currencies.KRW ? "KRW" : codes[Math.min(1,codes.length-1)];
+  }
+
+  /* ---- 환율 조회 (base 기준 전체 rates 캐시) ---- */
+  function ensureRates(base, cb){
+    if(rateCache[base]){ cb(rateCache[base]); return; }
+    getJSON(API+"/latest?from="+encodeURIComponent(base), function(data){
+      if(!data || !data.rates){ enterManual(); return; }
+      var pack={ date:data.date, rates:data.rates };
+      pack.rates[base]=1; /* 자기 자신 */
+      rateCache[base]=pack;
+      cb(pack);
+    }, function(){ enterManual(); });
+  }
+
+  /* ---- 계산 ---- */
+  function applyResult(from, to, rate, date){
+    var amount=num("amount");
+    var converted=amount*rate;
+    $("rResult").textContent = fmt(converted)+" "+to;
+    $("rateLine").textContent = "1 "+from+" = "+fmtRate(rate)+" "+to;
+    $("rateDate").textContent = date ? (T("fxBasis")+" · "+date) : "";
+  }
+
+  function renderQuick(from, ratesPack){
+    var amount=num("amount"), html="";
+    for(var i=0;i<QUICK.length;i++){
+      var code=QUICK[i];
+      if(!currencies || !currencies.hasOwnProperty(code)) continue;
+      var rate;
+      if(code===from) rate=1;
+      else if(ratesPack && ratesPack.rates && ratesPack.rates[code]!=null) rate=ratesPack.rates[code];
+      else { continue; }
+      var nm = currencies[code] || "";
+      html+="<tr><td>"+code+' <span class="ccy-name">'+nm+'</span></td><td>'+fmt(amount*rate)+"</td></tr>";
+    }
+    $("tbody").innerHTML=html;
+  }
+
+  function recompute(){
+    /* 수동 모드 */
+    if(manualMode){
+      var from=$("from").value||"—", to=$("to").value||"—";
+      var mr=parseFloat($("manualRate").value);
+      if(isNaN(mr) || mr<=0){
+        $("rResult").textContent="—";
+        $("rateLine").textContent="1 "+from+" = — "+to;
+        $("rateDate").textContent="";
+        $("tbody").innerHTML="";
+        return;
+      }
+      applyResult(from, to, mr, null);
+      $("tbody").innerHTML="";
+      return;
+    }
+
+    if(!currencies) return;
+    var f=$("from").value, t=$("to").value;
+    setStatus(null);
+
+    /* 디바운스: API 호출만 지연 */
+    if(debounceTimer) clearTimeout(debounceTimer);
+    /* 캐시가 있으면 즉시 그림 */
+    if(rateCache[f]){
+      var rate = rateCache[f].rates[t]!=null ? rateCache[f].rates[t] : (f===t?1:null);
+      if(rate!=null){ applyResult(f, t, rate, rateCache[f].date); renderQuick(f, rateCache[f]); }
+    } else {
+      setStatus("fxLoading", false);
+    }
+    debounceTimer=setTimeout(function(){
+      ensureRates(f, function(pack){
+        if(manualMode) return;
+        if($("from").value!==f) { recompute(); return; }
+        var rate = pack.rates[t]!=null ? pack.rates[t] : (f===t?1:null);
+        if(rate==null){ enterManual(); return; }
+        setStatus(null);
+        applyResult(f, t, rate, pack.date);
+        renderQuick(f, pack);
+      });
+    }, 250);
+  }
+
+  /* ---- 이벤트 ---- */
+  $("amount").addEventListener("input", recompute);
+  $("from").addEventListener("change", recompute);
+  $("to").addEventListener("change", recompute);
+  $("swapBtn").addEventListener("click", function(){
+    var f=$("from").value, t=$("to").value;
+    $("from").value=t; $("to").value=f;
+    recompute();
+  });
+
+  /* ---- 부팅 ---- */
+  function boot(){
+    setStatus("fxLoading", false);
+    getJSON(API+"/currencies", function(data){
+      if(!data || typeof data!=="object"){ bootFallback(); return; }
+      currencies=data;
+      fillSelects();
+      recompute();
+    }, function(){ bootFallback(); });
+  }
+  /* /currencies 조차 실패 → 최소 통화 목록 + 수동 모드 */
+  function bootFallback(){
+    currencies={ USD:"United States Dollar", EUR:"Euro", JPY:"Japanese Yen",
+      CNY:"Chinese Renminbi", KRW:"South Korean Won", GBP:"British Pound" };
+    fillSelects();
+    enterManual();
+  }
+
+  GritI18n.register({
+    ko:{
+      docTitle:"환율 계산기 — Grit Tools",
+      fxTool:"환율 계산기", fxAllTools:"← 모든 도구",
+      fxTitle:"환율 계산기",
+      fxSub:"금액과 통화를 선택하면 실시간 환율로 즉시 변환합니다.",
+      fxInputTitle:"변환", fxAmount:"금액",
+      fxFrom:"기준 통화", fxTo:"대상 통화", fxSwap:"통화 교환",
+      fxResult:"변환 결과", fxBasis:"ECB 기준",
+      fxTableTitle:"빠른 환산표", fxColCcy:"통화", fxColAmount:"환산 금액",
+      fxLoading:"환율을 불러오는 중…",
+      fxErr:"환율을 불러오지 못했습니다. 네트워크를 확인하거나 아래에 환율을 직접 입력하세요.",
+      fxManualLabel:"수동 환율 (1 기준 통화 = ? 대상 통화)",
+      fxManualPh:"예: 1320.5",
+      fxDisclaimer:"환율은 frankfurter.app을 통한 ECB(유럽중앙은행) 기준 환율로, 참고용이며 실제 매매 호가가 아닙니다.",
+      fxHelpBtn:"사용법", fxHelpClose:"닫기", fxGuideTitle:"환율 계산기 사용법",
+      fxStep1T:"금액·통화 선택", fxStep1D:"변환할 금액을 입력하고 기준 통화와 대상 통화를 선택하세요. ⇄ 버튼으로 두 통화를 바꿀 수 있습니다.",
+      fxStep2T:"즉시 변환", fxStep2D:"입력하는 즉시 실시간 환율로 변환 결과와 단위 환율, 기준 일자가 표시됩니다. 오른쪽 표에는 주요 통화 환산값이 함께 나옵니다.",
+      fxStep3T:"오프라인 대비", fxStep3D:"네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 <code>금액 × 환율</code>로 계산합니다."
+    },
+    en:{
+      docTitle:"Currency Converter — Grit Tools",
+      fxTool:"Currency Converter", fxAllTools:"← All tools",
+      fxTitle:"Currency Converter",
+      fxSub:"Pick an amount and currencies to convert instantly at live exchange rates.",
+      fxInputTitle:"Convert", fxAmount:"Amount",
+      fxFrom:"From", fxTo:"To", fxSwap:"Swap currencies",
+      fxResult:"Converted", fxBasis:"ECB reference",
+      fxTableTitle:"Quick reference", fxColCcy:"Currency", fxColAmount:"Converted",
+      fxLoading:"Loading exchange rates…",
+      fxErr:"Couldn't load exchange rates. Check your connection or enter a rate manually below.",
+      fxManualLabel:"Manual rate (1 from-currency = ? to-currency)",
+      fxManualPh:"e.g. 1320.5",
+      fxDisclaimer:"Rates are ECB reference rates via frankfurter.app — for reference only, not a trading quote.",
+      fxHelpBtn:"How to use", fxHelpClose:"Close", fxGuideTitle:"How to use the currency converter",
+      fxStep1T:"Pick amount & currencies", fxStep1D:"Enter the amount and choose the from- and to-currency. Use the ⇄ button to swap the two.",
+      fxStep2T:"Instant conversion", fxStep2D:"As you type, the converted amount, unit rate and reference date update from live rates. The right-hand table shows major currencies too.",
+      fxStep3T:"Offline fallback", fxStep3D:"If rates can't be fetched due to a network error, a ‘manual rate’ field appears. Enter a rate and it computes <code>amount × rate</code>."
+    },
+    ja:{
+      docTitle:"為替計算機 — Grit Tools",
+      fxTool:"為替計算機", fxAllTools:"← すべてのツール",
+      fxTitle:"為替計算機",
+      fxSub:"金額と通貨を選ぶと、リアルタイムの為替レートで即座に換算します。",
+      fxInputTitle:"換算", fxAmount:"金額",
+      fxFrom:"基準通貨", fxTo:"対象通貨", fxSwap:"通貨を入れ替え",
+      fxResult:"換算結果", fxBasis:"ECB基準",
+      fxTableTitle:"クイック換算表", fxColCcy:"通貨", fxColAmount:"換算金額",
+      fxLoading:"為替レートを読み込み中…",
+      fxErr:"為替レートを取得できませんでした。接続を確認するか、下にレートを手動で入力してください。",
+      fxManualLabel:"手動レート（1 基準通貨 = ? 対象通貨）",
+      fxManualPh:"例: 1320.5",
+      fxDisclaimer:"レートは frankfurter.app 経由の ECB（欧州中央銀行）基準レートで、参考用であり実際の売買レートではありません。",
+      fxHelpBtn:"使い方", fxHelpClose:"閉じる", fxGuideTitle:"為替計算機の使い方",
+      fxStep1T:"金額・通貨を選択", fxStep1D:"換算する金額を入力し、基準通貨と対象通貨を選びます。⇄ ボタンで2つの通貨を入れ替えられます。",
+      fxStep2T:"即時換算", fxStep2D:"入力するたびに、リアルタイムレートで換算結果・単位レート・基準日が更新されます。右の表には主要通貨の換算値も表示されます。",
+      fxStep3T:"オフライン対応", fxStep3D:"ネットワークエラーでレートを取得できない場合は「手動レート入力」欄が表示されます。レートを入力すると <code>金額 × レート</code> で計算します。"
+    },
+    zh:{
+      docTitle:"汇率计算器 — Grit Tools",
+      fxTool:"汇率计算器", fxAllTools:"← 所有工具",
+      fxTitle:"汇率计算器",
+      fxSub:"选择金额和币种，即可按实时汇率立即换算。",
+      fxInputTitle:"换算", fxAmount:"金额",
+      fxFrom:"原币种", fxTo:"目标币种", fxSwap:"互换币种",
+      fxResult:"换算结果", fxBasis:"ECB 基准",
+      fxTableTitle:"快速换算表", fxColCcy:"币种", fxColAmount:"换算金额",
+      fxLoading:"正在加载汇率…",
+      fxErr:"无法加载汇率。请检查网络，或在下方手动输入汇率。",
+      fxManualLabel:"手动汇率（1 原币种 = ? 目标币种）",
+      fxManualPh:"例如：1320.5",
+      fxDisclaimer:"汇率为通过 frankfurter.app 获取的 ECB（欧洲央行）基准汇率，仅供参考，并非实际交易报价。",
+      fxHelpBtn:"使用方法", fxHelpClose:"关闭", fxGuideTitle:"汇率计算器使用方法",
+      fxStep1T:"选择金额与币种", fxStep1D:"输入要换算的金额，并选择原币种和目标币种。用 ⇄ 按钮可互换两种币种。",
+      fxStep2T:"即时换算", fxStep2D:"输入时即按实时汇率更新换算结果、单位汇率和基准日期。右侧表格还会显示主要币种的换算值。",
+      fxStep3T:"离线备用", fxStep3D:"若因网络错误无法获取汇率，会出现“手动汇率输入”框。输入汇率后将按 <code>金额 × 汇率</code> 计算。"
+    }
+  });
+
+  /* i18n 적용 후 placeholder/label 갱신을 위한 onChange */
+  function onLangChange(){
+    var ml=$("manualLabel"); if(ml) ml.textContent=T("fxManualLabel");
+    var mr=$("manualRate"); if(mr) mr.setAttribute("placeholder", T("fxManualPh"));
+    /* 결과의 기준 일자 라벨 갱신 */
+    if(currencies && !manualMode){ recompute(); }
+  }
+  GritI18n.init({ mount: document.getElementById("langMount"), onChange: onLangChange });
+
+  boot();
+})();
+</script>
+</body>
+</html>
