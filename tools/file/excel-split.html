@@ -7,11 +7,29 @@
 <meta name="description" content="엑셀(xlsx·xls·csv) 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV 파일로 저장하는 도구. 모든 처리는 브라우저에서만 이뤄지며 파일은 서버로 전송되지 않습니다.">
 <meta name="keywords" content="엑셀 시트별 나누기, 엑셀 분리, 시트별 저장, xlsx split, excel split sheets, csv 변환">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/file/excel-split.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="엑셀 시트별 나누기 — Grit Tools">
 <meta property="og:description" content="엑셀 워크북을 시트별로 분리해 개별 XLSX·CSV로 저장. 파일은 브라우저에서만 처리됩니다.">
+<meta property="og:url" content="https://grit-tools.com/tools/file/excel-split.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="엑셀 시트별 나누기 — Grit Tools">
+<meta name="twitter:description" content="엑셀 워크북을 시트별로 분리해 개별 XLSX·CSV로 저장. 파일은 브라우저에서만 처리됩니다.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -135,8 +153,24 @@
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web browser",
   "description": "엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV 파일로 저장하는 도구. 모든 처리는 브라우저에서만 이뤄집니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"파일","item":"https://grit-tools.com/#file"},
+ {"@type":"ListItem","position":3,"name":"엑셀 시트별 나누기","item":"https://grit-tools.com/tools/file/excel-split.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"엑셀 시트별 나누기 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"파일 불러오기","text":"엑셀(.xlsx·.xls·.csv) 파일을 끌어다 놓거나 ‘파일 선택’으로 엽니다. 시트 이름과 행 수가 목록에 나타납니다."},
+ {"@type":"HowToStep","name":"시트·형식 고르기","text":"저장할 시트를 체크하고 출력 형식(분리된 XLSX 또는 CSV)을 고르세요. 기본은 모든 시트가 선택됩니다."},
+ {"@type":"HowToStep","name":"시트별 저장","text":"시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 원본명__시트명 형식입니다."}
+]}
 </script>
 </head>
 <body>
@@ -221,6 +255,10 @@
         <p class="hs-d" data-i18n-html="xsStep3D">시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 <code>원본명__시트명</code> 형식입니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="batch-rename.html" data-i18n="navBr" style="color:var(--blue);text-decoration:none;margin-left:10px;">파일 이름 일괄 변경</a>
+    </nav>
   </div>
 </div>
 
@@ -462,7 +500,8 @@
       xsStep2T:"시트·형식 고르기",
       xsStep2D:"저장할 시트를 체크하고 출력 형식(분리된 XLSX 또는 CSV)을 고르세요. 기본은 모든 시트가 선택됩니다.",
       xsStep3T:"시트별 저장",
-      xsStep3D:"시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 <code>원본명__시트명</code> 형식입니다."
+      xsStep3D:"시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 <code>원본명__시트명</code> 형식입니다.",
+      relTitle:"관련 도구", navBr:"파일 이름 일괄 변경"
     },
     en:{
       docTitle:"Excel Sheet Splitter — Grit Tools",
@@ -492,7 +531,8 @@
       xsStep2T:"Pick sheets &amp; format",
       xsStep2D:"Check the sheets you want and choose the output format (separate XLSX or CSV). All sheets are selected by default.",
       xsStep3T:"Save per sheet",
-      xsStep3D:"Press ‘Save’ on each sheet, or use ‘Download all selected sheets’ at once. File names use the <code>original__sheet</code> pattern."
+      xsStep3D:"Press ‘Save’ on each sheet, or use ‘Download all selected sheets’ at once. File names use the <code>original__sheet</code> pattern.",
+      relTitle:"Related tools", navBr:"Batch Rename"
     },
     ja:{
       docTitle:"Excelシート分割 — Grit Tools",
@@ -522,7 +562,8 @@
       xsStep2T:"シートと形式を選択",
       xsStep2D:"保存したいシートにチェックを入れ、出力形式（分割XLSXまたはCSV）を選びます。初期状態ですべて選択されています。",
       xsStep3T:"シートごとに保存",
-      xsStep3D:"各シートの「保存」を押すか、「選択したシートを一括ダウンロード」でまとめて保存します。ファイル名は <code>元名__シート名</code> 形式です。"
+      xsStep3D:"各シートの「保存」を押すか、「選択したシートを一括ダウンロード」でまとめて保存します。ファイル名は <code>元名__シート名</code> 形式です。",
+      relTitle:"関連ツール", navBr:"ファイル名一括変更"
     },
     zh:{
       docTitle:"Excel 工作表拆分 — Grit Tools",
@@ -552,7 +593,163 @@
       xsStep2T:"选择工作表与格式",
       xsStep2D:"勾选要保存的工作表，并选择输出格式（拆分 XLSX 或 CSV）。默认全部选中。",
       xsStep3T:"逐表保存",
-      xsStep3D:"点击各工作表的“保存”，或用“下载全部所选工作表”一次性保存。文件名采用 <code>原名__工作表名</code> 格式。"
+      xsStep3D:"点击各工作表的“保存”，或用“下载全部所选工作表”一次性保存。文件名采用 <code>原名__工作表名</code> 格式。",
+      relTitle:"相关工具", navBr:"批量重命名"
+    },
+    es:{
+      docTitle:"Divisor de hojas de Excel — Grit Tools",
+      xsTool:"Divisor de hojas de Excel", xsAllTools:"← Todas las herramientas",
+      xsTitle:"Divisor de hojas de Excel",
+      xsSub:"Divide un libro en sus hojas y guarda cada una como un archivo independiente.",
+      xsInputTitle:"Cargar archivo",
+      xsDropTitle:"Arrastra y suelta un archivo de Excel o <span class=\"dz-link\">elige un archivo</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Formato de salida",
+      xsFmtXlsx:"XLSX separados (un .xlsx por hoja)",
+      xsFmtCsv:"CSV (un .csv por hoja)",
+      xsDownloadAll:"Descargar todas las hojas seleccionadas",
+      xsPrivacy:"Los archivos nunca se suben. Todo se procesa dentro de tu navegador.",
+      xsSheetsTitle:"Hojas", xsSelectAll:"Seleccionar todo",
+      xsEmpty:"Carga un archivo de Excel y<br>sus hojas aparecerán aquí.",
+      xsRowsUnit:"filas", xsRowDownload:"Guardar", xsRemove:"Quitar",
+      xsMetaFile:"Archivo de origen:", xsMetaSheets:"Hojas:",
+      xsDoneAll:"Se guardaron {n} hoja(s).",
+      xsNoneSelected:"No hay hojas seleccionadas.",
+      xsLibFail:"No se pudo cargar la biblioteca de hojas de cálculo. Comprueba tu red.",
+      xsReadFail:"No se pudo leer el archivo.",
+      xsNoSheets:"No se encontraron hojas.",
+      xsHelpBtn:"Cómo usar", xsHelpClose:"Cerrar", xsGuideTitle:"Cómo usar el divisor de hojas de Excel",
+      xsStep1T:"Carga un archivo",
+      xsStep1D:"Arrastra y suelta un archivo de Excel (.xlsx · .xls · .csv) o elige uno con ‘elige un archivo’. Los nombres de las hojas y el número de filas aparecen en la lista.",
+      xsStep2T:"Elige hojas y formato",
+      xsStep2D:"Marca las hojas que quieras y elige el formato de salida (XLSX separados o CSV). Por defecto se seleccionan todas las hojas.",
+      xsStep3T:"Guarda por hoja",
+      xsStep3D:"Pulsa ‘Guardar’ en cada hoja, o usa ‘Descargar todas las hojas seleccionadas’ de una vez. Los nombres de archivo usan el patrón <code>original__hoja</code>.",
+      relTitle:"Herramientas relacionadas", navBr:"Renombrado por lotes"
+    },
+    fr:{
+      docTitle:"Diviseur de feuilles Excel — Grit Tools",
+      xsTool:"Diviseur de feuilles Excel", xsAllTools:"← Tous les outils",
+      xsTitle:"Diviseur de feuilles Excel",
+      xsSub:"Divisez un classeur en ses feuilles et enregistrez chacune comme un fichier distinct.",
+      xsInputTitle:"Charger un fichier",
+      xsDropTitle:"Glissez-déposez un fichier Excel ou <span class=\"dz-link\">choisissez un fichier</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Format de sortie",
+      xsFmtXlsx:"XLSX séparés (un .xlsx par feuille)",
+      xsFmtCsv:"CSV (un .csv par feuille)",
+      xsDownloadAll:"Télécharger toutes les feuilles sélectionnées",
+      xsPrivacy:"Les fichiers ne sont jamais envoyés. Tout est traité dans votre navigateur.",
+      xsSheetsTitle:"Feuilles", xsSelectAll:"Tout sélectionner",
+      xsEmpty:"Chargez un fichier Excel et<br>ses feuilles apparaîtront ici.",
+      xsRowsUnit:"lignes", xsRowDownload:"Enregistrer", xsRemove:"Retirer",
+      xsMetaFile:"Fichier source :", xsMetaSheets:"Feuilles :",
+      xsDoneAll:"{n} feuille(s) enregistrée(s).",
+      xsNoneSelected:"Aucune feuille sélectionnée.",
+      xsLibFail:"Échec du chargement de la bibliothèque de tableur. Vérifiez votre réseau.",
+      xsReadFail:"Impossible de lire le fichier.",
+      xsNoSheets:"Aucune feuille trouvée.",
+      xsHelpBtn:"Mode d'emploi", xsHelpClose:"Fermer", xsGuideTitle:"Comment utiliser le diviseur de feuilles Excel",
+      xsStep1T:"Chargez un fichier",
+      xsStep1D:"Glissez-déposez un fichier Excel (.xlsx · .xls · .csv) ou ouvrez-en un avec ‘choisissez un fichier’. Les noms des feuilles et le nombre de lignes apparaissent dans la liste.",
+      xsStep2T:"Choisissez feuilles et format",
+      xsStep2D:"Cochez les feuilles voulues et choisissez le format de sortie (XLSX séparés ou CSV). Toutes les feuilles sont sélectionnées par défaut.",
+      xsStep3T:"Enregistrez par feuille",
+      xsStep3D:"Cliquez sur ‘Enregistrer’ pour chaque feuille, ou utilisez ‘Télécharger toutes les feuilles sélectionnées’ en une fois. Les noms de fichier suivent le modèle <code>original__feuille</code>.",
+      relTitle:"Outils associés", navBr:"Renommage par lot"
+    },
+    de:{
+      docTitle:"Excel-Blatt-Splitter — Grit Tools",
+      xsTool:"Excel-Blatt-Splitter", xsAllTools:"← Alle Werkzeuge",
+      xsTitle:"Excel-Blatt-Splitter",
+      xsSub:"Teile eine Arbeitsmappe in ihre Blätter auf und speichere jedes als separate Datei.",
+      xsInputTitle:"Datei laden",
+      xsDropTitle:"Excel-Datei per Drag &amp; Drop ablegen oder <span class=\"dz-link\">Datei auswählen</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Ausgabeformat",
+      xsFmtXlsx:"Getrennte XLSX (eine .xlsx pro Blatt)",
+      xsFmtCsv:"CSV (eine .csv pro Blatt)",
+      xsDownloadAll:"Alle ausgewählten Blätter herunterladen",
+      xsPrivacy:"Dateien werden nie hochgeladen. Alles wird in deinem Browser verarbeitet.",
+      xsSheetsTitle:"Blätter", xsSelectAll:"Alle auswählen",
+      xsEmpty:"Lade eine Excel-Datei und<br>ihre Blätter erscheinen hier.",
+      xsRowsUnit:"Zeilen", xsRowDownload:"Speichern", xsRemove:"Entfernen",
+      xsMetaFile:"Quelldatei:", xsMetaSheets:"Blätter:",
+      xsDoneAll:"{n} Blatt/Blätter gespeichert.",
+      xsNoneSelected:"Keine Blätter ausgewählt.",
+      xsLibFail:"Die Tabellenkalkulations-Bibliothek konnte nicht geladen werden. Prüfe dein Netzwerk.",
+      xsReadFail:"Die Datei konnte nicht gelesen werden.",
+      xsNoSheets:"Keine Blätter gefunden.",
+      xsHelpBtn:"Anleitung", xsHelpClose:"Schließen", xsGuideTitle:"So nutzt du den Excel-Blatt-Splitter",
+      xsStep1T:"Datei laden",
+      xsStep1D:"Lege eine Excel-Datei (.xlsx · .xls · .csv) per Drag &amp; Drop ab oder wähle eine mit ‘Datei auswählen’. Blattnamen und Zeilenanzahl erscheinen in der Liste.",
+      xsStep2T:"Blätter &amp; Format wählen",
+      xsStep2D:"Hake die gewünschten Blätter an und wähle das Ausgabeformat (getrennte XLSX oder CSV). Standardmäßig sind alle Blätter ausgewählt.",
+      xsStep3T:"Pro Blatt speichern",
+      xsStep3D:"Klicke bei jedem Blatt auf ‘Speichern’ oder nutze ‘Alle ausgewählten Blätter herunterladen’ auf einmal. Dateinamen folgen dem Muster <code>original__blatt</code>.",
+      relTitle:"Verwandte Tools", navBr:"Stapel-Umbenennung"
+    },
+    pt:{
+      docTitle:"Divisor de planilhas do Excel — Grit Tools",
+      xsTool:"Divisor de planilhas do Excel", xsAllTools:"← Todas as ferramentas",
+      xsTitle:"Divisor de planilhas do Excel",
+      xsSub:"Divida uma pasta de trabalho em suas planilhas e salve cada uma como um arquivo separado.",
+      xsInputTitle:"Carregar arquivo",
+      xsDropTitle:"Arraste e solte um arquivo do Excel ou <span class=\"dz-link\">escolha um arquivo</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Formato de saída",
+      xsFmtXlsx:"XLSX separados (um .xlsx por planilha)",
+      xsFmtCsv:"CSV (um .csv por planilha)",
+      xsDownloadAll:"Baixar todas as planilhas selecionadas",
+      xsPrivacy:"Os arquivos nunca são enviados. Tudo é processado dentro do seu navegador.",
+      xsSheetsTitle:"Planilhas", xsSelectAll:"Selecionar tudo",
+      xsEmpty:"Carregue um arquivo do Excel e<br>suas planilhas aparecerão aqui.",
+      xsRowsUnit:"linhas", xsRowDownload:"Salvar", xsRemove:"Remover",
+      xsMetaFile:"Arquivo de origem:", xsMetaSheets:"Planilhas:",
+      xsDoneAll:"{n} planilha(s) salva(s).",
+      xsNoneSelected:"Nenhuma planilha selecionada.",
+      xsLibFail:"Não foi possível carregar a biblioteca de planilhas. Verifique sua rede.",
+      xsReadFail:"Não foi possível ler o arquivo.",
+      xsNoSheets:"Nenhuma planilha encontrada.",
+      xsHelpBtn:"Como usar", xsHelpClose:"Fechar", xsGuideTitle:"Como usar o divisor de planilhas do Excel",
+      xsStep1T:"Carregue um arquivo",
+      xsStep1D:"Arraste e solte um arquivo do Excel (.xlsx · .xls · .csv) ou abra um com ‘escolha um arquivo’. Os nomes das planilhas e a contagem de linhas aparecem na lista.",
+      xsStep2T:"Escolha planilhas e formato",
+      xsStep2D:"Marque as planilhas que quiser e escolha o formato de saída (XLSX separados ou CSV). Por padrão, todas as planilhas ficam selecionadas.",
+      xsStep3T:"Salve por planilha",
+      xsStep3D:"Clique em ‘Salvar’ em cada planilha, ou use ‘Baixar todas as planilhas selecionadas’ de uma vez. Os nomes de arquivo usam o padrão <code>original__planilha</code>.",
+      relTitle:"Ferramentas relacionadas", navBr:"Renomear em lote"
+    },
+    ru:{
+      docTitle:"Разделение листов Excel — Grit Tools",
+      xsTool:"Разделение листов Excel", xsAllTools:"← Все инструменты",
+      xsTitle:"Разделение листов Excel",
+      xsSub:"Разделите книгу на её листы и сохраните каждый как отдельный файл.",
+      xsInputTitle:"Загрузить файл",
+      xsDropTitle:"Перетащите файл Excel или <span class=\"dz-link\">выберите файл</span>",
+      xsDropSub:".xlsx · .xls · .csv",
+      xsFormatLabel:"Формат вывода",
+      xsFmtXlsx:"Отдельные XLSX (по одному .xlsx на лист)",
+      xsFmtCsv:"CSV (по одному .csv на лист)",
+      xsDownloadAll:"Скачать все выбранные листы",
+      xsPrivacy:"Файлы никогда не загружаются на сервер. Всё обрабатывается в вашем браузере.",
+      xsSheetsTitle:"Листы", xsSelectAll:"Выбрать все",
+      xsEmpty:"Загрузите файл Excel, и<br>его листы появятся здесь.",
+      xsRowsUnit:"строк", xsRowDownload:"Сохранить", xsRemove:"Удалить",
+      xsMetaFile:"Исходный файл:", xsMetaSheets:"Листов:",
+      xsDoneAll:"Сохранено листов: {n}.",
+      xsNoneSelected:"Листы не выбраны.",
+      xsLibFail:"Не удалось загрузить библиотеку таблиц. Проверьте сеть.",
+      xsReadFail:"Не удалось прочитать файл.",
+      xsNoSheets:"Листы не найдены.",
+      xsHelpBtn:"Как пользоваться", xsHelpClose:"Закрыть", xsGuideTitle:"Как пользоваться разделением листов Excel",
+      xsStep1T:"Загрузите файл",
+      xsStep1D:"Перетащите файл Excel (.xlsx · .xls · .csv) или откройте его через ‘выберите файл’. Имена листов и количество строк появятся в списке.",
+      xsStep2T:"Выберите листы и формат",
+      xsStep2D:"Отметьте нужные листы и выберите формат вывода (отдельные XLSX или CSV). По умолчанию выбраны все листы.",
+      xsStep3T:"Сохраняйте по листам",
+      xsStep3D:"Нажмите ‘Сохранить’ на каждом листе или используйте ‘Скачать все выбранные листы’ за один раз. Имена файлов используют шаблон <code>оригинал__лист</code>.",
+      relTitle:"Похожие инструменты", navBr:"Пакетное переименование"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ if(sheets.length) renderList(); } });

@@ -7,11 +7,29 @@
 <meta name="description" content="여러 파일 이름을 한 번에 바꾸는 도구. 찾기·바꾸기, 접두사·접미사, 연속 번호, 대소문자, 공백 처리 규칙을 적용해 old→new를 미리 보고, 새 이름으로 다시 저장하거나 .bat/.ps1/.sh 이름변경 스크립트를 내보냅니다. 모든 처리는 브라우저에서, 파일은 업로드되지 않습니다.">
 <meta name="keywords" content="파일 이름 일괄 변경, 파일 이름 바꾸기, batch rename, bulk rename, rename script, 일괄 리네임">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/file/batch-rename.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="파일 이름 일괄 변경 — Grit Tools">
 <meta property="og:description" content="찾기·바꾸기, 접두사·접미사, 연속 번호 등 규칙으로 파일 이름을 한 번에 변경. 새 이름 다운로드 또는 .bat/.ps1/.sh 스크립트 내보내기.">
+<meta property="og:url" content="https://grit-tools.com/tools/file/batch-rename.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="파일 이름 일괄 변경 — Grit Tools">
+<meta name="twitter:description" content="찾기·바꾸기, 접두사·접미사, 연속 번호 등 규칙으로 파일 이름을 한 번에 변경. 새 이름 다운로드 또는 .bat/.ps1/.sh 스크립트 내보내기.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -147,8 +165,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "찾기·바꾸기, 접두사·접미사, 연속 번호, 대소문자, 공백 처리 규칙으로 파일 이름을 한 번에 바꾸고, 새 이름으로 다운로드하거나 .bat/.ps1/.sh 이름변경 스크립트를 내보내는 도구. 파일은 업로드되지 않습니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"파일","item":"https://grit-tools.com/#file"},
+ {"@type":"ListItem","position":3,"name":"파일 이름 일괄 변경","item":"https://grit-tools.com/tools/file/batch-rename.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"파일 이름 일괄 변경 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"파일 또는 이름 불러오기","text":"파일을 끌어다 놓아 추가하거나, ‘이름만 직접 입력’ 탭에서 한 줄에 하나씩 이름을 붙여넣으세요. 파일은 브라우저 안에서만 처리되고 어디로도 업로드되지 않습니다."},
+ {"@type":"HowToStep","name":"규칙 적용 · 미리보기","text":"찾기·바꾸기, 접두사·접미사, 연속 번호, 대소문자, 공백 처리를 위에서 아래 순서로 적용합니다. 오른쪽에서 원래 이름 → 새 이름을 바로 확인하고, 중복되는 이름은 경고색으로 표시됩니다."},
+ {"@type":"HowToStep","name":"다운로드 또는 스크립트","text":"브라우저는 디스크의 파일을 직접 이름 바꿀 수 없습니다. 그래서 두 가지 방법이 있습니다. (1) 실제 파일을 불러왔다면 이름 바꿔 다운로드로 새 이름의 파일을 받습니다. (2) 스크립트 내보내기로 .bat·.ps1·.sh를 받아 폴더에서 실행하면 제자리에서 이름이 바뀝니다."}
+]}
 </script>
 </head>
 <body>
@@ -284,6 +318,10 @@
         <p class="hs-d" data-i18n-html="brStep3D">브라우저는 디스크의 파일을 직접 이름 바꿀 수 없습니다. 그래서 두 가지 방법이 있습니다. (1) 실제 파일을 불러왔다면 <code>이름 바꿔 다운로드</code>로 새 이름의 파일을 받습니다. (2) <code>스크립트 내보내기</code>로 .bat·.ps1·.sh를 받아 폴더에서 실행하면 제자리에서 이름이 바뀝니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="excel-split.html" data-i18n="navXs" style="color:var(--blue);text-decoration:none;margin-left:10px;">엑셀 시트별 나누기</a>
+    </nav>
   </div>
 </div>
 
@@ -589,7 +627,8 @@
       brStep2T:"규칙 적용 · 미리보기",
       brStep2D:"찾기·바꾸기, 접두사·접미사, 연속 번호, 대소문자, 공백 처리를 위에서 아래 순서로 적용합니다. 오른쪽에서 <code>원래 이름 → 새 이름</code>을 바로 확인하고, 중복되는 이름은 경고색으로 표시됩니다.",
       brStep3T:"다운로드 또는 스크립트",
-      brStep3D:"브라우저는 디스크의 파일을 직접 이름 바꿀 수 없습니다. 그래서 두 가지 방법이 있습니다. (1) 실제 파일을 불러왔다면 <code>이름 바꿔 다운로드</code>로 새 이름의 파일을 받습니다. (2) <code>스크립트 내보내기</code>로 .bat·.ps1·.sh를 받아 폴더에서 실행하면 제자리에서 이름이 바뀝니다."
+      brStep3D:"브라우저는 디스크의 파일을 직접 이름 바꿀 수 없습니다. 그래서 두 가지 방법이 있습니다. (1) 실제 파일을 불러왔다면 <code>이름 바꿔 다운로드</code>로 새 이름의 파일을 받습니다. (2) <code>스크립트 내보내기</code>로 .bat·.ps1·.sh를 받아 폴더에서 실행하면 제자리에서 이름이 바뀝니다.",
+      relTitle:"관련 도구", navXs:"엑셀 시트별 나누기"
     },
     en:{
       docTitle:"Batch File Renamer — Grit Tools",
@@ -621,7 +660,8 @@
       brStep2T:"Apply rules & preview",
       brStep2D:"Find &amp; replace, prefix/suffix, sequential numbering, case and space handling are applied top to bottom. Watch the <code>old name → new name</code> preview on the right; duplicate names are flagged in a warning color.",
       brStep3T:"Download or script",
-      brStep3D:"Browsers cannot rename files on disk directly, so there are two paths. (1) If you loaded real files, <code>Download renamed</code> saves them under the new names. (2) <code>Export script</code> gives you a .bat / .ps1 / .sh you run inside the folder to rename in place."
+      brStep3D:"Browsers cannot rename files on disk directly, so there are two paths. (1) If you loaded real files, <code>Download renamed</code> saves them under the new names. (2) <code>Export script</code> gives you a .bat / .ps1 / .sh you run inside the folder to rename in place.",
+      relTitle:"Related tools", navXs:"Excel Sheet Split"
     },
     ja:{
       docTitle:"ファイル名一括変更 — Grit Tools",
@@ -653,7 +693,8 @@
       brStep2T:"ルール適用・プレビュー",
       brStep2D:"検索・置換、接頭辞・接尾辞、連番、大文字小文字、空白処理を上から下の順に適用します。右側で <code>元の名前 → 新しい名前</code> をすぐ確認でき、重複する名前は警告色で表示されます。",
       brStep3T:"ダウンロードまたはスクリプト",
-      brStep3D:"ブラウザはディスク上のファイルを直接リネームできません。そこで2つの方法があります。(1) 実ファイルを読み込んだ場合は <code>名前を変えてDL</code> で新しい名前で保存。(2) <code>スクリプト書き出し</code> で .bat・.ps1・.sh を受け取り、フォルダ内で実行するとその場で名前が変わります。"
+      brStep3D:"ブラウザはディスク上のファイルを直接リネームできません。そこで2つの方法があります。(1) 実ファイルを読み込んだ場合は <code>名前を変えてDL</code> で新しい名前で保存。(2) <code>スクリプト書き出し</code> で .bat・.ps1・.sh を受け取り、フォルダ内で実行するとその場で名前が変わります。",
+      relTitle:"関連ツール", navXs:"Excelシート分割"
     },
     zh:{
       docTitle:"批量重命名 — Grit Tools",
@@ -685,7 +726,173 @@
       brStep2T:"应用规则 · 预览",
       brStep2D:"查找替换、前缀后缀、连续编号、大小写、空格处理会自上而下依次应用。右侧实时显示 <code>原名称 → 新名称</code>，重复的名称会以警告色标出。",
       brStep3T:"下载或脚本",
-      brStep3D:"浏览器无法直接重命名磁盘上的文件，因此有两种方式。(1) 若已载入真实文件，用 <code>重命名后下载</code> 以新名称保存。(2) 用 <code>导出脚本</code> 获取 .bat·.ps1·.sh，在文件夹中运行即可就地重命名。"
+      brStep3D:"浏览器无法直接重命名磁盘上的文件，因此有两种方式。(1) 若已载入真实文件，用 <code>重命名后下载</code> 以新名称保存。(2) 用 <code>导出脚本</code> 获取 .bat·.ps1·.sh，在文件夹中运行即可就地重命名。",
+      relTitle:"相关工具", navXs:"Excel 工作表拆分"
+    },
+    es:{
+      docTitle:"Renombrador de archivos por lotes — Grit Tools",
+      brTool:"Renombrar por lotes", brAllTools:"← Todas las herramientas",
+      brTitle:"Renombrador de archivos por lotes",
+      brSub:"Renombra muchos archivos a la vez con reglas, luego vuelve a guardarlos con los nuevos nombres o exporta un script de renombrado. Los archivos nunca se suben.",
+      brInputTitle:"Archivos / nombres",
+      brTabFiles:"Añadir archivos", brTabNames:"Escribir solo nombres",
+      brDrop:"Arrastra y suelta archivos aquí, o haz clic para elegir.<br><strong>Descargar renombrados</strong> queda disponible.",
+      brNoFiles:"No hay archivos cargados.", brFilesLoaded:"archivo(s) cargado(s)",
+      brNamesPh:"Un nombre de archivo por línea\nphoto 1.jpg\nphoto 2.jpg",
+      brNamesHint:"Uno por línea. En este modo solo se puede exportar el script.",
+      brRulesTitle:"Reglas de renombrado (se aplican de arriba abajo)",
+      brFind:"Buscar y reemplazar", brFindPh:"Buscar", brReplPh:"Reemplazar por", brRegex:"Regex (RegExp, global)",
+      brPrefix:"Prefijo", brSuffix:"Sufijo",
+      brSeq:"Añadir número secuencial", brSeqStart:"Empezar en", brSeqPad:"Dígitos (relleno con ceros)",
+      brSeqPos:"Posición", brSeqPosStart:"Inicio", brSeqPosEnd:"Final", brSeqSep:"Separador",
+      brCase:"Mayúsculas/minúsculas", brCaseNone:"Sin cambios", brCaseLower:"minúsculas", brCaseUpper:"MAYÚSCULAS",
+      brSpaceLbl:"Espacios", brSpaceUnder:"Espacios a _",
+      brIncludeExt:"Aplicar también a la extensión (por defecto: conservar la extensión)",
+      brPreviewTitle:"Vista previa (nombre antiguo → nombre nuevo)",
+      brColOld:"Nombre antiguo", brColNew:"Nombre nuevo",
+      brNoConflict:"Sin conflictos", brConflicts:"conflicto(s) de nombre",
+      brEmpty:"Añade archivos o escribe nombres y aquí\naparecerá la vista previa nombre antiguo → nombre nuevo.",
+      brDownload:"Descargar renombrados", brExportScript:"Exportar script", brClear:"Vaciar",
+      brHelpBtn:"Cómo usar", brHelpClose:"Cerrar", brGuideTitle:"Cómo usar el renombrador por lotes",
+      brStep1T:"Carga archivos o nombres",
+      brStep1D:"Arrastra y suelta archivos para añadirlos, o pega nombres uno por línea en la pestaña ‘Escribir solo nombres’. Los archivos se procesan dentro de tu navegador y nunca se suben a ningún sitio.",
+      brStep2T:"Aplica reglas y previsualiza",
+      brStep2D:"Buscar y reemplazar, prefijo/sufijo, numeración secuencial, mayúsculas/minúsculas y manejo de espacios se aplican de arriba abajo. Observa la vista previa <code>nombre antiguo → nombre nuevo</code> a la derecha; los nombres duplicados se marcan con un color de advertencia.",
+      brStep3T:"Descarga o script",
+      brStep3D:"Los navegadores no pueden renombrar archivos en el disco directamente, así que hay dos caminos. (1) Si cargaste archivos reales, <code>Descargar renombrados</code> los guarda con los nuevos nombres. (2) <code>Exportar script</code> te da un .bat / .ps1 / .sh que ejecutas dentro de la carpeta para renombrar in situ.",
+      relTitle:"Herramientas relacionadas", navXs:"Dividir hojas de Excel"
+    },
+    fr:{
+      docTitle:"Renommage de fichiers par lots — Grit Tools",
+      brTool:"Renommer par lots", brAllTools:"← Tous les outils",
+      brTitle:"Renommage de fichiers par lots",
+      brSub:"Renommez plusieurs fichiers d'un coup avec des règles, puis enregistrez-les sous les nouveaux noms ou exportez un script de renommage. Les fichiers ne sont jamais envoyés.",
+      brInputTitle:"Fichiers / noms",
+      brTabFiles:"Ajouter des fichiers", brTabNames:"Saisir uniquement les noms",
+      brDrop:"Glissez-déposez des fichiers ici, ou cliquez pour choisir.<br><strong>Télécharger les fichiers renommés</strong> devient disponible.",
+      brNoFiles:"Aucun fichier chargé.", brFilesLoaded:"fichier(s) chargé(s)",
+      brNamesPh:"Un nom de fichier par ligne\nphoto 1.jpg\nphoto 2.jpg",
+      brNamesHint:"Un par ligne. Dans ce mode, seule l'exportation du script est possible.",
+      brRulesTitle:"Règles de renommage (appliquées de haut en bas)",
+      brFind:"Rechercher et remplacer", brFindPh:"Rechercher", brReplPh:"Remplacer par", brRegex:"Regex (RegExp, global)",
+      brPrefix:"Préfixe", brSuffix:"Suffixe",
+      brSeq:"Ajouter un numéro séquentiel", brSeqStart:"Commencer à", brSeqPad:"Chiffres (remplissage par zéros)",
+      brSeqPos:"Position", brSeqPosStart:"Début", brSeqPosEnd:"Fin", brSeqSep:"Séparateur",
+      brCase:"Casse", brCaseNone:"Aucun changement", brCaseLower:"minuscules", brCaseUpper:"MAJUSCULES",
+      brSpaceLbl:"Espaces", brSpaceUnder:"Espaces en _",
+      brIncludeExt:"Appliquer aussi à l'extension (par défaut : conserver l'extension)",
+      brPreviewTitle:"Aperçu (ancien nom → nouveau nom)",
+      brColOld:"Ancien nom", brColNew:"Nouveau nom",
+      brNoConflict:"Aucun conflit", brConflicts:"conflit(s) de nom",
+      brEmpty:"Ajoutez des fichiers ou saisissez des noms et\nl'aperçu ancien nom → nouveau nom apparaîtra ici.",
+      brDownload:"Télécharger les renommés", brExportScript:"Exporter le script", brClear:"Vider",
+      brHelpBtn:"Mode d'emploi", brHelpClose:"Fermer", brGuideTitle:"Comment utiliser le renommage par lots",
+      brStep1T:"Chargez des fichiers ou des noms",
+      brStep1D:"Glissez-déposez des fichiers pour les ajouter, ou collez des noms un par ligne sous l'onglet ‘Saisir uniquement les noms’. Les fichiers sont traités dans votre navigateur et ne sont jamais envoyés où que ce soit.",
+      brStep2T:"Appliquez les règles et prévisualisez",
+      brStep2D:"Rechercher et remplacer, préfixe/suffixe, numérotation séquentielle, casse et gestion des espaces sont appliqués de haut en bas. Observez l'aperçu <code>ancien nom → nouveau nom</code> à droite ; les noms en double sont signalés par une couleur d'avertissement.",
+      brStep3T:"Téléchargement ou script",
+      brStep3D:"Les navigateurs ne peuvent pas renommer directement les fichiers sur le disque, il y a donc deux voies. (1) Si vous avez chargé de vrais fichiers, <code>Télécharger les renommés</code> les enregistre sous les nouveaux noms. (2) <code>Exporter le script</code> vous donne un .bat / .ps1 / .sh que vous exécutez dans le dossier pour renommer sur place.",
+      relTitle:"Outils associés", navXs:"Diviser des feuilles Excel"
+    },
+    de:{
+      docTitle:"Stapelweise Dateien umbenennen — Grit Tools",
+      brTool:"Stapel-Umbenennen", brAllTools:"← Alle Werkzeuge",
+      brTitle:"Stapelweise Dateien umbenennen",
+      brSub:"Benenne viele Dateien auf einmal mit Regeln um, speichere sie unter den neuen Namen oder exportiere ein Umbenennungs-Skript. Dateien werden nie hochgeladen.",
+      brInputTitle:"Dateien / Namen",
+      brTabFiles:"Dateien hinzufügen", brTabNames:"Nur Namen eingeben",
+      brDrop:"Dateien hierher ziehen und ablegen oder zum Auswählen klicken.<br><strong>Umbenannt herunterladen</strong> wird verfügbar.",
+      brNoFiles:"Keine Dateien geladen.", brFilesLoaded:"Datei(en) geladen",
+      brNamesPh:"Ein Dateiname pro Zeile\nphoto 1.jpg\nphoto 2.jpg",
+      brNamesHint:"Einer pro Zeile. In diesem Modus ist nur der Skript-Export möglich.",
+      brRulesTitle:"Umbenennungsregeln (von oben nach unten angewendet)",
+      brFind:"Suchen & ersetzen", brFindPh:"Suchen", brReplPh:"Ersetzen durch", brRegex:"Regex (RegExp, global)",
+      brPrefix:"Präfix", brSuffix:"Suffix",
+      brSeq:"Fortlaufende Nummer hinzufügen", brSeqStart:"Beginn bei", brSeqPad:"Stellen (mit Nullen auffüllen)",
+      brSeqPos:"Position", brSeqPosStart:"Anfang", brSeqPosEnd:"Ende", brSeqSep:"Trenner",
+      brCase:"Groß-/Kleinschreibung", brCaseNone:"Keine Änderung", brCaseLower:"kleinbuchstaben", brCaseUpper:"GROSSBUCHSTABEN",
+      brSpaceLbl:"Leerzeichen", brSpaceUnder:"Leerzeichen zu _",
+      brIncludeExt:"Auch auf die Erweiterung anwenden (Standard: Erweiterung behalten)",
+      brPreviewTitle:"Vorschau (alter Name → neuer Name)",
+      brColOld:"Alter Name", brColNew:"Neuer Name",
+      brNoConflict:"Keine Konflikte", brConflicts:"Namenskonflikt(e)",
+      brEmpty:"Füge Dateien hinzu oder gib Namen ein, dann\nerscheint hier die Vorschau alter Name → neuer Name.",
+      brDownload:"Umbenannt herunterladen", brExportScript:"Skript exportieren", brClear:"Leeren",
+      brHelpBtn:"Anleitung", brHelpClose:"Schließen", brGuideTitle:"So nutzt du das Stapel-Umbenennen",
+      brStep1T:"Dateien oder Namen laden",
+      brStep1D:"Ziehe Dateien per Drag &amp; Drop hinein, um sie hinzuzufügen, oder füge Namen Zeile für Zeile unter dem Tab ‘Nur Namen eingeben’ ein. Dateien werden in deinem Browser verarbeitet und nirgendwohin hochgeladen.",
+      brStep2T:"Regeln anwenden & Vorschau",
+      brStep2D:"Suchen &amp; ersetzen, Präfix/Suffix, fortlaufende Nummerierung, Groß-/Kleinschreibung und Leerzeichenbehandlung werden von oben nach unten angewendet. Beobachte rechts die Vorschau <code>alter Name → neuer Name</code>; doppelte Namen werden in einer Warnfarbe markiert.",
+      brStep3T:"Herunterladen oder Skript",
+      brStep3D:"Browser können Dateien auf der Festplatte nicht direkt umbenennen, daher gibt es zwei Wege. (1) Wenn du echte Dateien geladen hast, speichert <code>Umbenannt herunterladen</code> sie unter den neuen Namen. (2) <code>Skript exportieren</code> liefert dir eine .bat / .ps1 / .sh, die du im Ordner ausführst, um vor Ort umzubenennen.",
+      relTitle:"Verwandte Tools", navXs:"Excel-Blätter teilen"
+    },
+    pt:{
+      docTitle:"Renomeador de arquivos em lote — Grit Tools",
+      brTool:"Renomear em lote", brAllTools:"← Todas as ferramentas",
+      brTitle:"Renomeador de arquivos em lote",
+      brSub:"Renomeie vários arquivos de uma vez com regras e salve-os com os novos nomes ou exporte um script de renomeação. Os arquivos nunca são enviados.",
+      brInputTitle:"Arquivos / nomes",
+      brTabFiles:"Adicionar arquivos", brTabNames:"Digitar apenas nomes",
+      brDrop:"Arraste e solte arquivos aqui ou clique para escolher.<br><strong>Baixar renomeados</strong> fica disponível.",
+      brNoFiles:"Nenhum arquivo carregado.", brFilesLoaded:"arquivo(s) carregado(s)",
+      brNamesPh:"Um nome de arquivo por linha\nphoto 1.jpg\nphoto 2.jpg",
+      brNamesHint:"Um por linha. Neste modo só é possível exportar o script.",
+      brRulesTitle:"Regras de renomeação (aplicadas de cima para baixo)",
+      brFind:"Localizar e substituir", brFindPh:"Localizar", brReplPh:"Substituir por", brRegex:"Regex (RegExp, global)",
+      brPrefix:"Prefixo", brSuffix:"Sufixo",
+      brSeq:"Adicionar número sequencial", brSeqStart:"Começar em", brSeqPad:"Dígitos (preenchimento com zeros)",
+      brSeqPos:"Posição", brSeqPosStart:"Início", brSeqPosEnd:"Fim", brSeqSep:"Separador",
+      brCase:"Maiúsculas/minúsculas", brCaseNone:"Sem alteração", brCaseLower:"minúsculas", brCaseUpper:"MAIÚSCULAS",
+      brSpaceLbl:"Espaços", brSpaceUnder:"Espaços para _",
+      brIncludeExt:"Aplicar também à extensão (padrão: manter a extensão)",
+      brPreviewTitle:"Pré-visualização (nome antigo → nome novo)",
+      brColOld:"Nome antigo", brColNew:"Nome novo",
+      brNoConflict:"Sem conflitos", brConflicts:"conflito(s) de nome",
+      brEmpty:"Adicione arquivos ou digite nomes e a\npré-visualização nome antigo → nome novo aparecerá aqui.",
+      brDownload:"Baixar renomeados", brExportScript:"Exportar script", brClear:"Limpar",
+      brHelpBtn:"Como usar", brHelpClose:"Fechar", brGuideTitle:"Como usar o renomeador em lote",
+      brStep1T:"Carregue arquivos ou nomes",
+      brStep1D:"Arraste e solte arquivos para adicioná-los, ou cole nomes um por linha na aba ‘Digitar apenas nomes’. Os arquivos são processados dentro do seu navegador e nunca são enviados a lugar nenhum.",
+      brStep2T:"Aplique regras e pré-visualize",
+      brStep2D:"Localizar e substituir, prefixo/sufixo, numeração sequencial, maiúsculas/minúsculas e tratamento de espaços são aplicados de cima para baixo. Observe a pré-visualização <code>nome antigo → nome novo</code> à direita; nomes duplicados são destacados com uma cor de aviso.",
+      brStep3T:"Download ou script",
+      brStep3D:"Os navegadores não conseguem renomear arquivos no disco diretamente, então há dois caminhos. (1) Se você carregou arquivos reais, <code>Baixar renomeados</code> os salva com os novos nomes. (2) <code>Exportar script</code> fornece um .bat / .ps1 / .sh que você executa dentro da pasta para renomear no local.",
+      relTitle:"Ferramentas relacionadas", navXs:"Dividir planilhas Excel"
+    },
+    ru:{
+      docTitle:"Пакетное переименование файлов — Grit Tools",
+      brTool:"Пакетное переименование", brAllTools:"← Все инструменты",
+      brTitle:"Пакетное переименование файлов",
+      brSub:"Переименуйте множество файлов сразу по правилам, затем пересохраните их под новыми именами или экспортируйте скрипт переименования. Файлы никогда не загружаются.",
+      brInputTitle:"Файлы / имена",
+      brTabFiles:"Добавить файлы", brTabNames:"Ввести только имена",
+      brDrop:"Перетащите файлы сюда или нажмите, чтобы выбрать.<br><strong>Скачать переименованные</strong> станет доступно.",
+      brNoFiles:"Файлы не загружены.", brFilesLoaded:"файл(ов) загружено",
+      brNamesPh:"По одному имени файла в строке\nphoto 1.jpg\nphoto 2.jpg",
+      brNamesHint:"По одному в строке. В этом режиме доступен только экспорт скрипта.",
+      brRulesTitle:"Правила переименования (применяются сверху вниз)",
+      brFind:"Найти и заменить", brFindPh:"Найти", brReplPh:"Заменить на", brRegex:"Регулярное выражение (RegExp, глобально)",
+      brPrefix:"Префикс", brSuffix:"Суффикс",
+      brSeq:"Добавить порядковый номер", brSeqStart:"Начать с", brSeqPad:"Разрядов (дополнить нулями)",
+      brSeqPos:"Положение", brSeqPosStart:"В начале", brSeqPosEnd:"В конце", brSeqSep:"Разделитель",
+      brCase:"Регистр", brCaseNone:"Без изменений", brCaseLower:"строчные", brCaseUpper:"ПРОПИСНЫЕ",
+      brSpaceLbl:"Пробелы", brSpaceUnder:"Пробелы в _",
+      brIncludeExt:"Применять и к расширению (по умолчанию: сохранять расширение)",
+      brPreviewTitle:"Предпросмотр (старое имя → новое имя)",
+      brColOld:"Старое имя", brColNew:"Новое имя",
+      brNoConflict:"Конфликтов нет", brConflicts:"конфликт(ов) имён",
+      brEmpty:"Добавьте файлы или введите имена, и здесь\nпоявится предпросмотр старое имя → новое имя.",
+      brDownload:"Скачать переименованные", brExportScript:"Экспорт скрипта", brClear:"Очистить",
+      brHelpBtn:"Как пользоваться", brHelpClose:"Закрыть", brGuideTitle:"Как пользоваться пакетным переименованием",
+      brStep1T:"Загрузите файлы или имена",
+      brStep1D:"Перетащите файлы, чтобы добавить их, или вставьте имена по одному в строке на вкладке ‘Ввести только имена’. Файлы обрабатываются внутри вашего браузера и никуда не загружаются.",
+      brStep2T:"Примените правила и просмотрите",
+      brStep2D:"Поиск и замена, префикс/суффикс, порядковая нумерация, регистр и обработка пробелов применяются сверху вниз. Следите за предпросмотром <code>старое имя → новое имя</code> справа; повторяющиеся имена выделяются предупреждающим цветом.",
+      brStep3T:"Скачивание или скрипт",
+      brStep3D:"Браузеры не могут переименовывать файлы на диске напрямую, поэтому есть два пути. (1) Если вы загрузили реальные файлы, <code>Скачать переименованные</code> сохранит их под новыми именами. (2) <code>Экспорт скрипта</code> даёт вам .bat / .ps1 / .sh, который вы запускаете в папке, чтобы переименовать на месте.",
+      relTitle:"Похожие инструменты", navXs:"Разделить листы Excel"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ updateFileCount(); render(); } });

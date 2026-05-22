@@ -7,11 +7,29 @@
 <meta name="description" content="PDF 파일을 페이지별 PNG·JPEG 이미지로 변환합니다. 해상도와 품질을 고르고 한 페이지씩 또는 전체를 한 번에 저장하세요. 모든 변환은 브라우저에서 처리되며 PDF는 서버로 전송되지 않습니다.">
 <meta name="keywords" content="PDF 이미지 변환, PDF to image, PDF to PNG, PDF to JPG, PDF 이미지 추출, pdf converter">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/pdf/pdf-to-image.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="PDF를 이미지로 변환 — Grit Tools">
 <meta property="og:description" content="PDF를 페이지별 PNG·JPEG로 변환. 해상도·품질 설정, 전체 일괄 저장. 브라우저에서만 처리.">
+<meta property="og:url" content="https://grit-tools.com/tools/pdf/pdf-to-image.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF를 이미지로 변환 — Grit Tools">
+<meta name="twitter:description" content="PDF를 페이지별 PNG·JPEG로 변환. 해상도·품질 설정, 전체 일괄 저장. 브라우저에서만 처리.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -138,8 +156,24 @@
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Web browser",
   "description": "PDF 파일을 페이지별 PNG 또는 JPEG 이미지로 변환하는 도구. 해상도와 품질을 선택하고 페이지별 또는 전체 일괄 저장이 가능하며, 모든 변환은 브라우저에서 처리됩니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"PDF","item":"https://grit-tools.com/#pdf"},
+ {"@type":"ListItem","position":3,"name":"PDF를 이미지로 변환","item":"https://grit-tools.com/tools/pdf/pdf-to-image.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"PDF를 이미지로 변환 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"PDF 불러오기","text":"PDF 파일을 왼쪽 영역에 끌어다 놓거나 클릭해서 선택하세요. 페이지 미리보기가 바로 나타납니다."},
+ {"@type":"HowToStep","name":"형식·해상도 선택","text":"출력 형식(PNG/JPEG), 해상도(1x~300 DPI), JPEG 품질을 고릅니다. 해상도가 높을수록 이미지가 선명하지만 용량이 커집니다."},
+ {"@type":"HowToStep","name":"이미지 저장","text":"페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 원본이름_p01.png 형식입니다."}
+]}
 </script>
 </head>
 <body>
@@ -240,6 +274,11 @@
         <p class="hs-d" data-i18n-html="piStep3D">페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 <code>원본이름_p01.png</code> 형식입니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="pdf-merge.html" data-i18n="navPm" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF 합치기</a>
+      <a href="pdf-split.html" data-i18n="navPs" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF 나누기</a>
+    </nav>
   </div>
 </div>
 
@@ -552,7 +591,8 @@
       piStep2T:"형식·해상도 선택",
       piStep2D:"출력 형식(PNG/JPEG), 해상도(1x~300 DPI), JPEG 품질을 고릅니다. 해상도가 높을수록 이미지가 선명하지만 용량이 커집니다.",
       piStep3T:"이미지 저장",
-      piStep3D:"페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 <code>원본이름_p01.png</code> 형식입니다."
+      piStep3D:"페이지마다 ‘이미지 저장’ 버튼으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 내려받습니다. 파일명은 <code>원본이름_p01.png</code> 형식입니다.",
+      relTitle:"관련 도구", navPm:"PDF 합치기", navPs:"PDF 나누기"
     },
     en:{
       docTitle:"PDF to Image Converter — Grit Tools",
@@ -578,7 +618,8 @@
       piStep2T:"Pick format & resolution",
       piStep2D:"Choose the output format (PNG/JPEG), resolution (1x–300 DPI) and JPEG quality. Higher resolution is sharper but larger.",
       piStep3T:"Save images",
-      piStep3D:"Use each page's ‘Save image’ button for one page, or ‘Save all pages’ for the whole document. Files are named <code>originalname_p01.png</code>."
+      piStep3D:"Use each page's ‘Save image’ button for one page, or ‘Save all pages’ for the whole document. Files are named <code>originalname_p01.png</code>.",
+      relTitle:"Related tools", navPm:"PDF Merge", navPs:"PDF Split"
     },
     ja:{
       docTitle:"PDF → 画像変換 — Grit Tools",
@@ -604,7 +645,8 @@
       piStep2T:"形式・解像度を選ぶ",
       piStep2D:"出力形式（PNG/JPEG）、解像度（1x〜300 DPI）、JPEGの品質を選びます。解像度が高いほど鮮明ですが容量は大きくなります。",
       piStep3T:"画像を保存",
-      piStep3D:"各ページの「画像を保存」で1枚ずつ、または「全ページを保存」で全体をダウンロードします。ファイル名は <code>元の名前_p01.png</code> 形式です。"
+      piStep3D:"各ページの「画像を保存」で1枚ずつ、または「全ページを保存」で全体をダウンロードします。ファイル名は <code>元の名前_p01.png</code> 形式です。",
+      relTitle:"関連ツール", navPm:"PDF結合", navPs:"PDF分割"
     },
     zh:{
       docTitle:"PDF → 图片转换 — Grit Tools",
@@ -630,7 +672,143 @@
       piStep2T:"选择格式与分辨率",
       piStep2D:"选择输出格式（PNG/JPEG）、分辨率（1x–300 DPI）和 JPEG 质量。分辨率越高越清晰，但文件越大。",
       piStep3T:"保存图片",
-      piStep3D:"用每页的“保存图片”按钮逐张保存，或用“保存所有页面”下载整份文档。文件名格式为 <code>原名称_p01.png</code>。"
+      piStep3D:"用每页的“保存图片”按钮逐张保存，或用“保存所有页面”下载整份文档。文件名格式为 <code>原名称_p01.png</code>。",
+      relTitle:"相关工具", navPm:"PDF 合并", navPs:"PDF 拆分"
+    },
+    es:{
+      docTitle:"Convertir PDF a imagen — Grit Tools",
+      piTool:"PDF a imagen", piAllTools:"← Todas las herramientas",
+      piTitle:"Convertir PDF a imagen",
+      piSub:"Convierte cada página de un PDF en una imagen PNG o JPEG.",
+      piDropMain:"Arrastra y suelta un PDF o haz clic",
+      piDropSub:"Elige un solo archivo PDF",
+      piFormat:"Formato de salida", piQuality:"Calidad (JPEG)", piScale:"Resolución",
+      piScale2:"2x · Alta calidad (150 DPI)",
+      piSaveAll:"Guardar todas las páginas", piSavePage:"Guardar imagen",
+      piPrivacy:"Tu PDF nunca se sube. Toda la conversión ocurre por completo dentro de este navegador.",
+      piPagesTitle:"Páginas", piPagesUnit:"páginas",
+      piPlaceholder:"Carga un PDF y las vistas previas de las páginas aparecerán aquí.",
+      piLoading:"Cargando…", piConverting:"Convirtiendo", piSaving:"Guardando…", piDone:"Listo",
+      piNotPdf:"Solo se admiten archivos PDF.",
+      piLoadError:"Se produjo un error al abrir el PDF.",
+      piRenderError:"Se produjo un error al convertir la página.",
+      piLibError:"No se pudo cargar la biblioteca PDF. Comprueba tu conexión a Internet y vuelve a cargar.",
+      piHelpBtn:"Cómo usar", piHelpClose:"Cerrar", piGuideTitle:"Cómo usar el conversor de PDF a imagen",
+      piStep1T:"Cargar un PDF",
+      piStep1D:"Arrastra y suelta un PDF en el panel izquierdo, o haz clic para elegir uno. Las vistas previas de las páginas aparecen al instante.",
+      piStep2T:"Elegir formato y resolución",
+      piStep2D:"Elige el formato de salida (PNG/JPEG), la resolución (1x–300 DPI) y la calidad JPEG. A mayor resolución, más nitidez pero mayor tamaño.",
+      piStep3T:"Guardar imágenes",
+      piStep3D:"Usa el botón ‘Guardar imagen’ de cada página para una sola, o ‘Guardar todas las páginas’ para todo el documento. Los archivos se nombran <code>nombreoriginal_p01.png</code>.",
+      relTitle:"Herramientas relacionadas", navPm:"Unir PDF", navPs:"Dividir PDF"
+    },
+    fr:{
+      docTitle:"Convertir PDF en image — Grit Tools",
+      piTool:"PDF en image", piAllTools:"← Tous les outils",
+      piTitle:"Convertir PDF en image",
+      piSub:"Convertissez chaque page d'un PDF en image PNG ou JPEG.",
+      piDropMain:"Glissez-déposez un PDF ou cliquez",
+      piDropSub:"Choisissez un seul fichier PDF",
+      piFormat:"Format de sortie", piQuality:"Qualité (JPEG)", piScale:"Résolution",
+      piScale2:"2x · Haute qualité (150 DPI)",
+      piSaveAll:"Enregistrer toutes les pages", piSavePage:"Enregistrer l'image",
+      piPrivacy:"Votre PDF n'est jamais envoyé. Toute la conversion se fait entièrement dans ce navigateur.",
+      piPagesTitle:"Pages", piPagesUnit:"pages",
+      piPlaceholder:"Chargez un PDF et les aperçus des pages apparaîtront ici.",
+      piLoading:"Chargement…", piConverting:"Conversion", piSaving:"Enregistrement…", piDone:"Terminé",
+      piNotPdf:"Seuls les fichiers PDF sont pris en charge.",
+      piLoadError:"Une erreur s'est produite à l'ouverture du PDF.",
+      piRenderError:"Une erreur s'est produite lors de la conversion de la page.",
+      piLibError:"Impossible de charger la bibliothèque PDF. Vérifiez votre connexion Internet et rechargez.",
+      piHelpBtn:"Mode d'emploi", piHelpClose:"Fermer", piGuideTitle:"Comment utiliser le convertisseur PDF en image",
+      piStep1T:"Charger un PDF",
+      piStep1D:"Glissez-déposez un PDF sur le panneau de gauche, ou cliquez pour en choisir un. Les aperçus des pages apparaissent aussitôt.",
+      piStep2T:"Choisir le format et la résolution",
+      piStep2D:"Choisissez le format de sortie (PNG/JPEG), la résolution (1x–300 DPI) et la qualité JPEG. Plus la résolution est élevée, plus c'est net mais volumineux.",
+      piStep3T:"Enregistrer les images",
+      piStep3D:"Utilisez le bouton ‘Enregistrer l'image’ de chaque page pour une seule, ou ‘Enregistrer toutes les pages’ pour tout le document. Les fichiers sont nommés <code>nomoriginal_p01.png</code>.",
+      relTitle:"Outils associés", navPm:"Fusionner des PDF", navPs:"Diviser un PDF"
+    },
+    de:{
+      docTitle:"PDF in Bild umwandeln — Grit Tools",
+      piTool:"PDF in Bild", piAllTools:"← Alle Tools",
+      piTitle:"PDF in Bild umwandeln",
+      piSub:"Wandeln Sie jede Seite eines PDF in ein PNG- oder JPEG-Bild um.",
+      piDropMain:"PDF hierher ziehen oder klicken",
+      piDropSub:"Wählen Sie eine einzelne PDF-Datei",
+      piFormat:"Ausgabeformat", piQuality:"Qualität (JPEG)", piScale:"Auflösung",
+      piScale2:"2x · Hohe Qualität (150 DPI)",
+      piSaveAll:"Alle Seiten speichern", piSavePage:"Bild speichern",
+      piPrivacy:"Ihr PDF wird nie hochgeladen. Die gesamte Umwandlung erfolgt vollständig in diesem Browser.",
+      piPagesTitle:"Seiten", piPagesUnit:"Seiten",
+      piPlaceholder:"Laden Sie ein PDF, dann erscheinen hier die Seitenvorschauen.",
+      piLoading:"Wird geladen…", piConverting:"Wird umgewandelt", piSaving:"Wird gespeichert…", piDone:"Fertig",
+      piNotPdf:"Nur PDF-Dateien werden unterstützt.",
+      piLoadError:"Beim Öffnen des PDF ist ein Fehler aufgetreten.",
+      piRenderError:"Beim Umwandeln der Seite ist ein Fehler aufgetreten.",
+      piLibError:"Die PDF-Bibliothek konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung und laden Sie neu.",
+      piHelpBtn:"Anleitung", piHelpClose:"Schließen", piGuideTitle:"So nutzen Sie den PDF-zu-Bild-Konverter",
+      piStep1T:"PDF laden",
+      piStep1D:"Ziehen Sie ein PDF auf das linke Feld oder klicken Sie, um eines auszuwählen. Die Seitenvorschauen erscheinen sofort.",
+      piStep2T:"Format und Auflösung wählen",
+      piStep2D:"Wählen Sie Ausgabeformat (PNG/JPEG), Auflösung (1x–300 DPI) und JPEG-Qualität. Höhere Auflösung ist schärfer, aber größer.",
+      piStep3T:"Bilder speichern",
+      piStep3D:"Nutzen Sie pro Seite die Schaltfläche ‘Bild speichern’ für eine einzelne Seite oder ‘Alle Seiten speichern’ für das ganze Dokument. Dateien heißen <code>originalname_p01.png</code>.",
+      relTitle:"Verwandte Tools", navPm:"PDF zusammenfügen", navPs:"PDF teilen"
+    },
+    pt:{
+      docTitle:"Converter PDF em imagem — Grit Tools",
+      piTool:"PDF para imagem", piAllTools:"← Todas as ferramentas",
+      piTitle:"Converter PDF em imagem",
+      piSub:"Converta cada página de um PDF numa imagem PNG ou JPEG.",
+      piDropMain:"Arraste e largue um PDF ou clique",
+      piDropSub:"Escolha um único ficheiro PDF",
+      piFormat:"Formato de saída", piQuality:"Qualidade (JPEG)", piScale:"Resolução",
+      piScale2:"2x · Alta qualidade (150 DPI)",
+      piSaveAll:"Guardar todas as páginas", piSavePage:"Guardar imagem",
+      piPrivacy:"O seu PDF nunca é enviado. Toda a conversão acontece inteiramente dentro deste navegador.",
+      piPagesTitle:"Páginas", piPagesUnit:"páginas",
+      piPlaceholder:"Carregue um PDF e as pré-visualizações das páginas aparecerão aqui.",
+      piLoading:"A carregar…", piConverting:"A converter", piSaving:"A guardar…", piDone:"Concluído",
+      piNotPdf:"Apenas ficheiros PDF são suportados.",
+      piLoadError:"Ocorreu um erro ao abrir o PDF.",
+      piRenderError:"Ocorreu um erro ao converter a página.",
+      piLibError:"Não foi possível carregar a biblioteca PDF. Verifique a ligação à Internet e recarregue.",
+      piHelpBtn:"Como usar", piHelpClose:"Fechar", piGuideTitle:"Como usar o conversor de PDF para imagem",
+      piStep1T:"Carregar um PDF",
+      piStep1D:"Arraste e largue um PDF no painel esquerdo, ou clique para escolher um. As pré-visualizações das páginas aparecem de imediato.",
+      piStep2T:"Escolher formato e resolução",
+      piStep2D:"Escolha o formato de saída (PNG/JPEG), a resolução (1x–300 DPI) e a qualidade JPEG. Maior resolução é mais nítida mas maior em tamanho.",
+      piStep3T:"Guardar imagens",
+      piStep3D:"Use o botão ‘Guardar imagem’ de cada página para uma única, ou ‘Guardar todas as páginas’ para o documento inteiro. Os ficheiros são nomeados <code>nomeoriginal_p01.png</code>.",
+      relTitle:"Ferramentas relacionadas", navPm:"Juntar PDF", navPs:"Dividir PDF"
+    },
+    ru:{
+      docTitle:"Конвертация PDF в изображение — Grit Tools",
+      piTool:"PDF в изображение", piAllTools:"← Все инструменты",
+      piTitle:"Конвертация PDF в изображение",
+      piSub:"Преобразуйте каждую страницу PDF в изображение PNG или JPEG.",
+      piDropMain:"Перетащите PDF или нажмите",
+      piDropSub:"Выберите один PDF-файл",
+      piFormat:"Формат вывода", piQuality:"Качество (JPEG)", piScale:"Разрешение",
+      piScale2:"2x · Высокое качество (150 DPI)",
+      piSaveAll:"Сохранить все страницы", piSavePage:"Сохранить изображение",
+      piPrivacy:"Ваш PDF никогда не загружается на сервер. Вся конвертация выполняется полностью в этом браузере.",
+      piPagesTitle:"Страницы", piPagesUnit:"стр.",
+      piPlaceholder:"Загрузите PDF, и здесь появятся миниатюры страниц.",
+      piLoading:"Загрузка…", piConverting:"Конвертация", piSaving:"Сохранение…", piDone:"Готово",
+      piNotPdf:"Поддерживаются только PDF-файлы.",
+      piLoadError:"При открытии PDF произошла ошибка.",
+      piRenderError:"При конвертации страницы произошла ошибка.",
+      piLibError:"Не удалось загрузить библиотеку обработки PDF. Проверьте подключение к Интернету и обновите страницу.",
+      piHelpBtn:"Как пользоваться", piHelpClose:"Закрыть", piGuideTitle:"Как пользоваться конвертером PDF в изображение",
+      piStep1T:"Загрузите PDF",
+      piStep1D:"Перетащите PDF на левую панель или нажмите, чтобы выбрать файл. Миниатюры страниц появятся сразу.",
+      piStep2T:"Выберите формат и разрешение",
+      piStep2D:"Выберите формат вывода (PNG/JPEG), разрешение (1x–300 DPI) и качество JPEG. Чем выше разрешение, тем чётче, но больше размер.",
+      piStep3T:"Сохраните изображения",
+      piStep3D:"Используйте кнопку ‘Сохранить изображение’ на каждой странице для одной, или ‘Сохранить все страницы’ для всего документа. Файлы называются <code>исходноеимя_p01.png</code>.",
+      relTitle:"Похожие инструменты", navPm:"Объединить PDF", navPs:"Разделить PDF"
     }
   });
 

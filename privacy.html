@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>개인정보처리방침 — Grit Tools</title>
+<meta name="description" content="Grit Tools 개인정보처리방침. 도구의 모든 처리는 브라우저 안에서 이뤄지며 파일·이미지는 서버로 전송되지 않습니다. 수집·저장·외부 전송 항목과 쿠키·광고 정책을 안내합니다.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/privacy.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="개인정보처리방침 — Grit Tools">
+<meta property="og:description" content="Grit Tools의 개인정보 수집·저장·외부 전송 및 쿠키·광고 정책 안내.">
+<meta property="og:url" content="https://grit-tools.com/privacy.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; line-height:1.7; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-home { margin-left:auto; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  main { max-width:760px; margin:0 auto; padding:40px 22px 80px; }
+  h1 { font-size:26px; font-weight:600; letter-spacing:-.01em; margin:0 0 6px; }
+  .updated { color:var(--text-muted); font-size:13px; margin:0 0 32px; }
+  h2 { font-size:17px; font-weight:600; margin:34px 0 10px; padding-top:18px; border-top:1px solid var(--border); color:var(--text); }
+  p, li { color:var(--text-dim); font-size:15px; }
+  ul { padding-left:20px; margin:10px 0; }
+  li { margin:6px 0; }
+  strong { color:var(--text); font-weight:600; }
+  code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  a { color:var(--blue); }
+  .lead { color:var(--text); font-size:15px; }
+</style>
+</head>
+<body>
+  <div id="grit-bar">
+    <a href="index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool">개인정보처리방침</span>
+    <a href="index.html" class="g-home">← 모든 도구</a>
+  </div>
+
+  <main>
+    <h1>개인정보처리방침</h1>
+    <p class="updated">시행일: 2026년 5월 22일</p>
+
+    <p class="lead">Grit Tools(<code>grit-tools.com</code>, 이하 "서비스")는 이용자의 개인정보를 소중히 다룹니다. 서비스의 도구는 가능한 모든 처리를 <strong>이용자의 브라우저 안에서</strong> 수행하며, 회원가입을 요구하지 않습니다. 본 방침은 어떤 정보가 어떻게 다뤄지는지 투명하게 안내합니다.</p>
+
+    <h2>1. 수집하지 않는 정보</h2>
+    <ul>
+      <li>회원가입·로그인이 없어 이름·이메일·전화번호 등 <strong>계정 정보를 수집하지 않습니다.</strong></li>
+      <li>이미지·PDF·엑셀·텍스트 등 도구에 올린 <strong>파일은 서버로 전송되지 않습니다.</strong> 모든 변환·계산은 이용자의 브라우저 안에서만 이뤄지며, 처리 후 페이지를 닫으면 사라집니다.</li>
+    </ul>
+
+    <h2>2. 브라우저 로컬 저장(localStorage)</h2>
+    <p>이용 편의를 위해 다음 설정값을 이용자의 브라우저(localStorage)에만 저장합니다. 이 값은 외부로 전송되지 않으며 이용자가 브라우저 데이터를 지우면 삭제됩니다.</p>
+    <ul>
+      <li><strong>언어 설정</strong>(<code>gritLang</code>) — 선택한 표시 언어.</li>
+      <li><strong>일부 도구 설정</strong>(예: 이미지 좌표 도구의 코드 포맷 <code>coordTpl</code>) — 마지막으로 쓴 옵션.</li>
+    </ul>
+
+    <h2>3. 외부 서비스로의 전송</h2>
+    <p>대부분의 도구는 외부 통신 없이 동작합니다. 다만 다음 기능은 동작에 필요한 최소한의 정보를 외부 서비스로 보냅니다.</p>
+    <ul>
+      <li><strong>환율 계산기</strong> — 선택한 통화 코드(예: <code>USD</code>, <code>KRW</code>)를 환율 API(<a href="https://www.frankfurter.app/" target="_blank" rel="noopener">frankfurter.app</a>, ECB 기준)로 보내 환율을 받아옵니다. 금액 등 개인 정보는 보내지 않습니다.</li>
+      <li><strong>우편번호 검색</strong> — 입력한 검색어/주소가 카카오(다음) 우편번호 서비스로 전송되어 조회됩니다.</li>
+      <li><strong>웹폰트</strong> — 화면 표시를 위해 Google Fonts 및 jsDelivr CDN에서 글꼴을 불러옵니다. 이 과정에서 이용자의 IP 주소가 해당 제공자에 노출될 수 있습니다(웹의 일반적 동작).</li>
+      <li><strong>호스팅·CDN</strong> — 서비스는 Cloudflare Pages에서 제공되며, 호스팅·보안·전송 목적상 접속 정보(IP 주소 등)가 서버 로그에 일시적으로 기록될 수 있습니다.</li>
+    </ul>
+
+    <h2>4. 쿠키 및 광고</h2>
+    <p><strong>도구 페이지에는 광고와 추적 쿠키를 두지 않습니다.</strong> 다만 일부 설명·가이드 등 콘텐츠 페이지에는 향후 Google AdSense 광고가 표시될 수 있습니다. 이 경우 Google 및 광고 파트너가 쿠키를 사용해 광고를 제공할 수 있으며, 여기에는 이용자의 이전 방문 기록에 기반한 맞춤형 광고가 포함될 수 있습니다.</p>
+    <ul>
+      <li>Google의 광고 쿠키 사용 방식: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google 광고 정책</a></li>
+      <li>맞춤형 광고 설정·해제: <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google 광고 설정</a></li>
+    </ul>
+
+    <h2>5. 분석 도구</h2>
+    <p>현재 서비스는 별도의 사용자 분석·추적 도구를 사용하지 않습니다. 추후 도입하게 되면 본 방침을 갱신해 안내합니다.</p>
+
+    <h2>6. 아동의 개인정보</h2>
+    <p>서비스는 만 14세 미만 아동을 주 대상으로 하지 않으며, 아동의 개인정보를 의도적으로 수집하지 않습니다.</p>
+
+    <h2>7. 방침의 변경</h2>
+    <p>본 개인정보처리방침은 법령 또는 서비스 변경에 따라 수정될 수 있으며, 변경 시 본 페이지에 게시합니다.</p>
+
+    <h2>8. 문의</h2>
+    <p>본 방침에 대한 문의는 <a href="mailto:contact@grit-tools.com">contact@grit-tools.com</a> 로 보내주세요.</p>
+  </main>
+</body>
+</html>

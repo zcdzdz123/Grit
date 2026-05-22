@@ -7,11 +7,29 @@
 <meta name="description" content="원금·이율·기간을 넣으면 단리 이자와 총액을 바로 계산하고, 회차별 추이를 그래프로 보고 엑셀로 저장하는 단리 계산기. 모든 계산은 브라우저에서 처리됩니다.">
 <meta name="keywords" content="단리 계산기, 단리 이자 계산, 이자 계산기, simple interest calculator">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/calc/simple-interest.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="단리 계산기 — Grit Tools">
 <meta property="og:description" content="원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 그래프·엑셀 저장 지원.">
+<meta property="og:url" content="https://grit-tools.com/tools/calc/simple-interest.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="단리 계산기 — Grit Tools">
+<meta name="twitter:description" content="원금·이율·기간으로 단리 이자와 총액을 즉시 계산. 그래프·엑셀 저장 지원.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -124,8 +142,24 @@
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web browser",
   "description": "원금·이율·기간으로 단리 이자와 총액을 계산하고, 회차별 추이를 그래프로 보여주며 엑셀로 저장할 수 있는 도구.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"계산기","item":"https://grit-tools.com/#calc"},
+ {"@type":"ListItem","position":3,"name":"단리 계산기","item":"https://grit-tools.com/tools/calc/simple-interest.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"단리 계산기 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"값 입력","text":"원금, 이율(%), 기간(회)을 입력하세요. 기간은 소수도 됩니다(예: 1.5회)."},
+  {"@type":"HowToStep","name":"바로 계산·그래프","text":"입력하는 즉시 총액·이자와 회차별 표·그래프가 갱신됩니다."},
+  {"@type":"HowToStep","name":"엑셀로 저장","text":"‘엑셀로 저장’을 누르면 회차별 표(원금·이자·잔액)를 엑셀 파일로 내려받습니다. 계산식: 원금 × (1 + 이율 ÷ 100 × 기간)."}
+ ]}
 </script>
 </head>
 <body>
@@ -208,6 +242,13 @@
         <p class="hs-d" data-i18n-html="siStep3D">‘엑셀로 저장’을 누르면 회차별 표(원금·이자·잔액)를 엑셀 파일로 내려받습니다. 계산식: <code>원금 × (1 + 이율 ÷ 100 × 기간)</code>.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="compound-interest.html" data-i18n="navCompound" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="salary-net.html" data-i18n="navSalary" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="d-day.html" data-i18n="navDday" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="currency.html" data-i18n="navFx" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+    </nav>
   </div>
 </div>
 
@@ -329,7 +370,8 @@
       siHelpBtn:"사용법", siHelpClose:"닫기", siGuideTitle:"단리 계산기 사용법",
       siStep1T:"값 입력", siStep1D:"원금, 이율(%), 기간(회)을 입력하세요. 기간은 소수도 됩니다(예: 1.5회).",
       siStep2T:"바로 계산·그래프", siStep2D:"입력하는 즉시 총액·이자와 회차별 표·그래프가 갱신됩니다.",
-      siStep3T:"엑셀로 저장", siStep3D:"‘엑셀로 저장’을 누르면 회차별 표(원금·이자·잔액)를 엑셀 파일로 내려받습니다. 계산식: <code>원금 × (1 + 이율 ÷ 100 × 기간)</code>."
+      siStep3T:"엑셀로 저장", siStep3D:"‘엑셀로 저장’을 누르면 회차별 표(원금·이자·잔액)를 엑셀 파일로 내려받습니다. 계산식: <code>원금 × (1 + 이율 ÷ 100 × 기간)</code>.",
+      relTitle:"관련 도구", navCompound:"복리 계산기", navSalary:"연봉 실수령액 계산기", navDday:"디데이·날짜 계산기", navFx:"환율 계산기"
     },
     en:{
       docTitle:"Simple Interest Calculator — Grit Tools",
@@ -345,7 +387,8 @@
       siHelpBtn:"How to use", siHelpClose:"Close", siGuideTitle:"How to use the simple interest calculator",
       siStep1T:"Enter values", siStep1D:"Type the principal, rate (% per period) and number of periods. Periods can be a decimal (e.g. 1.5).",
       siStep2T:"Instant result & chart", siStep2D:"The total, interest and the per-period table & chart update as you type.",
-      siStep3T:"Export to Excel", siStep3D:"‘Export to Excel’ downloads the per-period table (principal, interest, balance). Formula: <code>principal × (1 + rate ÷ 100 × periods)</code>."
+      siStep3T:"Export to Excel", siStep3D:"‘Export to Excel’ downloads the per-period table (principal, interest, balance). Formula: <code>principal × (1 + rate ÷ 100 × periods)</code>.",
+      relTitle:"Related tools", navCompound:"Compound Interest", navSalary:"Net Salary (KR)", navDday:"D-Day Calculator", navFx:"Currency Converter"
     },
     ja:{
       docTitle:"単利計算機 — Grit Tools",
@@ -361,7 +404,8 @@
       siHelpBtn:"使い方", siHelpClose:"閉じる", siGuideTitle:"単利計算機の使い方",
       siStep1T:"値を入力", siStep1D:"元金、利率（%）、回数を入力します。回数は小数も可（例：1.5回）。",
       siStep2T:"すぐ計算・グラフ", siStep2D:"入力するたびに総額・利息と回数ごとの表・グラフが更新されます。",
-      siStep3T:"Excelで保存", siStep3D:"「Excelで保存」を押すと回数ごとの表（元金・利息・残高）をExcelファイルで保存します。計算式: <code>元金 ×（1 + 利率 ÷ 100 × 回数）</code>。"
+      siStep3T:"Excelで保存", siStep3D:"「Excelで保存」を押すと回数ごとの表（元金・利息・残高）をExcelファイルで保存します。計算式: <code>元金 ×（1 + 利率 ÷ 100 × 回数）</code>。",
+      relTitle:"関連ツール", navCompound:"複利計算機", navSalary:"手取り計算（韓国）", navDday:"D-Day計算機", navFx:"為替計算機"
     },
     zh:{
       docTitle:"单利计算器 — Grit Tools",
@@ -377,7 +421,93 @@
       siHelpBtn:"使用方法", siHelpClose:"关闭", siGuideTitle:"单利计算器使用方法",
       siStep1T:"输入数值", siStep1D:"输入本金、利率（每次 %）和次数。次数可为小数（如 1.5 次）。",
       siStep2T:"即时计算·图表", siStep2D:"输入时总额、利息和逐次表格、图表会即时更新。",
-      siStep3T:"导出 Excel", siStep3D:"点击“导出 Excel”可下载逐次表格（本金·利息·余额）。计算公式: <code>本金 ×（1 + 利率 ÷ 100 × 次数）</code>。"
+      siStep3T:"导出 Excel", siStep3D:"点击“导出 Excel”可下载逐次表格（本金·利息·余额）。计算公式: <code>本金 ×（1 + 利率 ÷ 100 × 次数）</code>。",
+      relTitle:"相关工具", navCompound:"复利计算器", navSalary:"实发工资（韩）", navDday:"D-Day 计算器", navFx:"汇率计算器"
+    },
+    es:{
+      docTitle:"Calculadora de interés simple — Grit Tools",
+      siTool:"Interés simple", siAllTools:"← Todas las herramientas",
+      siTitle:"Calculadora de interés simple",
+      siSub:"Introduce el capital, la tasa y el número de periodos para obtener al instante el interés simple y el total.",
+      siPrincipal:"Capital", siRate:"Tasa", siYears:"Periodos", siYearsUnit:"×",
+      siResPrincipal:"Capital", siResInterest:"Interés total", siResTotal:"Importe final",
+      siInputTitle:"Datos", siTableTitle:"Por periodo",
+      siChartTitle:"Saldo en el tiempo", siExport:"Exportar a Excel",
+      siColYear:"Periodo", siColPrincipal:"Capital", siColInterest:"Interés acumulado", siColBalance:"Saldo", siSheet:"Interés simple",
+      siFormula:"Fórmula (interés simple): <code>final = capital × (1 + tasa ÷ 100 × periodos)</code>",
+      siHelpBtn:"Cómo usar", siHelpClose:"Cerrar", siGuideTitle:"Cómo usar la calculadora de interés simple",
+      siStep1T:"Introduce los valores", siStep1D:"Escribe el capital, la tasa (% por periodo) y el número de periodos. Los periodos pueden ser decimales (p. ej. 1,5).",
+      siStep2T:"Resultado y gráfico al instante", siStep2D:"El total, los intereses y la tabla y el gráfico por periodo se actualizan mientras escribes.",
+      siStep3T:"Exportar a Excel", siStep3D:"‘Exportar a Excel’ descarga la tabla por periodo (capital, interés, saldo). Fórmula: <code>capital × (1 + tasa ÷ 100 × periodos)</code>.",
+      relTitle:"Herramientas relacionadas", navCompound:"Interés compuesto", navSalary:"Salario neto (KR)", navDday:"Calculadora D-Day", navFx:"Conversor de divisas"
+    },
+    fr:{
+      docTitle:"Calculateur d'intérêts simples — Grit Tools",
+      siTool:"Intérêts simples", siAllTools:"← Tous les outils",
+      siTitle:"Calculateur d'intérêts simples",
+      siSub:"Saisissez le capital, le taux et le nombre de périodes pour obtenir instantanément les intérêts simples et le total.",
+      siPrincipal:"Capital", siRate:"Taux", siYears:"Périodes", siYearsUnit:"×",
+      siResPrincipal:"Capital", siResInterest:"Intérêts totaux", siResTotal:"Montant final",
+      siInputTitle:"Saisie", siTableTitle:"Par période",
+      siChartTitle:"Solde dans le temps", siExport:"Exporter vers Excel",
+      siColYear:"Période", siColPrincipal:"Capital", siColInterest:"Intérêts cumulés", siColBalance:"Solde", siSheet:"Intérêts simples",
+      siFormula:"Formule (intérêts simples) : <code>final = capital × (1 + taux ÷ 100 × périodes)</code>",
+      siHelpBtn:"Mode d'emploi", siHelpClose:"Fermer", siGuideTitle:"Comment utiliser le calculateur d'intérêts simples",
+      siStep1T:"Saisissez les valeurs", siStep1D:"Indiquez le capital, le taux (% par période) et le nombre de périodes. Les périodes peuvent être décimales (par ex. 1,5).",
+      siStep2T:"Résultat et graphique instantanés", siStep2D:"Le total, les intérêts ainsi que le tableau et le graphique par période se mettent à jour au fil de la saisie.",
+      siStep3T:"Exporter vers Excel", siStep3D:"« Exporter vers Excel » télécharge le tableau par période (capital, intérêts, solde). Formule : <code>capital × (1 + taux ÷ 100 × périodes)</code>.",
+      relTitle:"Outils associés", navCompound:"Intérêts composés", navSalary:"Salaire net (KR)", navDday:"Calculateur J-J", navFx:"Convertisseur de devises"
+    },
+    de:{
+      docTitle:"Rechner für einfache Zinsen — Grit Tools",
+      siTool:"Einfache Zinsen", siAllTools:"← Alle Tools",
+      siTitle:"Rechner für einfache Zinsen",
+      siSub:"Geben Sie Kapital, Zinssatz und Anzahl der Perioden ein, um sofort die einfachen Zinsen und den Gesamtbetrag zu erhalten.",
+      siPrincipal:"Kapital", siRate:"Zinssatz", siYears:"Perioden", siYearsUnit:"×",
+      siResPrincipal:"Kapital", siResInterest:"Zinsen gesamt", siResTotal:"Endbetrag",
+      siInputTitle:"Eingaben", siTableTitle:"Pro Periode",
+      siChartTitle:"Saldo im Zeitverlauf", siExport:"Nach Excel exportieren",
+      siColYear:"Periode", siColPrincipal:"Kapital", siColInterest:"Kumulierte Zinsen", siColBalance:"Saldo", siSheet:"Einfache Zinsen",
+      siFormula:"Formel (einfache Zinsen): <code>Endbetrag = Kapital × (1 + Zinssatz ÷ 100 × Perioden)</code>",
+      siHelpBtn:"Anleitung", siHelpClose:"Schließen", siGuideTitle:"So verwenden Sie den Rechner für einfache Zinsen",
+      siStep1T:"Werte eingeben", siStep1D:"Geben Sie Kapital, Zinssatz (% pro Periode) und Anzahl der Perioden ein. Perioden können dezimal sein (z. B. 1,5).",
+      siStep2T:"Sofortiges Ergebnis & Diagramm", siStep2D:"Gesamtbetrag, Zinsen sowie die Tabelle und das Diagramm pro Periode aktualisieren sich während der Eingabe.",
+      siStep3T:"Nach Excel exportieren", siStep3D:"„Nach Excel exportieren“ lädt die Tabelle pro Periode herunter (Kapital, Zinsen, Saldo). Formel: <code>Kapital × (1 + Zinssatz ÷ 100 × Perioden)</code>.",
+      relTitle:"Verwandte Tools", navCompound:"Zinseszins", navSalary:"Nettogehalt (KR)", navDday:"D-Day-Rechner", navFx:"Währungsrechner"
+    },
+    pt:{
+      docTitle:"Calculadora de juros simples — Grit Tools",
+      siTool:"Juros simples", siAllTools:"← Todas as ferramentas",
+      siTitle:"Calculadora de juros simples",
+      siSub:"Introduza o capital, a taxa e o número de períodos para obter de imediato os juros simples e o total.",
+      siPrincipal:"Capital", siRate:"Taxa", siYears:"Períodos", siYearsUnit:"×",
+      siResPrincipal:"Capital", siResInterest:"Juros totais", siResTotal:"Montante final",
+      siInputTitle:"Dados", siTableTitle:"Por período",
+      siChartTitle:"Saldo ao longo do tempo", siExport:"Exportar para Excel",
+      siColYear:"Período", siColPrincipal:"Capital", siColInterest:"Juros acumulados", siColBalance:"Saldo", siSheet:"Juros simples",
+      siFormula:"Fórmula (juros simples): <code>final = capital × (1 + taxa ÷ 100 × períodos)</code>",
+      siHelpBtn:"Como usar", siHelpClose:"Fechar", siGuideTitle:"Como usar a calculadora de juros simples",
+      siStep1T:"Introduza os valores", siStep1D:"Escreva o capital, a taxa (% por período) e o número de períodos. Os períodos podem ser decimais (por ex. 1,5).",
+      siStep2T:"Resultado e gráfico instantâneos", siStep2D:"O total, os juros e a tabela e o gráfico por período atualizam-se à medida que escreve.",
+      siStep3T:"Exportar para Excel", siStep3D:"‘Exportar para Excel’ transfere a tabela por período (capital, juros, saldo). Fórmula: <code>capital × (1 + taxa ÷ 100 × períodos)</code>.",
+      relTitle:"Ferramentas relacionadas", navCompound:"Juros compostos", navSalary:"Salário líquido (KR)", navDday:"Calculadora D-Day", navFx:"Conversor de moedas"
+    },
+    ru:{
+      docTitle:"Калькулятор простых процентов — Grit Tools",
+      siTool:"Простые проценты", siAllTools:"← Все инструменты",
+      siTitle:"Калькулятор простых процентов",
+      siSub:"Введите основную сумму, ставку и число периодов, чтобы мгновенно получить простые проценты и итог.",
+      siPrincipal:"Основная сумма", siRate:"Ставка", siYears:"Периоды", siYearsUnit:"×",
+      siResPrincipal:"Основная сумма", siResInterest:"Всего процентов", siResTotal:"Итоговая сумма",
+      siInputTitle:"Ввод", siTableTitle:"По периодам",
+      siChartTitle:"Баланс во времени", siExport:"Экспорт в Excel",
+      siColYear:"Период", siColPrincipal:"Основная сумма", siColInterest:"Накопленные проценты", siColBalance:"Баланс", siSheet:"Простые проценты",
+      siFormula:"Формула (простые проценты): <code>итог = основная сумма × (1 + ставка ÷ 100 × периоды)</code>",
+      siHelpBtn:"Как пользоваться", siHelpClose:"Закрыть", siGuideTitle:"Как пользоваться калькулятором простых процентов",
+      siStep1T:"Введите значения", siStep1D:"Укажите основную сумму, ставку (% за период) и число периодов. Периоды могут быть дробными (например, 1,5).",
+      siStep2T:"Мгновенный результат и график", siStep2D:"Итог, проценты, а также таблица и график по периодам обновляются по мере ввода.",
+      siStep3T:"Экспорт в Excel", siStep3D:"«Экспорт в Excel» сохраняет таблицу по периодам (основная сумма, проценты, баланс). Формула: <code>основная сумма × (1 + ставка ÷ 100 × периоды)</code>.",
+      relTitle:"Похожие инструменты", navCompound:"Сложные проценты", navSalary:"Зарплата на руки (KR)", navDday:"Калькулятор D-Day", navFx:"Конвертер валют"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: calc });

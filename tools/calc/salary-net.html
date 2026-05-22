@@ -7,11 +7,29 @@
 <meta name="description" content="연봉·비과세·부양가족·자녀 수를 넣으면 국민연금·건강보험·소득세 등 공제를 빼고 월 실수령액과 연 실수령액을 추정해 주는 계산기. 모든 계산은 브라우저에서 처리됩니다.">
 <meta name="keywords" content="연봉 실수령액 계산기, 실수령액, 세후 월급, 4대보험, 소득세, net salary calculator korea">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/calc/salary-net.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="연봉 실수령액 계산기 — Grit Tools">
 <meta property="og:description" content="연봉·비과세·부양가족으로 4대보험·세금을 빼고 월/연 실수령액을 즉시 추정. 엑셀 저장 지원.">
+<meta property="og:url" content="https://grit-tools.com/tools/calc/salary-net.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="연봉 실수령액 계산기 — Grit Tools">
+<meta name="twitter:description" content="연봉·비과세·부양가족으로 4대보험·세금을 빼고 월/연 실수령액을 즉시 추정. 엑셀 저장 지원.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -112,8 +130,24 @@
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web browser",
   "description": "연봉·비과세·부양가족·자녀 수로 국민연금·건강보험·소득세 등을 빼고 월/연 실수령액을 추정하고 엑셀로 저장할 수 있는 도구. 2025년 한국 기준.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"계산기","item":"https://grit-tools.com/#calc"},
+ {"@type":"ListItem","position":3,"name":"연봉 실수령액 계산기","item":"https://grit-tools.com/tools/calc/salary-net.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"연봉 실수령액 계산기 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"값 입력","text":"연봉, 월 비과세액(식대 등), 부양가족 수(본인 포함), 20세 이하 자녀 수를 입력하세요."},
+  {"@type":"HowToStep","name":"자동 계산 (공제 내역)","text":"입력하는 즉시 국민연금·건강보험·장기요양·고용보험·소득세·지방소득세와 월/연 실수령액이 표로 갱신됩니다."},
+  {"@type":"HowToStep","name":"엑셀 저장 · 추정치 안내","text":"‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 근로소득 간이세액표를 근사한 추정치이며 특별공제는 빠져 있어 실제와 다를 수 있습니다."}
+ ]}
 </script>
 </head>
 <body>
@@ -188,6 +222,13 @@
         <p class="hs-d" data-i18n-html="snStep3D">‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>이며 특별공제는 빠져 있어 실제와 다를 수 있습니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="compound-interest.html" data-i18n="navCompound" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="simple-interest.html" data-i18n="navSimple" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="d-day.html" data-i18n="navDday" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="currency.html" data-i18n="navFx" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+    </nav>
   </div>
 </div>
 
@@ -344,7 +385,8 @@
       snHelpBtn:"사용법", snHelpClose:"닫기", snGuideTitle:"연봉 실수령액 계산기 사용법",
       snStep1T:"값 입력", snStep1D:"연봉, 월 비과세액(식대 등), 부양가족 수(본인 포함), 20세 이하 자녀 수를 입력하세요.",
       snStep2T:"자동 계산 (공제 내역)", snStep2D:"입력하는 즉시 국민연금·건강보험·장기요양·고용보험·소득세·지방소득세와 월/연 실수령액이 표로 갱신됩니다.",
-      snStep3T:"엑셀 저장 · 추정치 안내", snStep3D:"‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>이며 특별공제는 빠져 있어 실제와 다를 수 있습니다."
+      snStep3T:"엑셀 저장 · 추정치 안내", snStep3D:"‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 <code>근로소득 간이세액표</code>를 근사한 <b>추정치</b>이며 특별공제는 빠져 있어 실제와 다를 수 있습니다.",
+      relTitle:"관련 도구", navCompound:"복리 계산기", navSimple:"단리 계산기", navDday:"디데이·날짜 계산기", navFx:"환율 계산기"
     },
     en:{
       docTitle:"Korea Net Salary Calculator — Grit Tools",
@@ -362,7 +404,8 @@
       snHelpBtn:"How to use", snHelpClose:"Close", snGuideTitle:"How to use the net salary calculator",
       snStep1T:"Enter values", snStep1D:"Enter the annual gross salary, monthly non-taxable amount (e.g. meals), number of dependents (including yourself) and children aged 20 or under.",
       snStep2T:"Auto calculation (deductions)", snStep2D:"As you type, National Pension, health, long-term care, employment insurance, income tax, local tax and the monthly/annual net pay update in the table.",
-      snStep3T:"Export & estimate note", snStep3D:"‘Export to Excel’ downloads the deduction breakdown. Income tax approximates Korea's <code>simplified withholding tax table</code> and excludes special deductions, so it is an <b>estimate</b> and may differ from reality."
+      snStep3T:"Export & estimate note", snStep3D:"‘Export to Excel’ downloads the deduction breakdown. Income tax approximates Korea's <code>simplified withholding tax table</code> and excludes special deductions, so it is an <b>estimate</b> and may differ from reality.",
+      relTitle:"Related tools", navCompound:"Compound Interest", navSimple:"Simple Interest", navDday:"D-Day Calculator", navFx:"Currency Converter"
     },
     ja:{
       docTitle:"韓国 手取り給与計算機 — Grit Tools",
@@ -380,7 +423,8 @@
       snHelpBtn:"使い方", snHelpClose:"閉じる", snGuideTitle:"手取り給与計算機の使い方",
       snStep1T:"値を入力", snStep1D:"年俸、月の非課税額（食事代など）、扶養家族数（本人を含む）、20歳以下の子の数を入力します。",
       snStep2T:"自動計算（控除内訳）", snStep2D:"入力するたびに国民年金・健康保険・長期療養・雇用保険・所得税・地方所得税と月/年の手取り額が表で更新されます。",
-      snStep3T:"Excel保存・概算の注意", snStep3D:"「Excelで保存」を押すと控除内訳をExcelファイルで保存します。所得税は韓国の<code>勤労所得簡易税額表</code>を近似した<b>概算</b>で、特別控除を含まないため実際と異なる場合があります。"
+      snStep3T:"Excel保存・概算の注意", snStep3D:"「Excelで保存」を押すと控除内訳をExcelファイルで保存します。所得税は韓国の<code>勤労所得簡易税額表</code>を近似した<b>概算</b>で、特別控除を含まないため実際と異なる場合があります。",
+      relTitle:"関連ツール", navCompound:"複利計算機", navSimple:"単利計算機", navDday:"D-Day計算機", navFx:"為替計算機"
     },
     zh:{
       docTitle:"韩国实发工资计算器 — Grit Tools",
@@ -398,7 +442,103 @@
       snHelpBtn:"使用方法", snHelpClose:"关闭", snGuideTitle:"实发工资计算器使用方法",
       snStep1T:"输入数值", snStep1D:"输入年薪、每月免税额（餐补等）、赡养家属人数（含本人）以及 20 岁以下子女数。",
       snStep2T:"自动计算（扣除明细）", snStep2D:"输入时国民年金、健康保险、长期疗养、雇佣保险、所得税、地方所得税以及月/年实发工资会即时在表格中更新。",
-      snStep3T:"导出 Excel · 估算说明", snStep3D:"点击“导出 Excel”可下载扣除明细。所得税近似韩国<code>劳动所得简易税额表</code>，未含特别扣除，为<b>估算值</b>，可能与实际不同。"
+      snStep3T:"导出 Excel · 估算说明", snStep3D:"点击“导出 Excel”可下载扣除明细。所得税近似韩国<code>劳动所得简易税额表</code>，未含特别扣除，为<b>估算值</b>，可能与实际不同。",
+      relTitle:"相关工具", navCompound:"复利计算器", navSimple:"单利计算器", navDday:"D-Day 计算器", navFx:"汇率计算器"
+    },
+    es:{
+      docTitle:"Calculadora de salario neto (Corea) — Grit Tools",
+      snTool:"Salario neto (Corea)", snAllTools:"← Todas las herramientas",
+      snTitle:"Calculadora de salario neto (Corea)",
+      snSub:"Estima el salario mensual neto tras los seguros sociales coreanos y el impuesto sobre la renta, a partir de tu salario bruto anual.",
+      snWon:"wones", snPersonUnit:"",
+      snSalary:"Salario bruto anual", snNonTax:"No imponible mensual (p. ej. comidas)", snDeps:"Personas a cargo (incluido tú)", snKids:"Hijos de 20 años o menos",
+      snInputTitle:"Datos", snTableTitle:"Deducciones (mensuales, estimación)", snExport:"Exportar a Excel",
+      snColItem:"Concepto", snColAmount:"Importe", snSheet:"Salario neto",
+      snRowGross:"Bruto mensual", snRowPension:"Pensión Nacional", snRowHealth:"Seguro de salud", snRowCare:"Cuidados de larga duración",
+      snRowEmploy:"Seguro de empleo", snRowIncome:"Impuesto sobre la renta", snRowLocal:"Impuesto local sobre la renta", snRowTotal:"Total de deducciones",
+      snRowNet:"Neto mensual", snRowNetYear:"Neto anual",
+      snFormula:"※ Es una <b>estimación</b> específica de Corea que aproxima la <code>tabla simplificada de retención</code>. Las deducciones especiales (tarjetas de crédito, pensión, seguros, etc.) no se incluyen, por lo que tu nómina real puede variar. (Tipos de 2025)",
+      snHelpBtn:"Cómo usar", snHelpClose:"Cerrar", snGuideTitle:"Cómo usar la calculadora de salario neto",
+      snStep1T:"Introduce los valores", snStep1D:"Introduce el salario bruto anual, el importe no imponible mensual (p. ej. comidas), el número de personas a cargo (incluido tú) y los hijos de 20 años o menos.",
+      snStep2T:"Cálculo automático (deducciones)", snStep2D:"Mientras escribes, la Pensión Nacional, la salud, los cuidados de larga duración, el seguro de empleo, el impuesto sobre la renta, el impuesto local y el neto mensual/anual se actualizan en la tabla.",
+      snStep3T:"Exportar y nota de estimación", snStep3D:"‘Exportar a Excel’ descarga el desglose de deducciones. El impuesto sobre la renta aproxima la <code>tabla simplificada de retención</code> de Corea y excluye las deducciones especiales, por lo que es una <b>estimación</b> y puede diferir de la realidad.",
+      relTitle:"Herramientas relacionadas", navCompound:"Interés compuesto", navSimple:"Interés simple", navDday:"Calculadora D-Day", navFx:"Conversor de divisas"
+    },
+    fr:{
+      docTitle:"Calculateur de salaire net (Corée) — Grit Tools",
+      snTool:"Salaire net (Corée)", snAllTools:"← Tous les outils",
+      snTitle:"Calculateur de salaire net (Corée)",
+      snSub:"Estime le salaire net mensuel après les cotisations sociales coréennes et l'impôt sur le revenu, à partir de votre salaire brut annuel.",
+      snWon:"wons", snPersonUnit:"",
+      snSalary:"Salaire brut annuel", snNonTax:"Non imposable mensuel (par ex. repas)", snDeps:"Personnes à charge (vous compris)", snKids:"Enfants de 20 ans ou moins",
+      snInputTitle:"Saisie", snTableTitle:"Cotisations (mensuelles, estimation)", snExport:"Exporter vers Excel",
+      snColItem:"Poste", snColAmount:"Montant", snSheet:"Salaire net",
+      snRowGross:"Brut mensuel", snRowPension:"Pension nationale", snRowHealth:"Assurance maladie", snRowCare:"Soins de longue durée",
+      snRowEmploy:"Assurance emploi", snRowIncome:"Impôt sur le revenu", snRowLocal:"Impôt local sur le revenu", snRowTotal:"Total des cotisations",
+      snRowNet:"Net mensuel", snRowNetYear:"Net annuel",
+      snFormula:"※ Il s'agit d'une <b>estimation</b> propre à la Corée qui approxime le <code>barème de retenue simplifié</code>. Les déductions spéciales (cartes de crédit, retraite, assurances, etc.) ne sont pas prises en compte, votre fiche de paie réelle peut donc différer. (Taux 2025)",
+      snHelpBtn:"Mode d'emploi", snHelpClose:"Fermer", snGuideTitle:"Comment utiliser le calculateur de salaire net",
+      snStep1T:"Saisissez les valeurs", snStep1D:"Indiquez le salaire brut annuel, le montant non imposable mensuel (par ex. repas), le nombre de personnes à charge (vous compris) et les enfants de 20 ans ou moins.",
+      snStep2T:"Calcul automatique (cotisations)", snStep2D:"Au fil de la saisie, la pension nationale, l'assurance maladie, les soins de longue durée, l'assurance emploi, l'impôt sur le revenu, l'impôt local et le net mensuel/annuel se mettent à jour dans le tableau.",
+      snStep3T:"Export et note d'estimation", snStep3D:"« Exporter vers Excel » télécharge le détail des cotisations. L'impôt sur le revenu approxime le <code>barème de retenue simplifié</code> coréen et exclut les déductions spéciales : c'est donc une <b>estimation</b> qui peut différer de la réalité.",
+      relTitle:"Outils associés", navCompound:"Intérêts composés", navSimple:"Intérêts simples", navDday:"Calculateur J-J", navFx:"Convertisseur de devises"
+    },
+    de:{
+      docTitle:"Nettogehaltsrechner (Korea) — Grit Tools",
+      snTool:"Nettogehalt (Korea)", snAllTools:"← Alle Tools",
+      snTitle:"Nettogehaltsrechner (Korea)",
+      snSub:"Schätzt das monatliche Nettogehalt nach koreanischen Sozialversicherungen und Einkommensteuer auf Basis Ihres jährlichen Bruttogehalts.",
+      snWon:"Won", snPersonUnit:"",
+      snSalary:"Jährliches Bruttogehalt", snNonTax:"Monatlich steuerfrei (z. B. Verpflegung)", snDeps:"Unterhaltsberechtigte (inkl. selbst)", snKids:"Kinder bis 20 Jahre",
+      snInputTitle:"Eingaben", snTableTitle:"Abzüge (monatlich, Schätzung)", snExport:"Nach Excel exportieren",
+      snColItem:"Position", snColAmount:"Betrag", snSheet:"Nettogehalt",
+      snRowGross:"Brutto monatlich", snRowPension:"Nationale Rentenversicherung", snRowHealth:"Krankenversicherung", snRowCare:"Pflegeversicherung",
+      snRowEmploy:"Arbeitslosenversicherung", snRowIncome:"Einkommensteuer", snRowLocal:"Lokale Einkommensteuer", snRowTotal:"Abzüge gesamt",
+      snRowNet:"Netto monatlich", snRowNetYear:"Netto jährlich",
+      snFormula:"※ Dies ist eine korea-spezifische <b>Schätzung</b>, die die <code>vereinfachte Lohnsteuertabelle</code> annähert. Sonderabzüge (Kreditkarten, Rente, Versicherungen usw.) sind nicht berücksichtigt, daher kann Ihre tatsächliche Gehaltsabrechnung abweichen. (Sätze 2025)",
+      snHelpBtn:"Anleitung", snHelpClose:"Schließen", snGuideTitle:"So verwenden Sie den Nettogehaltsrechner",
+      snStep1T:"Werte eingeben", snStep1D:"Geben Sie das jährliche Bruttogehalt, den monatlich steuerfreien Betrag (z. B. Verpflegung), die Zahl der Unterhaltsberechtigten (Sie eingeschlossen) und die Kinder bis 20 Jahre ein.",
+      snStep2T:"Automatische Berechnung (Abzüge)", snStep2D:"Während der Eingabe aktualisieren sich Nationale Rente, Kranken-, Pflege- und Arbeitslosenversicherung, Einkommensteuer, lokale Steuer sowie das monatliche/jährliche Netto in der Tabelle.",
+      snStep3T:"Export & Schätzhinweis", snStep3D:"„Nach Excel exportieren“ lädt die Aufschlüsselung der Abzüge herunter. Die Einkommensteuer nähert die koreanische <code>vereinfachte Lohnsteuertabelle</code> an und lässt Sonderabzüge aus, daher ist sie eine <b>Schätzung</b> und kann von der Realität abweichen.",
+      relTitle:"Verwandte Tools", navCompound:"Zinseszins", navSimple:"Einfacher Zins", navDday:"D-Day-Rechner", navFx:"Währungsrechner"
+    },
+    pt:{
+      docTitle:"Calculadora de salário líquido (Coreia) — Grit Tools",
+      snTool:"Salário líquido (Coreia)", snAllTools:"← Todas as ferramentas",
+      snTitle:"Calculadora de salário líquido (Coreia)",
+      snSub:"Estima o salário mensal líquido após os seguros sociais coreanos e o imposto sobre o rendimento, a partir do seu salário bruto anual.",
+      snWon:"wones", snPersonUnit:"",
+      snSalary:"Salário bruto anual", snNonTax:"Não tributável mensal (por ex. refeições)", snDeps:"Dependentes (incluindo você)", snKids:"Filhos com 20 anos ou menos",
+      snInputTitle:"Dados", snTableTitle:"Deduções (mensais, estimativa)", snExport:"Exportar para Excel",
+      snColItem:"Item", snColAmount:"Valor", snSheet:"Salário líquido",
+      snRowGross:"Bruto mensal", snRowPension:"Pensão Nacional", snRowHealth:"Seguro de saúde", snRowCare:"Cuidados prolongados",
+      snRowEmploy:"Seguro de emprego", snRowIncome:"Imposto sobre o rendimento", snRowLocal:"Imposto local sobre o rendimento", snRowTotal:"Total de deduções",
+      snRowNet:"Líquido mensal", snRowNetYear:"Líquido anual",
+      snFormula:"※ Esta é uma <b>estimativa</b> específica da Coreia que aproxima a <code>tabela simplificada de retenção</code>. As deduções especiais (cartões de crédito, pensão, seguros, etc.) não são incluídas, pelo que o seu recibo real pode diferir. (Taxas de 2025)",
+      snHelpBtn:"Como usar", snHelpClose:"Fechar", snGuideTitle:"Como usar a calculadora de salário líquido",
+      snStep1T:"Introduza os valores", snStep1D:"Introduza o salário bruto anual, o valor não tributável mensal (por ex. refeições), o número de dependentes (incluindo você) e os filhos com 20 anos ou menos.",
+      snStep2T:"Cálculo automático (deduções)", snStep2D:"À medida que escreve, a Pensão Nacional, a saúde, os cuidados prolongados, o seguro de emprego, o imposto sobre o rendimento, o imposto local e o líquido mensal/anual atualizam-se na tabela.",
+      snStep3T:"Exportar e nota de estimativa", snStep3D:"‘Exportar para Excel’ transfere o detalhe das deduções. O imposto sobre o rendimento aproxima a <code>tabela simplificada de retenção</code> da Coreia e exclui deduções especiais, pelo que é uma <b>estimativa</b> e pode diferir da realidade.",
+      relTitle:"Ferramentas relacionadas", navCompound:"Juros compostos", navSimple:"Juros simples", navDday:"Calculadora D-Day", navFx:"Conversor de moedas"
+    },
+    ru:{
+      docTitle:"Калькулятор чистой зарплаты (Корея) — Grit Tools",
+      snTool:"Чистая зарплата (Корея)", snAllTools:"← Все инструменты",
+      snTitle:"Калькулятор чистой зарплаты (Корея)",
+      snSub:"Оценивает чистую зарплату в месяц после корейских социальных взносов и подоходного налога на основе годового оклада до вычетов.",
+      snWon:"вон", snPersonUnit:"",
+      snSalary:"Годовой оклад (до вычетов)", snNonTax:"Необлагаемая сумма в месяц (например, питание)", snDeps:"Иждивенцы (включая себя)", snKids:"Дети 20 лет и младше",
+      snInputTitle:"Ввод", snTableTitle:"Удержания (в месяц, оценка)", snExport:"Экспорт в Excel",
+      snColItem:"Статья", snColAmount:"Сумма", snSheet:"Чистая зарплата",
+      snRowGross:"Брутто в месяц", snRowPension:"Государственная пенсия", snRowHealth:"Медицинское страхование", snRowCare:"Долгосрочный уход",
+      snRowEmploy:"Страхование занятости", snRowIncome:"Подоходный налог", snRowLocal:"Местный подоходный налог", snRowTotal:"Всего удержаний",
+      snRowNet:"Чистыми в месяц", snRowNetYear:"Чистыми в год",
+      snFormula:"※ Это <b>оценка</b> для Кореи, приближающая <code>упрощённую таблицу удержания налога</code>. Специальные вычеты (кредитные карты, пенсия, страховки и т. п.) не учитываются, поэтому ваш реальный расчётный лист может отличаться. (Ставки 2025 года)",
+      snHelpBtn:"Как пользоваться", snHelpClose:"Закрыть", snGuideTitle:"Как пользоваться калькулятором чистой зарплаты",
+      snStep1T:"Введите значения", snStep1D:"Укажите годовой оклад до вычетов, необлагаемую сумму в месяц (например, питание), число иждивенцев (включая себя) и детей 20 лет и младше.",
+      snStep2T:"Автоматический расчёт (удержания)", snStep2D:"По мере ввода государственная пенсия, медицинское страхование, долгосрочный уход, страхование занятости, подоходный и местный налоги, а также чистая зарплата за месяц/год обновляются в таблице.",
+      snStep3T:"Экспорт и примечание об оценке", snStep3D:"«Экспорт в Excel» сохраняет разбивку удержаний. Подоходный налог приближает корейскую <code>упрощённую таблицу удержания налога</code> и не учитывает специальные вычеты, поэтому это <b>оценка</b>, которая может отличаться от реальности.",
+      relTitle:"Похожие инструменты", navCompound:"Сложные проценты", navSimple:"Простые проценты", navDday:"Калькулятор D-Day", navFx:"Конвертер валют"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: calc });

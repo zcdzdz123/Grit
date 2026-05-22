@@ -7,11 +7,29 @@
 <meta name="description" content="이미지를 끌어다 놓고 브라우저 안에서 크기 조절·압축한 뒤 바로 내려받는 도구. 사진은 서버로 전송되지 않고 100% 내 브라우저에서 처리됩니다.">
 <meta name="keywords" content="이미지 리사이즈, 이미지 압축, 사진 크기 줄이기, image resize, image compress, 이미지 용량 줄이기">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/image/image-resize.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="이미지 크기·용량 줄이기 — Grit Tools">
 <meta property="og:description" content="이미지를 브라우저 안에서 크기 조절·압축. 서버 전송 없이 즉시 다운로드.">
+<meta property="og:url" content="https://grit-tools.com/tools/image/image-resize.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="이미지 크기·용량 줄이기 — Grit Tools">
+<meta name="twitter:description" content="이미지를 브라우저 안에서 크기 조절·압축. 서버 전송 없이 즉시 다운로드.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -141,12 +159,29 @@
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Web browser",
   "description": "이미지를 브라우저 안에서 크기 조절하고 압축한 뒤 바로 내려받는 도구. 사진은 서버로 전송되지 않고 100% 클라이언트에서 처리됩니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"이미지","item":"https://grit-tools.com/#image"},
+ {"@type":"ListItem","position":3,"name":"이미지 크기·용량 줄이기","item":"https://grit-tools.com/tools/image/image-resize.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"이미지 크기·용량 줄이기 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"이미지 불러오기","text":"이미지를 끌어다 놓거나 점선 영역을 클릭해 선택하세요. 한 번에 여러 장도 됩니다. 모든 처리는 브라우저 안에서만 이뤄집니다."},
+  {"@type":"HowToStep","name":"크기·형식·품질 설정","text":"‘최대 크기’로 비율을 유지하며 줄이거나, ‘너비/높이 직접 지정’으로 정확한 크기를 정하세요. 형식과 품질(JPEG·WebP)을 바꾸면 결과가 바로 다시 계산됩니다."},
+  {"@type":"HowToStep","name":"다운로드","text":"각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’를 누르면 결과 파일을 내려받습니다. 절감된 용량은 상단 요약에 표시됩니다."}
+]}
 </script>
 </head>
 <body>
 <div id="app">
+  <h1 data-i18n="irTool" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">이미지 크기·용량 줄이기</h1>
   <div id="sidebar">
     <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="irTool">이미지 크기·용량 줄이기</span><button type="button" id="helpBtn" class="g-help" data-i18n="irHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="irAllTools">← 모든 도구</a></div>
 
@@ -243,6 +278,11 @@
         <p class="hs-d" data-i18n-html="irStep3D">각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’를 누르면 결과 파일을 내려받습니다. 절감된 용량은 상단 요약에 표시됩니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="pixel-coords.html" data-i18n="navPixel" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 좌표 추출기</a>
+      <a href="color-picker.html" data-i18n="navCp" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 색상 추출</a>
+    </nav>
   </div>
 </div>
 
@@ -557,7 +597,8 @@
       irStep2T:"크기·형식·품질 설정",
       irStep2D:"‘최대 크기’로 비율을 유지하며 줄이거나, ‘너비/높이 직접 지정’으로 정확한 크기를 정하세요. 형식과 품질(JPEG·WebP)을 바꾸면 결과가 바로 다시 계산됩니다.",
       irStep3T:"다운로드",
-      irStep3D:"각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’를 누르면 결과 파일을 내려받습니다. 절감된 용량은 상단 요약에 표시됩니다."
+      irStep3D:"각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’를 누르면 결과 파일을 내려받습니다. 절감된 용량은 상단 요약에 표시됩니다.",
+      relTitle:"관련 도구", navPixel:"이미지 좌표 추출기", navCp:"이미지 색상 추출"
     },
     en:{
       docTitle:"Image Resize & Compress — Grit Tools",
@@ -582,7 +623,8 @@
       irStep2T:"Set size, format & quality",
       irStep2D:"Use ‘Max size’ to shrink while keeping the ratio, or ‘Set width/height manually’ for exact dimensions. Changing the format or quality (JPEG/WebP) recomputes the result instantly.",
       irStep3T:"Download",
-      irStep3D:"Click ‘Download’ on a card, or ‘Download all’, to save the results. The total size saved is shown in the summary at the top."
+      irStep3D:"Click ‘Download’ on a card, or ‘Download all’, to save the results. The total size saved is shown in the summary at the top.",
+      relTitle:"Related tools", navPixel:"Image Coordinate Tool", navCp:"Color Picker"
     },
     ja:{
       docTitle:"画像リサイズ・圧縮 — Grit Tools",
@@ -607,7 +649,8 @@
       irStep2T:"サイズ・形式・品質を設定",
       irStep2D:"「最大サイズ」で比率を保ったまま縮小、または「幅／高さを手動指定」で正確なサイズに。形式や品質（JPEG・WebP）を変えると結果がすぐに再計算されます。",
       irStep3T:"ダウンロード",
-      irStep3D:"各カードの「ダウンロード」または「すべてダウンロード」を押すと結果ファイルを保存します。削減された容量は上部の概要に表示されます。"
+      irStep3D:"各カードの「ダウンロード」または「すべてダウンロード」を押すと結果ファイルを保存します。削減された容量は上部の概要に表示されます。",
+      relTitle:"関連ツール", navPixel:"画像座標ツール", navCp:"色抽出（スポイト）"
     },
     zh:{
       docTitle:"图片缩放·压缩 — Grit Tools",
@@ -632,7 +675,138 @@
       irStep2T:"设置尺寸·格式·质量",
       irStep2D:"用“最大尺寸”保持比例缩小，或用“手动指定宽/高”设定精确尺寸。更改格式或质量（JPEG/WebP）会立即重新计算结果。",
       irStep3T:"下载",
-      irStep3D:"点击卡片上的“下载”或“全部下载”即可保存结果文件。节省的容量会显示在顶部的概要中。"
+      irStep3D:"点击卡片上的“下载”或“全部下载”即可保存结果文件。节省的容量会显示在顶部的概要中。",
+      relTitle:"相关工具", navPixel:"图像坐标工具", navCp:"颜色提取（吸管）"
+    },
+    es:{
+      docTitle:"Redimensionar y comprimir imágenes — Grit Tools",
+      irTool:"Redimensionar y comprimir imágenes", irAllTools:"← Todas las herramientas",
+      irSecControls:"Ajustes",
+      irDrop:"<span class=\"di\">⬇</span>Arrastra y suelta imágenes, o haz clic para elegir<span class=\"ds\">Varias permitidas · PNG / JPEG / WebP / GIF</span>",
+      irMaxOn:"Reducir al tamaño máximo (mantener proporción)",
+      irMaxSize:"Tamaño máximo (ancho/alto)",
+      irDimOn:"Definir ancho/alto manualmente",
+      irWidth:"Ancho", irHeight:"Alto", irLock:"Mantener proporción",
+      irFormat:"Formato de salida", irFmtKeep:"Mantener original", irQuality:"Calidad",
+      irQualityHint:"PNG es sin pérdida, así que la calidad apenas reduce su tamaño. Para reducir el archivo, cambia el formato a JPEG/WebP o reduce las dimensiones.",
+      irDownloadAll:"Descargar todo", irDownload:"Descargar", irRemove:"Quitar", irClear:"Vaciar",
+      irPrivacy:"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Todo se procesa en tu navegador (canvas); las imágenes nunca se suben a un servidor.",
+      irOriginal:"Original", irResult:"Resultado", irSaved:"Ahorrado", irCalc:"Calculando…",
+      irNoImages:"No hay imágenes cargadas.", irProcessing:"Procesando…",
+      irImagesUnit:"imágenes", irTotal:"Total",
+      irEmpty:"Arrastra y suelta imágenes a la izquierda,<br>o usa ‘haz clic para elegir’.",
+      irHelpBtn:"Cómo usar", irHelpClose:"Cerrar", irGuideTitle:"Cómo usar Redimensionar y comprimir imágenes",
+      irStep1T:"Carga las imágenes",
+      irStep1D:"Arrastra y suelta imágenes o haz clic en el área punteada para elegirlas. Puedes cargar varias a la vez. Todo el procesamiento ocurre solo en tu navegador.",
+      irStep2T:"Define tamaño, formato y calidad",
+      irStep2D:"Usa ‘Tamaño máximo’ para reducir manteniendo la proporción, o ‘Definir ancho/alto manualmente’ para dimensiones exactas. Cambiar el formato o la calidad (JPEG/WebP) recalcula el resultado al instante.",
+      irStep3T:"Descarga",
+      irStep3D:"Haz clic en ‘Descargar’ en una tarjeta, o en ‘Descargar todo’, para guardar los resultados. El tamaño total ahorrado se muestra en el resumen superior.",
+      relTitle:"Herramientas relacionadas", navPixel:"Coordenadas de imagen", navCp:"Selector de color"
+    },
+    fr:{
+      docTitle:"Redimensionner et compresser des images — Grit Tools",
+      irTool:"Redimensionner et compresser des images", irAllTools:"← Tous les outils",
+      irSecControls:"Réglages",
+      irDrop:"<span class=\"di\">⬇</span>Glissez-déposez des images, ou cliquez pour choisir<span class=\"ds\">Plusieurs possibles · PNG / JPEG / WebP / GIF</span>",
+      irMaxOn:"Réduire à la taille maximale (garder le ratio)",
+      irMaxSize:"Taille max (largeur/hauteur)",
+      irDimOn:"Définir largeur/hauteur manuellement",
+      irWidth:"Largeur", irHeight:"Hauteur", irLock:"Garder les proportions",
+      irFormat:"Format de sortie", irFmtKeep:"Garder l'original", irQuality:"Qualité",
+      irQualityHint:"Le PNG est sans perte : la qualité ne réduit quasiment pas sa taille. Pour alléger le fichier, passez au format JPEG/WebP ou réduisez les dimensions.",
+      irDownloadAll:"Tout télécharger", irDownload:"Télécharger", irRemove:"Retirer", irClear:"Vider",
+      irPrivacy:"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Tout est traité dans votre navigateur (canvas) ; les images ne sont jamais envoyées à un serveur.",
+      irOriginal:"Original", irResult:"Résultat", irSaved:"Économisé", irCalc:"Calcul…",
+      irNoImages:"Aucune image chargée.", irProcessing:"Traitement…",
+      irImagesUnit:"images", irTotal:"Total",
+      irEmpty:"Glissez-déposez des images à gauche,<br>ou utilisez ‘cliquez pour choisir’.",
+      irHelpBtn:"Mode d'emploi", irHelpClose:"Fermer", irGuideTitle:"Comment redimensionner et compresser des images",
+      irStep1T:"Chargez des images",
+      irStep1D:"Glissez-déposez des images ou cliquez sur la zone en pointillés pour les choisir. Plusieurs à la fois, c'est possible. Tout le traitement se fait uniquement dans votre navigateur.",
+      irStep2T:"Définissez taille, format et qualité",
+      irStep2D:"Utilisez ‘Taille max’ pour réduire en gardant le ratio, ou ‘Définir largeur/hauteur manuellement’ pour des dimensions précises. Changer le format ou la qualité (JPEG/WebP) recalcule le résultat instantanément.",
+      irStep3T:"Téléchargement",
+      irStep3D:"Cliquez sur ‘Télécharger’ sur une carte, ou sur ‘Tout télécharger’, pour enregistrer les résultats. L'espace total économisé s'affiche dans le récapitulatif en haut.",
+      relTitle:"Outils associés", navPixel:"Coordonnées d'image", navCp:"Sélecteur de couleur"
+    },
+    de:{
+      docTitle:"Bilder verkleinern & komprimieren — Grit Tools",
+      irTool:"Bilder verkleinern & komprimieren", irAllTools:"← Alle Werkzeuge",
+      irSecControls:"Einstellungen",
+      irDrop:"<span class=\"di\">⬇</span>Bilder hierher ziehen oder zum Auswählen klicken<span class=\"ds\">Mehrere möglich · PNG / JPEG / WebP / GIF</span>",
+      irMaxOn:"Auf Maximalgröße verkleinern (Verhältnis beibehalten)",
+      irMaxSize:"Maximalgröße (Breite/Höhe)",
+      irDimOn:"Breite/Höhe manuell festlegen",
+      irWidth:"Breite", irHeight:"Höhe", irLock:"Seitenverhältnis beibehalten",
+      irFormat:"Ausgabeformat", irFmtKeep:"Original behalten", irQuality:"Qualität",
+      irQualityHint:"PNG ist verlustfrei, daher verringert die Qualität die Größe kaum. Um die Datei zu verkleinern, wechsle das Format zu JPEG/WebP oder reduziere die Maße.",
+      irDownloadAll:"Alle herunterladen", irDownload:"Herunterladen", irRemove:"Entfernen", irClear:"Leeren",
+      irPrivacy:"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Alles läuft in deinem Browser (canvas); Bilder werden nie auf einen Server hochgeladen.",
+      irOriginal:"Original", irResult:"Ergebnis", irSaved:"Gespart", irCalc:"Berechne…",
+      irNoImages:"Keine Bilder geladen.", irProcessing:"Verarbeite…",
+      irImagesUnit:"Bilder", irTotal:"Gesamt",
+      irEmpty:"Bilder links hineinziehen<br>oder über ‘zum Auswählen klicken’ laden.",
+      irHelpBtn:"Anleitung", irHelpClose:"Schließen", irGuideTitle:"So verkleinerst & komprimierst du Bilder",
+      irStep1T:"Bilder laden",
+      irStep1D:"Ziehe Bilder hierher oder klicke auf den gestrichelten Bereich, um sie auszuwählen. Mehrere auf einmal sind möglich. Die gesamte Verarbeitung läuft nur in deinem Browser.",
+      irStep2T:"Größe, Format & Qualität festlegen",
+      irStep2D:"Nutze ‘Maximalgröße’, um unter Beibehaltung des Verhältnisses zu verkleinern, oder ‘Breite/Höhe manuell festlegen’ für exakte Maße. Beim Ändern von Format oder Qualität (JPEG/WebP) wird das Ergebnis sofort neu berechnet.",
+      irStep3T:"Herunterladen",
+      irStep3D:"Klicke auf einer Karte auf ‘Herunterladen’ oder auf ‘Alle herunterladen’, um die Ergebnisse zu speichern. Der insgesamt gesparte Speicher wird in der Zusammenfassung oben angezeigt.",
+      relTitle:"Verwandte Tools", navPixel:"Bildkoordinaten", navCp:"Farbwähler"
+    },
+    pt:{
+      docTitle:"Redimensionar e comprimir imagens — Grit Tools",
+      irTool:"Redimensionar e comprimir imagens", irAllTools:"← Todas as ferramentas",
+      irSecControls:"Configurações",
+      irDrop:"<span class=\"di\">⬇</span>Arraste e solte imagens, ou clique para escolher<span class=\"ds\">Várias permitidas · PNG / JPEG / WebP / GIF</span>",
+      irMaxOn:"Reduzir ao tamanho máximo (manter proporção)",
+      irMaxSize:"Tamanho máximo (largura/altura)",
+      irDimOn:"Definir largura/altura manualmente",
+      irWidth:"Largura", irHeight:"Altura", irLock:"Manter proporção",
+      irFormat:"Formato de saída", irFmtKeep:"Manter original", irQuality:"Qualidade",
+      irQualityHint:"PNG é sem perdas, então a qualidade quase não reduz o tamanho. Para diminuir o arquivo, mude o formato para JPEG/WebP ou reduza as dimensões.",
+      irDownloadAll:"Baixar tudo", irDownload:"Baixar", irRemove:"Remover", irClear:"Limpar",
+      irPrivacy:"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Tudo é processado no seu navegador (canvas); as imagens nunca são enviadas a um servidor.",
+      irOriginal:"Original", irResult:"Resultado", irSaved:"Economizado", irCalc:"Calculando…",
+      irNoImages:"Nenhuma imagem carregada.", irProcessing:"Processando…",
+      irImagesUnit:"imagens", irTotal:"Total",
+      irEmpty:"Arraste e solte imagens à esquerda,<br>ou use ‘clique para escolher’.",
+      irHelpBtn:"Como usar", irHelpClose:"Fechar", irGuideTitle:"Como usar Redimensionar e comprimir imagens",
+      irStep1T:"Carregue as imagens",
+      irStep1D:"Arraste e solte imagens ou clique na área pontilhada para escolhê-las. Várias de uma vez é possível. Todo o processamento acontece apenas no seu navegador.",
+      irStep2T:"Defina tamanho, formato e qualidade",
+      irStep2D:"Use ‘Tamanho máximo’ para reduzir mantendo a proporção, ou ‘Definir largura/altura manualmente’ para dimensões exatas. Mudar o formato ou a qualidade (JPEG/WebP) recalcula o resultado na hora.",
+      irStep3T:"Download",
+      irStep3D:"Clique em ‘Baixar’ num cartão, ou em ‘Baixar tudo’, para salvar os resultados. O total de espaço economizado aparece no resumo no topo.",
+      relTitle:"Ferramentas relacionadas", navPixel:"Coordenadas de imagem", navCp:"Seletor de cor"
+    },
+    ru:{
+      docTitle:"Изменение размера и сжатие изображений — Grit Tools",
+      irTool:"Изменение размера и сжатие", irAllTools:"← Все инструменты",
+      irSecControls:"Настройки",
+      irDrop:"<span class=\"di\">⬇</span>Перетащите изображения или нажмите для выбора<span class=\"ds\">Можно несколько · PNG / JPEG / WebP / GIF</span>",
+      irMaxOn:"Уменьшить до макс. размера (сохранить пропорции)",
+      irMaxSize:"Макс. размер (ширина/высота)",
+      irDimOn:"Задать ширину/высоту вручную",
+      irWidth:"Ширина", irHeight:"Высота", irLock:"Сохранять пропорции",
+      irFormat:"Формат вывода", irFmtKeep:"Оставить исходный", irQuality:"Качество",
+      irQualityHint:"PNG без потерь, поэтому качество почти не уменьшает размер. Чтобы уменьшить файл, смените формат на JPEG/WebP или уменьшите размеры.",
+      irDownloadAll:"Скачать все", irDownload:"Скачать", irRemove:"Удалить", irClear:"Очистить",
+      irPrivacy:"<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z\"/><path d=\"M9 12l2 2 4-4\"/></svg>Вся обработка идёт в вашем браузере (canvas); изображения никогда не загружаются на сервер.",
+      irOriginal:"Оригинал", irResult:"Результат", irSaved:"Сэкономлено", irCalc:"Вычисление…",
+      irNoImages:"Изображения не загружены.", irProcessing:"Обработка…",
+      irImagesUnit:"изобр.", irTotal:"Итого",
+      irEmpty:"Перетащите изображения слева<br>или нажмите ‘нажмите для выбора’.",
+      irHelpBtn:"Как пользоваться", irHelpClose:"Закрыть", irGuideTitle:"Как изменять размер и сжимать изображения",
+      irStep1T:"Загрузите изображения",
+      irStep1D:"Перетащите изображения или нажмите на пунктирную область, чтобы выбрать их. Можно сразу несколько. Вся обработка происходит только в вашем браузере.",
+      irStep2T:"Задайте размер, формат и качество",
+      irStep2D:"Используйте ‘Макс. размер’, чтобы уменьшить с сохранением пропорций, или ‘Задать ширину/высоту вручную’ для точных размеров. При смене формата или качества (JPEG/WebP) результат пересчитывается мгновенно.",
+      irStep3T:"Скачивание",
+      irStep3D:"Нажмите ‘Скачать’ на карточке или ‘Скачать все’, чтобы сохранить результаты. Общий сэкономленный объём показан в сводке вверху.",
+      relTitle:"Похожие инструменты", navPixel:"Координаты изображения", navCp:"Выбор цвета"
     }
   });
 

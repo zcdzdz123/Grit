@@ -7,11 +7,29 @@
 <meta name="description" content="PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 PDF로 저장하는 도구. 파일은 브라우저에서만 처리되며 서버로 전송되지 않습니다.">
 <meta name="keywords" content="PDF 나누기, PDF 나누기, PDF split, split pdf, PDF 페이지 분리">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/pdf/pdf-split.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="PDF 나누기 — Grit Tools">
 <meta property="og:description" content="PDF를 낱장·범위·N장 단위로 분할. 100% 브라우저에서 처리, 서버 전송 없음.">
+<meta property="og:url" content="https://grit-tools.com/tools/pdf/pdf-split.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF 나누기 — Grit Tools">
+<meta name="twitter:description" content="PDF를 낱장·범위·N장 단위로 분할. 100% 브라우저에서 처리, 서버 전송 없음.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -147,8 +165,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "PDF를 낱장·페이지 범위·N장 단위로 나눠 여러 개의 PDF로 저장하는 도구. 모든 처리는 브라우저에서 이루어지며 파일은 서버로 전송되지 않습니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"PDF","item":"https://grit-tools.com/#pdf"},
+ {"@type":"ListItem","position":3,"name":"PDF 나누기","item":"https://grit-tools.com/tools/pdf/pdf-split.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"PDF 나누기 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"PDF 열기","text":"PDF 파일을 끌어다 놓거나 영역을 클릭해 선택하세요. 파일명과 총 페이지 수가 표시됩니다."},
+ {"@type":"HowToStep","name":"분할 방식 선택","text":"낱장 분할, 범위 지정(1-3, 4, 5-8), 또는 N장씩 중에서 고르세요."},
+ {"@type":"HowToStep","name":"다운로드","text":"‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다."}
+]}
 </script>
 </head>
 <body>
@@ -255,6 +289,11 @@
         <p class="hs-d" data-i18n="psStep3D">‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="pdf-merge.html" data-i18n="navPm" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF 합치기</a>
+      <a href="pdf-to-image.html" data-i18n="navPi" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF를 이미지로 변환</a>
+    </nav>
   </div>
 </div>
 
@@ -549,7 +588,8 @@
       psHelpBtn:"사용법", psHelpClose:"닫기", psGuideTitle:"PDF 나누기 사용법",
       psStep1T:"PDF 열기", psStep1D:"PDF 파일을 끌어다 놓거나 영역을 클릭해 선택하세요. 파일명과 총 페이지 수가 표시됩니다.",
       psStep2T:"분할 방식 선택", psStep2D:"낱장 분할, 범위 지정(<code>1-3, 4, 5-8</code>), 또는 N장씩 중에서 고르세요.",
-      psStep3T:"다운로드", psStep3D:"‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다."
+      psStep3T:"다운로드", psStep3D:"‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다.",
+      relTitle:"관련 도구", navPm:"PDF 합치기", navPi:"PDF를 이미지로 변환"
     },
     en:{
       docTitle:"PDF Splitter — Grit Tools",
@@ -581,7 +621,8 @@
       psHelpBtn:"How to use", psHelpClose:"Close", psGuideTitle:"How to use the PDF splitter",
       psStep1T:"Open a PDF", psStep1D:"Drag & drop a PDF or click the area to pick one. Its name and total page count appear.",
       psStep2T:"Pick a split mode", psStep2D:"Choose every page, by ranges (<code>1-3, 4, 5-8</code>), or every N pages.",
-      psStep3T:"Download", psStep3D:"Press ‘Split’ to build the result list. Download each file, or all at once with ‘Download all’. Everything runs in your browser."
+      psStep3T:"Download", psStep3D:"Press ‘Split’ to build the result list. Download each file, or all at once with ‘Download all’. Everything runs in your browser.",
+      relTitle:"Related tools", navPm:"PDF Merge", navPi:"PDF to Image"
     },
     ja:{
       docTitle:"PDF分割 — Grit Tools",
@@ -613,7 +654,8 @@
       psHelpBtn:"使い方", psHelpClose:"閉じる", psGuideTitle:"PDF分割の使い方",
       psStep1T:"PDFを開く", psStep1D:"PDFファイルをドラッグ＆ドロップするか、エリアをクリックして選択します。ファイル名と総ページ数が表示されます。",
       psStep2T:"分割方式を選ぶ", psStep2D:"ページごと、範囲指定(<code>1-3, 4, 5-8</code>)、Nページごとから選びます。",
-      psStep3T:"ダウンロード", psStep3D:"「分割する」を押すと結果リストが作られます。ファイルごと、または「すべてダウンロード」で一括取得。処理はすべてブラウザ内で行われます。"
+      psStep3T:"ダウンロード", psStep3D:"「分割する」を押すと結果リストが作られます。ファイルごと、または「すべてダウンロード」で一括取得。処理はすべてブラウザ内で行われます。",
+      relTitle:"関連ツール", navPm:"PDF結合", navPi:"PDF → 画像"
     },
     zh:{
       docTitle:"PDF 拆分 — Grit Tools",
@@ -645,7 +687,173 @@
       psHelpBtn:"使用方法", psHelpClose:"关闭", psGuideTitle:"PDF 拆分使用方法",
       psStep1T:"打开 PDF", psStep1D:"拖放 PDF 文件，或点击区域选择。会显示文件名和总页数。",
       psStep2T:"选择拆分方式", psStep2D:"可选逐页、指定范围(<code>1-3, 4, 5-8</code>)或每 N 页。",
-      psStep3T:"下载", psStep3D:"点击“拆分”生成结果列表。可逐个下载，或用“全部下载”一次获取。所有处理都在浏览器中完成。"
+      psStep3T:"下载", psStep3D:"点击“拆分”生成结果列表。可逐个下载，或用“全部下载”一次获取。所有处理都在浏览器中完成。",
+      relTitle:"相关工具", navPm:"PDF 合并", navPi:"PDF 转图片"
+    },
+    es:{
+      docTitle:"Dividir PDF — Grit Tools",
+      psTool:"Dividir PDF", psAllTools:"← Todas las herramientas",
+      psTitle:"Dividir PDF",
+      psSub:"Divide un PDF en páginas sueltas, rangos de páginas o bloques de tamaño fijo y guarda cada parte como un PDF independiente.",
+      psInputTitle:"Elegir PDF", psResultTitle:"Resultados",
+      psDropTitle:"Arrastra y suelta un PDF aquí o haz clic", psDropHint:"Un archivo PDF",
+      psTotalPages:"{n} páginas en total",
+      psModeTitle:"Modo de división",
+      psModeEachT:"Cada página por separado", psModeEachD:"Cada página se convierte en un PDF de 1 página.",
+      psModeRangeT:"Por rangos", psModeRangeD:"p. ej. 1-3, 4, 5-8 — cada rango se convierte en un PDF.",
+      psModeChunkT:"Cada N páginas", psModeChunkD:"Divide en bloques de N páginas cada uno.",
+      psChunkLabel:"Páginas por bloque (N)",
+      psSplit:"Dividir", psWorking:"Dividiendo…",
+      psDownload:"Descargar", psDownloadAll:"Descargar todo",
+      psPagesCount:"{n} páginas", psLabelPage:"página {n}", psLabelRange:"páginas {a}–{b}",
+      psPrivacy:"Tu PDF nunca se sube a un servidor.",
+      psResEmpty:"Los resultados de la división aparecen aquí.<br>Elige un PDF y pulsa ‘Dividir’.",
+      psNotPdf:"Solo se permiten archivos PDF.",
+      psLoadFail:"No se pudo leer el PDF. Puede estar dañado o protegido con contraseña.",
+      psNoFile:"Elige primero un archivo PDF.",
+      psSplitFail:"Se produjo un error al dividir.",
+      psLibError:"No se pudo cargar la biblioteca PDF. Comprueba tu conexión y vuelve a cargar.",
+      psErrEmptyRange:"Introduce un rango, p. ej. 1-3, 4, 5-8",
+      psErrBadRange:"Rango no válido: “{token}”. p. ej. 1-3, 4, 5-8",
+      psErrOutOfRange:"El rango “{token}” está fuera del número de páginas (1–{total}).",
+      psErrBadChunk:"Las páginas por bloque (N) deben ser un entero de 1 o más.",
+      psHelpBtn:"Cómo usar", psHelpClose:"Cerrar", psGuideTitle:"Cómo usar el divisor de PDF",
+      psStep1T:"Abrir un PDF", psStep1D:"Arrastra y suelta un PDF o haz clic en el área para elegir uno. Aparecen su nombre y el total de páginas.",
+      psStep2T:"Elegir un modo de división", psStep2D:"Elige cada página, por rangos (<code>1-3, 4, 5-8</code>) o cada N páginas.",
+      psStep3T:"Descargar", psStep3D:"Pulsa ‘Dividir’ para generar la lista de resultados. Descarga cada archivo o todos a la vez con ‘Descargar todo’. Todo se ejecuta en tu navegador.",
+      relTitle:"Herramientas relacionadas", navPm:"Unir PDF", navPi:"PDF a imagen"
+    },
+    fr:{
+      docTitle:"Diviser PDF — Grit Tools",
+      psTool:"Diviser PDF", psAllTools:"← Tous les outils",
+      psTitle:"Diviser PDF",
+      psSub:"Divisez un PDF en pages individuelles, plages de pages ou blocs de taille fixe et enregistrez chaque partie comme un PDF distinct.",
+      psInputTitle:"Choisir un PDF", psResultTitle:"Résultats",
+      psDropTitle:"Glissez-déposez un PDF ici, ou cliquez", psDropHint:"Un fichier PDF",
+      psTotalPages:"{n} pages au total",
+      psModeTitle:"Mode de division",
+      psModeEachT:"Chaque page séparément", psModeEachD:"Chaque page devient un PDF d'une seule page.",
+      psModeRangeT:"Par plages", psModeRangeD:"ex. 1-3, 4, 5-8 — chaque plage devient un PDF.",
+      psModeChunkT:"Toutes les N pages", psModeChunkD:"Divise en blocs de N pages chacun.",
+      psChunkLabel:"Pages par bloc (N)",
+      psSplit:"Diviser", psWorking:"Division…",
+      psDownload:"Télécharger", psDownloadAll:"Tout télécharger",
+      psPagesCount:"{n} pages", psLabelPage:"page {n}", psLabelRange:"pages {a}–{b}",
+      psPrivacy:"Votre PDF n'est jamais envoyé à un serveur.",
+      psResEmpty:"Les résultats de la division apparaissent ici.<br>Choisissez un PDF et appuyez sur ‘Diviser’.",
+      psNotPdf:"Seuls les fichiers PDF sont autorisés.",
+      psLoadFail:"Impossible de lire le PDF. Il est peut-être corrompu ou protégé par mot de passe.",
+      psNoFile:"Choisissez d'abord un fichier PDF.",
+      psSplitFail:"Une erreur s'est produite lors de la division.",
+      psLibError:"Impossible de charger la bibliothèque PDF. Vérifiez votre connexion et rechargez.",
+      psErrEmptyRange:"Saisissez une plage, ex. 1-3, 4, 5-8",
+      psErrBadRange:"Plage non valide : “{token}”. ex. 1-3, 4, 5-8",
+      psErrOutOfRange:"La plage “{token}” dépasse le nombre de pages (1–{total}).",
+      psErrBadChunk:"Les pages par bloc (N) doivent être un entier supérieur ou égal à 1.",
+      psHelpBtn:"Mode d'emploi", psHelpClose:"Fermer", psGuideTitle:"Comment utiliser le diviseur de PDF",
+      psStep1T:"Ouvrir un PDF", psStep1D:"Glissez-déposez un PDF ou cliquez sur la zone pour en choisir un. Son nom et le nombre total de pages s'affichent.",
+      psStep2T:"Choisir un mode de division", psStep2D:"Choisissez chaque page, par plages (<code>1-3, 4, 5-8</code>) ou toutes les N pages.",
+      psStep3T:"Télécharger", psStep3D:"Appuyez sur ‘Diviser’ pour générer la liste des résultats. Téléchargez chaque fichier, ou tous en une fois avec ‘Tout télécharger’. Tout s'exécute dans votre navigateur.",
+      relTitle:"Outils associés", navPm:"Fusionner des PDF", navPi:"PDF en image"
+    },
+    de:{
+      docTitle:"PDF teilen — Grit Tools",
+      psTool:"PDF teilen", psAllTools:"← Alle Tools",
+      psTitle:"PDF teilen",
+      psSub:"Teilen Sie ein PDF in einzelne Seiten, Seitenbereiche oder Blöcke fester Größe und speichern Sie jeden Teil als eigenes PDF.",
+      psInputTitle:"PDF wählen", psResultTitle:"Ergebnisse",
+      psDropTitle:"PDF hierher ziehen oder klicken", psDropHint:"Eine PDF-Datei",
+      psTotalPages:"insgesamt {n} Seiten",
+      psModeTitle:"Teilungsmodus",
+      psModeEachT:"Jede Seite einzeln", psModeEachD:"Jede Seite wird zu einem eigenen 1-seitigen PDF.",
+      psModeRangeT:"Nach Bereichen", psModeRangeD:"z. B. 1-3, 4, 5-8 — jeder Bereich wird ein PDF.",
+      psModeChunkT:"Alle N Seiten", psModeChunkD:"In Blöcke von je N Seiten teilen.",
+      psChunkLabel:"Seiten pro Block (N)",
+      psSplit:"Teilen", psWorking:"Wird geteilt…",
+      psDownload:"Herunterladen", psDownloadAll:"Alle herunterladen",
+      psPagesCount:"{n} Seiten", psLabelPage:"Seite {n}", psLabelRange:"Seiten {a}–{b}",
+      psPrivacy:"Ihr PDF wird nie auf einen Server hochgeladen.",
+      psResEmpty:"Hier erscheinen die Teilungsergebnisse.<br>Wählen Sie ein PDF und drücken Sie ‘Teilen’.",
+      psNotPdf:"Nur PDF-Dateien sind erlaubt.",
+      psLoadFail:"Das PDF konnte nicht gelesen werden. Es ist möglicherweise beschädigt oder passwortgeschützt.",
+      psNoFile:"Wählen Sie zuerst eine PDF-Datei.",
+      psSplitFail:"Beim Teilen ist ein Fehler aufgetreten.",
+      psLibError:"Die PDF-Bibliothek konnte nicht geladen werden. Prüfen Sie Ihre Verbindung und laden Sie neu.",
+      psErrEmptyRange:"Geben Sie einen Bereich ein, z. B. 1-3, 4, 5-8",
+      psErrBadRange:"Ungültiger Bereich: „{token}“. z. B. 1-3, 4, 5-8",
+      psErrOutOfRange:"Der Bereich „{token}“ liegt außerhalb der Seitenzahl (1–{total}).",
+      psErrBadChunk:"Seiten pro Block (N) muss eine ganze Zahl ab 1 sein.",
+      psHelpBtn:"Anleitung", psHelpClose:"Schließen", psGuideTitle:"So nutzen Sie das PDF-Teilen",
+      psStep1T:"PDF öffnen", psStep1D:"Ziehen Sie ein PDF hierher oder klicken Sie auf den Bereich, um eines auszuwählen. Name und Gesamtseitenzahl werden angezeigt.",
+      psStep2T:"Teilungsmodus wählen", psStep2D:"Wählen Sie jede Seite, nach Bereichen (<code>1-3, 4, 5-8</code>) oder alle N Seiten.",
+      psStep3T:"Herunterladen", psStep3D:"Drücken Sie ‘Teilen’, um die Ergebnisliste zu erstellen. Laden Sie jede Datei einzeln herunter oder alle auf einmal mit ‘Alle herunterladen’. Alles läuft in Ihrem Browser.",
+      relTitle:"Verwandte Tools", navPm:"PDF zusammenfügen", navPi:"PDF zu Bild"
+    },
+    pt:{
+      docTitle:"Dividir PDF — Grit Tools",
+      psTool:"Dividir PDF", psAllTools:"← Todas as ferramentas",
+      psTitle:"Dividir PDF",
+      psSub:"Divida um PDF em páginas avulsas, intervalos de páginas ou blocos de tamanho fixo e guarde cada parte como um PDF independente.",
+      psInputTitle:"Escolher PDF", psResultTitle:"Resultados",
+      psDropTitle:"Arraste e largue um PDF aqui, ou clique", psDropHint:"Um ficheiro PDF",
+      psTotalPages:"{n} páginas no total",
+      psModeTitle:"Modo de divisão",
+      psModeEachT:"Cada página separadamente", psModeEachD:"Cada página torna-se um PDF de 1 página.",
+      psModeRangeT:"Por intervalos", psModeRangeD:"ex.: 1-3, 4, 5-8 — cada intervalo torna-se um PDF.",
+      psModeChunkT:"A cada N páginas", psModeChunkD:"Divide em blocos de N páginas cada.",
+      psChunkLabel:"Páginas por bloco (N)",
+      psSplit:"Dividir", psWorking:"A dividir…",
+      psDownload:"Transferir", psDownloadAll:"Transferir tudo",
+      psPagesCount:"{n} páginas", psLabelPage:"página {n}", psLabelRange:"páginas {a}–{b}",
+      psPrivacy:"O seu PDF nunca é enviado para um servidor.",
+      psResEmpty:"Os resultados da divisão aparecem aqui.<br>Escolha um PDF e carregue em ‘Dividir’.",
+      psNotPdf:"Só são permitidos ficheiros PDF.",
+      psLoadFail:"Não foi possível ler o PDF. Pode estar danificado ou protegido por palavra-passe.",
+      psNoFile:"Escolha primeiro um ficheiro PDF.",
+      psSplitFail:"Ocorreu um erro ao dividir.",
+      psLibError:"Não foi possível carregar a biblioteca PDF. Verifique a ligação e recarregue.",
+      psErrEmptyRange:"Introduza um intervalo, ex.: 1-3, 4, 5-8",
+      psErrBadRange:"Intervalo inválido: “{token}”. ex.: 1-3, 4, 5-8",
+      psErrOutOfRange:"O intervalo “{token}” está fora do número de páginas (1–{total}).",
+      psErrBadChunk:"As páginas por bloco (N) têm de ser um inteiro igual ou superior a 1.",
+      psHelpBtn:"Como usar", psHelpClose:"Fechar", psGuideTitle:"Como usar o divisor de PDF",
+      psStep1T:"Abrir um PDF", psStep1D:"Arraste e largue um PDF ou clique na área para escolher um. Aparecem o nome e o total de páginas.",
+      psStep2T:"Escolher um modo de divisão", psStep2D:"Escolha cada página, por intervalos (<code>1-3, 4, 5-8</code>) ou a cada N páginas.",
+      psStep3T:"Transferir", psStep3D:"Carregue em ‘Dividir’ para gerar a lista de resultados. Transfira cada ficheiro, ou todos de uma vez com ‘Transferir tudo’. Tudo é executado no seu navegador.",
+      relTitle:"Ferramentas relacionadas", navPm:"Juntar PDF", navPi:"PDF para imagem"
+    },
+    ru:{
+      docTitle:"Разделение PDF — Grit Tools",
+      psTool:"Разделение PDF", psAllTools:"← Все инструменты",
+      psTitle:"Разделение PDF",
+      psSub:"Разделите PDF на отдельные страницы, диапазоны страниц или блоки фиксированного размера и сохраните каждую часть как отдельный PDF.",
+      psInputTitle:"Выбрать PDF", psResultTitle:"Результаты",
+      psDropTitle:"Перетащите PDF сюда или нажмите", psDropHint:"Один PDF-файл",
+      psTotalPages:"всего {n} стр.",
+      psModeTitle:"Способ разделения",
+      psModeEachT:"Каждая страница отдельно", psModeEachD:"Каждая страница становится отдельным PDF из одной страницы.",
+      psModeRangeT:"По диапазонам", psModeRangeD:"напр.: 1-3, 4, 5-8 — каждый диапазон становится одним PDF.",
+      psModeChunkT:"Каждые N страниц", psModeChunkD:"Разделить на блоки по N страниц.",
+      psChunkLabel:"Страниц в блоке (N)",
+      psSplit:"Разделить", psWorking:"Разделение…",
+      psDownload:"Скачать", psDownloadAll:"Скачать всё",
+      psPagesCount:"{n} стр.", psLabelPage:"страница {n}", psLabelRange:"страницы {a}–{b}",
+      psPrivacy:"Ваш PDF никогда не загружается на сервер.",
+      psResEmpty:"Здесь появятся результаты разделения.<br>Выберите PDF и нажмите ‘Разделить’.",
+      psNotPdf:"Разрешены только PDF-файлы.",
+      psLoadFail:"Не удалось прочитать PDF. Возможно, он повреждён или защищён паролем.",
+      psNoFile:"Сначала выберите PDF-файл.",
+      psSplitFail:"При разделении произошла ошибка.",
+      psLibError:"Не удалось загрузить библиотеку PDF. Проверьте подключение и обновите страницу.",
+      psErrEmptyRange:"Введите диапазон, напр.: 1-3, 4, 5-8",
+      psErrBadRange:"Неверный диапазон: «{token}». напр.: 1-3, 4, 5-8",
+      psErrOutOfRange:"Диапазон «{token}» выходит за число страниц (1–{total}).",
+      psErrBadChunk:"Число страниц в блоке (N) должно быть целым числом не менее 1.",
+      psHelpBtn:"Как пользоваться", psHelpClose:"Закрыть", psGuideTitle:"Как пользоваться разделением PDF",
+      psStep1T:"Откройте PDF", psStep1D:"Перетащите PDF или нажмите на область, чтобы выбрать файл. Появятся его имя и общее число страниц.",
+      psStep2T:"Выберите способ разделения", psStep2D:"Выберите каждую страницу, по диапазонам (<code>1-3, 4, 5-8</code>) или каждые N страниц.",
+      psStep3T:"Скачать", psStep3D:"Нажмите ‘Разделить’, чтобы создать список результатов. Скачивайте каждый файл по отдельности или все сразу через ‘Скачать всё’. Всё выполняется в вашем браузере.",
+      relTitle:"Похожие инструменты", navPm:"Объединить PDF", navPi:"PDF в изображение"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){

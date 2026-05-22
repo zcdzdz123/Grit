@@ -7,11 +7,29 @@
 <meta name="description" content="한글 주소를 붙여넣으면 국제 배송 양식에 쓸 수 있는 영문·로마자 주소로 바로 변환합니다. 국어의 로마자 표기법 기반, 100% 브라우저 내 처리.">
 <meta name="keywords" content="영어주소 변환, 영문주소 변환기, 한글 주소 로마자, korean address romanizer, english address converter">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/text/address-romanize.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="한글 주소 영문 변환 — Grit Tools">
 <meta property="og:description" content="한글 주소를 영문·로마자 주소로 즉시 변환. 국제 배송 양식용 참고 변환.">
+<meta property="og:url" content="https://grit-tools.com/tools/text/address-romanize.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="한글 주소 영문 변환 — Grit Tools">
+<meta name="twitter:description" content="한글 주소를 영문·로마자 주소로 즉시 변환. 국제 배송 양식용 참고 변환.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -104,8 +122,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "한글 주소를 국제 배송 양식에 쓸 수 있는 영문·로마자 주소로 변환하는 도구. 국어의 로마자 표기법 기반, 모든 처리는 브라우저에서 이루어집니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"텍스트","item":"https://grit-tools.com/#text"},
+ {"@type":"ListItem","position":3,"name":"한글 주소 영문 변환","item":"https://grit-tools.com/tools/text/address-romanize.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"한글 주소 영문 변환 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"한글 주소 입력","text":"위 칸에 한글 주소를 붙여넣거나 입력하세요. 예시 칩을 눌러 바로 채울 수도 있습니다."},
+ {"@type":"HowToStep","name":"실시간 변환","text":"입력하는 즉시 큰 단위→작은 단위 순서를 뒤집어 영문 주소로 변환합니다. 우편번호는 끝에 붙고 ‘Republic of Korea’가 추가됩니다."},
+ {"@type":"HowToStep","name":"복사해서 사용","text":"‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 참고용이며 공식 영문 주소는 juso.go.kr에서 확인하세요."}
+]}
 </script>
 </head>
 <body>
@@ -163,6 +197,11 @@
         <p class="hs-d" data-i18n-html="arStep3D">‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 <b>참고용</b>이며 공식 영문 주소는 <code>juso.go.kr</code>에서 확인하세요.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="table-to-markdown.html" data-i18n="navTm" style="color:var(--blue);text-decoration:none;margin-left:10px;">표를 마크다운으로 변환</a>
+      <a href="text-merge.html" data-i18n="navTx" style="color:var(--blue);text-decoration:none;margin-left:10px;">텍스트 파일 합치기</a>
+    </nav>
   </div>
 </div>
 
@@ -316,7 +355,8 @@
       arHelpBtn:"사용법", arHelpClose:"닫기", arGuideTitle:"한글 주소 영문 변환 사용법",
       arStep1T:"한글 주소 입력", arStep1D:"위 칸에 한글 주소를 붙여넣거나 입력하세요. 예시 칩을 눌러 바로 채울 수도 있습니다.",
       arStep2T:"실시간 변환", arStep2D:"입력하는 즉시 큰 단위→작은 단위 순서를 뒤집어 영문 주소로 변환합니다. 우편번호는 끝에 붙고 ‘Republic of Korea’가 추가됩니다.",
-      arStep3T:"복사해서 사용", arStep3D:"‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 <b>참고용</b>이며 공식 영문 주소는 <code>juso.go.kr</code>에서 확인하세요."
+      arStep3T:"복사해서 사용", arStep3D:"‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 <b>참고용</b>이며 공식 영문 주소는 <code>juso.go.kr</code>에서 확인하세요.",
+      relTitle:"관련 도구", navTm:"표를 마크다운으로 변환", navTx:"텍스트 파일 합치기"
     },
     en:{
       docTitle:"Korean Address Romanizer — Grit Tools",
@@ -331,7 +371,8 @@
       arHelpBtn:"How to use", arHelpClose:"Close", arGuideTitle:"How to use the address romanizer",
       arStep1T:"Enter a Korean address", arStep1D:"Paste or type a Korean address in the box above. You can also click an example chip to fill it instantly.",
       arStep2T:"Live conversion", arStep2D:"As you type, the big-to-small order is reversed into an English address. A postal code is moved to the end and ‘Republic of Korea’ is appended.",
-      arStep3T:"Copy and use", arStep3D:"Use the ‘Copy’ button to put the result on the clipboard and paste it into a shipping form. This is an <b>estimate</b>; verify the official address at <code>juso.go.kr</code>."
+      arStep3T:"Copy and use", arStep3D:"Use the ‘Copy’ button to put the result on the clipboard and paste it into a shipping form. This is an <b>estimate</b>; verify the official address at <code>juso.go.kr</code>.",
+      relTitle:"Related tools", navTm:"Table → Markdown", navTx:"Text File Merge"
     },
     ja:{
       docTitle:"英語住所変換ツール — Grit Tools",
@@ -346,7 +387,8 @@
       arHelpBtn:"使い方", arHelpClose:"閉じる", arGuideTitle:"英語住所変換ツールの使い方",
       arStep1T:"韓国語の住所を入力", arStep1D:"上の欄に韓国語の住所を貼り付けるか入力します。例のチップを押すとすぐ入力できます。",
       arStep2T:"リアルタイム変換", arStep2D:"入力するたびに、大きい単位→小さい単位の順序を逆にして英語住所へ変換します。郵便番号は末尾に置かれ「Republic of Korea」が追加されます。",
-      arStep3T:"コピーして使用", arStep3D:"「コピー」ボタンで結果をクリップボードに入れ、発送フォームに貼り付けます。表記法に基づく<b>参考用</b>のため、正式な住所は <code>juso.go.kr</code> で確認してください。"
+      arStep3T:"コピーして使用", arStep3D:"「コピー」ボタンで結果をクリップボードに入れ、発送フォームに貼り付けます。表記法に基づく<b>参考用</b>のため、正式な住所は <code>juso.go.kr</code> で確認してください。",
+      relTitle:"関連ツール", navTm:"表 → Markdown", navTx:"テキスト結合"
     },
     zh:{
       docTitle:"英文地址转换器 — Grit Tools",
@@ -361,7 +403,88 @@
       arHelpBtn:"使用方法", arHelpClose:"关闭", arGuideTitle:"英文地址转换器使用方法",
       arStep1T:"输入韩文地址", arStep1D:"在上方框中粘贴或输入韩文地址。也可点击示例标签快速填入。",
       arStep2T:"实时转换", arStep2D:"输入时即把大单位→小单位的顺序反转为英文地址。邮政编码会移到末尾并追加“Republic of Korea”。",
-      arStep3T:"复制使用", arStep3D:"用“复制”按钮把结果放入剪贴板，粘贴到寄送表单。基于表记法<b>仅供参考</b>，官方地址请在 <code>juso.go.kr</code> 核对。"
+      arStep3T:"复制使用", arStep3D:"用“复制”按钮把结果放入剪贴板，粘贴到寄送表单。基于表记法<b>仅供参考</b>，官方地址请在 <code>juso.go.kr</code> 核对。",
+      relTitle:"相关工具", navTm:"表格 → Markdown", navTx:"文本文件合并"
+    },
+    es:{
+      docTitle:"Romanizador de direcciones coreanas — Grit Tools",
+      arTool:"Romanizar dirección", arAllTools:"← Todas las herramientas",
+      arTitle:"Romanizador de direcciones coreanas",
+      arSub:"Pega una dirección coreana y obtén al instante una dirección en inglés / romanizada para formularios de envío internacional.",
+      arInputTitle:"Dirección coreana", arInputLabel:"Introduce una dirección coreana",
+      arPlaceholder:"p. ej. 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"Dirección en inglés", arCopy:"Copiar", arCopied:"¡Copiado!",
+      arTokensLabel:"Tokens romanizados",
+      arDisclaimer:"Estimación: conversión automática basada en la Romanización Revisada del Coreano. Verifica la dirección oficial en inglés en <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"Cómo usar", arHelpClose:"Cerrar", arGuideTitle:"Cómo usar el romanizador de direcciones",
+      arStep1T:"Introduce una dirección coreana", arStep1D:"Pega o escribe una dirección coreana en el cuadro de arriba. También puedes pulsar un ejemplo para rellenarlo al instante.",
+      arStep2T:"Conversión en vivo", arStep2D:"A medida que escribes, el orden de mayor a menor se invierte para formar una dirección en inglés. El código postal se mueve al final y se añade ‘Republic of Korea’.",
+      arStep3T:"Copia y úsala", arStep3D:"Usa el botón ‘Copiar’ para poner el resultado en el portapapeles y pegarlo en un formulario de envío. Es una <b>estimación</b>; verifica la dirección oficial en <code>juso.go.kr</code>.",
+      relTitle:"Herramientas relacionadas", navTm:"Tabla → Markdown", navTx:"Unir archivos de texto"
+    },
+    fr:{
+      docTitle:"Romanisation d'adresses coréennes — Grit Tools",
+      arTool:"Romaniser l'adresse", arAllTools:"← Tous les outils",
+      arTitle:"Romanisation d'adresses coréennes",
+      arSub:"Collez une adresse coréenne pour obtenir instantanément une adresse en anglais / romanisée pour les formulaires d'expédition internationale.",
+      arInputTitle:"Adresse coréenne", arInputLabel:"Saisissez une adresse coréenne",
+      arPlaceholder:"ex. 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"Adresse en anglais", arCopy:"Copier", arCopied:"Copié !",
+      arTokensLabel:"Tokens romanisés",
+      arDisclaimer:"Estimation : conversion automatique basée sur la romanisation révisée du coréen. Vérifiez l'adresse officielle en anglais sur <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"Mode d'emploi", arHelpClose:"Fermer", arGuideTitle:"Comment utiliser la romanisation d'adresses",
+      arStep1T:"Saisissez une adresse coréenne", arStep1D:"Collez ou saisissez une adresse coréenne dans le champ ci-dessus. Vous pouvez aussi cliquer sur un exemple pour le remplir instantanément.",
+      arStep2T:"Conversion en direct", arStep2D:"À mesure que vous tapez, l'ordre du plus grand au plus petit est inversé pour former une adresse en anglais. Le code postal est placé à la fin et ‘Republic of Korea’ est ajouté.",
+      arStep3T:"Copiez et utilisez", arStep3D:"Utilisez le bouton ‘Copier’ pour mettre le résultat dans le presse-papiers et le coller dans un formulaire d'expédition. Il s'agit d'une <b>estimation</b> ; vérifiez l'adresse officielle sur <code>juso.go.kr</code>.",
+      relTitle:"Outils associés", navTm:"Tableau → Markdown", navTx:"Fusionner des fichiers texte"
+    },
+    de:{
+      docTitle:"Koreanische Adressen romanisieren — Grit Tools",
+      arTool:"Adresse romanisieren", arAllTools:"← Alle Werkzeuge",
+      arTitle:"Koreanische Adressen romanisieren",
+      arSub:"Füge eine koreanische Adresse ein und erhalte sofort eine englische / romanisierte Adresse für internationale Versandformulare.",
+      arInputTitle:"Koreanische Adresse", arInputLabel:"Koreanische Adresse eingeben",
+      arPlaceholder:"z. B. 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"Englische Adresse", arCopy:"Kopieren", arCopied:"Kopiert!",
+      arTokensLabel:"Romanisierte Tokens",
+      arDisclaimer:"Schätzung: automatische Umwandlung auf Basis der überarbeiteten Romanisierung des Koreanischen. Prüfe die offizielle englische Adresse auf <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"Anleitung", arHelpClose:"Schließen", arGuideTitle:"So nutzt du den Adress-Romanisierer",
+      arStep1T:"Koreanische Adresse eingeben", arStep1D:"Füge eine koreanische Adresse in das obige Feld ein oder tippe sie. Du kannst auch auf ein Beispiel klicken, um es sofort einzufügen.",
+      arStep2T:"Live-Umwandlung", arStep2D:"Während du tippst, wird die Reihenfolge von groß nach klein zu einer englischen Adresse umgekehrt. Die Postleitzahl wandert ans Ende und ‘Republic of Korea’ wird ergänzt.",
+      arStep3T:"Kopieren und verwenden", arStep3D:"Mit der Schaltfläche ‘Kopieren’ legst du das Ergebnis in die Zwischenablage und fügst es in ein Versandformular ein. Dies ist eine <b>Schätzung</b>; prüfe die offizielle Adresse auf <code>juso.go.kr</code>.",
+      relTitle:"Verwandte Tools", navTm:"Tabelle → Markdown", navTx:"Textdateien zusammenführen"
+    },
+    pt:{
+      docTitle:"Romanizador de endereços coreanos — Grit Tools",
+      arTool:"Romanizar endereço", arAllTools:"← Todas as ferramentas",
+      arTitle:"Romanizador de endereços coreanos",
+      arSub:"Cole um endereço coreano para obter na hora um endereço em inglês / romanizado para formulários de envio internacional.",
+      arInputTitle:"Endereço coreano", arInputLabel:"Digite um endereço coreano",
+      arPlaceholder:"ex.: 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"Endereço em inglês", arCopy:"Copiar", arCopied:"Copiado!",
+      arTokensLabel:"Tokens romanizados",
+      arDisclaimer:"Estimativa: conversão automática baseada na Romanização Revisada do Coreano. Verifique o endereço oficial em inglês em <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"Como usar", arHelpClose:"Fechar", arGuideTitle:"Como usar o romanizador de endereços",
+      arStep1T:"Digite um endereço coreano", arStep1D:"Cole ou digite um endereço coreano no campo acima. Você também pode clicar em um exemplo para preencher na hora.",
+      arStep2T:"Conversão ao vivo", arStep2D:"Conforme você digita, a ordem do maior para o menor é invertida em um endereço em inglês. O CEP vai para o final e ‘Republic of Korea’ é acrescentado.",
+      arStep3T:"Copie e use", arStep3D:"Use o botão ‘Copiar’ para colocar o resultado na área de transferência e colá-lo em um formulário de envio. Isto é uma <b>estimativa</b>; verifique o endereço oficial em <code>juso.go.kr</code>.",
+      relTitle:"Ferramentas relacionadas", navTm:"Tabela → Markdown", navTx:"Juntar arquivos de texto"
+    },
+    ru:{
+      docTitle:"Романизация корейских адресов — Grit Tools",
+      arTool:"Романизация адреса", arAllTools:"← Все инструменты",
+      arTitle:"Романизация корейских адресов",
+      arSub:"Вставьте корейский адрес, чтобы мгновенно получить английский / латинизированный адрес для международных форм отправки.",
+      arInputTitle:"Корейский адрес", arInputLabel:"Введите корейский адрес",
+      arPlaceholder:"напр. 서울특별시 강남구 테헤란로 152",
+      arOutputTitle:"Адрес на английском", arCopy:"Копировать", arCopied:"Скопировано!",
+      arTokensLabel:"Латинизированные токены",
+      arDisclaimer:"Оценка: автоматическое преобразование на основе новой романизации корейского языка. Проверьте официальный английский адрес на <a href=\"https://www.juso.go.kr\" target=\"_blank\" rel=\"noopener\">juso.go.kr</a>.",
+      arHelpBtn:"Как пользоваться", arHelpClose:"Закрыть", arGuideTitle:"Как пользоваться романизатором адресов",
+      arStep1T:"Введите корейский адрес", arStep1D:"Вставьте или введите корейский адрес в поле выше. Можно также нажать на пример, чтобы заполнить поле сразу.",
+      arStep2T:"Преобразование в реальном времени", arStep2D:"По мере ввода порядок от большего к меньшему переворачивается в английский адрес. Почтовый индекс переносится в конец, и добавляется ‘Republic of Korea’.",
+      arStep3T:"Скопируйте и используйте", arStep3D:"Нажмите кнопку ‘Копировать’, чтобы поместить результат в буфер обмена и вставить его в форму отправки. Это <b>оценка</b>; проверьте официальный адрес на <code>juso.go.kr</code>.",
+      relTitle:"Похожие инструменты", navTm:"Таблица → Markdown", navTx:"Объединить текстовые файлы"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: convert });

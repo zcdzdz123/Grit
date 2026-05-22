@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>우편번호 검색 — 도로명·지번 주소로 우편번호 찾기 | Grit Tools</title>
+<meta name="description" content="도로명주소·지번주소를 검색해 5자리 우편번호를 바로 찾고 복사하는 도구. 카카오(다음) 우편번호 서비스 기반, 회원가입·API 키 없이 무료로 우편번호 검색.">
+<meta name="keywords" content="우편번호 검색, 우편번호 찾기, 도로명주소 우편번호, 지번주소, 다음 우편번호, 카카오 우편번호, postal code, zip code, korea postal code">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/text/postal-code.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="우편번호 검색 — 도로명·지번 주소로 우편번호 찾기 | Grit Tools">
+<meta property="og:description" content="도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사. 카카오 우편번호 서비스 기반.">
+<meta property="og:url" content="https://grit-tools.com/tools/text/postal-code.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="우편번호 검색 — 도로명·지번 주소로 우편번호 찾기 | Grit Tools">
+<meta name="twitter:description" content="도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사. 카카오 우편번호 서비스 기반.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --shadow-card:0 1px 3px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; overflow:hidden; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-help { margin-left:auto; background:transparent; border:1px solid var(--border-lit); color:var(--text-dim); font:inherit; font-size:11px; line-height:1; padding:5px 11px; border-radius:9999px; cursor:pointer; transition:border-color .15s,color .15s; }
+  #grit-bar .g-help:hover { border-color:var(--blue); color:var(--blue); }
+  #grit-bar .g-home { margin-left:14px; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  .app { height:calc(100vh - 38px); display:flex; flex-direction:column; gap:14px; padding:22px 26px; overflow:hidden; }
+  .app-head { flex:0 0 auto; }
+  .calc-title { font-size:24px; font-weight:600; letter-spacing:-.02em; margin:0; }
+  .calc-sub { font-size:14px; color:var(--text-dim); margin:4px 0 0; line-height:1.5; }
+  .panels { flex:1 1 auto; min-height:0; display:grid; gap:18px; grid-template-columns:1.1fr .9fr; }
+  .panels .panel { min-height:0; overflow:auto; }
+  @media (max-width:1080px){ body{overflow:auto;} .app{height:auto; overflow:visible;} .panels{grid-template-columns:1fr;} }
+
+  .panel { display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:24px; box-shadow:var(--shadow-card); }
+  .panel h2 { margin:0 0 16px; font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.08em; text-transform:uppercase; }
+
+  /* 임베드 검색 영역 */
+  #postcodeBox { flex:1 1 auto; min-height:460px; border:1px solid var(--border-lit); border-radius:9px; overflow:hidden; background:#fff; }
+  .embed-note { margin:12px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+
+  /* 결과 항목 */
+  .res-list { display:flex; flex-direction:column; gap:14px; }
+  .res-item { background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:14px 14px 12px; }
+  .res-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+  .res-label { font-size:12px; font-weight:600; color:var(--text-muted); letter-spacing:.04em; }
+  .res-val { font-family:var(--font-mono); font-size:16px; line-height:1.5; color:var(--text); word-break:break-word; min-height:24px; }
+  .res-val.zip { font-size:22px; letter-spacing:.04em; color:var(--blue); }
+  .res-val:empty::before { content:"—"; color:var(--text-muted); }
+
+  .copy-btn { background:var(--blue); color:#fff; border:none; padding:6px 13px; border-radius:var(--radius-pill); font:inherit; font-size:12px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:background .15s; flex:0 0 auto; }
+  .copy-btn:hover { background:var(--blue-dark); }
+  .copy-btn:disabled { opacity:.4; cursor:default; }
+  .copy-btn svg { width:13px; height:13px; stroke:#fff; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .copy-btn.done { background:var(--blue-dark); }
+
+  .empty-note { font-size:13px; color:var(--text-muted); line-height:1.6; padding:8px 2px; }
+  .extra-note { margin:16px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+
+  /* 사용법 모달 */
+  .help-modal { position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:rgba(12,10,9,.5); padding:20px; }
+  .help-modal.open { display:flex; }
+  .help-box { position:relative; width:480px; max-width:100%; max-height:85vh; overflow:auto; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:24px; box-shadow:var(--shadow-card); }
+  .help-close { position:absolute; top:12px; right:12px; width:28px; height:28px; border:1px solid var(--border); background:transparent; color:var(--text-dim); border-radius:9999px; cursor:pointer; font-size:16px; line-height:1; }
+  .help-close:hover { border-color:var(--blue); color:var(--blue); }
+  .help-title { margin:0 0 16px; font-size:17px; font-weight:600; }
+  .help-steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .hs-head { display:flex; align-items:center; gap:9px; margin-bottom:5px; }
+  .hs-num { width:22px; height:22px; flex:0 0 22px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:12px; font-weight:600; }
+  .hs-t { font-size:14px; font-weight:600; }
+  .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+  .help-privacy { margin:16px 0 0; font-size:12px; color:var(--text-muted); line-height:1.55; }
+</style><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "우편번호 검색",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web browser",
+  "description": "도로명주소·지번주소를 검색해 5자리 우편번호를 바로 찾고 복사하는 도구. 카카오(다음) 우편번호 서비스 기반.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"텍스트","item":"https://grit-tools.com/#text"},
+ {"@type":"ListItem","position":3,"name":"우편번호 검색","item":"https://grit-tools.com/tools/text/postal-code.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"우편번호 검색 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"검색창 열기","text":"왼쪽 검색창에 도로명 또는 지번 주소의 일부를 입력하세요. 예) 테헤란로 152, 또는 동·읍·면 이름."},
+ {"@type":"HowToStep","name":"주소 선택","text":"검색 결과 목록에서 정확한 주소를 클릭하면 5자리 우편번호와 도로명·지번 주소가 오른쪽에 표시됩니다."},
+ {"@type":"HowToStep","name":"우편번호 복사","text":"각 항목의 복사 버튼으로 우편번호나 주소를 클립보드에 담아 양식에 붙여넣으세요."}
+]}
+</script>
+</head>
+<body>
+<div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="pzTool">우편번호 검색</span><button type="button" id="helpBtn" class="g-help" data-i18n="pzHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="pzAllTools">← 모든 도구</a></div>
+
+<main class="app">
+  <div class="app-head">
+    <h1 class="calc-title" data-i18n="pzTitle">우편번호 검색</h1>
+    <p class="calc-sub" data-i18n="pzSub">도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사하세요.</p>
+  </div>
+
+  <div class="panels">
+  <section class="panel">
+    <h2 data-i18n="pzSearch">주소 검색</h2>
+    <div id="postcodeBox"></div>
+    <p class="embed-note" data-i18n="pzPrivacy">주소 검색은 카카오(다음) 우편번호 서비스를 이용합니다.</p>
+  </section>
+
+  <section class="panel">
+    <h2 data-i18n="pzResult">검색 결과</h2>
+    <p class="empty-note" id="emptyNote" data-i18n="pzEmpty">주소를 검색하면 우편번호가 여기에 표시됩니다.</p>
+    <div class="res-list" id="resList" style="display:none;">
+      <div class="res-item">
+        <div class="res-head">
+          <span class="res-label" data-i18n="pzZip">우편번호</span>
+          <button type="button" class="copy-btn" data-copy="zip" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v10H9zM5 15H4V4h11v1"/></svg>
+            <span data-i18n="pzCopy">복사</span>
+          </button>
+        </div>
+        <div class="res-val zip" id="valZip"></div>
+      </div>
+      <div class="res-item">
+        <div class="res-head">
+          <span class="res-label" data-i18n="pzRoad">도로명주소</span>
+          <button type="button" class="copy-btn" data-copy="road" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v10H9zM5 15H4V4h11v1"/></svg>
+            <span data-i18n="pzCopy">복사</span>
+          </button>
+        </div>
+        <div class="res-val" id="valRoad"></div>
+      </div>
+      <div class="res-item">
+        <div class="res-head">
+          <span class="res-label" data-i18n="pzJibun">지번주소</span>
+          <button type="button" class="copy-btn" data-copy="jibun" disabled>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9h10v10H9zM5 15H4V4h11v1"/></svg>
+            <span data-i18n="pzCopy">복사</span>
+          </button>
+        </div>
+        <div class="res-val" id="valJibun"></div>
+      </div>
+    </div>
+    <p class="extra-note" data-i18n="pzPrivacy2">검색어와 선택한 주소는 조회를 위해 카카오(다음) 우편번호 서비스로 전송됩니다.</p>
+  </section>
+  </div>
+</main>
+
+<div id="helpModal" class="help-modal">
+  <div class="help-box" role="dialog" aria-modal="true">
+    <button type="button" class="help-close" id="helpClose" data-i18n-title="pzHelpClose" title="닫기">×</button>
+    <h2 class="help-title" data-i18n="pzGuideTitle">우편번호 검색 사용법</h2>
+    <ol class="help-steps">
+      <li>
+        <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="pzStep1T">검색창 열기</span></div>
+        <p class="hs-d" data-i18n="pzStep1D">왼쪽 검색창에 도로명 또는 지번 주소의 일부를 입력하세요. 예) <code>테헤란로 152</code>, 또는 동·읍·면 이름.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">2</span><span class="hs-t" data-i18n="pzStep2T">주소 선택</span></div>
+        <p class="hs-d" data-i18n="pzStep2D">검색 결과 목록에서 정확한 주소를 클릭하면 5자리 우편번호와 도로명·지번 주소가 오른쪽에 표시됩니다.</p>
+      </li>
+      <li>
+        <div class="hs-head"><span class="hs-num">3</span><span class="hs-t" data-i18n="pzStep3T">우편번호 복사</span></div>
+        <p class="hs-d" data-i18n="pzStep3D">각 항목의 <b>복사</b> 버튼으로 우편번호나 주소를 클립보드에 담아 양식에 붙여넣으세요.</p>
+      </li>
+    </ol>
+    <p class="help-privacy" data-i18n="pzPrivacy">주소 검색은 카카오(다음) 우편번호 서비스를 이용합니다.</p>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="address-romanize.html" data-i18n="navAddr" style="color:var(--blue);text-decoration:none;margin-left:10px;">한글 주소 영문 변환</a>
+    </nav>
+  </div>
+</div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="../../i18n.js"></script>
+<script>
+(function(){
+  "use strict";
+  var T = GritI18n.t;
+  var $=function(id){ return document.getElementById(id); };
+  var helpModal=$("helpModal");
+
+  $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
+  $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
+  helpModal.addEventListener("click", function(e){ if(e.target===helpModal) helpModal.classList.remove("open"); });
+  window.addEventListener("keydown", function(e){ if(e.keyCode===27) helpModal.classList.remove("open"); });
+
+  /* 현재 선택된 값 보관 */
+  var current={ zip:"", road:"", jibun:"" };
+
+  function setResult(data){
+    current.zip=data.zonecode||"";
+    current.road=data.roadAddress||"";
+    current.jibun=data.jibunAddress||data.autoJibunAddress||"";
+    $("valZip").textContent=current.zip;
+    $("valRoad").textContent=current.road;
+    $("valJibun").textContent=current.jibun;
+    $("emptyNote").style.display="none";
+    $("resList").style.display="";
+    var btns=document.querySelectorAll(".copy-btn");
+    for(var i=0;i<btns.length;i++){
+      var key=btns[i].getAttribute("data-copy");
+      btns[i].disabled = !current[key];
+    }
+  }
+
+  /* 카카오(다음) 우편번호 서비스 임베드 */
+  function buildPostcode(){
+    $("postcodeBox").innerHTML="";
+    if(typeof daum==="undefined" || !daum.Postcode){ return; }
+    new daum.Postcode({
+      oncomplete:function(data){ setResult(data); },
+      width:"100%", height:"100%"
+    }).embed($("postcodeBox"), { autoClose:false });
+  }
+  buildPostcode();
+
+  /* 복사 (clipboard 우선, execCommand 폴백) */
+  var copyTimers={};
+  function flashDone(btn){
+    btn.classList.add("done");
+    var span=btn.querySelector("span");
+    var prev=span.textContent;
+    span.textContent=T("pzCopied");
+    var key=btn.getAttribute("data-copy");
+    if(copyTimers[key]) clearTimeout(copyTimers[key]);
+    copyTimers[key]=setTimeout(function(){ btn.classList.remove("done"); span.textContent=T("pzCopy"); }, 1200);
+  }
+  function legacyCopy(txt){
+    var ta=document.createElement("textarea"); ta.value=txt;
+    ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.focus(); ta.select();
+    try{ document.execCommand("copy"); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  function doCopy(btn){
+    var key=btn.getAttribute("data-copy");
+    var txt=current[key]||"";
+    if(!txt) return;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ flashDone(btn); }, function(){ legacyCopy(txt); flashDone(btn); });
+    } else { legacyCopy(txt); flashDone(btn); }
+  }
+  var copyBtns=document.querySelectorAll(".copy-btn");
+  for(var b=0;b<copyBtns.length;b++){ (function(btn){
+    btn.addEventListener("click", function(){ doCopy(btn); });
+  })(copyBtns[b]); }
+
+  GritI18n.register({
+    ko:{
+      docTitle:"우편번호 검색 — 도로명·지번 주소로 우편번호 찾기 | Grit Tools",
+      pzTool:"우편번호 검색", pzAllTools:"← 모든 도구",
+      pzTitle:"우편번호 검색",
+      pzSub:"도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사하세요.",
+      pzSearch:"주소 검색", pzResult:"검색 결과",
+      pzZip:"우편번호", pzRoad:"도로명주소", pzJibun:"지번주소",
+      pzCopy:"복사", pzCopied:"복사됨!",
+      pzEmpty:"주소를 검색하면 우편번호가 여기에 표시됩니다.",
+      pzPrivacy:"주소 검색은 카카오(다음) 우편번호 서비스를 이용합니다.",
+      pzPrivacy2:"검색어와 선택한 주소는 조회를 위해 카카오(다음) 우편번호 서비스로 전송됩니다.",
+      pzHelpBtn:"사용법", pzHelpClose:"닫기", pzGuideTitle:"우편번호 검색 사용법",
+      pzStep1T:"검색창 열기", pzStep1D:"왼쪽 검색창에 도로명 또는 지번 주소의 일부를 입력하세요. 예) <code>테헤란로 152</code>, 또는 동·읍·면 이름.",
+      pzStep2T:"주소 선택", pzStep2D:"검색 결과 목록에서 정확한 주소를 클릭하면 5자리 우편번호와 도로명·지번 주소가 오른쪽에 표시됩니다.",
+      pzStep3T:"우편번호 복사", pzStep3D:"각 항목의 <b>복사</b> 버튼으로 우편번호나 주소를 클립보드에 담아 양식에 붙여넣으세요.",
+      relTitle:"관련 도구", navAddr:"한글 주소 영문 변환"
+    },
+    en:{
+      docTitle:"Postal Code Search (KR) — find a ZIP code by address | Grit Tools",
+      pzTool:"Postal Code Search (KR)", pzAllTools:"← All tools",
+      pzTitle:"Postal Code Search (KR)",
+      pzSub:"Search a Korean road or lot-number address to instantly find and copy the 5-digit postal code.",
+      pzSearch:"Search address", pzResult:"Result",
+      pzZip:"Postal code", pzRoad:"Road address", pzJibun:"Lot-number address",
+      pzCopy:"Copy", pzCopied:"Copied!",
+      pzEmpty:"Search an address and the postal code will appear here.",
+      pzPrivacy:"Address search uses the Kakao (Daum) Postcode service.",
+      pzPrivacy2:"Your query and selected address are sent to the Kakao (Daum) Postcode service for lookup.",
+      pzHelpBtn:"How to use", pzHelpClose:"Close", pzGuideTitle:"How to use the postal code search",
+      pzStep1T:"Open the search box", pzStep1D:"Type part of a road or lot-number address into the left search box, e.g. <code>테헤란로 152</code> or a neighborhood name.",
+      pzStep2T:"Pick an address", pzStep2D:"Click the exact address in the result list, and the 5-digit postal code with the road and lot-number addresses appear on the right.",
+      pzStep3T:"Copy the postal code", pzStep3D:"Use each item's <b>Copy</b> button to put the postal code or address on the clipboard and paste it into a form.",
+      relTitle:"Related tools", navAddr:"Address Romanizer"
+    },
+    ja:{
+      docTitle:"郵便番号検索（韓国）— 住所から郵便番号を探す | Grit Tools",
+      pzTool:"郵便番号検索（韓国）", pzAllTools:"← すべてのツール",
+      pzTitle:"郵便番号検索（韓国）",
+      pzSub:"道路名・地番の住所を検索して、5桁の郵便番号をすぐに見つけてコピーできます。",
+      pzSearch:"住所検索", pzResult:"検索結果",
+      pzZip:"郵便番号", pzRoad:"道路名住所", pzJibun:"地番住所",
+      pzCopy:"コピー", pzCopied:"コピーしました！",
+      pzEmpty:"住所を検索すると、ここに郵便番号が表示されます。",
+      pzPrivacy:"住所検索はKakaoのDaum郵便番号サービスを利用します。",
+      pzPrivacy2:"検索語と選択した住所は、照会のためKakaoのDaum郵便番号サービスへ送信されます。",
+      pzHelpBtn:"使い方", pzHelpClose:"閉じる", pzGuideTitle:"郵便番号検索の使い方",
+      pzStep1T:"検索窓を開く", pzStep1D:"左の検索窓に道路名または地番住所の一部を入力します。例）<code>테헤란로 152</code>、または洞・邑・面の名前。",
+      pzStep2T:"住所を選択", pzStep2D:"検索結果から正確な住所をクリックすると、5桁の郵便番号と道路名・地番の住所が右側に表示されます。",
+      pzStep3T:"郵便番号をコピー", pzStep3D:"各項目の<b>コピー</b>ボタンで郵便番号や住所をクリップボードに入れ、フォームに貼り付けます。",
+      relTitle:"関連ツール", navAddr:"住所ローマ字変換"
+    },
+    zh:{
+      docTitle:"邮政编码查询（韩国）— 按地址查邮编 | Grit Tools",
+      pzTool:"邮政编码查询（韩国）", pzAllTools:"← 所有工具",
+      pzTitle:"邮政编码查询（韩国）",
+      pzSub:"搜索道路名或地番地址，立即查找并复制 5 位邮政编码。",
+      pzSearch:"地址搜索", pzResult:"搜索结果",
+      pzZip:"邮政编码", pzRoad:"道路名地址", pzJibun:"地番地址",
+      pzCopy:"复制", pzCopied:"已复制！",
+      pzEmpty:"搜索地址后，邮政编码将显示在这里。",
+      pzPrivacy:"地址搜索使用 Kakao（Daum）邮政编码服务。",
+      pzPrivacy2:"搜索词和所选地址会发送至 Kakao（Daum）邮政编码服务以进行查询。",
+      pzHelpBtn:"使用方法", pzHelpClose:"关闭", pzGuideTitle:"邮政编码查询使用方法",
+      pzStep1T:"打开搜索框", pzStep1D:"在左侧搜索框输入道路名或地番地址的一部分，例如 <code>테헤란로 152</code>，或洞·邑·面名称。",
+      pzStep2T:"选择地址", pzStep2D:"在结果列表中点击准确的地址，5 位邮政编码以及道路名·地番地址会显示在右侧。",
+      pzStep3T:"复制邮政编码", pzStep3D:"用各项的<b>复制</b>按钮把邮政编码或地址放入剪贴板，粘贴到表单中。",
+      relTitle:"相关工具", navAddr:"韩文地址转换"
+    },
+    es:{
+      docTitle:"Búsqueda de código postal (KR) — busca el CP por dirección | Grit Tools",
+      pzTool:"Búsqueda de código postal (KR)", pzAllTools:"← Todas las herramientas",
+      pzTitle:"Búsqueda de código postal (KR)",
+      pzSub:"Busca una dirección coreana por vía o por número de parcela para encontrar y copiar al instante el código postal de 5 dígitos.",
+      pzSearch:"Buscar dirección", pzResult:"Resultado",
+      pzZip:"Código postal", pzRoad:"Dirección vial", pzJibun:"Dirección por parcela",
+      pzCopy:"Copiar", pzCopied:"¡Copiado!",
+      pzEmpty:"Busca una dirección y el código postal aparecerá aquí.",
+      pzPrivacy:"La búsqueda de direcciones usa el servicio de código postal de Kakao (Daum).",
+      pzPrivacy2:"Tu consulta y la dirección seleccionada se envían al servicio de código postal de Kakao (Daum) para la búsqueda.",
+      pzHelpBtn:"Cómo usar", pzHelpClose:"Cerrar", pzGuideTitle:"Cómo usar la búsqueda de código postal",
+      pzStep1T:"Abre el cuadro de búsqueda", pzStep1D:"Escribe parte de una dirección vial o de parcela en el cuadro de la izquierda, p. ej. <code>테헤란로 152</code> o el nombre de un barrio.",
+      pzStep2T:"Elige una dirección", pzStep2D:"Haz clic en la dirección exacta de la lista de resultados y el código postal de 5 dígitos con las direcciones vial y por parcela aparecerán a la derecha.",
+      pzStep3T:"Copia el código postal", pzStep3D:"Usa el botón <b>Copiar</b> de cada elemento para poner el código postal o la dirección en el portapapeles y pegarlo en un formulario.",
+      relTitle:"Herramientas relacionadas", navAddr:"Romanizar dirección"
+    },
+    fr:{
+      docTitle:"Recherche de code postal (KR) — trouver un code postal par adresse | Grit Tools",
+      pzTool:"Recherche de code postal (KR)", pzAllTools:"← Tous les outils",
+      pzTitle:"Recherche de code postal (KR)",
+      pzSub:"Recherchez une adresse coréenne par voie ou par numéro de parcelle pour trouver et copier instantanément le code postal à 5 chiffres.",
+      pzSearch:"Rechercher une adresse", pzResult:"Résultat",
+      pzZip:"Code postal", pzRoad:"Adresse de voie", pzJibun:"Adresse parcellaire",
+      pzCopy:"Copier", pzCopied:"Copié !",
+      pzEmpty:"Recherchez une adresse et le code postal apparaîtra ici.",
+      pzPrivacy:"La recherche d'adresse utilise le service de code postal Kakao (Daum).",
+      pzPrivacy2:"Votre requête et l'adresse sélectionnée sont envoyées au service de code postal Kakao (Daum) pour la recherche.",
+      pzHelpBtn:"Mode d'emploi", pzHelpClose:"Fermer", pzGuideTitle:"Comment utiliser la recherche de code postal",
+      pzStep1T:"Ouvrez le champ de recherche", pzStep1D:"Saisissez une partie d'une adresse de voie ou parcellaire dans le champ de gauche, ex. <code>테헤란로 152</code> ou le nom d'un quartier.",
+      pzStep2T:"Choisissez une adresse", pzStep2D:"Cliquez sur l'adresse exacte dans la liste de résultats : le code postal à 5 chiffres ainsi que les adresses de voie et parcellaire s'affichent à droite.",
+      pzStep3T:"Copiez le code postal", pzStep3D:"Utilisez le bouton <b>Copier</b> de chaque élément pour placer le code postal ou l'adresse dans le presse-papiers et le coller dans un formulaire.",
+      relTitle:"Outils associés", navAddr:"Romaniser l'adresse"
+    },
+    de:{
+      docTitle:"Postleitzahl-Suche (KR) — PLZ über die Adresse finden | Grit Tools",
+      pzTool:"Postleitzahl-Suche (KR)", pzAllTools:"← Alle Werkzeuge",
+      pzTitle:"Postleitzahl-Suche (KR)",
+      pzSub:"Suche eine koreanische Adresse nach Straße oder Flurstücknummer, um die 5-stellige Postleitzahl sofort zu finden und zu kopieren.",
+      pzSearch:"Adresse suchen", pzResult:"Ergebnis",
+      pzZip:"Postleitzahl", pzRoad:"Straßenadresse", pzJibun:"Flurstückadresse",
+      pzCopy:"Kopieren", pzCopied:"Kopiert!",
+      pzEmpty:"Suche eine Adresse, und die Postleitzahl erscheint hier.",
+      pzPrivacy:"Die Adresssuche nutzt den Kakao-(Daum-)Postleitzahl-Dienst.",
+      pzPrivacy2:"Deine Anfrage und die gewählte Adresse werden zur Suche an den Kakao-(Daum-)Postleitzahl-Dienst gesendet.",
+      pzHelpBtn:"Anleitung", pzHelpClose:"Schließen", pzGuideTitle:"So nutzt du die Postleitzahl-Suche",
+      pzStep1T:"Suchfeld öffnen", pzStep1D:"Gib einen Teil einer Straßen- oder Flurstückadresse in das linke Suchfeld ein, z. B. <code>테헤란로 152</code> oder den Namen eines Stadtviertels.",
+      pzStep2T:"Adresse auswählen", pzStep2D:"Klicke in der Ergebnisliste auf die genaue Adresse, dann erscheinen die 5-stellige Postleitzahl sowie Straßen- und Flurstückadresse rechts.",
+      pzStep3T:"Postleitzahl kopieren", pzStep3D:"Nutze die Schaltfläche <b>Kopieren</b> jedes Eintrags, um die Postleitzahl oder Adresse in die Zwischenablage zu legen und in ein Formular einzufügen.",
+      relTitle:"Verwandte Tools", navAddr:"Adresse romanisieren"
+    },
+    pt:{
+      docTitle:"Busca de CEP (KR) — encontre o CEP pelo endereço | Grit Tools",
+      pzTool:"Busca de CEP (KR)", pzAllTools:"← Todas as ferramentas",
+      pzTitle:"Busca de CEP (KR)",
+      pzSub:"Pesquise um endereço coreano por via ou por número de lote para encontrar e copiar na hora o CEP de 5 dígitos.",
+      pzSearch:"Buscar endereço", pzResult:"Resultado",
+      pzZip:"CEP", pzRoad:"Endereço de via", pzJibun:"Endereço por lote",
+      pzCopy:"Copiar", pzCopied:"Copiado!",
+      pzEmpty:"Pesquise um endereço e o CEP aparecerá aqui.",
+      pzPrivacy:"A busca de endereço usa o serviço de CEP da Kakao (Daum).",
+      pzPrivacy2:"Sua consulta e o endereço selecionado são enviados ao serviço de CEP da Kakao (Daum) para a busca.",
+      pzHelpBtn:"Como usar", pzHelpClose:"Fechar", pzGuideTitle:"Como usar a busca de CEP",
+      pzStep1T:"Abra o campo de busca", pzStep1D:"Digite parte de um endereço de via ou de lote no campo à esquerda, ex.: <code>테헤란로 152</code> ou o nome de um bairro.",
+      pzStep2T:"Escolha um endereço", pzStep2D:"Clique no endereço exato na lista de resultados e o CEP de 5 dígitos com os endereços de via e por lote aparecem à direita.",
+      pzStep3T:"Copie o CEP", pzStep3D:"Use o botão <b>Copiar</b> de cada item para colocar o CEP ou o endereço na área de transferência e colá-lo em um formulário.",
+      relTitle:"Ferramentas relacionadas", navAddr:"Romanizar endereço"
+    },
+    ru:{
+      docTitle:"Поиск почтового индекса (KR) — найти индекс по адресу | Grit Tools",
+      pzTool:"Поиск почтового индекса (KR)", pzAllTools:"← Все инструменты",
+      pzTitle:"Поиск почтового индекса (KR)",
+      pzSub:"Найдите корейский адрес по улице или номеру участка, чтобы мгновенно получить и скопировать 5-значный почтовый индекс.",
+      pzSearch:"Поиск адреса", pzResult:"Результат",
+      pzZip:"Почтовый индекс", pzRoad:"Адрес по улице", pzJibun:"Адрес по участку",
+      pzCopy:"Копировать", pzCopied:"Скопировано!",
+      pzEmpty:"Найдите адрес, и почтовый индекс появится здесь.",
+      pzPrivacy:"Поиск адреса использует сервис почтовых индексов Kakao (Daum).",
+      pzPrivacy2:"Ваш запрос и выбранный адрес отправляются в сервис почтовых индексов Kakao (Daum) для поиска.",
+      pzHelpBtn:"Как пользоваться", pzHelpClose:"Закрыть", pzGuideTitle:"Как пользоваться поиском почтового индекса",
+      pzStep1T:"Откройте поле поиска", pzStep1D:"Введите часть адреса по улице или по участку в левое поле поиска, напр. <code>테헤란로 152</code> или название района.",
+      pzStep2T:"Выберите адрес", pzStep2D:"Нажмите на точный адрес в списке результатов — 5-значный почтовый индекс вместе с адресами по улице и по участку появятся справа.",
+      pzStep3T:"Скопируйте индекс", pzStep3D:"Используйте кнопку <b>Копировать</b> у каждого пункта, чтобы поместить индекс или адрес в буфер обмена и вставить в форму.",
+      relTitle:"Похожие инструменты", navAddr:"Романизация адреса"
+    }
+  });
+  GritI18n.init({ mount: document.getElementById("langMount") });
+})();
+</script>
+</body>
+</html>

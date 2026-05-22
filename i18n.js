@@ -17,7 +17,12 @@
     {code:"ko",label:"한국어",short:"KO"},
     {code:"en",label:"English",short:"EN"},
     {code:"ja",label:"日本語",short:"JA"},
-    {code:"zh",label:"中文",short:"ZH"}
+    {code:"zh",label:"中文",short:"ZH"},
+    {code:"es",label:"Español",short:"ES"},
+    {code:"fr",label:"Français",short:"FR"},
+    {code:"de",label:"Deutsch",short:"DE"},
+    {code:"pt",label:"Português",short:"PT"},
+    {code:"ru",label:"Русский",short:"RU"}
   ];
   var dict={}, current="en", changeCb=null, menuEl=null, btnEl=null;
   var inlineMode=false, inlineWrap=null;
@@ -42,13 +47,12 @@
     return false;
   }
   function detect(){
+    /* 저장된 사용자 선택만 따른다. 선택이 없으면(첫 방문·검색봇 등) 한국어로 고정 —
+     * 정적 HTML/canonical/og:locale(ko_KR)과 렌더링 언어를 일치시켜 색인 신호를 일관되게 한다.
+     * 단일 URL이라 navigator 언어로 자동 전환하면 봇이 보는 언어가 ko와 어긋난다. */
     var s=null; try{ s=localStorage.getItem(STORE); }catch(e){}
     if(s&&supported(s)) return s;
-    var n=(navigator.language||navigator.userLanguage||"en").toLowerCase();
-    if(n.indexOf("ko")===0) return "ko";
-    if(n.indexOf("ja")===0) return "ja";
-    if(n.indexOf("zh")===0) return "zh";
-    return "en";
+    return "ko";
   }
 
   function apply(){

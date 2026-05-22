@@ -7,11 +7,29 @@
 <meta name="description" content="여러 개의 텍스트 파일(.txt·.md·.csv·.log·.json)을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·UTF-8 BOM 옵션 지원. 모든 처리는 브라우저에서 끝나며 파일은 서버로 전송되지 않습니다.">
 <meta name="keywords" content="텍스트 파일 합치기, txt 합치기, 파일 병합 도구, merge text files, text combiner">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/text/text-merge.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="텍스트 파일 합치기 — Grit Tools">
 <meta property="og:description" content="여러 텍스트 파일을 순서대로 하나로 병합. 구분자·파일명 헤더·BOM 옵션. 100% 브라우저 처리.">
+<meta property="og:url" content="https://grit-tools.com/tools/text/text-merge.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="텍스트 파일 합치기 — Grit Tools">
+<meta name="twitter:description" content="여러 텍스트 파일을 순서대로 하나로 병합. 구분자·파일명 헤더·BOM 옵션. 100% 브라우저 처리.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -145,8 +163,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "여러 개의 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합하는 도구. 구분자·파일명 헤더·UTF-8 BOM 옵션을 지원하며 모든 처리는 브라우저에서 끝납니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"텍스트","item":"https://grit-tools.com/#text"},
+ {"@type":"ListItem","position":3,"name":"텍스트 파일 합치기","item":"https://grit-tools.com/tools/text/text-merge.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"텍스트 파일 합치기 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"파일 추가","text":"텍스트 파일을 드롭존에 끌어다 놓거나 클릭해서 여러 개 선택하세요. .txt·.md·.csv·.log·.json 등 텍스트 파일을 UTF-8로 읽습니다."},
+ {"@type":"HowToStep","name":"순서·옵션 설정","text":"▲▼ 로 순서를 바꾸고 ✕ 로 제거합니다. 파일 사이 구분자, 파일명 헤더({name} 치환), UTF-8 BOM을 켤 수 있어요."},
+ {"@type":"HowToStep","name":"복사·다운로드","text":"오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다."}
+]}
 </script>
 </head>
 <body>
@@ -251,6 +285,11 @@
         <p class="hs-d" data-i18n="txStep3D">오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="address-romanize.html" data-i18n="navAddr" style="color:var(--blue);text-decoration:none;margin-left:10px;">한글 주소 영문 변환</a>
+      <a href="table-to-markdown.html" data-i18n="navTm" style="color:var(--blue);text-decoration:none;margin-left:10px;">표를 마크다운으로 변환</a>
+    </nav>
   </div>
 </div>
 
@@ -477,7 +516,8 @@
       txHelpBtn:"사용법", txHelpClose:"닫기", txGuideTitle:"텍스트 파일 합치기 사용법",
       txStep1T:"파일 추가", txStep1D:"텍스트 파일을 드롭존에 끌어다 놓거나 클릭해서 여러 개 선택하세요. .txt·.md·.csv·.log·.json 등 텍스트 파일을 UTF-8로 읽습니다.",
       txStep2T:"순서·옵션 설정", txStep2D:"▲▼ 로 순서를 바꾸고 ✕ 로 제거합니다. 파일 사이 구분자, 파일명 헤더(<code>{name}</code> 치환), UTF-8 BOM을 켤 수 있어요.",
-      txStep3T:"복사·다운로드", txStep3D:"오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다."
+      txStep3T:"복사·다운로드", txStep3D:"오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다.",
+      relTitle:"관련 도구", navAddr:"한글 주소 영문 변환", navTm:"표를 마크다운으로 변환"
     },
     en:{
       docTitle:"Merge Text Files — Grit Tools",
@@ -502,7 +542,8 @@
       txHelpBtn:"How to use", txHelpClose:"Close", txGuideTitle:"How to merge text files",
       txStep1T:"Add files", txStep1D:"Drag text files onto the drop zone or click to select several. .txt, .md, .csv, .log, .json and other text files are read as UTF-8.",
       txStep2T:"Order & options", txStep2D:"Reorder with ▲▼ and remove with ✕. Set the separator between files, a filename header (<code>{name}</code> token) and a UTF-8 BOM.",
-      txStep3T:"Copy or download", txStep3D:"Check the preview on the right, then click ‘Copy’ or ‘Download merged’. Your files are never uploaded."
+      txStep3T:"Copy or download", txStep3D:"Check the preview on the right, then click ‘Copy’ or ‘Download merged’. Your files are never uploaded.",
+      relTitle:"Related tools", navAddr:"Address Romanizer", navTm:"Table → Markdown"
     },
     ja:{
       docTitle:"テキストファイル結合 — Grit Tools",
@@ -527,7 +568,8 @@
       txHelpBtn:"使い方", txHelpClose:"閉じる", txGuideTitle:"テキストファイル結合の使い方",
       txStep1T:"ファイルを追加", txStep1D:"テキストファイルをドロップゾーンにドラッグするか、クリックして複数選択します。.txt・.md・.csv・.log・.json などのテキストファイルを UTF-8 で読み込みます。",
       txStep2T:"並び順・オプション", txStep2D:"▲▼ で並べ替え、✕ で削除。ファイル間の区切り、ファイル名ヘッダー（<code>{name}</code> を置換）、UTF-8 BOM を設定できます。",
-      txStep3T:"コピー・ダウンロード", txStep3D:"右のプレビューで結果を確認し、「コピー」または「結合をダウンロード」を押します。ファイルはサーバーに送信されません。"
+      txStep3T:"コピー・ダウンロード", txStep3D:"右のプレビューで結果を確認し、「コピー」または「結合をダウンロード」を押します。ファイルはサーバーに送信されません。",
+      relTitle:"関連ツール", navAddr:"住所ローマ字変換", navTm:"表 → Markdown"
     },
     zh:{
       docTitle:"文本文件合并 — Grit Tools",
@@ -552,7 +594,138 @@
       txHelpBtn:"使用方法", txHelpClose:"关闭", txGuideTitle:"文本文件合并使用方法",
       txStep1T:"添加文件", txStep1D:"将文本文件拖到拖放区，或点击选择多个文件。.txt、.md、.csv、.log、.json 等文本文件以 UTF-8 读取。",
       txStep2T:"顺序与选项", txStep2D:"用 ▲▼ 调整顺序，用 ✕ 移除。可设置文件之间的分隔符、文件名标题（替换 <code>{name}</code>）和 UTF-8 BOM。",
-      txStep3T:"复制或下载", txStep3D:"在右侧预览中查看结果，然后点击“复制”或“下载合并文件”。文件不会上传到服务器。"
+      txStep3T:"复制或下载", txStep3D:"在右侧预览中查看结果，然后点击“复制”或“下载合并文件”。文件不会上传到服务器。",
+      relTitle:"相关工具", navAddr:"韩文地址转换", navTm:"表格 → Markdown"
+    },
+    es:{
+      docTitle:"Combinar archivos de texto — Grit Tools",
+      txTool:"Combinar archivos de texto", txAllTools:"← Todas las herramientas",
+      txTitle:"Combinar archivos de texto",
+      txSub:"Suelta varios archivos de texto, reordénalos y combínalos en uno solo.",
+      txFilesTitle:"Archivos", txClear:"Vaciar",
+      txDrop:"<b>Arrastra y suelta</b> archivos de texto o haz clic para elegir<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"Aún no hay archivos.",
+      txOptTitle:"Opciones de combinación",
+      txSep:"Separador entre archivos",
+      txSepNone:"Ninguno", txSepNl:"Salto de línea", txSepBlank:"Línea en blanco", txSepCustom:"Personalizado", txSepCustomPh:"texto separador",
+      txHeader:"Insertar encabezado con el nombre de archivo", txHeaderTpl:"Plantilla de encabezado ({name} = nombre de archivo)",
+      txBom:"Añadir BOM UTF-8", txOutName:"Nombre del archivo de salida",
+      txOutTitle:"Vista previa combinada", txCopy:"Copiar", txDownload:"Descargar combinado",
+      txPreviewPh:"Añade archivos y el resultado combinado aparecerá aquí.",
+      txPrivacy:"Los archivos nunca se suben. Todo se procesa en tu navegador.",
+      txLinesShort:"líneas", txMoveUp:"Subir", txMoveDown:"Bajar", txRemove:"Quitar",
+      txNoText:"No es un archivo de texto.", txNoFiles:"Añade archivos primero.",
+      txClearConfirm:"¿Vaciar toda la lista de archivos?",
+      txCopied:"¡Copiado!", txCopyFail:"Error al copiar",
+      txHelpBtn:"Cómo usar", txHelpClose:"Cerrar", txGuideTitle:"Cómo combinar archivos de texto",
+      txStep1T:"Añade archivos", txStep1D:"Arrastra archivos de texto a la zona de soltar o haz clic para seleccionar varios. .txt, .md, .csv, .log, .json y otros archivos de texto se leen como UTF-8.",
+      txStep2T:"Orden y opciones", txStep2D:"Reordena con ▲▼ y quita con ✕. Define el separador entre archivos, un encabezado con el nombre de archivo (token <code>{name}</code>) y un BOM UTF-8.",
+      txStep3T:"Copia o descarga", txStep3D:"Revisa la vista previa de la derecha y luego pulsa ‘Copiar’ o ‘Descargar combinado’. Tus archivos nunca se suben.",
+      relTitle:"Herramientas relacionadas", navAddr:"Romanizar dirección", navTm:"Tabla → Markdown"
+    },
+    fr:{
+      docTitle:"Fusionner des fichiers texte — Grit Tools",
+      txTool:"Fusionner des fichiers texte", txAllTools:"← Tous les outils",
+      txTitle:"Fusionner des fichiers texte",
+      txSub:"Déposez plusieurs fichiers texte, réorganisez-les et fusionnez-les en un seul.",
+      txFilesTitle:"Fichiers", txClear:"Vider",
+      txDrop:"<b>Glissez-déposez</b> des fichiers texte ou cliquez pour choisir<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"Aucun fichier pour le moment.",
+      txOptTitle:"Options de fusion",
+      txSep:"Séparateur entre les fichiers",
+      txSepNone:"Aucun", txSepNl:"Saut de ligne", txSepBlank:"Ligne vide", txSepCustom:"Personnalisé", txSepCustomPh:"texte du séparateur",
+      txHeader:"Insérer un en-tête avec le nom du fichier", txHeaderTpl:"Modèle d'en-tête ({name} = nom du fichier)",
+      txBom:"Ajouter un BOM UTF-8", txOutName:"Nom du fichier de sortie",
+      txOutTitle:"Aperçu fusionné", txCopy:"Copier", txDownload:"Télécharger le fichier fusionné",
+      txPreviewPh:"Ajoutez des fichiers et le résultat fusionné apparaîtra ici.",
+      txPrivacy:"Les fichiers ne sont jamais envoyés. Tout se passe dans votre navigateur.",
+      txLinesShort:"lignes", txMoveUp:"Monter", txMoveDown:"Descendre", txRemove:"Retirer",
+      txNoText:"Ce n'est pas un fichier texte.", txNoFiles:"Ajoutez d'abord des fichiers.",
+      txClearConfirm:"Vider toute la liste de fichiers ?",
+      txCopied:"Copié !", txCopyFail:"Échec de la copie",
+      txHelpBtn:"Mode d'emploi", txHelpClose:"Fermer", txGuideTitle:"Comment fusionner des fichiers texte",
+      txStep1T:"Ajoutez des fichiers", txStep1D:"Glissez des fichiers texte sur la zone de dépôt ou cliquez pour en sélectionner plusieurs. Les fichiers .txt, .md, .csv, .log, .json et autres fichiers texte sont lus en UTF-8.",
+      txStep2T:"Ordre et options", txStep2D:"Réorganisez avec ▲▼ et retirez avec ✕. Définissez le séparateur entre les fichiers, un en-tête avec le nom du fichier (token <code>{name}</code>) et un BOM UTF-8.",
+      txStep3T:"Copier ou télécharger", txStep3D:"Vérifiez l'aperçu à droite, puis cliquez sur ‘Copier’ ou ‘Télécharger le fichier fusionné’. Vos fichiers ne sont jamais envoyés.",
+      relTitle:"Outils associés", navAddr:"Romaniser l'adresse", navTm:"Tableau → Markdown"
+    },
+    de:{
+      docTitle:"Textdateien zusammenführen — Grit Tools",
+      txTool:"Textdateien zusammenführen", txAllTools:"← Alle Werkzeuge",
+      txTitle:"Textdateien zusammenführen",
+      txSub:"Lege mehrere Textdateien ab, ordne sie neu an und führe sie zu einer zusammen.",
+      txFilesTitle:"Dateien", txClear:"Leeren",
+      txDrop:"Textdateien <b>per Drag &amp; Drop</b> ablegen oder zum Auswählen klicken<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"Noch keine Dateien.",
+      txOptTitle:"Zusammenführungs-Optionen",
+      txSep:"Trenner zwischen Dateien",
+      txSepNone:"Keiner", txSepNl:"Zeilenumbruch", txSepBlank:"Leerzeile", txSepCustom:"Benutzerdefiniert", txSepCustomPh:"Trennertext",
+      txHeader:"Dateinamen-Kopfzeile einfügen", txHeaderTpl:"Kopfzeilen-Vorlage ({name} = Dateiname)",
+      txBom:"UTF-8-BOM hinzufügen", txOutName:"Name der Ausgabedatei",
+      txOutTitle:"Zusammengeführte Vorschau", txCopy:"Kopieren", txDownload:"Zusammengeführt herunterladen",
+      txPreviewPh:"Füge Dateien hinzu, dann erscheint hier das zusammengeführte Ergebnis.",
+      txPrivacy:"Dateien werden nie hochgeladen. Alles läuft in deinem Browser.",
+      txLinesShort:"Zeilen", txMoveUp:"Nach oben", txMoveDown:"Nach unten", txRemove:"Entfernen",
+      txNoText:"Keine Textdatei.", txNoFiles:"Füge zuerst Dateien hinzu.",
+      txClearConfirm:"Die gesamte Dateiliste leeren?",
+      txCopied:"Kopiert!", txCopyFail:"Kopieren fehlgeschlagen",
+      txHelpBtn:"Anleitung", txHelpClose:"Schließen", txGuideTitle:"So führst du Textdateien zusammen",
+      txStep1T:"Dateien hinzufügen", txStep1D:"Ziehe Textdateien in die Ablagezone oder klicke, um mehrere auszuwählen. .txt, .md, .csv, .log, .json und andere Textdateien werden als UTF-8 gelesen.",
+      txStep2T:"Reihenfolge & Optionen", txStep2D:"Mit ▲▼ neu anordnen und mit ✕ entfernen. Lege den Trenner zwischen Dateien, eine Dateinamen-Kopfzeile (Token <code>{name}</code>) und ein UTF-8-BOM fest.",
+      txStep3T:"Kopieren oder herunterladen", txStep3D:"Prüfe die Vorschau rechts und klicke dann auf ‘Kopieren’ oder ‘Zusammengeführt herunterladen’. Deine Dateien werden nie hochgeladen.",
+      relTitle:"Verwandte Tools", navAddr:"Adresse romanisieren", navTm:"Tabelle → Markdown"
+    },
+    pt:{
+      docTitle:"Mesclar arquivos de texto — Grit Tools",
+      txTool:"Mesclar arquivos de texto", txAllTools:"← Todas as ferramentas",
+      txTitle:"Mesclar arquivos de texto",
+      txSub:"Solte vários arquivos de texto, reordene-os e mescle em um só.",
+      txFilesTitle:"Arquivos", txClear:"Limpar",
+      txDrop:"<b>Arraste e solte</b> arquivos de texto ou clique para escolher<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"Ainda não há arquivos.",
+      txOptTitle:"Opções de mesclagem",
+      txSep:"Separador entre arquivos",
+      txSepNone:"Nenhum", txSepNl:"Quebra de linha", txSepBlank:"Linha em branco", txSepCustom:"Personalizado", txSepCustomPh:"texto separador",
+      txHeader:"Inserir cabeçalho com o nome do arquivo", txHeaderTpl:"Modelo de cabeçalho ({name} = nome do arquivo)",
+      txBom:"Adicionar BOM UTF-8", txOutName:"Nome do arquivo de saída",
+      txOutTitle:"Pré-visualização mesclada", txCopy:"Copiar", txDownload:"Baixar mesclado",
+      txPreviewPh:"Adicione arquivos e o resultado mesclado aparecerá aqui.",
+      txPrivacy:"Os arquivos nunca são enviados. Tudo é processado no seu navegador.",
+      txLinesShort:"linhas", txMoveUp:"Subir", txMoveDown:"Descer", txRemove:"Remover",
+      txNoText:"Não é um arquivo de texto.", txNoFiles:"Adicione arquivos primeiro.",
+      txClearConfirm:"Limpar toda a lista de arquivos?",
+      txCopied:"Copiado!", txCopyFail:"Falha ao copiar",
+      txHelpBtn:"Como usar", txHelpClose:"Fechar", txGuideTitle:"Como mesclar arquivos de texto",
+      txStep1T:"Adicione arquivos", txStep1D:"Arraste arquivos de texto para a área de soltar ou clique para selecionar vários. .txt, .md, .csv, .log, .json e outros arquivos de texto são lidos como UTF-8.",
+      txStep2T:"Ordem e opções", txStep2D:"Reordene com ▲▼ e remova com ✕. Defina o separador entre arquivos, um cabeçalho com o nome do arquivo (token <code>{name}</code>) e um BOM UTF-8.",
+      txStep3T:"Copie ou baixe", txStep3D:"Confira a pré-visualização à direita e clique em ‘Copiar’ ou ‘Baixar mesclado’. Seus arquivos nunca são enviados.",
+      relTitle:"Ferramentas relacionadas", navAddr:"Romanizar endereço", navTm:"Tabela → Markdown"
+    },
+    ru:{
+      docTitle:"Объединение текстовых файлов — Grit Tools",
+      txTool:"Объединение текстовых файлов", txAllTools:"← Все инструменты",
+      txTitle:"Объединение текстовых файлов",
+      txSub:"Перетащите несколько текстовых файлов, измените порядок и объедините их в один.",
+      txFilesTitle:"Файлы", txClear:"Очистить",
+      txDrop:"<b>Перетащите</b> текстовые файлы или нажмите, чтобы выбрать<span class=\"dz-sub\">.txt · .md · .csv · .log · .json</span>",
+      txEmpty:"Файлов пока нет.",
+      txOptTitle:"Параметры объединения",
+      txSep:"Разделитель между файлами",
+      txSepNone:"Нет", txSepNl:"Перенос строки", txSepBlank:"Пустая строка", txSepCustom:"Свой", txSepCustomPh:"текст разделителя",
+      txHeader:"Вставлять заголовок с именем файла", txHeaderTpl:"Шаблон заголовка ({name} = имя файла)",
+      txBom:"Добавить BOM UTF-8", txOutName:"Имя выходного файла",
+      txOutTitle:"Предпросмотр результата", txCopy:"Копировать", txDownload:"Скачать результат",
+      txPreviewPh:"Добавьте файлы, и объединённый результат появится здесь.",
+      txPrivacy:"Файлы никогда не загружаются на сервер. Всё обрабатывается в вашем браузере.",
+      txLinesShort:"строк", txMoveUp:"Вверх", txMoveDown:"Вниз", txRemove:"Удалить",
+      txNoText:"Это не текстовый файл.", txNoFiles:"Сначала добавьте файлы.",
+      txClearConfirm:"Очистить весь список файлов?",
+      txCopied:"Скопировано!", txCopyFail:"Не удалось скопировать",
+      txHelpBtn:"Как пользоваться", txHelpClose:"Закрыть", txGuideTitle:"Как объединять текстовые файлы",
+      txStep1T:"Добавьте файлы", txStep1D:"Перетащите текстовые файлы в зону или нажмите, чтобы выбрать несколько. Файлы .txt, .md, .csv, .log, .json и другие текстовые файлы читаются как UTF-8.",
+      txStep2T:"Порядок и параметры", txStep2D:"Меняйте порядок кнопками ▲▼ и удаляйте кнопкой ✕. Задайте разделитель между файлами, заголовок с именем файла (токен <code>{name}</code>) и BOM UTF-8.",
+      txStep3T:"Скопируйте или скачайте", txStep3D:"Проверьте предпросмотр справа, затем нажмите ‘Копировать’ или ‘Скачать результат’. Ваши файлы никогда не загружаются на сервер.",
+      relTitle:"Похожие инструменты", navAddr:"Романизация адреса", navTm:"Таблица → Markdown"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ renderList(); render(); } });

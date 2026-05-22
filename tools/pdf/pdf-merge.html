@@ -7,11 +7,29 @@
 <meta name="description" content="여러 PDF 파일을 원하는 순서로 정렬해 하나로 합치는 PDF 합치기 도구. 모든 처리는 브라우저에서 이루어지며 파일은 절대 업로드되지 않습니다.">
 <meta name="keywords" content="PDF 합치기, PDF 합치기, PDF merge, merge pdf, combine pdf, PDF結合, 合并PDF">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/pdf/pdf-merge.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="PDF 합치기 — Grit Tools">
 <meta property="og:description" content="여러 PDF를 순서대로 정렬해 하나로 합치기. 100% 브라우저 처리, 업로드 없음.">
+<meta property="og:url" content="https://grit-tools.com/tools/pdf/pdf-merge.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PDF 합치기 — Grit Tools">
+<meta name="twitter:description" content="여러 PDF를 순서대로 정렬해 하나로 합치기. 100% 브라우저 처리, 업로드 없음.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -133,8 +151,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "여러 PDF 파일을 원하는 순서로 정렬해 하나로 합치는 도구. 모든 처리는 브라우저에서 이루어지며 파일은 업로드되지 않습니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"PDF","item":"https://grit-tools.com/#pdf"},
+ {"@type":"ListItem","position":3,"name":"PDF 합치기","item":"https://grit-tools.com/tools/pdf/pdf-merge.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"PDF 합치기 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"PDF 추가","text":"드롭존을 클릭하거나 PDF 파일을 끌어다 놓으세요. 여러 개를 한 번에 추가할 수 있습니다."},
+ {"@type":"HowToStep","name":"순서 정렬","text":"목록의 ▲▼ 버튼으로 합쳐질 순서를 바꾸고, ✕로 필요 없는 파일을 제거합니다."},
+ {"@type":"HowToStep","name":"병합 후 내려받기","text":"‘병합 후 내려받기’를 누르면 모든 PDF가 순서대로 합쳐져 merged.pdf로 저장됩니다. 모든 처리는 브라우저에서 이루어집니다."}
+]}
 </script>
 </head>
 <body>
@@ -207,6 +241,11 @@
         <p class="hs-d" data-i18n="pmStep3D">‘병합 후 내려받기’를 누르면 모든 PDF가 순서대로 합쳐져 merged.pdf로 저장됩니다. 모든 처리는 브라우저에서 이루어집니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="pdf-split.html" data-i18n="navPs" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF 나누기</a>
+      <a href="pdf-to-image.html" data-i18n="navPi" style="color:var(--blue);text-decoration:none;margin-left:10px;">PDF를 이미지로 변환</a>
+    </nav>
   </div>
 </div>
 
@@ -418,7 +457,8 @@
       pmHelpBtn:"사용법", pmHelpClose:"닫기", pmGuideTitle:"PDF 합치기 사용법",
       pmStep1T:"PDF 추가", pmStep1D:"드롭존을 클릭하거나 PDF 파일을 끌어다 놓으세요. 여러 개를 한 번에 추가할 수 있습니다.",
       pmStep2T:"순서 정렬", pmStep2D:"목록의 ▲▼ 버튼으로 합쳐질 순서를 바꾸고, ✕로 필요 없는 파일을 제거합니다.",
-      pmStep3T:"병합 후 내려받기", pmStep3D:"‘병합 후 내려받기’를 누르면 모든 PDF가 순서대로 합쳐져 merged.pdf로 저장됩니다. 모든 처리는 브라우저에서 이루어집니다."
+      pmStep3T:"병합 후 내려받기", pmStep3D:"‘병합 후 내려받기’를 누르면 모든 PDF가 순서대로 합쳐져 merged.pdf로 저장됩니다. 모든 처리는 브라우저에서 이루어집니다.",
+      relTitle:"관련 도구", navPs:"PDF 나누기", navPi:"PDF를 이미지로 변환"
     },
     en:{
       docTitle:"PDF Merge — Grit Tools",
@@ -441,7 +481,8 @@
       pmHelpBtn:"How to use", pmHelpClose:"Close", pmGuideTitle:"How to use PDF Merge",
       pmStep1T:"Add PDFs", pmStep1D:"Click the drop zone or drag PDF files in. You can add several at once.",
       pmStep2T:"Reorder", pmStep2D:"Use the ▲▼ buttons to set the merge order, and ✕ to remove files you don't need.",
-      pmStep3T:"Merge & download", pmStep3D:"Press ‘Merge & download’ and all PDFs are combined in order and saved as merged.pdf. Everything runs in your browser."
+      pmStep3T:"Merge & download", pmStep3D:"Press ‘Merge & download’ and all PDFs are combined in order and saved as merged.pdf. Everything runs in your browser.",
+      relTitle:"Related tools", navPs:"PDF Split", navPi:"PDF to Image"
     },
     ja:{
       docTitle:"PDF結合 — Grit Tools",
@@ -464,7 +505,8 @@
       pmHelpBtn:"使い方", pmHelpClose:"閉じる", pmGuideTitle:"PDF結合の使い方",
       pmStep1T:"PDFを追加", pmStep1D:"ドロップゾーンをクリックするか、PDFファイルをドラッグして追加します。複数まとめて追加できます。",
       pmStep2T:"順序を並べ替え", pmStep2D:"リストの▲▼ボタンで結合する順序を変え、✕で不要なファイルを削除します。",
-      pmStep3T:"結合してダウンロード", pmStep3D:"「結合してダウンロード」を押すと、すべてのPDFが順に結合されmerged.pdfとして保存されます。処理はすべてブラウザ内で行われます。"
+      pmStep3T:"結合してダウンロード", pmStep3D:"「結合してダウンロード」を押すと、すべてのPDFが順に結合されmerged.pdfとして保存されます。処理はすべてブラウザ内で行われます。",
+      relTitle:"関連ツール", navPs:"PDF分割", navPi:"PDF → 画像"
     },
     zh:{
       docTitle:"PDF 合并 — Grit Tools",
@@ -487,7 +529,128 @@
       pmHelpBtn:"使用方法", pmHelpClose:"关闭", pmGuideTitle:"PDF 合并使用方法",
       pmStep1T:"添加 PDF", pmStep1D:"点击拖放区域或将 PDF 文件拖入。可一次添加多个。",
       pmStep2T:"调整顺序", pmStep2D:"用列表中的 ▲▼ 按钮设置合并顺序，用 ✕ 移除不需要的文件。",
-      pmStep3T:"合并并下载", pmStep3D:"点击“合并并下载”，所有 PDF 将按顺序合并并保存为 merged.pdf。全部处理在浏览器内完成。"
+      pmStep3T:"合并并下载", pmStep3D:"点击“合并并下载”，所有 PDF 将按顺序合并并保存为 merged.pdf。全部处理在浏览器内完成。",
+      relTitle:"相关工具", navPs:"PDF 拆分", navPi:"PDF 转图片"
+    },
+    es:{
+      docTitle:"Unir PDF — Grit Tools",
+      pmTool:"Unir PDF", pmAllTools:"← Todas las herramientas",
+      pmTitle:"Unir PDF",
+      pmSub:"Ordena varios PDF como quieras y combínalos en un solo archivo. Los archivos nunca se suben.",
+      pmAddTitle:"Añadir archivos",
+      pmDropTitle:"Arrastra archivos PDF aquí o haz clic",
+      pmDropSub:"Puedes seleccionar varios a la vez",
+      pmStatFiles:"Archivos", pmStatPages:"Páginas totales",
+      pmMerge:"Unir y descargar", pmMerging:"Uniendo…", pmClear:"Borrar todo",
+      pmPrivacy:"Toda la unión se realiza dentro de este navegador. Tus archivos nunca se envían a ningún servidor.",
+      pmListTitle:"Orden de unión", pmListHint:"▲▼ para reordenar · ✕ para quitar",
+      pmEmpty:"Aún no hay PDF añadidos.<br>Añade archivos a la izquierda.",
+      pmPagesUnit:"páginas", pmReading:"leyendo…", pmBadFile:"no se puede abrir (omitido en la unión)",
+      pmUp:"Subir", pmDown:"Bajar", pmRemove:"Quitar",
+      pmNoPdf:"No es un archivo PDF.", pmClearConfirm:"¿Borrar toda la lista?",
+      pmDone:"Unión completada", pmNoPages:"No hay páginas que unir.",
+      pmMergeFail:"La unión falló.", pmLibFail:"No se pudo cargar la biblioteca PDF. Comprueba tu conexión a Internet.",
+      pmHelpBtn:"Cómo usar", pmHelpClose:"Cerrar", pmGuideTitle:"Cómo usar Unir PDF",
+      pmStep1T:"Añadir PDF", pmStep1D:"Haz clic en la zona de arrastre o arrastra archivos PDF. Puedes añadir varios a la vez.",
+      pmStep2T:"Reordenar", pmStep2D:"Usa los botones ▲▼ para fijar el orden de unión y ✕ para quitar los archivos que no necesites.",
+      pmStep3T:"Unir y descargar", pmStep3D:"Pulsa ‘Unir y descargar’ y todos los PDF se combinarán en orden y se guardarán como merged.pdf. Todo se ejecuta en tu navegador.",
+      relTitle:"Herramientas relacionadas", navPs:"Dividir PDF", navPi:"PDF a imagen"
+    },
+    fr:{
+      docTitle:"Fusionner PDF — Grit Tools",
+      pmTool:"Fusionner PDF", pmAllTools:"← Tous les outils",
+      pmTitle:"Fusionner PDF",
+      pmSub:"Classez plusieurs PDF dans l'ordre souhaité et combinez-les en un seul fichier. Les fichiers ne sont jamais envoyés.",
+      pmAddTitle:"Ajouter des fichiers",
+      pmDropTitle:"Déposez des fichiers PDF ici ou cliquez",
+      pmDropSub:"Vous pouvez en sélectionner plusieurs à la fois",
+      pmStatFiles:"Fichiers", pmStatPages:"Pages totales",
+      pmMerge:"Fusionner et télécharger", pmMerging:"Fusion…", pmClear:"Tout effacer",
+      pmPrivacy:"Toute la fusion se fait dans ce navigateur. Vos fichiers ne sont jamais envoyés à un serveur.",
+      pmListTitle:"Ordre de fusion", pmListHint:"▲▼ pour réordonner · ✕ pour retirer",
+      pmEmpty:"Aucun PDF ajouté pour l'instant.<br>Ajoutez des fichiers à gauche.",
+      pmPagesUnit:"pages", pmReading:"lecture…", pmBadFile:"impossible d'ouvrir (ignoré dans la fusion)",
+      pmUp:"Monter", pmDown:"Descendre", pmRemove:"Retirer",
+      pmNoPdf:"Ce n'est pas un fichier PDF.", pmClearConfirm:"Effacer toute la liste ?",
+      pmDone:"Fusion terminée", pmNoPages:"Aucune page à fusionner.",
+      pmMergeFail:"Échec de la fusion.", pmLibFail:"Impossible de charger la bibliothèque PDF. Vérifiez votre connexion Internet.",
+      pmHelpBtn:"Mode d'emploi", pmHelpClose:"Fermer", pmGuideTitle:"Comment utiliser Fusionner PDF",
+      pmStep1T:"Ajouter des PDF", pmStep1D:"Cliquez sur la zone de dépôt ou faites glisser des fichiers PDF. Vous pouvez en ajouter plusieurs à la fois.",
+      pmStep2T:"Réordonner", pmStep2D:"Utilisez les boutons ▲▼ pour définir l'ordre de fusion et ✕ pour retirer les fichiers inutiles.",
+      pmStep3T:"Fusionner et télécharger", pmStep3D:"Appuyez sur ‘Fusionner et télécharger’ et tous les PDF sont combinés dans l'ordre puis enregistrés sous merged.pdf. Tout s'exécute dans votre navigateur.",
+      relTitle:"Outils associés", navPs:"Diviser un PDF", navPi:"PDF en image"
+    },
+    de:{
+      docTitle:"PDF zusammenfügen — Grit Tools",
+      pmTool:"PDF zusammenfügen", pmAllTools:"← Alle Tools",
+      pmTitle:"PDF zusammenfügen",
+      pmSub:"Ordnen Sie mehrere PDFs in beliebiger Reihenfolge an und kombinieren Sie sie zu einer Datei. Dateien werden nie hochgeladen.",
+      pmAddTitle:"Dateien hinzufügen",
+      pmDropTitle:"PDF-Dateien hierher ziehen oder klicken",
+      pmDropSub:"Sie können mehrere auf einmal auswählen",
+      pmStatFiles:"Dateien", pmStatPages:"Seiten gesamt",
+      pmMerge:"Zusammenfügen & herunterladen", pmMerging:"Wird zusammengefügt…", pmClear:"Alles löschen",
+      pmPrivacy:"Das Zusammenfügen erfolgt vollständig in diesem Browser. Ihre Dateien werden nie an einen Server gesendet.",
+      pmListTitle:"Reihenfolge", pmListHint:"▲▼ zum Umsortieren · ✕ zum Entfernen",
+      pmEmpty:"Noch keine PDFs hinzugefügt.<br>Fügen Sie links Dateien hinzu.",
+      pmPagesUnit:"Seiten", pmReading:"wird gelesen…", pmBadFile:"kann nicht geöffnet werden (übersprungen)",
+      pmUp:"Nach oben", pmDown:"Nach unten", pmRemove:"Entfernen",
+      pmNoPdf:"Keine PDF-Datei.", pmClearConfirm:"Die gesamte Liste löschen?",
+      pmDone:"Zusammenfügen abgeschlossen", pmNoPages:"Keine Seiten zum Zusammenfügen.",
+      pmMergeFail:"Zusammenfügen fehlgeschlagen.", pmLibFail:"Die PDF-Bibliothek konnte nicht geladen werden. Prüfen Sie Ihre Internetverbindung.",
+      pmHelpBtn:"Anleitung", pmHelpClose:"Schließen", pmGuideTitle:"So nutzen Sie PDF zusammenfügen",
+      pmStep1T:"PDFs hinzufügen", pmStep1D:"Klicken Sie auf die Ablagezone oder ziehen Sie PDF-Dateien hinein. Sie können mehrere auf einmal hinzufügen.",
+      pmStep2T:"Umsortieren", pmStep2D:"Mit den Tasten ▲▼ legen Sie die Reihenfolge fest und mit ✕ entfernen Sie nicht benötigte Dateien.",
+      pmStep3T:"Zusammenfügen & herunterladen", pmStep3D:"Klicken Sie auf ‘Zusammenfügen & herunterladen’ und alle PDFs werden der Reihe nach kombiniert und als merged.pdf gespeichert. Alles läuft in Ihrem Browser.",
+      relTitle:"Verwandte Tools", navPs:"PDF teilen", navPi:"PDF zu Bild"
+    },
+    pt:{
+      docTitle:"Juntar PDF — Grit Tools",
+      pmTool:"Juntar PDF", pmAllTools:"← Todas as ferramentas",
+      pmTitle:"Juntar PDF",
+      pmSub:"Organize vários PDF na ordem que quiser e combine-os num único ficheiro. Os ficheiros nunca são enviados.",
+      pmAddTitle:"Adicionar ficheiros",
+      pmDropTitle:"Arraste ficheiros PDF para aqui ou clique",
+      pmDropSub:"Pode selecionar vários de uma vez",
+      pmStatFiles:"Ficheiros", pmStatPages:"Total de páginas",
+      pmMerge:"Juntar e transferir", pmMerging:"A juntar…", pmClear:"Limpar tudo",
+      pmPrivacy:"Toda a junção é feita dentro deste navegador. Os seus ficheiros nunca são enviados para nenhum servidor.",
+      pmListTitle:"Ordem de junção", pmListHint:"▲▼ para reordenar · ✕ para remover",
+      pmEmpty:"Ainda não há PDF adicionados.<br>Adicione ficheiros à esquerda.",
+      pmPagesUnit:"páginas", pmReading:"a ler…", pmBadFile:"não foi possível abrir (excluído da junção)",
+      pmUp:"Subir", pmDown:"Descer", pmRemove:"Remover",
+      pmNoPdf:"Não é um ficheiro PDF.", pmClearConfirm:"Limpar toda a lista?",
+      pmDone:"Junção concluída", pmNoPages:"Não há páginas para juntar.",
+      pmMergeFail:"A junção falhou.", pmLibFail:"Não foi possível carregar a biblioteca PDF. Verifique a sua ligação à Internet.",
+      pmHelpBtn:"Como usar", pmHelpClose:"Fechar", pmGuideTitle:"Como usar Juntar PDF",
+      pmStep1T:"Adicionar PDF", pmStep1D:"Clique na zona de arrastar ou arraste ficheiros PDF. Pode adicionar vários de uma vez.",
+      pmStep2T:"Reordenar", pmStep2D:"Use os botões ▲▼ para definir a ordem de junção e ✕ para remover os ficheiros que não precisa.",
+      pmStep3T:"Juntar e transferir", pmStep3D:"Carregue em ‘Juntar e transferir’ e todos os PDF são combinados por ordem e guardados como merged.pdf. Tudo é executado no seu navegador.",
+      relTitle:"Ferramentas relacionadas", navPs:"Dividir PDF", navPi:"PDF para imagem"
+    },
+    ru:{
+      docTitle:"Объединение PDF — Grit Tools",
+      pmTool:"Объединение PDF", pmAllTools:"← Все инструменты",
+      pmTitle:"Объединение PDF",
+      pmSub:"Расположите несколько PDF в нужном порядке и объедините их в один файл. Файлы никогда не загружаются на сервер.",
+      pmAddTitle:"Добавить файлы",
+      pmDropTitle:"Перетащите PDF-файлы сюда или нажмите",
+      pmDropSub:"Можно выбрать сразу несколько",
+      pmStatFiles:"Файлов", pmStatPages:"Всего страниц",
+      pmMerge:"Объединить и скачать", pmMerging:"Объединение…", pmClear:"Очистить всё",
+      pmPrivacy:"Всё объединение происходит внутри этого браузера. Ваши файлы никогда не отправляются на сервер.",
+      pmListTitle:"Порядок объединения", pmListHint:"▲▼ — изменить порядок · ✕ — удалить",
+      pmEmpty:"PDF ещё не добавлены.<br>Добавьте файлы слева.",
+      pmPagesUnit:"стр.", pmReading:"чтение…", pmBadFile:"не удаётся открыть (пропущено при объединении)",
+      pmUp:"Вверх", pmDown:"Вниз", pmRemove:"Удалить",
+      pmNoPdf:"Это не PDF-файл.", pmClearConfirm:"Очистить весь список?",
+      pmDone:"Объединение завершено", pmNoPages:"Нет страниц для объединения.",
+      pmMergeFail:"Не удалось объединить.", pmLibFail:"Не удалось загрузить библиотеку PDF. Проверьте подключение к Интернету.",
+      pmHelpBtn:"Как пользоваться", pmHelpClose:"Закрыть", pmGuideTitle:"Как пользоваться объединением PDF",
+      pmStep1T:"Добавить PDF", pmStep1D:"Нажмите на зону загрузки или перетащите PDF-файлы. Можно добавить сразу несколько.",
+      pmStep2T:"Изменить порядок", pmStep2D:"Кнопками ▲▼ задайте порядок объединения, а ✕ удалите ненужные файлы.",
+      pmStep3T:"Объединить и скачать", pmStep3D:"Нажмите ‘Объединить и скачать’ — все PDF объединятся по порядку и сохранятся как merged.pdf. Всё выполняется в вашем браузере.",
+      relTitle:"Похожие инструменты", navPs:"Разделить PDF", navPi:"PDF в изображение"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: render });

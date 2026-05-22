@@ -3,7 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pixel Coords — Grit Tools</title>
+<title>이미지 좌표 추출기 — Grit Tools</title>
+<meta name="description" content="이미지를 끌어다 놓고 클릭해 픽셀 좌표(x, y)를 추출하는 도구. 방향키로 1px 미세 조정하고, 좌표·#define·함수 코드 포맷으로 복사. HMI·임베디드 UI 좌표 작업에 유용하며 이미지는 서버로 전송되지 않습니다.">
+<meta name="keywords" content="픽셀 좌표, 이미지 좌표, 좌표 추출, x y 좌표, pixel coordinates, image coordinate, HMI, 임베디드 UI, #define, 좌표 복사, 좌표 추출기">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/image/pixel-coords.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="이미지 좌표 추출기 — Grit Tools">
+<meta property="og:description" content="이미지를 클릭해 픽셀 좌표를 추출하고 방향키로 미세 조정. 좌표·#define·함수 포맷으로 복사. HMI·임베디드 UI 좌표 작업에 유용.">
+<meta property="og:url" content="https://grit-tools.com/tools/image/pixel-coords.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="이미지 좌표 추출기 — Grit Tools">
+<meta name="twitter:description" content="이미지를 클릭해 픽셀 좌표를 추출하고 방향키로 미세 조정. 좌표·#define·함수 포맷으로 복사. HMI·임베디드 UI 좌표 작업에 유용.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -106,9 +132,39 @@
   #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:8px 16px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:60; max-width:70%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; box-shadow:var(--shadow-card); }
   #toast.show { opacity:1; }
   kbd { background:var(--surface-2); border:1px solid var(--border-lit); border-radius:4px; padding:0 5px; font-size:11px; color:var(--text-dim); font-family:var(--font-mono); }
-</style></head>
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "이미지 좌표 추출기 — Grit Tools",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web browser",
+  "description": "이미지를 클릭해 픽셀 좌표(x, y)를 추출하고 방향키로 1px 미세 조정하는 도구. 좌표·#define·함수 코드 포맷으로 복사할 수 있어 HMI·임베디드 UI 좌표 작업에 유용합니다. 이미지는 서버로 전송되지 않습니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"이미지","item":"https://grit-tools.com/#image"},
+ {"@type":"ListItem","position":3,"name":"이미지 좌표 추출기","item":"https://grit-tools.com/tools/image/pixel-coords.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"Pixel Coords 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"이미지 열기","text":"‘이미지 열기’ 버튼으로 고르거나 파일을 끌어다 놓으세요. 폴더 안에서 Ctrl+A로 여러 장을 한 번에 불러올 수 있어요."},
+  {"@type":"HowToStep","name":"클릭해서 좌표 찍기","text":"이미지 위를 클릭하면 그 지점이 잡힙니다. 따라다니는 돋보기가 픽셀 단위로 확대해 정확한 위치를 보여줘요."},
+  {"@type":"HowToStep","name":"방향키로 미세 조정","text":"←↑↓→로 1px씩 옮기고 Enter로 확정. 확정한 좌표는 목록에 쌓입니다."},
+  {"@type":"HowToStep","name":"코드로 복사","text":"좌표 행을 클릭하면 설정한 포맷(좌표·#define·함수)대로 클립보드에 자동 복사됩니다. 포맷은 왼쪽 ‘복사 포맷 설정’에서 바꿔요."}
+]}
+</script>
+</head>
 <body>
 <div id="app">
+  <h1 data-i18n="pcTool" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">이미지 좌표 추출기</h1>
   <div id="sidebar">
     <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="pcTool">이미지 좌표 추출기</span><button type="button" id="helpBtn" class="g-help" data-i18n="pcHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" style="margin-left:14px;" data-i18n="pcAllTools">← 모든 도구</a></div>
 
@@ -168,7 +224,7 @@
 <div id="helpModal" class="help-modal">
   <div class="help-box" role="dialog" aria-modal="true">
     <button type="button" class="help-close" id="helpClose" data-i18n-title="pcHelpClose" title="닫기">×</button>
-    <h2 class="help-title" data-i18n="pcGuideTitle">Pixel Coords 사용법</h2>
+    <h2 class="help-title" data-i18n="pcGuideTitle">이미지 좌표 추출기 사용법</h2>
     <ol class="help-steps">
       <li>
         <div class="hs-head"><span class="hs-num">1</span><span class="hs-t" data-i18n="pcStep1T">이미지 열기</span></div>
@@ -187,6 +243,11 @@
         <p class="hs-d" data-i18n-html="pcStep4D">좌표 행을 클릭하면 설정한 포맷(좌표·#define·함수)대로 클립보드에 자동 복사됩니다. 포맷은 왼쪽 ‘복사 포맷 설정’에서 바꿔요.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="color-picker.html" data-i18n="navCp" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 색상 추출</a>
+      <a href="image-resize.html" data-i18n="navResize" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 크기·용량 줄이기</a>
+    </nav>
   </div>
 </div>
 
@@ -491,7 +552,8 @@
       pcStep3T:"방향키로 미세 조정",
       pcStep3D:"<kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd>로 1px씩 옮기고 <kbd>Enter</kbd>로 확정. 확정한 좌표는 목록에 쌓입니다.",
       pcStep4T:"코드로 복사",
-      pcStep4D:"좌표 행을 클릭하면 설정한 포맷(좌표·#define·함수)대로 클립보드에 자동 복사됩니다. 포맷은 왼쪽 ‘복사 포맷 설정’에서 바꿔요."
+      pcStep4D:"좌표 행을 클릭하면 설정한 포맷(좌표·#define·함수)대로 클립보드에 자동 복사됩니다. 포맷은 왼쪽 ‘복사 포맷 설정’에서 바꿔요.",
+      relTitle:"관련 도구", navCp:"이미지 색상 추출", navResize:"이미지 크기·용량 줄이기"
     },
     en:{
       docTitle:"Image Coordinate Tool — Grit Tools",
@@ -520,7 +582,8 @@
       pcStep3T:"Nudge with arrow keys",
       pcStep3D:"Move 1px at a time with <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd>, then <kbd>Enter</kbd> to commit. Committed points stack up in the list.",
       pcStep4T:"Copy as code",
-      pcStep4D:"Click a coordinate row to auto-copy it in your chosen format (coords · #define · function). Change the format under ‘Copy format settings’ on the left."
+      pcStep4D:"Click a coordinate row to auto-copy it in your chosen format (coords · #define · function). Change the format under ‘Copy format settings’ on the left.",
+      relTitle:"Related tools", navCp:"Color Picker", navResize:"Image Resize & Compress"
     },
     ja:{
       docTitle:"画像座標ツール — Grit Tools",
@@ -549,7 +612,8 @@
       pcStep3T:"矢印キーで微調整",
       pcStep3D:"<kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> で1pxずつ動かし、<kbd>Enter</kbd> で確定。確定した座標はリストに溜まります。",
       pcStep4T:"コードでコピー",
-      pcStep4D:"座標の行をクリックすると、設定した形式（座標・#define・関数）でクリップボードへ自動コピー。形式は左の「コピー形式の設定」で変更できます。"
+      pcStep4D:"座標の行をクリックすると、設定した形式（座標・#define・関数）でクリップボードへ自動コピー。形式は左の「コピー形式の設定」で変更できます。",
+      relTitle:"関連ツール", navCp:"色抽出（スポイト）", navResize:"画像リサイズ・圧縮"
     },
     zh:{
       docTitle:"图像坐标工具 — Grit Tools",
@@ -578,7 +642,158 @@
       pcStep3T:"用方向键微调",
       pcStep3D:"用 <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> 每次移动1px，按 <kbd>Enter</kbd> 确定。确定的坐标会累加到列表。",
       pcStep4T:"复制为代码",
-      pcStep4D:"点击坐标行，即按你设定的格式（坐标·#define·函数）自动复制到剪贴板。格式可在左侧“复制格式设置”里修改。"
+      pcStep4D:"点击坐标行，即按你设定的格式（坐标·#define·函数）自动复制到剪贴板。格式可在左侧“复制格式设置”里修改。",
+      relTitle:"相关工具", navCp:"颜色提取（吸管）", navResize:"图片缩放·压缩"
+    },
+    es:{
+      docTitle:"Extractor de coordenadas de imagen — Grit Tools",
+      pcTool:"Extractor de coordenadas",
+      pcAllTools:"← Todas las herramientas",
+      pcSecImage:"Imágenes", pcOpenImage:"Abrir imágenes",
+      pcOpenImageTitle:"En el selector de archivos usa Ctrl+A o Ctrl/Mayús+clic para elegir varias",
+      pcEmpty:"Usa ‘Abrir imágenes’<br>(o Ctrl+A dentro de una carpeta)<br>o arrastra y suelta archivos de imagen aquí",
+      pcSecCoords:"Coordenadas", pcSecCoordsHint:"(haz clic en una fila para copiar)", pcClear:"Vaciar",
+      pcColCoord:"Coord.", pcColFile:"Archivo",
+      pcFmtSummary:"Ajustes de formato de copia ⚙",
+      presetCoord:"Coords", presetDefine:"#define", presetFunc:"Función",
+      pcPlaceholders:"Tokens: <code>{x}</code> <code>{y}</code> <code>{n}</code>=índice <code>{file}</code>=nombre de archivo · admite plantillas multilínea / de función",
+      pcPreviewLabel:"Vista previa (x=123, y=45):",
+      pcFit:"Ajustar", pcOne:"1:1",
+      pcHint:"| clic→<kbd>←↑↓→</kbd> ajustar 1px→<kbd>Enter</kbd> confirmar · <kbd>Space</kbd>+arrastrar para desplazar",
+      pcNoImageFiles:"No hay archivos de imagen", pcNoImages:"No hay imágenes",
+      pcAdjusting:"(ajustando · Enter para confirmar)", pcCopied:"Copiado", pcCopyFail:"Error al copiar",
+      pcDelete:"Eliminar", pcClearConfirm:"¿Vaciar toda la lista de coordenadas?",
+      pcHelpBtn:"Cómo usar", pcHelpClose:"Cerrar",
+      pcGuideTitle:"Cómo usar Pixel Coords",
+      pcStep1T:"Abre imágenes",
+      pcStep1D:"Elige archivos con ‘Abrir imágenes’ o arrástralos y suéltalos. Dentro de una carpeta, <kbd>Ctrl</kbd>+<kbd>A</kbd> carga muchas a la vez.",
+      pcStep2T:"Haz clic para marcar un punto",
+      pcStep2D:"Haz clic en la imagen para capturar ese punto. Una lupa sigue al cursor y amplía píxel a píxel para mayor precisión.",
+      pcStep3T:"Ajusta con las flechas",
+      pcStep3D:"Mueve 1px a la vez con <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> y luego <kbd>Enter</kbd> para confirmar. Los puntos confirmados se acumulan en la lista.",
+      pcStep4T:"Copia como código",
+      pcStep4D:"Haz clic en una fila de coordenadas para copiarla automáticamente en el formato elegido (coords · #define · función). Cambia el formato en ‘Ajustes de formato de copia’ a la izquierda.",
+      relTitle:"Herramientas relacionadas", navCp:"Selector de color", navResize:"Redimensionar imagen"
+    },
+    fr:{
+      docTitle:"Extracteur de coordonnées d'image — Grit Tools",
+      pcTool:"Extracteur de coordonnées",
+      pcAllTools:"← Tous les outils",
+      pcSecImage:"Images", pcOpenImage:"Ouvrir des images",
+      pcOpenImageTitle:"Dans le sélecteur de fichiers, utilisez Ctrl+A ou Ctrl/Maj+clic pour en choisir plusieurs",
+      pcEmpty:"Utilisez ‘Ouvrir des images’<br>(ou Ctrl+A dans un dossier)<br>ou glissez-déposez des fichiers image ici",
+      pcSecCoords:"Coordonnées", pcSecCoordsHint:"(cliquez sur une ligne pour copier)", pcClear:"Vider",
+      pcColCoord:"Coord.", pcColFile:"Fichier",
+      pcFmtSummary:"Réglages du format de copie ⚙",
+      presetCoord:"Coords", presetDefine:"#define", presetFunc:"Fonction",
+      pcPlaceholders:"Jetons : <code>{x}</code> <code>{y}</code> <code>{n}</code>=index <code>{file}</code>=nom du fichier · modèles multilignes / de fonction pris en charge",
+      pcPreviewLabel:"Aperçu (x=123, y=45):",
+      pcFit:"Ajuster", pcOne:"1:1",
+      pcHint:"| clic→<kbd>←↑↓→</kbd> ajuster d'1px→<kbd>Enter</kbd> valider · <kbd>Space</kbd>+glisser pour déplacer",
+      pcNoImageFiles:"Aucun fichier image", pcNoImages:"Aucune image",
+      pcAdjusting:"(ajustement · Entrée pour valider)", pcCopied:"Copié", pcCopyFail:"Échec de la copie",
+      pcDelete:"Supprimer", pcClearConfirm:"Vider toute la liste des coordonnées ?",
+      pcHelpBtn:"Mode d'emploi", pcHelpClose:"Fermer",
+      pcGuideTitle:"Comment utiliser Pixel Coords",
+      pcStep1T:"Ouvrez des images",
+      pcStep1D:"Choisissez des fichiers avec ‘Ouvrir des images’ ou glissez-déposez-les. Dans un dossier, <kbd>Ctrl</kbd>+<kbd>A</kbd> en charge plusieurs d'un coup.",
+      pcStep2T:"Cliquez pour poser un point",
+      pcStep2D:"Cliquez sur l'image pour capturer ce point. Une loupe suit le curseur et agrandit pixel par pixel pour plus de précision.",
+      pcStep3T:"Ajustez avec les flèches",
+      pcStep3D:"Déplacez d'1px avec <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd>, puis <kbd>Enter</kbd> pour valider. Les points validés s'accumulent dans la liste.",
+      pcStep4T:"Copier en code",
+      pcStep4D:"Cliquez sur une ligne de coordonnées pour la copier automatiquement au format choisi (coords · #define · fonction). Changez le format dans ‘Réglages du format de copie’ à gauche.",
+      relTitle:"Outils associés", navCp:"Sélecteur de couleur", navResize:"Redimensionner l'image"
+    },
+    de:{
+      docTitle:"Bild-Koordinaten-Tool — Grit Tools",
+      pcTool:"Bild-Koordinaten-Tool",
+      pcAllTools:"← Alle Werkzeuge",
+      pcSecImage:"Bilder", pcOpenImage:"Bilder öffnen",
+      pcOpenImageTitle:"Im Dateidialog mit Strg+A oder Strg/Umschalt+Klick mehrere auswählen",
+      pcEmpty:"Nutze ‘Bilder öffnen’<br>(oder Strg+A in einem Ordner)<br>oder ziehe Bilddateien hierher",
+      pcSecCoords:"Koordinaten", pcSecCoordsHint:"(Zeile anklicken zum Kopieren)", pcClear:"Leeren",
+      pcColCoord:"Koord.", pcColFile:"Datei",
+      pcFmtSummary:"Kopierformat-Einstellungen ⚙",
+      presetCoord:"Koords", presetDefine:"#define", presetFunc:"Funktion",
+      pcPlaceholders:"Platzhalter: <code>{x}</code> <code>{y}</code> <code>{n}</code>=Index <code>{file}</code>=Dateiname · mehrzeilige / Funktions-Vorlagen möglich",
+      pcPreviewLabel:"Vorschau (x=123, y=45):",
+      pcFit:"Anpassen", pcOne:"1:1",
+      pcHint:"| Klick→<kbd>←↑↓→</kbd> um 1px verschieben→<kbd>Enter</kbd> bestätigen · <kbd>Space</kbd>+Ziehen zum Verschieben",
+      pcNoImageFiles:"Keine Bilddateien", pcNoImages:"Keine Bilder",
+      pcAdjusting:"(wird angepasst · Enter zum Bestätigen)", pcCopied:"Kopiert", pcCopyFail:"Kopieren fehlgeschlagen",
+      pcDelete:"Löschen", pcClearConfirm:"Die gesamte Koordinatenliste leeren?",
+      pcHelpBtn:"Anleitung", pcHelpClose:"Schließen",
+      pcGuideTitle:"So nutzt du Pixel Coords",
+      pcStep1T:"Bilder öffnen",
+      pcStep1D:"Wähle Dateien mit ‘Bilder öffnen’ oder ziehe sie per Drag & Drop hinein. In einem Ordner lädt <kbd>Ctrl</kbd>+<kbd>A</kbd> viele auf einmal.",
+      pcStep2T:"Zum Setzen eines Punkts klicken",
+      pcStep2D:"Klicke auf das Bild, um diesen Punkt zu erfassen. Eine Lupe folgt dem Cursor und zoomt Pixel für Pixel für mehr Genauigkeit.",
+      pcStep3T:"Mit den Pfeiltasten feinjustieren",
+      pcStep3D:"Verschiebe mit <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> jeweils 1px, dann <kbd>Enter</kbd> zum Bestätigen. Bestätigte Punkte sammeln sich in der Liste.",
+      pcStep4T:"Als Code kopieren",
+      pcStep4D:"Klicke auf eine Koordinatenzeile, um sie automatisch im gewählten Format (Koords · #define · Funktion) zu kopieren. Das Format änderst du links unter ‘Kopierformat-Einstellungen’.",
+      relTitle:"Verwandte Tools", navCp:"Farbwähler", navResize:"Bild verkleinern"
+    },
+    pt:{
+      docTitle:"Extrator de coordenadas de imagem — Grit Tools",
+      pcTool:"Extrator de coordenadas",
+      pcAllTools:"← Todas as ferramentas",
+      pcSecImage:"Imagens", pcOpenImage:"Abrir imagens",
+      pcOpenImageTitle:"No seletor de arquivos use Ctrl+A ou Ctrl/Shift+clique para selecionar várias",
+      pcEmpty:"Use ‘Abrir imagens’<br>(ou Ctrl+A dentro de uma pasta)<br>ou arraste e solte arquivos de imagem aqui",
+      pcSecCoords:"Coordenadas", pcSecCoordsHint:"(clique numa linha para copiar)", pcClear:"Limpar",
+      pcColCoord:"Coord.", pcColFile:"Arquivo",
+      pcFmtSummary:"Configurações de formato de cópia ⚙",
+      presetCoord:"Coords", presetDefine:"#define", presetFunc:"Função",
+      pcPlaceholders:"Tokens: <code>{x}</code> <code>{y}</code> <code>{n}</code>=índice <code>{file}</code>=nome do arquivo · suporta modelos multilinha / de função",
+      pcPreviewLabel:"Pré-visualização (x=123, y=45):",
+      pcFit:"Ajustar", pcOne:"1:1",
+      pcHint:"| clique→<kbd>←↑↓→</kbd> ajustar 1px→<kbd>Enter</kbd> confirmar · <kbd>Space</kbd>+arrastar para deslocar",
+      pcNoImageFiles:"Nenhum arquivo de imagem", pcNoImages:"Nenhuma imagem",
+      pcAdjusting:"(ajustando · Enter para confirmar)", pcCopied:"Copiado", pcCopyFail:"Falha ao copiar",
+      pcDelete:"Excluir", pcClearConfirm:"Limpar toda a lista de coordenadas?",
+      pcHelpBtn:"Como usar", pcHelpClose:"Fechar",
+      pcGuideTitle:"Como usar o Pixel Coords",
+      pcStep1T:"Abra imagens",
+      pcStep1D:"Escolha arquivos com ‘Abrir imagens’ ou arraste e solte. Dentro de uma pasta, <kbd>Ctrl</kbd>+<kbd>A</kbd> carrega várias de uma vez.",
+      pcStep2T:"Clique para marcar um ponto",
+      pcStep2D:"Clique na imagem para capturar aquele ponto. Uma lupa acompanha o cursor e amplia pixel a pixel para mais precisão.",
+      pcStep3T:"Ajuste com as setas",
+      pcStep3D:"Mova 1px por vez com <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd> e depois <kbd>Enter</kbd> para confirmar. Os pontos confirmados se acumulam na lista.",
+      pcStep4T:"Copiar como código",
+      pcStep4D:"Clique numa linha de coordenadas para copiá-la automaticamente no formato escolhido (coords · #define · função). Mude o formato em ‘Configurações de formato de cópia’ à esquerda.",
+      relTitle:"Ferramentas relacionadas", navCp:"Seletor de cor", navResize:"Redimensionar imagem"
+    },
+    ru:{
+      docTitle:"Извлечение координат изображения — Grit Tools",
+      pcTool:"Извлечение координат",
+      pcAllTools:"← Все инструменты",
+      pcSecImage:"Изображения", pcOpenImage:"Открыть изображения",
+      pcOpenImageTitle:"В окне выбора файлов используйте Ctrl+A или Ctrl/Shift+клик для выбора нескольких",
+      pcEmpty:"Нажмите ‘Открыть изображения’<br>(или Ctrl+A внутри папки)<br>либо перетащите файлы изображений сюда",
+      pcSecCoords:"Координаты", pcSecCoordsHint:"(нажмите на строку, чтобы скопировать)", pcClear:"Очистить",
+      pcColCoord:"Коорд.", pcColFile:"Файл",
+      pcFmtSummary:"Настройки формата копирования ⚙",
+      presetCoord:"Коорд.", presetDefine:"#define", presetFunc:"Функция",
+      pcPlaceholders:"Подстановки: <code>{x}</code> <code>{y}</code> <code>{n}</code>=номер <code>{file}</code>=имя файла · поддерживаются многострочные / функциональные шаблоны",
+      pcPreviewLabel:"Предпросмотр (x=123, y=45):",
+      pcFit:"Вписать", pcOne:"1:1",
+      pcHint:"| клик→<kbd>←↑↓→</kbd> сдвиг на 1px→<kbd>Enter</kbd> подтвердить · <kbd>Space</kbd>+перетаскивание для прокрутки",
+      pcNoImageFiles:"Нет файлов изображений", pcNoImages:"Нет изображений",
+      pcAdjusting:"(идёт настройка · Enter для подтверждения)", pcCopied:"Скопировано", pcCopyFail:"Не удалось скопировать",
+      pcDelete:"Удалить", pcClearConfirm:"Очистить весь список координат?",
+      pcHelpBtn:"Как пользоваться", pcHelpClose:"Закрыть",
+      pcGuideTitle:"Как пользоваться Pixel Coords",
+      pcStep1T:"Откройте изображения",
+      pcStep1D:"Выберите файлы через ‘Открыть изображения’ или перетащите их. Внутри папки <kbd>Ctrl</kbd>+<kbd>A</kbd> загружает сразу несколько.",
+      pcStep2T:"Нажмите, чтобы поставить точку",
+      pcStep2D:"Нажмите на изображение, чтобы захватить эту точку. За курсором следует лупа, увеличивая попиксельно для точности.",
+      pcStep3T:"Подстройка стрелками",
+      pcStep3D:"Сдвигайте на 1px стрелками <kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd>, затем <kbd>Enter</kbd> для подтверждения. Подтверждённые точки накапливаются в списке.",
+      pcStep4T:"Копировать как код",
+      pcStep4D:"Нажмите на строку координат, чтобы автоматически скопировать её в выбранном формате (coords · #define · функция). Формат меняется слева в ‘Настройках формата копирования’.",
+      relTitle:"Похожие инструменты", navCp:"Выбор цвета", navResize:"Изменить размер изображения"
     }
   });
   function onLang(){ renderCoords(); if(pend) refreshPend(); }

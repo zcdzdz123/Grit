@@ -7,11 +7,29 @@
 <meta name="description" content="유로화·달러·원·엔 등 실시간 환율을 무료로 변환하는 환율 계산기. ECB(유럽중앙은행) 기준 환율을 frankfurter.app에서 가져오며, 통화 코드만 전송하고 다른 정보는 보내지 않습니다.">
 <meta name="keywords" content="환율 계산기, 환율 변환, 실시간 환율, currency converter, exchange rate">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/calc/currency.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="환율 계산기 — Grit Tools">
 <meta property="og:description" content="ECB 기준 실시간 환율로 통화를 즉시 변환. 무료·무가입·브라우저에서 처리.">
+<meta property="og:url" content="https://grit-tools.com/tools/calc/currency.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="환율 계산기 — Grit Tools">
+<meta name="twitter:description" content="ECB 기준 실시간 환율로 통화를 즉시 변환. 무료·무가입·브라우저에서 처리.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -129,8 +147,24 @@
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web browser",
   "description": "ECB(유럽중앙은행) 기준 실시간 환율로 통화를 즉시 변환하는 무료 환율 계산기. frankfurter.app에서 환율을 가져오며 통화 코드만 전송합니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"계산기","item":"https://grit-tools.com/#calc"},
+ {"@type":"ListItem","position":3,"name":"환율 계산기","item":"https://grit-tools.com/tools/calc/currency.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"환율 계산기 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"금액·통화 선택","text":"변환할 금액을 입력하고 기준 통화와 대상 통화를 선택하세요. ⇄ 버튼으로 두 통화를 바꿀 수 있습니다."},
+  {"@type":"HowToStep","name":"즉시 변환","text":"입력하는 즉시 실시간 환율로 변환 결과와 단위 환율, 기준 일자가 표시됩니다. 오른쪽 표에는 주요 통화 환산값이 함께 나옵니다."},
+  {"@type":"HowToStep","name":"오프라인 대비","text":"네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 금액 × 환율로 계산합니다."}
+ ]}
 </script>
 </head>
 <body>
@@ -217,6 +251,13 @@
         <p class="hs-d" data-i18n-html="fxStep3D">네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 <code>금액 × 환율</code>로 계산합니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="compound-interest.html" data-i18n="navCompound" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="simple-interest.html" data-i18n="navSimple" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="salary-net.html" data-i18n="navSalary" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="d-day.html" data-i18n="navDday" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+    </nav>
   </div>
 </div>
 
@@ -419,7 +460,8 @@
       fxHelpBtn:"사용법", fxHelpClose:"닫기", fxGuideTitle:"환율 계산기 사용법",
       fxStep1T:"금액·통화 선택", fxStep1D:"변환할 금액을 입력하고 기준 통화와 대상 통화를 선택하세요. ⇄ 버튼으로 두 통화를 바꿀 수 있습니다.",
       fxStep2T:"즉시 변환", fxStep2D:"입력하는 즉시 실시간 환율로 변환 결과와 단위 환율, 기준 일자가 표시됩니다. 오른쪽 표에는 주요 통화 환산값이 함께 나옵니다.",
-      fxStep3T:"오프라인 대비", fxStep3D:"네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 <code>금액 × 환율</code>로 계산합니다."
+      fxStep3T:"오프라인 대비", fxStep3D:"네트워크 오류로 환율을 가져오지 못하면 ‘수동 환율 입력’ 칸이 나타납니다. 직접 환율을 넣으면 <code>금액 × 환율</code>로 계산합니다.",
+      relTitle:"관련 도구", navCompound:"복리 계산기", navSimple:"단리 계산기", navSalary:"연봉 실수령액 계산기", navDday:"디데이·날짜 계산기"
     },
     en:{
       docTitle:"Currency Converter — Grit Tools",
@@ -438,7 +480,8 @@
       fxHelpBtn:"How to use", fxHelpClose:"Close", fxGuideTitle:"How to use the currency converter",
       fxStep1T:"Pick amount & currencies", fxStep1D:"Enter the amount and choose the from- and to-currency. Use the ⇄ button to swap the two.",
       fxStep2T:"Instant conversion", fxStep2D:"As you type, the converted amount, unit rate and reference date update from live rates. The right-hand table shows major currencies too.",
-      fxStep3T:"Offline fallback", fxStep3D:"If rates can't be fetched due to a network error, a ‘manual rate’ field appears. Enter a rate and it computes <code>amount × rate</code>."
+      fxStep3T:"Offline fallback", fxStep3D:"If rates can't be fetched due to a network error, a ‘manual rate’ field appears. Enter a rate and it computes <code>amount × rate</code>.",
+      relTitle:"Related tools", navCompound:"Compound Interest", navSimple:"Simple Interest", navSalary:"Net Salary (KR)", navDday:"D-Day Calculator"
     },
     ja:{
       docTitle:"為替計算機 — Grit Tools",
@@ -457,7 +500,8 @@
       fxHelpBtn:"使い方", fxHelpClose:"閉じる", fxGuideTitle:"為替計算機の使い方",
       fxStep1T:"金額・通貨を選択", fxStep1D:"換算する金額を入力し、基準通貨と対象通貨を選びます。⇄ ボタンで2つの通貨を入れ替えられます。",
       fxStep2T:"即時換算", fxStep2D:"入力するたびに、リアルタイムレートで換算結果・単位レート・基準日が更新されます。右の表には主要通貨の換算値も表示されます。",
-      fxStep3T:"オフライン対応", fxStep3D:"ネットワークエラーでレートを取得できない場合は「手動レート入力」欄が表示されます。レートを入力すると <code>金額 × レート</code> で計算します。"
+      fxStep3T:"オフライン対応", fxStep3D:"ネットワークエラーでレートを取得できない場合は「手動レート入力」欄が表示されます。レートを入力すると <code>金額 × レート</code> で計算します。",
+      relTitle:"関連ツール", navCompound:"複利計算機", navSimple:"単利計算機", navSalary:"手取り計算（韓国）", navDday:"D-Day計算機"
     },
     zh:{
       docTitle:"汇率计算器 — Grit Tools",
@@ -476,7 +520,108 @@
       fxHelpBtn:"使用方法", fxHelpClose:"关闭", fxGuideTitle:"汇率计算器使用方法",
       fxStep1T:"选择金额与币种", fxStep1D:"输入要换算的金额，并选择原币种和目标币种。用 ⇄ 按钮可互换两种币种。",
       fxStep2T:"即时换算", fxStep2D:"输入时即按实时汇率更新换算结果、单位汇率和基准日期。右侧表格还会显示主要币种的换算值。",
-      fxStep3T:"离线备用", fxStep3D:"若因网络错误无法获取汇率，会出现“手动汇率输入”框。输入汇率后将按 <code>金额 × 汇率</code> 计算。"
+      fxStep3T:"离线备用", fxStep3D:"若因网络错误无法获取汇率，会出现“手动汇率输入”框。输入汇率后将按 <code>金额 × 汇率</code> 计算。",
+      relTitle:"相关工具", navCompound:"复利计算器", navSimple:"单利计算器", navSalary:"实发工资（韩）", navDday:"D-Day 计算器"
+    },
+    es:{
+      docTitle:"Conversor de divisas — Grit Tools",
+      fxTool:"Conversor de divisas", fxAllTools:"← Todas las herramientas",
+      fxTitle:"Conversor de divisas",
+      fxSub:"Elige un importe y las divisas para convertir al instante con tipos de cambio en vivo.",
+      fxInputTitle:"Convertir", fxAmount:"Importe",
+      fxFrom:"De", fxTo:"A", fxSwap:"Intercambiar divisas",
+      fxResult:"Convertido", fxBasis:"Referencia del BCE",
+      fxTableTitle:"Referencia rápida", fxColCcy:"Divisa", fxColAmount:"Convertido",
+      fxLoading:"Cargando tipos de cambio…",
+      fxErr:"No se pudieron cargar los tipos de cambio. Comprueba tu conexión o introduce un tipo manualmente abajo.",
+      fxManualLabel:"Tipo manual (1 divisa de origen = ? divisa de destino)",
+      fxManualPh:"p. ej. 1320.5",
+      fxDisclaimer:"Los tipos son tipos de referencia del BCE a través de frankfurter.app; son solo de referencia y no una cotización de mercado.",
+      fxHelpBtn:"Cómo usar", fxHelpClose:"Cerrar", fxGuideTitle:"Cómo usar el conversor de divisas",
+      fxStep1T:"Elige importe y divisas", fxStep1D:"Introduce el importe y elige la divisa de origen y de destino. Usa el botón ⇄ para intercambiar ambas.",
+      fxStep2T:"Conversión instantánea", fxStep2D:"Mientras escribes, el importe convertido, el tipo unitario y la fecha de referencia se actualizan con tipos en vivo. La tabla de la derecha también muestra las principales divisas.",
+      fxStep3T:"Alternativa sin conexión", fxStep3D:"Si no se pueden obtener los tipos por un error de red, aparece un campo de ‘tipo manual’. Introduce un tipo y calcula <code>importe × tipo</code>.",
+      relTitle:"Herramientas relacionadas", navCompound:"Interés compuesto", navSimple:"Interés simple", navSalary:"Salario neto (KR)", navDday:"Calculadora D-Day"
+    },
+    fr:{
+      docTitle:"Convertisseur de devises — Grit Tools",
+      fxTool:"Convertisseur de devises", fxAllTools:"← Tous les outils",
+      fxTitle:"Convertisseur de devises",
+      fxSub:"Choisissez un montant et des devises pour convertir instantanément aux taux de change en direct.",
+      fxInputTitle:"Convertir", fxAmount:"Montant",
+      fxFrom:"De", fxTo:"Vers", fxSwap:"Permuter les devises",
+      fxResult:"Converti", fxBasis:"Référence BCE",
+      fxTableTitle:"Référence rapide", fxColCcy:"Devise", fxColAmount:"Converti",
+      fxLoading:"Chargement des taux de change…",
+      fxErr:"Impossible de charger les taux de change. Vérifiez votre connexion ou saisissez un taux manuellement ci-dessous.",
+      fxManualLabel:"Taux manuel (1 devise source = ? devise cible)",
+      fxManualPh:"par ex. 1320.5",
+      fxDisclaimer:"Les taux sont les taux de référence de la BCE via frankfurter.app — à titre indicatif uniquement, ce n'est pas une cotation de marché.",
+      fxHelpBtn:"Mode d'emploi", fxHelpClose:"Fermer", fxGuideTitle:"Comment utiliser le convertisseur de devises",
+      fxStep1T:"Choisissez montant et devises", fxStep1D:"Saisissez le montant et choisissez la devise source et la devise cible. Utilisez le bouton ⇄ pour les permuter.",
+      fxStep2T:"Conversion instantanée", fxStep2D:"Au fil de la saisie, le montant converti, le taux unitaire et la date de référence se mettent à jour avec les taux en direct. Le tableau de droite affiche aussi les principales devises.",
+      fxStep3T:"Solution hors ligne", fxStep3D:"Si les taux ne peuvent pas être récupérés à cause d'une erreur réseau, un champ « taux manuel » apparaît. Saisissez un taux et il calcule <code>montant × taux</code>.",
+      relTitle:"Outils associés", navCompound:"Intérêts composés", navSimple:"Intérêts simples", navSalary:"Salaire net (KR)", navDday:"Calculateur J-J"
+    },
+    de:{
+      docTitle:"Währungsrechner — Grit Tools",
+      fxTool:"Währungsrechner", fxAllTools:"← Alle Tools",
+      fxTitle:"Währungsrechner",
+      fxSub:"Wählen Sie einen Betrag und Währungen, um sofort zu aktuellen Wechselkursen umzurechnen.",
+      fxInputTitle:"Umrechnen", fxAmount:"Betrag",
+      fxFrom:"Von", fxTo:"Nach", fxSwap:"Währungen tauschen",
+      fxResult:"Umgerechnet", fxBasis:"EZB-Referenz",
+      fxTableTitle:"Schnellübersicht", fxColCcy:"Währung", fxColAmount:"Umgerechnet",
+      fxLoading:"Wechselkurse werden geladen…",
+      fxErr:"Wechselkurse konnten nicht geladen werden. Prüfen Sie Ihre Verbindung oder geben Sie unten einen Kurs manuell ein.",
+      fxManualLabel:"Manueller Kurs (1 Ausgangswährung = ? Zielwährung)",
+      fxManualPh:"z. B. 1320.5",
+      fxDisclaimer:"Die Kurse sind EZB-Referenzkurse über frankfurter.app – nur als Referenz, keine Handelsnotierung.",
+      fxHelpBtn:"Anleitung", fxHelpClose:"Schließen", fxGuideTitle:"So verwenden Sie den Währungsrechner",
+      fxStep1T:"Betrag & Währungen wählen", fxStep1D:"Geben Sie den Betrag ein und wählen Sie Ausgangs- und Zielwährung. Mit der Schaltfläche ⇄ tauschen Sie beide.",
+      fxStep2T:"Sofortige Umrechnung", fxStep2D:"Während der Eingabe werden umgerechneter Betrag, Einzelkurs und Referenzdatum mit aktuellen Kursen aktualisiert. Die Tabelle rechts zeigt auch die wichtigsten Währungen.",
+      fxStep3T:"Offline-Ausweichlösung", fxStep3D:"Können die Kurse aufgrund eines Netzwerkfehlers nicht abgerufen werden, erscheint ein Feld für einen ‚manuellen Kurs‘. Geben Sie einen Kurs ein, und es berechnet <code>Betrag × Kurs</code>.",
+      relTitle:"Verwandte Tools", navCompound:"Zinseszins", navSimple:"Einfacher Zins", navSalary:"Nettogehalt (KR)", navDday:"D-Day-Rechner"
+    },
+    pt:{
+      docTitle:"Conversor de moedas — Grit Tools",
+      fxTool:"Conversor de moedas", fxAllTools:"← Todas as ferramentas",
+      fxTitle:"Conversor de moedas",
+      fxSub:"Escolha um montante e as moedas para converter de imediato com taxas de câmbio em tempo real.",
+      fxInputTitle:"Converter", fxAmount:"Montante",
+      fxFrom:"De", fxTo:"Para", fxSwap:"Trocar moedas",
+      fxResult:"Convertido", fxBasis:"Referência do BCE",
+      fxTableTitle:"Referência rápida", fxColCcy:"Moeda", fxColAmount:"Convertido",
+      fxLoading:"A carregar taxas de câmbio…",
+      fxErr:"Não foi possível carregar as taxas de câmbio. Verifique a ligação ou introduza uma taxa manualmente abaixo.",
+      fxManualLabel:"Taxa manual (1 moeda de origem = ? moeda de destino)",
+      fxManualPh:"por ex. 1320.5",
+      fxDisclaimer:"As taxas são taxas de referência do BCE via frankfurter.app — apenas para referência, não constituem uma cotação de mercado.",
+      fxHelpBtn:"Como usar", fxHelpClose:"Fechar", fxGuideTitle:"Como usar o conversor de moedas",
+      fxStep1T:"Escolha montante e moedas", fxStep1D:"Introduza o montante e escolha a moeda de origem e de destino. Use o botão ⇄ para trocar as duas.",
+      fxStep2T:"Conversão instantânea", fxStep2D:"À medida que escreve, o montante convertido, a taxa unitária e a data de referência atualizam-se com taxas em tempo real. A tabela à direita também mostra as principais moedas.",
+      fxStep3T:"Alternativa offline", fxStep3D:"Se as taxas não puderem ser obtidas devido a um erro de rede, surge um campo de ‘taxa manual’. Introduza uma taxa e calcula <code>montante × taxa</code>.",
+      relTitle:"Ferramentas relacionadas", navCompound:"Juros compostos", navSimple:"Juros simples", navSalary:"Salário líquido (KR)", navDday:"Calculadora D-Day"
+    },
+    ru:{
+      docTitle:"Конвертер валют — Grit Tools",
+      fxTool:"Конвертер валют", fxAllTools:"← Все инструменты",
+      fxTitle:"Конвертер валют",
+      fxSub:"Выберите сумму и валюты, чтобы мгновенно конвертировать по актуальным курсам.",
+      fxInputTitle:"Конвертация", fxAmount:"Сумма",
+      fxFrom:"Из", fxTo:"В", fxSwap:"Поменять валюты",
+      fxResult:"Результат", fxBasis:"Справочный курс ЕЦБ",
+      fxTableTitle:"Быстрая справка", fxColCcy:"Валюта", fxColAmount:"Результат",
+      fxLoading:"Загрузка курсов валют…",
+      fxErr:"Не удалось загрузить курсы валют. Проверьте подключение или введите курс вручную ниже.",
+      fxManualLabel:"Курс вручную (1 исходная валюта = ? целевая валюта)",
+      fxManualPh:"например, 1320.5",
+      fxDisclaimer:"Курсы — справочные курсы ЕЦБ через frankfurter.app, только для справки, а не торговая котировка.",
+      fxHelpBtn:"Как пользоваться", fxHelpClose:"Закрыть", fxGuideTitle:"Как пользоваться конвертером валют",
+      fxStep1T:"Выберите сумму и валюты", fxStep1D:"Введите сумму и выберите исходную и целевую валюту. Кнопка ⇄ меняет их местами.",
+      fxStep2T:"Мгновенная конвертация", fxStep2D:"По мере ввода результат конвертации, курс за единицу и дата курса обновляются по актуальным курсам. В таблице справа также показаны основные валюты.",
+      fxStep3T:"Работа без сети", fxStep3D:"Если курсы не удаётся получить из-за сетевой ошибки, появляется поле «курс вручную». Введите курс, и он рассчитает <code>сумма × курс</code>.",
+      relTitle:"Похожие инструменты", navCompound:"Сложные проценты", navSimple:"Простые проценты", navSalary:"Зарплата на руки (KR)", navDday:"Калькулятор D-Day"
     }
   });
 

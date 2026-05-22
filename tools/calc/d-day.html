@@ -7,11 +7,29 @@
 <meta name="description" content="목표일까지 D-Day를 계산하고, 두 날짜 사이의 일수, 날짜 더하기·빼기까지 한 번에. 요일과 정확한 일수를 바로 확인하는 날짜 계산기. 모든 계산은 브라우저에서 처리됩니다.">
 <meta name="keywords" content="D-Day 계산기, 디데이 계산기, 날짜 계산기, 날짜 사이 일수, 날짜 더하기 빼기, d-day calculator, date calculator, days between dates">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<link rel="canonical" href="https://grit-tools.com/tools/calc/d-day.html">
+<meta name="theme-color" content="#0f1115">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="디데이·날짜 계산기 — Grit Tools">
 <meta property="og:description" content="D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 즉시 계산. 요일과 정확한 일수까지.">
+<meta property="og:url" content="https://grit-tools.com/tools/calc/d-day.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="디데이·날짜 계산기 — Grit Tools">
+<meta name="twitter:description" content="D-Day, 두 날짜 사이 일수, 날짜 더하기·빼기를 즉시 계산. 요일과 정확한 일수까지.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -121,8 +139,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "목표일까지의 D-Day, 두 날짜 사이의 일수, 날짜 더하기·빼기를 즉시 계산하고 요일과 정확한 일수를 보여주는 날짜 계산기.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"계산기","item":"https://grit-tools.com/#calc"},
+ {"@type":"ListItem","position":3,"name":"디데이·날짜 계산기","item":"https://grit-tools.com/tools/calc/d-day.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"D-Day 계산기 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"모드 선택","text":"상단 탭에서 D-Day, 날짜 사이 일수, 날짜 더하기·빼기 중 원하는 계산을 고르세요."},
+  {"@type":"HowToStep","name":"날짜 입력","text":"날짜 칸을 채우면 됩니다. 처음에는 오늘 날짜가 들어가 있습니다. 입력하는 즉시 결과가 갱신됩니다."},
+  {"@type":"HowToStep","name":"결과 확인","text":"오른쪽에서 D-Day 표기(D-30 / D-DAY / D+5), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다."}
+ ]}
 </script>
 </head>
 <body>
@@ -254,6 +288,13 @@
         <p class="hs-d" data-i18n-html="ddStep3D">오른쪽에서 D-Day 표기(<code>D-30 / D-DAY / D+5</code>), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="compound-interest.html" data-i18n="navCompound" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="simple-interest.html" data-i18n="navSimple" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="salary-net.html" data-i18n="navSalary" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+      <a href="currency.html" data-i18n="navFx" style="color:var(--blue);text-decoration:none;margin-left:10px;">…</a>
+    </nav>
   </div>
 </div>
 
@@ -462,7 +503,8 @@
       ddHelpBtn:"사용법", ddHelpClose:"닫기", ddGuideTitle:"D-Day 계산기 사용법",
       ddStep1T:"모드 선택", ddStep1D:"상단 탭에서 D-Day, 날짜 사이 일수, 날짜 더하기·빼기 중 원하는 계산을 고르세요.",
       ddStep2T:"날짜 입력", ddStep2D:"날짜 칸을 채우면 됩니다. 처음에는 오늘 날짜가 들어가 있습니다. 입력하는 즉시 결과가 갱신됩니다.",
-      ddStep3T:"결과 확인", ddStep3D:"오른쪽에서 D-Day 표기(<code>D-30 / D-DAY / D+5</code>), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다."
+      ddStep3T:"결과 확인", ddStep3D:"오른쪽에서 D-Day 표기(<code>D-30 / D-DAY / D+5</code>), 요일, 정확한 일수를 확인하세요. 모든 계산은 브라우저에서만 처리됩니다.",
+      relTitle:"관련 도구", navCompound:"복리 계산기", navSimple:"단리 계산기", navSalary:"연봉 실수령액 계산기", navFx:"환율 계산기"
     },
     en:{
       docTitle:"D-Day Date Calculator — Grit Tools",
@@ -489,7 +531,8 @@
       ddHelpBtn:"How to use", ddHelpClose:"Close", ddGuideTitle:"How to use the D-Day calculator",
       ddStep1T:"Pick a mode", ddStep1D:"Use the top tabs to choose D-Day, days between dates, or date add/subtract.",
       ddStep2T:"Enter dates", ddStep2D:"Just fill in the date fields. They default to today. The result updates as you type.",
-      ddStep3T:"Read the result", ddStep3D:"On the right you'll see the D-Day notation (<code>D-30 / D-DAY / D+5</code>), the weekday and the exact day count. Everything runs in your browser only."
+      ddStep3T:"Read the result", ddStep3D:"On the right you'll see the D-Day notation (<code>D-30 / D-DAY / D+5</code>), the weekday and the exact day count. Everything runs in your browser only.",
+      relTitle:"Related tools", navCompound:"Compound Interest", navSimple:"Simple Interest", navSalary:"Net Salary (KR)", navFx:"Currency Converter"
     },
     ja:{
       docTitle:"D-Day 日付計算機 — Grit Tools",
@@ -516,7 +559,8 @@
       ddHelpBtn:"使い方", ddHelpClose:"閉じる", ddGuideTitle:"D-Day 計算機の使い方",
       ddStep1T:"モードを選ぶ", ddStep1D:"上部のタブで D-Day、日付の間の日数、日付の加算・減算から選びます。",
       ddStep2T:"日付を入力", ddStep2D:"日付欄を入力するだけ。最初は今日の日付が入っています。入力するたびに結果が更新されます。",
-      ddStep3T:"結果を確認", ddStep3D:"右側で D-Day 表記（<code>D-30 / D-DAY / D+5</code>）、曜日、正確な日数を確認できます。すべてブラウザ内で処理されます。"
+      ddStep3T:"結果を確認", ddStep3D:"右側で D-Day 表記（<code>D-30 / D-DAY / D+5</code>）、曜日、正確な日数を確認できます。すべてブラウザ内で処理されます。",
+      relTitle:"関連ツール", navCompound:"複利計算機", navSimple:"単利計算機", navSalary:"手取り計算（韓国）", navFx:"為替計算機"
     },
     zh:{
       docTitle:"D-Day 日期计算器 — Grit Tools",
@@ -543,7 +587,148 @@
       ddHelpBtn:"使用方法", ddHelpClose:"关闭", ddGuideTitle:"D-Day 计算器使用方法",
       ddStep1T:"选择模式", ddStep1D:"在顶部标签中选择 D-Day、日期间隔天数或日期加减。",
       ddStep2T:"输入日期", ddStep2D:"填写日期框即可，默认是今天。输入时结果会即时更新。",
-      ddStep3T:"查看结果", ddStep3D:"右侧会显示 D-Day 表示（<code>D-30 / D-DAY / D+5</code>）、星期和精确天数。所有计算均在浏览器内完成。"
+      ddStep3T:"查看结果", ddStep3D:"右侧会显示 D-Day 表示（<code>D-30 / D-DAY / D+5</code>）、星期和精确天数。所有计算均在浏览器内完成。",
+      relTitle:"相关工具", navCompound:"复利计算器", navSimple:"单利计算器", navSalary:"实发工资（韩）", navFx:"汇率计算器"
+    },
+    es:{
+      docTitle:"Calculadora de fechas y D-Day — Grit Tools",
+      ddTool:"Calculadora D-Day", ddAllTools:"← Todas las herramientas",
+      ddTitle:"Calculadora de fechas y D-Day",
+      ddSub:"Calcula un D-Day, los días entre dos fechas y sumar/restar fechas, todo en uno.",
+      ddTab1:"D-Day", ddTab2:"Días entre", ddTab3:"Sumar / restar",
+      ddInputTitle:"Datos", ddResultTitle:"Resultado",
+      ddTargetDate:"Fecha objetivo", ddStartDate:"Fecha de inicio", ddEndDate:"Fecha de fin", ddBaseDate:"Fecha base",
+      ddIncludeStart:"Incluir el día de inicio", ddAmount:"Cantidad a sumar/restar (admite negativos)", ddUnit:"Unidad",
+      ddUnitDay:"días", ddUnitWeek:"semanas", ddUnitMonth:"meses", ddUnitYear:"años",
+      ddNote:"El cálculo de fechas se realiza en días <code>UTC</code> para no verse afectado por el horario de verano.",
+      ddToday:"Hoy", ddWeekday:"Día de la semana", ddDaysCount:"Días restantes / transcurridos",
+      ddTotalDays:"Días totales", ddBreakdown:"Años/meses/días", ddWeeksDays:"En semanas",
+      ddOperation:"Aplicado", ddDiffDays:"Días desde la base",
+      ddDaysUnit:"días", ddOn:"Sí (+1)", ddOff:"No",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"domingo,lunes,martes,miércoles,jueves,viernes,sábado",
+      ddSubFuture:"Faltan {n} días para la fecha objetivo.",
+      ddSubToday:"Es hoy mismo.",
+      ddSubPast:"Han pasado {n} días desde la fecha objetivo.",
+      ddYMD:"{y} a {m} m {d} d",
+      ddWD:"{w} sem {d} d",
+      ddHelpBtn:"Cómo usar", ddHelpClose:"Cerrar", ddGuideTitle:"Cómo usar la calculadora D-Day",
+      ddStep1T:"Elige un modo", ddStep1D:"Usa las pestañas superiores para elegir D-Day, días entre fechas o sumar/restar fechas.",
+      ddStep2T:"Introduce las fechas", ddStep2D:"Solo rellena los campos de fecha. Por defecto muestran hoy. El resultado se actualiza mientras escribes.",
+      ddStep3T:"Lee el resultado", ddStep3D:"A la derecha verás la notación D-Day (<code>D-30 / D-DAY / D+5</code>), el día de la semana y el número exacto de días. Todo se ejecuta solo en tu navegador.",
+      relTitle:"Herramientas relacionadas", navCompound:"Interés compuesto", navSimple:"Interés simple", navSalary:"Salario neto (KR)", navFx:"Conversor de divisas"
+    },
+    fr:{
+      docTitle:"Calculateur de dates et J-Day — Grit Tools",
+      ddTool:"Calculateur D-Day", ddAllTools:"← Tous les outils",
+      ddTitle:"Calculateur de dates et D-Day",
+      ddSub:"Calculez un D-Day, le nombre de jours entre deux dates et l'ajout/soustraction de dates, le tout en un seul outil.",
+      ddTab1:"D-Day", ddTab2:"Jours entre", ddTab3:"Ajouter / soustraire",
+      ddInputTitle:"Saisie", ddResultTitle:"Résultat",
+      ddTargetDate:"Date cible", ddStartDate:"Date de début", ddEndDate:"Date de fin", ddBaseDate:"Date de référence",
+      ddIncludeStart:"Inclure le jour de début", ddAmount:"Valeur à ajouter/soustraire (négatif possible)", ddUnit:"Unité",
+      ddUnitDay:"jours", ddUnitWeek:"semaines", ddUnitMonth:"mois", ddUnitYear:"ans",
+      ddNote:"Le calcul des dates est effectué en jours <code>UTC</code> afin de ne pas être affecté par l'heure d'été.",
+      ddToday:"Aujourd'hui", ddWeekday:"Jour de la semaine", ddDaysCount:"Jours restants / écoulés",
+      ddTotalDays:"Total de jours", ddBreakdown:"Années/mois/jours", ddWeeksDays:"En semaines",
+      ddOperation:"Appliqué", ddDiffDays:"Jours depuis la référence",
+      ddDaysUnit:"jours", ddOn:"Oui (+1)", ddOff:"Non",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"dimanche,lundi,mardi,mercredi,jeudi,vendredi,samedi",
+      ddSubFuture:"Il reste {n} jours avant la date cible.",
+      ddSubToday:"C'est aujourd'hui.",
+      ddSubPast:"{n} jours se sont écoulés depuis la date cible.",
+      ddYMD:"{y} a {m} mois {d} j",
+      ddWD:"{w} sem {d} j",
+      ddHelpBtn:"Mode d'emploi", ddHelpClose:"Fermer", ddGuideTitle:"Comment utiliser le calculateur D-Day",
+      ddStep1T:"Choisissez un mode", ddStep1D:"Utilisez les onglets en haut pour choisir D-Day, jours entre dates ou ajout/soustraction de dates.",
+      ddStep2T:"Saisissez les dates", ddStep2D:"Remplissez simplement les champs de date. Ils affichent aujourd'hui par défaut. Le résultat se met à jour au fil de la saisie.",
+      ddStep3T:"Lisez le résultat", ddStep3D:"À droite, vous verrez la notation D-Day (<code>D-30 / D-DAY / D+5</code>), le jour de la semaine et le nombre exact de jours. Tout s'exécute uniquement dans votre navigateur.",
+      relTitle:"Outils associés", navCompound:"Intérêts composés", navSimple:"Intérêts simples", navSalary:"Salaire net (KR)", navFx:"Convertisseur de devises"
+    },
+    de:{
+      docTitle:"Datums- und D-Day-Rechner — Grit Tools",
+      ddTool:"D-Day-Rechner", ddAllTools:"← Alle Tools",
+      ddTitle:"Datums- und D-Day-Rechner",
+      ddSub:"Berechnen Sie ein D-Day, die Tage zwischen zwei Daten sowie Datum addieren/subtrahieren – alles in einem.",
+      ddTab1:"D-Day", ddTab2:"Tage dazwischen", ddTab3:"Addieren / subtrahieren",
+      ddInputTitle:"Eingaben", ddResultTitle:"Ergebnis",
+      ddTargetDate:"Zieldatum", ddStartDate:"Startdatum", ddEndDate:"Enddatum", ddBaseDate:"Basisdatum",
+      ddIncludeStart:"Starttag einbeziehen", ddAmount:"Wert zum Addieren/Subtrahieren (negativ möglich)", ddUnit:"Einheit",
+      ddUnitDay:"Tage", ddUnitWeek:"Wochen", ddUnitMonth:"Monate", ddUnitYear:"Jahre",
+      ddNote:"Die Datumsberechnung erfolgt in <code>UTC</code>-Tagen, sodass sie von der Sommerzeit nicht beeinflusst wird.",
+      ddToday:"Heute", ddWeekday:"Wochentag", ddDaysCount:"Tage verbleibend / vergangen",
+      ddTotalDays:"Tage gesamt", ddBreakdown:"Jahre/Monate/Tage", ddWeeksDays:"In Wochen",
+      ddOperation:"Angewendet", ddDiffDays:"Tage ab Basis",
+      ddDaysUnit:"Tage", ddOn:"Ja (+1)", ddOff:"Nein",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag",
+      ddSubFuture:"Noch {n} Tage bis zum Zieldatum.",
+      ddSubToday:"Das ist heute.",
+      ddSubPast:"Seit dem Zieldatum sind {n} Tage vergangen.",
+      ddYMD:"{y} J {m} Mon {d} T",
+      ddWD:"{w} Wo {d} T",
+      ddHelpBtn:"Anleitung", ddHelpClose:"Schließen", ddGuideTitle:"So verwenden Sie den D-Day-Rechner",
+      ddStep1T:"Modus wählen", ddStep1D:"Wählen Sie über die oberen Reiter D-Day, Tage zwischen Daten oder Datum addieren/subtrahieren.",
+      ddStep2T:"Daten eingeben", ddStep2D:"Füllen Sie einfach die Datumsfelder aus. Standardmäßig steht dort das heutige Datum. Das Ergebnis aktualisiert sich während der Eingabe.",
+      ddStep3T:"Ergebnis ablesen", ddStep3D:"Rechts sehen Sie die D-Day-Schreibweise (<code>D-30 / D-DAY / D+5</code>), den Wochentag und die genaue Tageszahl. Alles läuft nur in Ihrem Browser.",
+      relTitle:"Verwandte Tools", navCompound:"Zinseszins", navSimple:"Einfacher Zins", navSalary:"Nettogehalt (KR)", navFx:"Währungsrechner"
+    },
+    pt:{
+      docTitle:"Calculadora de datas e D-Day — Grit Tools",
+      ddTool:"Calculadora D-Day", ddAllTools:"← Todas as ferramentas",
+      ddTitle:"Calculadora de datas e D-Day",
+      ddSub:"Calcule um D-Day, os dias entre duas datas e somar/subtrair datas, tudo num só lugar.",
+      ddTab1:"D-Day", ddTab2:"Dias entre", ddTab3:"Somar / subtrair",
+      ddInputTitle:"Dados", ddResultTitle:"Resultado",
+      ddTargetDate:"Data alvo", ddStartDate:"Data de início", ddEndDate:"Data de fim", ddBaseDate:"Data base",
+      ddIncludeStart:"Incluir o dia de início", ddAmount:"Valor a somar/subtrair (admite negativos)", ddUnit:"Unidade",
+      ddUnitDay:"dias", ddUnitWeek:"semanas", ddUnitMonth:"meses", ddUnitYear:"anos",
+      ddNote:"O cálculo de datas é feito em dias <code>UTC</code> para não ser afetado pelo horário de verão.",
+      ddToday:"Hoje", ddWeekday:"Dia da semana", ddDaysCount:"Dias restantes / decorridos",
+      ddTotalDays:"Total de dias", ddBreakdown:"Anos/meses/dias", ddWeeksDays:"Em semanas",
+      ddOperation:"Aplicado", ddDiffDays:"Dias desde a base",
+      ddDaysUnit:"dias", ddOn:"Sim (+1)", ddOff:"Não",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"domingo,segunda-feira,terça-feira,quarta-feira,quinta-feira,sexta-feira,sábado",
+      ddSubFuture:"Faltam {n} dias para a data alvo.",
+      ddSubToday:"É mesmo hoje.",
+      ddSubPast:"Passaram {n} dias desde a data alvo.",
+      ddYMD:"{y} a {m} m {d} d",
+      ddWD:"{w} sem {d} d",
+      ddHelpBtn:"Como usar", ddHelpClose:"Fechar", ddGuideTitle:"Como usar a calculadora D-Day",
+      ddStep1T:"Escolha um modo", ddStep1D:"Use os separadores no topo para escolher D-Day, dias entre datas ou somar/subtrair datas.",
+      ddStep2T:"Introduza as datas", ddStep2D:"Basta preencher os campos de data. Por predefinição mostram hoje. O resultado atualiza-se à medida que escreve.",
+      ddStep3T:"Leia o resultado", ddStep3D:"À direita verá a notação D-Day (<code>D-30 / D-DAY / D+5</code>), o dia da semana e o número exato de dias. Tudo é processado apenas no seu navegador.",
+      relTitle:"Ferramentas relacionadas", navCompound:"Juros compostos", navSimple:"Juros simples", navSalary:"Salário líquido (KR)", navFx:"Conversor de moedas"
+    },
+    ru:{
+      docTitle:"Калькулятор дат и D-Day — Grit Tools",
+      ddTool:"Калькулятор D-Day", ddAllTools:"← Все инструменты",
+      ddTitle:"Калькулятор дат и D-Day",
+      ddSub:"Считайте D-Day, число дней между двумя датами и прибавление/вычитание дат — всё в одном.",
+      ddTab1:"D-Day", ddTab2:"Дней между", ddTab3:"Прибавить / вычесть",
+      ddInputTitle:"Ввод", ddResultTitle:"Результат",
+      ddTargetDate:"Целевая дата", ddStartDate:"Дата начала", ddEndDate:"Дата окончания", ddBaseDate:"Базовая дата",
+      ddIncludeStart:"Включить день начала", ddAmount:"Сколько прибавить/вычесть (можно отрицательное)", ddUnit:"Единица",
+      ddUnitDay:"дней", ddUnitWeek:"недель", ddUnitMonth:"месяцев", ddUnitYear:"лет",
+      ddNote:"Расчёт дат ведётся в днях по <code>UTC</code>, поэтому переход на летнее время на него не влияет.",
+      ddToday:"Сегодня", ddWeekday:"День недели", ddDaysCount:"Дней осталось / прошло",
+      ddTotalDays:"Всего дней", ddBreakdown:"Годы/месяцы/дни", ddWeeksDays:"В неделях",
+      ddOperation:"Применено", ddDiffDays:"Дней от базовой даты",
+      ddDaysUnit:"дней", ddOn:"Да (+1)", ddOff:"Нет",
+      ddPlus:"+", ddMinus:"−",
+      ddWeekdays:"воскресенье,понедельник,вторник,среда,четверг,пятница,суббота",
+      ddSubFuture:"До целевой даты осталось {n} дн.",
+      ddSubToday:"Это сегодня.",
+      ddSubPast:"С целевой даты прошло {n} дн.",
+      ddYMD:"{y} г {m} мес {d} дн",
+      ddWD:"{w} нед {d} дн",
+      ddHelpBtn:"Как пользоваться", ddHelpClose:"Закрыть", ddGuideTitle:"Как пользоваться калькулятором D-Day",
+      ddStep1T:"Выберите режим", ddStep1D:"С помощью вкладок вверху выберите D-Day, дни между датами или прибавление/вычитание дат.",
+      ddStep2T:"Введите даты", ddStep2D:"Просто заполните поля дат. По умолчанию указана сегодняшняя дата. Результат обновляется по мере ввода.",
+      ddStep3T:"Прочитайте результат", ddStep3D:"Справа вы увидите обозначение D-Day (<code>D-30 / D-DAY / D+5</code>), день недели и точное число дней. Все вычисления выполняются только в вашем браузере.",
+      relTitle:"Похожие инструменты", navCompound:"Сложные проценты", navSimple:"Простые проценты", navSalary:"Зарплата на руки (KR)", navFx:"Конвертер валют"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: recompute });

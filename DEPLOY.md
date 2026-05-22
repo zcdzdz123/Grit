@@ -43,15 +43,18 @@ Grit Tools(정적 사이트)를 Cloudflare Pages로 배포하고 도메인을 �
 
 > 막히는 단계가 있으면 화면에 보이는 내용을 알려주면 빌드 설정값·DNS를 정확히 짚어줄 수 있음.
 
-## 도메인 확정 후 SEO 마무리 (TODO)
+## SEO 현황 (도메인 `grit-tools.com` 기준 — 완료)
 
-도메인이 정해지면 절대 URL이 필요한 항목을 추가한다. `index.html`에는 이미 도메인이
-필요 없는 SEO(메타 설명·OG/트위터 카드·숨김 `<h1>`·JSON-LD 구조화 데이터)가 들어가 있음.
+절대 URL이 필요한 항목까지 모두 적용 완료. 도메인을 바꾸면 아래 파일의 `https://grit-tools.com`을 일괄 치환하면 된다.
 
-1. `index.html` `<head>`에 canonical + og:url 추가:
-   `<link rel="canonical" href="https://<도메인>/">`, `<meta property="og:url" content="https://<도메인>/">`.
-2. 다국어 hreflang(선택): 단일 URL이 4개 언어를 JS로 전환하므로 필수는 아님.
-3. **robots.txt**(루트): `User-agent: *` / `Allow: /` / `Sitemap: https://<도메인>/sitemap.xml`.
-4. **sitemap.xml**(루트): `/`(허브)와 `tools/image/pixel-coords.html` URL 등록.
-5. **og:image**(선택): 1200×630 미리보기 이미지 만들어 `og:image`·`twitter:image`에 절대 URL로 연결(소셜 공유 카드).
-6. 배포 후 **Google Search Console**에 도메인 등록 → sitemap 제출 → 색인 요청.
+1. ✅ **canonical + og:url + og:image** — `index.html`과 도구 16개 전 페이지 `<head>`에 적용. og:image는 `/og.png`(1200×630) 절대 URL.
+2. ✅ **robots.txt**(루트) — `Sitemap: https://grit-tools.com/sitemap.xml` 포함.
+3. ✅ **sitemap.xml**(루트) — 허브 + 도구 16개 전부 등록.
+4. ✅ **og.png**(루트) — 1200×630 다크 브랜드 소셜 카드. `og:image`·`twitter:image`에 연결, `twitter:card=summary_large_image`.
+5. ✅ **다국어** — i18n 9개 언어(ko·en·ja·zh·es·fr·de·pt·ru). og:locale:alternate에 9개 로케일 명시.
+   - hreflang은 **의도적으로 생략**: 단일 URL이 JS로 언어를 전환하므로 언어별 개별 URL이 없어 hreflang이 부적합.
+6. ✅ **JSON-LD** — 허브는 WebSite + 도구 16개 ItemList, 각 도구는 SoftwareApplication. inLanguage 9개 언어.
+
+### 남은 일 (배포 후 1회)
+- 배포 후 **Google Search Console**에 `grit-tools.com` 등록(소유권 확인) → `sitemap.xml` 제출 → 색인 요청.
+- (선택) Bing Webmaster Tools에도 동일하게 등록.

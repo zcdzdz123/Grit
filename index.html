@@ -3,24 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grit Tools — 브라우저용 개발·계산 도구</title>
-<meta name="description" content="브라우저에서 바로 실행하는 도구 모음. 이미지 좌표 계산기(픽셀 좌표 추출), 복리·단리 계산기 등. 모든 처리는 브라우저 안에서 이뤄집니다.">
-<meta name="keywords" content="개발자 도구, 픽셀 좌표, 복리 계산기, 단리 계산기, 이자 계산기, 브라우저 도구, HMI, 임베디드 UI">
+<title>Grit Tools — 브라우저용 무료 개발·계산·PDF·이미지 도구 모음</title>
+<meta name="description" content="설치·로그인 없이 브라우저에서 바로 쓰는 무료 도구 16종. PDF 합치기·나누기, 이미지 리사이즈·색상 추출, 복리·단리·환율·실수령액 계산기, 표→마크다운 변환 등. 파일은 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.">
+<meta name="keywords" content="무료 온라인 도구, PDF 합치기, PDF 나누기, 이미지 리사이즈, 색상 추출, 복리 계산기, 단리 계산기, 환율 계산기, 실수령액 계산기, 디데이 계산기, 표 마크다운 변환, 파일 이름 일괄 변경, 픽셀 좌표, 브라우저 도구">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/">
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
-<meta property="og:title" content="Grit Tools — 브라우저용 개발·계산 도구">
-<meta property="og:description" content="이미지 픽셀 좌표 추출, 복리·단리 계산기 등 브라우저에서 바로 쓰는 도구 모음.">
+<meta property="og:title" content="Grit Tools — 브라우저용 무료 개발·계산·PDF·이미지 도구 모음">
+<meta property="og:description" content="PDF·이미지·계산·텍스트 도구 16종을 브라우저에서 바로. 파일은 서버로 전송되지 않습니다.">
+<meta property="og:url" content="https://grit-tools.com/">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="ja_JP">
 <meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
 <!-- Twitter -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Grit Tools — 브라우저용 개발 도구">
-<meta name="twitter:description" content="이미지 픽셀 좌표 추출 등 브라우저에서 바로 쓰는 개발 도구.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Grit Tools — 브라우저용 무료 도구 모음">
+<meta name="twitter:description" content="PDF·이미지·계산·텍스트 도구 16종을 브라우저에서 바로. 서버 전송 없음.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -169,6 +180,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
   border-bottom: 1px solid var(--border);
 }
 .cat-name {
+  margin: 0;
   font-family: var(--font-display);
   font-size: 12px; font-weight: 600;
   letter-spacing: .1em;
@@ -305,13 +317,39 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Grit Tools — 이미지 좌표 계산기",
-  "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "Web browser",
-  "description": "이미지 위를 클릭해 픽셀 좌표를 추출하고 #define·함수 등 코드 포맷으로 자동 복사하는 브라우저용 개발 도구. HMI·임베디드 UI 좌표 작업에 적합.",
-  "inLanguage": ["ko", "en", "ja", "zh"],
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://grit-tools.com/#website",
+      "name": "Grit Tools",
+      "url": "https://grit-tools.com/",
+      "description": "설치·로그인 없이 브라우저에서 바로 쓰는 무료 개발·계산·PDF·이미지·텍스트 도구 모음. 파일은 서버로 전송되지 않습니다.",
+      "inLanguage": ["ko", "en", "ja", "zh", "es", "fr", "de", "pt", "ru"]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Grit Tools 도구 목록",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1,  "name": "복리 계산기",            "url": "https://grit-tools.com/tools/calc/compound-interest.html" },
+        { "@type": "ListItem", "position": 2,  "name": "단리 계산기",            "url": "https://grit-tools.com/tools/calc/simple-interest.html" },
+        { "@type": "ListItem", "position": 3,  "name": "환율 계산기",            "url": "https://grit-tools.com/tools/calc/currency.html" },
+        { "@type": "ListItem", "position": 4,  "name": "디데이·날짜 계산기",     "url": "https://grit-tools.com/tools/calc/d-day.html" },
+        { "@type": "ListItem", "position": 5,  "name": "연봉 실수령액 계산기",   "url": "https://grit-tools.com/tools/calc/salary-net.html" },
+        { "@type": "ListItem", "position": 6,  "name": "이미지 좌표 추출기",     "url": "https://grit-tools.com/tools/image/pixel-coords.html" },
+        { "@type": "ListItem", "position": 7,  "name": "이미지 색상 추출",       "url": "https://grit-tools.com/tools/image/color-picker.html" },
+        { "@type": "ListItem", "position": 8,  "name": "이미지 크기·용량 줄이기", "url": "https://grit-tools.com/tools/image/image-resize.html" },
+        { "@type": "ListItem", "position": 9,  "name": "PDF 합치기",            "url": "https://grit-tools.com/tools/pdf/pdf-merge.html" },
+        { "@type": "ListItem", "position": 10, "name": "PDF 나누기",            "url": "https://grit-tools.com/tools/pdf/pdf-split.html" },
+        { "@type": "ListItem", "position": 11, "name": "PDF를 이미지로 변환",    "url": "https://grit-tools.com/tools/pdf/pdf-to-image.html" },
+        { "@type": "ListItem", "position": 12, "name": "엑셀 시트별 나누기",     "url": "https://grit-tools.com/tools/file/excel-split.html" },
+        { "@type": "ListItem", "position": 13, "name": "파일 이름 일괄 변경",    "url": "https://grit-tools.com/tools/file/batch-rename.html" },
+        { "@type": "ListItem", "position": 14, "name": "표를 마크다운으로 변환", "url": "https://grit-tools.com/tools/text/table-to-markdown.html" },
+        { "@type": "ListItem", "position": 15, "name": "한글 주소 영문 변환",    "url": "https://grit-tools.com/tools/text/address-romanize.html" },
+        { "@type": "ListItem", "position": 16, "name": "텍스트 파일 합치기",     "url": "https://grit-tools.com/tools/text/text-merge.html" },
+        { "@type": "ListItem", "position": 17, "name": "우편번호 검색",          "url": "https://grit-tools.com/tools/text/postal-code.html" }
+      ]
+    }
+  ]
 }
 </script>
 </head>
@@ -347,7 +385,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
         </a>
       </div>
       <div class="nav-group">
-        <div class="nav-group-title">Text <span class="gc">3</span></div>
+        <div class="nav-group-title">Text <span class="gc">4</span></div>
         <a class="nav-item" href="tools/text/table-to-markdown.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></span>
           <span data-i18n="navTm">표 → Markdown</span> <span class="ni-badge new">New</span>
@@ -359,6 +397,10 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
         <a class="nav-item" href="tools/text/text-merge.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6M9 16h6M9 10h3"/></svg></span>
           <span data-i18n="navTx">텍스트 파일 병합</span> <span class="ni-badge new">New</span>
+        </a>
+        <a class="nav-item" href="tools/text/postal-code.html">
+          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
+          <span data-i18n="navPostal">우편번호 검색</span> <span class="ni-badge new">New</span>
         </a>
       </div>
       <div class="nav-group">
@@ -415,6 +457,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
     <div class="side-foot">
       <div class="lang-mount" id="langMount"></div>
       <span data-i18n="homeFoot">Grit · 오픈소스 도구 모음</span>
+      <a href="privacy.html" data-i18n="footPrivacy" style="display:block;margin-top:6px;color:var(--text-muted);font-size:12px;text-decoration:none;">개인정보처리방침</a>
     </div>
   </aside>
 
@@ -428,7 +471,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 
       <!-- 이미지 -->
       <section class="category" id="image">
-        <div class="cat-header"><span class="cat-name">Image</span><span class="cat-count">3</span></div>
+        <div class="cat-header"><h2 class="cat-name">Image</h2><span class="cat-count">3</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/image/pixel-coords.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v4.5M12 17v4.5M2.5 12h4.5M17 12h4.5"/></svg></div>
@@ -453,7 +496,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 
       <!-- 텍스트 -->
       <section class="category" id="text">
-        <div class="cat-header"><span class="cat-name">Text</span><span class="cat-count">3</span></div>
+        <div class="cat-header"><h2 class="cat-name">Text</h2><span class="cat-count">4</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/text/table-to-markdown.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></div>
@@ -473,12 +516,18 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
             <p class="tool-desc" data-i18n="homeTxDesc">여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원.</p>
             <div class="tool-meta"><span data-i18n="metaDragDrop">드래그&드롭</span><span data-i18n="metaDownload">다운로드</span></div>
           </a>
+          <a class="tool-card" href="tools/text/postal-code.html">
+            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></div>
+            <div class="tool-name"><span data-i18n="navPostal">우편번호 검색</span><span class="badge-new">NEW</span></div>
+            <p class="tool-desc" data-i18n="homePostalDesc">도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사.</p>
+            <div class="tool-meta"><span data-i18n="metaInstant">즉시 변환</span><span data-i18n="metaCopy">복사</span></div>
+          </a>
         </div>
       </section>
 
       <!-- 계산기 -->
       <section class="category" id="calc">
-        <div class="cat-header"><span class="cat-name">Calculator</span><span class="cat-count">5</span></div>
+        <div class="cat-header"><h2 class="cat-name">Calculator</h2><span class="cat-count">5</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/calc/compound-interest.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 9h16M9 13v4M15 13v4M12 13v4"/></svg></div>
@@ -515,7 +564,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 
       <!-- PDF -->
       <section class="category" id="pdf">
-        <div class="cat-header"><span class="cat-name">PDF</span><span class="cat-count">3</span></div>
+        <div class="cat-header"><h2 class="cat-name">PDF</h2><span class="cat-count">3</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/pdf/pdf-split.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M12 3v18"/></svg></div>
@@ -540,7 +589,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 
       <!-- 파일 -->
       <section class="category" id="file">
-        <div class="cat-header"><span class="cat-name">File</span><span class="cat-count">2</span></div>
+        <div class="cat-header"><h2 class="cat-name">File</h2><span class="cat-count">2</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/file/excel-split.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div>
@@ -613,7 +662,8 @@ GritI18n.register({
     homePiDesc:"PDF의 각 페이지를 PNG·JPEG 이미지로 변환하고 페이지별 또는 전체를 한 번에 저장합니다.",
     homeXsDesc:"엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV로 저장 (브라우저에서만 처리).",
     homeBrDesc:"찾기·바꾸기, 접두·접미, 연속 번호 규칙으로 파일명을 한 번에 바꾸고, 새 이름으로 다운로드하거나 .bat/.ps1/.sh 스크립트를 내보냅니다.",
-    homeTxDesc:"여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원."
+    homeTxDesc:"여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원.",
+    navPostal:"우편번호 검색", homePostalDesc:"도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사.", footPrivacy:"개인정보처리방침"
   },
   en:{
     docTitle:"Grit Tools — Developer & calculator tools in your browser",
@@ -645,7 +695,8 @@ GritI18n.register({
     homePiDesc:"Convert each page of a PDF into PNG or JPEG images and save them one by one or all at once.",
     homeXsDesc:"Split an Excel workbook into per-sheet files and save each as a separate XLSX or CSV (processed in your browser).",
     homeBrDesc:"Rename many files at once with find & replace, prefix/suffix and numbering rules, then download them renamed or export a .bat/.ps1/.sh script.",
-    homeTxDesc:"Drag, reorder and merge multiple text files into one — with separator, filename-header and BOM options."
+    homeTxDesc:"Drag, reorder and merge multiple text files into one — with separator, filename-header and BOM options.",
+    navPostal:"Postal Code Search (KR)", homePostalDesc:"Search a road or lot-number address to find and copy a 5-digit postal code.", footPrivacy:"Privacy Policy"
   },
   ja:{
     docTitle:"Grit Tools — ブラウザーで使う開発・計算ツール",
@@ -677,7 +728,8 @@ GritI18n.register({
     homePiDesc:"PDFの各ページをPNG・JPEG画像に変換し、1枚ずつまたは全ページをまとめて保存します。",
     homeXsDesc:"Excelワークブックをシートごとに分割し、各シートを個別のXLSXまたはCSVとして保存（ブラウザ内処理）。",
     homeBrDesc:"検索・置換、接頭辞・接尾辞、連番などのルールでファイル名を一括変更し、名前を変えてDLか .bat/.ps1/.sh スクリプトを書き出します。",
-    homeTxDesc:"複数のテキストファイルをドラッグ＆並べ替えて1つに結合。区切り・ファイル名ヘッダー・BOMに対応。"
+    homeTxDesc:"複数のテキストファイルをドラッグ＆並べ替えて1つに結合。区切り・ファイル名ヘッダー・BOMに対応。",
+    navPostal:"郵便番号検索（韓国）", homePostalDesc:"道路名・地番の住所から5桁の郵便番号をすぐに探してコピー。", footPrivacy:"プライバシーポリシー"
   },
   zh:{
     docTitle:"Grit Tools — 浏览器里的开发与计算工具",
@@ -709,7 +761,173 @@ GritI18n.register({
     homePiDesc:"将 PDF 的每一页转换为 PNG 或 JPEG 图片，可逐张或一次性保存全部。",
     homeXsDesc:"将 Excel 工作簿按工作表拆分，并将每个工作表保存为单独的 XLSX 或 CSV（在浏览器中处理）。",
     homeBrDesc:"用查找替换、前缀后缀、连续编号等规则一次性重命名多个文件，并以新名称下载或导出 .bat/.ps1/.sh 脚本。",
-    homeTxDesc:"拖入并排序多个文本文件合并为一个，支持分隔符、文件名标题与 BOM 选项。"
+    homeTxDesc:"拖入并排序多个文本文件合并为一个，支持分隔符、文件名标题与 BOM 选项。",
+    navPostal:"邮政编码查询（韩国）", homePostalDesc:"按道路名或地番地址查找并复制 5 位邮政编码。", footPrivacy:"隐私政策"
+  },
+  es:{
+    docTitle:"Grit Tools — Herramientas de desarrollo y cálculo en el navegador",
+    homeH1:"Grit Tools — herramientas que funcionan en tu navegador. Extracción de coordenadas de píxeles, calculadoras de interés compuesto y simple",
+    homeTag:"Herramientas de desarrollo, directo en el navegador",
+    homeFoot:"Grit · Herramientas de código abierto",
+    homePcDesc:"Haz clic en una imagen para extraer las coordenadas de píxeles. Ajusta 1px con las flechas y copia cada punto en el formato de código que quieras: coordenadas, #define o una función. Pensado para trabajo de coordenadas en HMI / UI embebida.",
+    homePcMeta1:"Clic en imagen", homePcMeta2:"Copiar código",
+    navPixel:"Coordenadas de imagen", navCompound:"Interés compuesto", navSimple:"Interés simple",
+    homeCiDesc:"Calcula al instante el monto final compuesto y los intereses a partir del capital, la tasa y el número de periodos. Muestra un gráfico de saldo por periodo y exporta la tabla a Excel.",
+    homeCiMeta1:"Gráfico", homeCiMeta2:"Exportar a Excel",
+    homeSiDesc:"Calcula al instante el interés simple y el total a partir del capital, la tasa y el número de periodos. Muestra un gráfico de saldo por periodo y exporta la tabla a Excel.",
+    homeSiMeta1:"Gráfico", homeSiMeta2:"Exportar a Excel",
+    navResize:"Redimensionar imagen", navCp:"Selector de color",
+    navTm:"Tabla → Markdown", navAddr:"Romanizar dirección",
+    navSalary:"Salario neto (KR)", navDday:"Calculadora D-Day", navFx:"Conversor de divisas",
+    navPs:"Dividir PDF", navPm:"Unir PDF", navPi:"PDF a imagen",
+    navXs:"Dividir hojas de Excel", navBr:"Renombrado por lotes", navTx:"Unir archivos de texto",
+    metaNoUpload:"Sin subir", metaCopy:"Copiar", metaDownload:"Descargar", metaDragDrop:"Arrastrar y soltar", metaExcel:"Exportar a Excel", metaInstant:"Instantáneo", metaPreview:"Vista previa", metaEstimate:"Estimación", metaLive:"Tasas en vivo", metaScript:"Script", metaImage:"Guardar imagen",
+    homeResizeDesc:"Redimensiona y comprime imágenes por completo en tu navegador y descárgalas. Nunca se suben a un servidor.",
+    homeCpDesc:"Sube una imagen y usa el cuentagotas en cualquier píxel para copiar su HEX/RGB/HSL, con lupa de zoom. Nunca se sube.",
+    homeTmDesc:"Pega una tabla de Excel, Google Sheets o Notion (o CSV) y obtén al instante una tabla Markdown de GitHub con vista previa en vivo.",
+    homeAddrDesc:"Convierte al instante una dirección coreana en una dirección en inglés/romanizada para formularios de envío. Una ayuda de romanización.",
+    homeSalaryDesc:"Estima el salario neto mensual/anual coreano tras la pensión nacional, el seguro de salud y el impuesto sobre la renta (tasas de 2025).",
+    homeDdayDesc:"D-Day, días entre dos fechas y suma/resta de fechas, con día de la semana y conteo exacto de días.",
+    homeFxDesc:"Convierte divisas con tasas de referencia del BCE en vivo y consulta una tabla rápida de conversión de las principales monedas.",
+    homePsDesc:"Divide un PDF en páginas sueltas, rangos o cada N páginas. Funciona 100% en tu navegador, sin subir nada.",
+    homePmDesc:"Combina varios PDF en uno en el orden que quieras. 100% en el navegador, sin subidas.",
+    homePiDesc:"Convierte cada página de un PDF en imágenes PNG o JPEG y guárdalas una a una o todas a la vez.",
+    homeXsDesc:"Divide un libro de Excel en archivos por hoja y guarda cada uno como XLSX o CSV (procesado en tu navegador).",
+    homeBrDesc:"Renombra muchos archivos a la vez con buscar y reemplazar, prefijo/sufijo y reglas de numeración; luego descárgalos renombrados o exporta un script .bat/.ps1/.sh.",
+    homeTxDesc:"Arrastra, reordena y combina varios archivos de texto en uno, con opciones de separador, encabezado con nombre de archivo y BOM.",
+    navPostal:"Búsqueda de código postal (KR)", homePostalDesc:"Busca una dirección por vía o parcela y copia el código postal de 5 dígitos.", footPrivacy:"Política de privacidad"
+  },
+  fr:{
+    docTitle:"Grit Tools — Outils de développement et de calcul dans le navigateur",
+    homeH1:"Grit Tools — des outils qui tournent dans votre navigateur. Extraction de coordonnées de pixels, calculatrices d'intérêts composés et simples",
+    homeTag:"Des outils de développement, directement dans le navigateur",
+    homeFoot:"Grit · Outils open source",
+    homePcDesc:"Cliquez sur une image pour en extraire les coordonnées de pixels. Affinez au pixel près avec les flèches et copiez chaque point au format de code souhaité : coordonnées, #define ou une fonction. Conçu pour le travail de coordonnées en IHM / UI embarquée.",
+    homePcMeta1:"Cliquer sur l'image", homePcMeta2:"Copier le code",
+    navPixel:"Coordonnées d'image", navCompound:"Intérêts composés", navSimple:"Intérêts simples",
+    homeCiDesc:"Calculez instantanément le montant final composé et les intérêts à partir du capital, du taux et du nombre de périodes. Affiche un graphique du solde par période et exporte le tableau vers Excel.",
+    homeCiMeta1:"Graphique", homeCiMeta2:"Exporter vers Excel",
+    homeSiDesc:"Calculez instantanément les intérêts simples et le total à partir du capital, du taux et du nombre de périodes. Affiche un graphique du solde par période et exporte le tableau vers Excel.",
+    homeSiMeta1:"Graphique", homeSiMeta2:"Exporter vers Excel",
+    navResize:"Redimensionner l'image", navCp:"Sélecteur de couleur",
+    navTm:"Tableau → Markdown", navAddr:"Romaniser l'adresse",
+    navSalary:"Salaire net (KR)", navDday:"Calculateur J-J", navFx:"Convertisseur de devises",
+    navPs:"Diviser un PDF", navPm:"Fusionner des PDF", navPi:"PDF en image",
+    navXs:"Diviser des feuilles Excel", navBr:"Renommage par lot", navTx:"Fusionner des fichiers texte",
+    metaNoUpload:"Aucun envoi", metaCopy:"Copier", metaDownload:"Télécharger", metaDragDrop:"Glisser-déposer", metaExcel:"Exporter vers Excel", metaInstant:"Instantané", metaPreview:"Aperçu", metaEstimate:"Estimation", metaLive:"Taux en direct", metaScript:"Script", metaImage:"Enregistrer l'image",
+    homeResizeDesc:"Redimensionnez et compressez vos images entièrement dans le navigateur, puis téléchargez-les. Jamais envoyées à un serveur.",
+    homeCpDesc:"Importez une image et prélevez la couleur de n'importe quel pixel pour copier son HEX/RGB/HSL, avec une loupe de zoom. Jamais envoyée.",
+    homeTmDesc:"Collez un tableau depuis Excel, Google Sheets ou Notion (ou un CSV) et obtenez instantanément un tableau Markdown GitHub avec aperçu en direct.",
+    homeAddrDesc:"Convertissez instantanément une adresse coréenne en adresse anglaise/romanisée pour les formulaires d'expédition. Une aide à la romanisation.",
+    homeSalaryDesc:"Estime le salaire net mensuel/annuel coréen après la pension nationale, l'assurance maladie et l'impôt sur le revenu (taux 2025).",
+    homeDdayDesc:"J-J, nombre de jours entre deux dates et ajout/soustraction de dates, avec jour de la semaine et décompte exact des jours.",
+    homeFxDesc:"Convertissez des devises avec les taux de référence en direct de la BCE et consultez un tableau de conversion rapide des principales monnaies.",
+    homePsDesc:"Divisez un PDF en pages individuelles, en plages ou toutes les N pages. Fonctionne à 100% dans votre navigateur, sans envoi.",
+    homePmDesc:"Combinez plusieurs PDF en un seul dans l'ordre de votre choix. 100% dans le navigateur, sans envoi.",
+    homePiDesc:"Convertissez chaque page d'un PDF en images PNG ou JPEG et enregistrez-les une à une ou toutes en même temps.",
+    homeXsDesc:"Divisez un classeur Excel en fichiers par feuille et enregistrez chacun en XLSX ou CSV (traité dans votre navigateur).",
+    homeBrDesc:"Renommez plusieurs fichiers à la fois avec rechercher-remplacer, préfixe/suffixe et règles de numérotation, puis téléchargez-les renommés ou exportez un script .bat/.ps1/.sh.",
+    homeTxDesc:"Glissez, réordonnez et fusionnez plusieurs fichiers texte en un seul, avec options de séparateur, d'en-tête de nom de fichier et de BOM.",
+    navPostal:"Recherche de code postal (KR)", homePostalDesc:"Trouvez et copiez un code postal à 5 chiffres à partir d'une adresse.", footPrivacy:"Politique de confidentialité"
+  },
+  de:{
+    docTitle:"Grit Tools — Entwickler- und Rechner-Tools im Browser",
+    homeH1:"Grit Tools — Tools, die in deinem Browser laufen. Pixelkoordinaten extrahieren, Zins- und Zinseszinsrechner",
+    homeTag:"Entwickler-Tools, direkt im Browser",
+    homeFoot:"Grit · Open-Source-Tools",
+    homePcDesc:"Klicke auf ein Bild, um Pixelkoordinaten zu ermitteln. Justiere mit den Pfeiltasten pixelgenau und kopiere jeden Punkt im gewünschten Code-Format – Koordinaten, #define oder eine Funktion. Gemacht für Koordinatenarbeit an HMI / Embedded-UI.",
+    homePcMeta1:"Bild anklicken", homePcMeta2:"Code kopieren",
+    navPixel:"Bildkoordinaten", navCompound:"Zinseszins", navSimple:"Einfacher Zins",
+    homeCiDesc:"Berechne sofort den Endbetrag mit Zinseszins und die Zinsen aus Kapital, Zinssatz und Anzahl der Perioden. Zeigt ein Saldo-Diagramm pro Periode und exportiert die Tabelle nach Excel.",
+    homeCiMeta1:"Diagramm", homeCiMeta2:"Excel-Export",
+    homeSiDesc:"Berechne sofort den einfachen Zins und die Summe aus Kapital, Zinssatz und Anzahl der Perioden. Zeigt ein Saldo-Diagramm pro Periode und exportiert die Tabelle nach Excel.",
+    homeSiMeta1:"Diagramm", homeSiMeta2:"Excel-Export",
+    navResize:"Bild verkleinern", navCp:"Farbwähler",
+    navTm:"Tabelle → Markdown", navAddr:"Adresse romanisieren",
+    navSalary:"Nettogehalt (KR)", navDday:"D-Day-Rechner", navFx:"Währungsrechner",
+    navPs:"PDF teilen", navPm:"PDF zusammenfügen", navPi:"PDF zu Bild",
+    navXs:"Excel-Blätter teilen", navBr:"Stapel-Umbenennung", navTx:"Textdateien zusammenführen",
+    metaNoUpload:"Kein Upload", metaCopy:"Kopieren", metaDownload:"Herunterladen", metaDragDrop:"Ziehen & Ablegen", metaExcel:"Excel-Export", metaInstant:"Sofort", metaPreview:"Vorschau", metaEstimate:"Schätzung", metaLive:"Live-Kurse", metaScript:"Skript", metaImage:"Bild speichern",
+    homeResizeDesc:"Verkleinere und komprimiere Bilder komplett im Browser und lade sie herunter. Werden nie auf einen Server hochgeladen.",
+    homeCpDesc:"Lade ein Bild hoch und pipettiere einen beliebigen Pixel, um HEX/RGB/HSL zu kopieren – mit Zoom-Lupe. Kein Upload.",
+    homeTmDesc:"Füge eine Tabelle aus Excel, Google Sheets oder Notion (oder CSV) ein und erhalte sofort eine GitHub-Markdown-Tabelle mit Live-Vorschau.",
+    homeAddrDesc:"Wandle eine koreanische Adresse sofort in eine englische/romanisierte Adresse für Versandformulare um. Eine Romanisierungshilfe.",
+    homeSalaryDesc:"Schätzt das koreanische Netto-Monats-/Jahresgehalt nach Rentenversicherung, Krankenversicherung und Einkommensteuer (Sätze 2025).",
+    homeDdayDesc:"D-Day, Tage zwischen zwei Daten sowie Datum addieren/subtrahieren – mit Wochentag und exakter Tageszahl.",
+    homeFxDesc:"Rechne Währungen mit Live-Referenzkursen der EZB um und sieh eine schnelle Umrechnungstabelle der wichtigsten Währungen.",
+    homePsDesc:"Teile ein PDF in einzelne Seiten, Seitenbereiche oder alle N Seiten. Läuft zu 100% im Browser, kein Upload.",
+    homePmDesc:"Füge mehrere PDFs in beliebiger Reihenfolge zu einem zusammen. 100% im Browser, ohne Upload.",
+    homePiDesc:"Wandle jede Seite eines PDFs in PNG- oder JPEG-Bilder um und speichere sie einzeln oder alle auf einmal.",
+    homeXsDesc:"Teile eine Excel-Arbeitsmappe in Dateien pro Blatt und speichere jedes als eigene XLSX oder CSV (im Browser verarbeitet).",
+    homeBrDesc:"Benenne viele Dateien auf einmal mit Suchen & Ersetzen, Präfix/Suffix und Nummerierungsregeln um, lade sie umbenannt herunter oder exportiere ein .bat/.ps1/.sh-Skript.",
+    homeTxDesc:"Ziehe, ordne und führe mehrere Textdateien zu einer zusammen – mit Trennzeichen-, Dateinamen-Kopfzeilen- und BOM-Optionen.",
+    navPostal:"Postleitzahl-Suche (KR)", homePostalDesc:"PLZ über Straßen- oder Flurstückadresse finden und 5-stellig kopieren.", footPrivacy:"Datenschutzerklärung"
+  },
+  pt:{
+    docTitle:"Grit Tools — Ferramentas de desenvolvimento e cálculo no navegador",
+    homeH1:"Grit Tools — ferramentas que rodam no seu navegador. Extração de coordenadas de pixels, calculadoras de juros compostos e simples",
+    homeTag:"Ferramentas de desenvolvimento, direto no navegador",
+    homeFoot:"Grit · Ferramentas de código aberto",
+    homePcDesc:"Clique numa imagem para extrair as coordenadas de pixels. Ajuste 1px de cada vez com as setas e copie cada ponto no formato de código que quiser: coordenadas, #define ou uma função. Feito para trabalho de coordenadas em IHM / UI embarcada.",
+    homePcMeta1:"Clicar na imagem", homePcMeta2:"Copiar código",
+    navPixel:"Coordenadas de imagem", navCompound:"Juros compostos", navSimple:"Juros simples",
+    homeCiDesc:"Calcule na hora o valor final composto e os juros a partir do capital, da taxa e do número de períodos. Mostra um gráfico de saldo por período e exporta a tabela para Excel.",
+    homeCiMeta1:"Gráfico", homeCiMeta2:"Exportar para Excel",
+    homeSiDesc:"Calcule na hora os juros simples e o total a partir do capital, da taxa e do número de períodos. Mostra um gráfico de saldo por período e exporta a tabela para Excel.",
+    homeSiMeta1:"Gráfico", homeSiMeta2:"Exportar para Excel",
+    navResize:"Redimensionar imagem", navCp:"Seletor de cor",
+    navTm:"Tabela → Markdown", navAddr:"Romanizar endereço",
+    navSalary:"Salário líquido (KR)", navDday:"Calculadora D-Day", navFx:"Conversor de moedas",
+    navPs:"Dividir PDF", navPm:"Juntar PDF", navPi:"PDF para imagem",
+    navXs:"Dividir planilhas Excel", navBr:"Renomear em lote", navTx:"Juntar arquivos de texto",
+    metaNoUpload:"Sem envio", metaCopy:"Copiar", metaDownload:"Baixar", metaDragDrop:"Arrastar e soltar", metaExcel:"Exportar para Excel", metaInstant:"Instantâneo", metaPreview:"Pré-visualização", metaEstimate:"Estimativa", metaLive:"Taxas ao vivo", metaScript:"Script", metaImage:"Salvar imagem",
+    homeResizeDesc:"Redimensione e comprima imagens totalmente no navegador e baixe-as. Nunca são enviadas a um servidor.",
+    homeCpDesc:"Envie uma imagem e use o conta-gotas em qualquer pixel para copiar seu HEX/RGB/HSL, com lupa de zoom. Nunca é enviada.",
+    homeTmDesc:"Cole uma tabela do Excel, Google Sheets ou Notion (ou CSV) e obtenha na hora uma tabela Markdown do GitHub com pré-visualização ao vivo.",
+    homeAddrDesc:"Converta na hora um endereço coreano em um endereço em inglês/romanizado para formulários de envio. Um auxílio de romanização.",
+    homeSalaryDesc:"Estima o salário líquido mensal/anual coreano após a previdência nacional, o seguro de saúde e o imposto de renda (taxas de 2025).",
+    homeDdayDesc:"D-Day, dias entre duas datas e adição/subtração de datas, com dia da semana e contagem exata de dias.",
+    homeFxDesc:"Converta moedas com taxas de referência do BCE ao vivo e veja uma tabela rápida de conversão das principais moedas.",
+    homePsDesc:"Divida um PDF em páginas avulsas, intervalos ou a cada N páginas. Funciona 100% no seu navegador, sem envio.",
+    homePmDesc:"Combine vários PDFs em um só na ordem que quiser. 100% no navegador, sem envios.",
+    homePiDesc:"Converta cada página de um PDF em imagens PNG ou JPEG e salve-as uma a uma ou todas de uma vez.",
+    homeXsDesc:"Divida uma pasta de trabalho do Excel em arquivos por planilha e salve cada um como XLSX ou CSV (processado no seu navegador).",
+    homeBrDesc:"Renomeie muitos arquivos de uma vez com localizar e substituir, prefixo/sufixo e regras de numeração; depois baixe-os renomeados ou exporte um script .bat/.ps1/.sh.",
+    homeTxDesc:"Arraste, reordene e junte vários arquivos de texto em um só, com opções de separador, cabeçalho com nome do arquivo e BOM.",
+    navPostal:"Busca de CEP (KR)", homePostalDesc:"Busque um endereço por via ou lote e copie o CEP de 5 dígitos.", footPrivacy:"Política de Privacidade"
+  },
+  ru:{
+    docTitle:"Grit Tools — Инструменты для разработки и расчётов в браузере",
+    homeH1:"Grit Tools — инструменты, работающие прямо в браузере. Извлечение координат пикселей, калькуляторы сложных и простых процентов",
+    homeTag:"Инструменты для разработки прямо в браузере",
+    homeFoot:"Grit · Инструменты с открытым исходным кодом",
+    homePcDesc:"Щёлкните по изображению, чтобы получить координаты пикселя. Точно подстраивайте по 1px стрелками и копируйте каждую точку в нужном формате кода — координаты, #define или функция. Создано для работы с координатами в HMI / встраиваемом UI.",
+    homePcMeta1:"Клик по изображению", homePcMeta2:"Копировать код",
+    navPixel:"Координаты изображения", navCompound:"Сложные проценты", navSimple:"Простые проценты",
+    homeCiDesc:"Мгновенно рассчитайте итоговую сумму со сложными процентами и проценты по сумме, ставке и числу периодов. Показывает график баланса по периодам и экспортирует таблицу в Excel.",
+    homeCiMeta1:"График", homeCiMeta2:"Экспорт в Excel",
+    homeSiDesc:"Мгновенно рассчитайте простые проценты и итог по сумме, ставке и числу периодов. Показывает график баланса по периодам и экспортирует таблицу в Excel.",
+    homeSiMeta1:"График", homeSiMeta2:"Экспорт в Excel",
+    navResize:"Изменить размер изображения", navCp:"Выбор цвета",
+    navTm:"Таблица → Markdown", navAddr:"Романизация адреса",
+    navSalary:"Зарплата на руки (KR)", navDday:"Калькулятор D-Day", navFx:"Конвертер валют",
+    navPs:"Разделить PDF", navPm:"Объединить PDF", navPi:"PDF в изображение",
+    navXs:"Разделить листы Excel", navBr:"Пакетное переименование", navTx:"Объединить текстовые файлы",
+    metaNoUpload:"Без загрузки", metaCopy:"Копировать", metaDownload:"Скачать", metaDragDrop:"Перетаскивание", metaExcel:"Экспорт в Excel", metaInstant:"Мгновенно", metaPreview:"Предпросмотр", metaEstimate:"Оценка", metaLive:"Курсы в реальном времени", metaScript:"Скрипт", metaImage:"Сохранить изображение",
+    homeResizeDesc:"Меняйте размер и сжимайте изображения полностью в браузере, затем скачивайте. Никогда не загружаются на сервер.",
+    homeCpDesc:"Загрузите изображение и пипеткой возьмите цвет любого пикселя, чтобы скопировать HEX/RGB/HSL, с лупой увеличения. Без загрузки на сервер.",
+    homeTmDesc:"Вставьте таблицу из Excel, Google Таблиц или Notion (или CSV) и мгновенно получите таблицу Markdown для GitHub с живым предпросмотром.",
+    homeAddrDesc:"Мгновенно преобразуйте корейский адрес в английский/латинизированный адрес для форм доставки. Помощник по латинизации.",
+    homeSalaryDesc:"Оценивает корейскую зарплату на руки за месяц/год после пенсионных, медицинской страховки и подоходного налога (ставки 2025 года).",
+    homeDdayDesc:"D-Day, число дней между двумя датами и прибавление/вычитание дат — с днём недели и точным подсчётом дней.",
+    homeFxDesc:"Конвертируйте валюты по справочным курсам ЕЦБ в реальном времени и смотрите быструю таблицу пересчёта основных валют.",
+    homePsDesc:"Разделите PDF на отдельные страницы, диапазоны или каждые N страниц. Работает на 100% в браузере, без загрузки.",
+    homePmDesc:"Объедините несколько PDF в один в любом порядке. На 100% в браузере, без загрузок.",
+    homePiDesc:"Преобразуйте каждую страницу PDF в изображения PNG или JPEG и сохраняйте их по одной или все сразу.",
+    homeXsDesc:"Разделите книгу Excel на файлы по листам и сохраните каждый как отдельный XLSX или CSV (обработка в браузере).",
+    homeBrDesc:"Переименуйте сразу много файлов с помощью поиска и замены, префикса/суффикса и правил нумерации, затем скачайте их переименованными или экспортируйте скрипт .bat/.ps1/.sh.",
+    homeTxDesc:"Перетаскивайте, меняйте порядок и объединяйте несколько текстовых файлов в один — с параметрами разделителя, заголовка с именем файла и BOM.",
+    navPostal:"Поиск почтового индекса (KR)", homePostalDesc:"Найдите по адресу и скопируйте 5-значный почтовый индекс.", footPrivacy:"Политика конфиденциальности"
   }
 });
 GritI18n.init({ mount: document.getElementById("langMount"), inline: true });

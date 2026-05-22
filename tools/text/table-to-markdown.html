@@ -7,11 +7,29 @@
 <meta name="description" content="엑셀·구글 시트·노션에서 복사한 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환하고 미리보기까지 보여주는 도구. 모든 변환은 브라우저에서 처리됩니다.">
 <meta name="keywords" content="표 마크다운 변환, 마크다운 표 만들기, CSV 마크다운, 엑셀 마크다운, table to markdown, markdown table generator">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/text/table-to-markdown.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="표를 마크다운으로 변환 — Grit Tools">
 <meta property="og:description" content="엑셀·구글 시트·노션 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환. 미리보기 지원.">
+<meta property="og:url" content="https://grit-tools.com/tools/text/table-to-markdown.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="표를 마크다운으로 변환 — Grit Tools">
+<meta name="twitter:description" content="엑셀·구글 시트·노션 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환. 미리보기 지원.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -120,8 +138,24 @@
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Web browser",
   "description": "엑셀·구글 시트·노션에서 복사한 표나 CSV를 붙여넣으면 GitHub 마크다운 표로 즉시 변환하고 미리보기를 보여주는 도구.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"텍스트","item":"https://grit-tools.com/#text"},
+ {"@type":"ListItem","position":3,"name":"표를 마크다운으로 변환","item":"https://grit-tools.com/tools/text/table-to-markdown.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"표를 마크다운으로 변환 사용법",
+ "step":[
+ {"@type":"HowToStep","name":"표 붙여넣기","text":"엑셀·구글 시트·노션에서 표 영역을 복사해 왼쪽 입력칸에 붙여넣으세요. CSV(쉼표) 텍스트도 됩니다."},
+ {"@type":"HowToStep","name":"옵션 선택","text":"첫 줄을 헤더로 쓸지, 구분자(자동·탭·쉼표), 정렬(왼쪽·가운데·오른쪽)을 고르면 결과가 즉시 갱신됩니다."},
+ {"@type":"HowToStep","name":"복사해서 사용","text":"‘복사’를 누르면 GitHub 마크다운 표가 클립보드에 담깁니다. 셀 안의 | 는 자동으로 \\| 로 처리됩니다."}
+]}
 </script>
 </head>
 <body>
@@ -207,6 +241,11 @@
         <p class="hs-d" data-i18n-html="tmStep3D">‘복사’를 누르면 GitHub 마크다운 표가 클립보드에 담깁니다. 셀 안의 <code>|</code> 는 자동으로 <code>\|</code> 로 처리됩니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="address-romanize.html" data-i18n="navAddr" style="color:var(--blue);text-decoration:none;margin-left:10px;">한글 주소 영문 변환</a>
+      <a href="text-merge.html" data-i18n="navTx" style="color:var(--blue);text-decoration:none;margin-left:10px;">텍스트 파일 합치기</a>
+    </nav>
   </div>
 </div>
 
@@ -388,7 +427,8 @@
       tmHelpBtn:"사용법", tmHelpClose:"닫기", tmGuideTitle:"표를 마크다운으로 변환 사용법",
       tmStep1T:"표 붙여넣기", tmStep1D:"엑셀·구글 시트·노션에서 표 영역을 복사해 왼쪽 입력칸에 붙여넣으세요. CSV(쉼표) 텍스트도 됩니다.",
       tmStep2T:"옵션 선택", tmStep2D:"첫 줄을 헤더로 쓸지, 구분자(자동·탭·쉼표), 정렬(왼쪽·가운데·오른쪽)을 고르면 결과가 즉시 갱신됩니다.",
-      tmStep3T:"복사해서 사용", tmStep3D:"‘복사’를 누르면 GitHub 마크다운 표가 클립보드에 담깁니다. 셀 안의 <code>|</code> 는 자동으로 <code>\\|</code> 로 처리됩니다."
+      tmStep3T:"복사해서 사용", tmStep3D:"‘복사’를 누르면 GitHub 마크다운 표가 클립보드에 담깁니다. 셀 안의 <code>|</code> 는 자동으로 <code>\\|</code> 로 처리됩니다.",
+      relTitle:"관련 도구", navAddr:"한글 주소 영문 변환", navTx:"텍스트 파일 합치기"
     },
     en:{
       docTitle:"Table → Markdown Converter — Grit Tools",
@@ -406,7 +446,8 @@
       tmHelpBtn:"How to use", tmHelpClose:"Close", tmGuideTitle:"How to use the Table → Markdown converter",
       tmStep1T:"Paste a table", tmStep1D:"Copy a table range from Excel, Google Sheets or Notion and paste it into the box on the left. Plain CSV (comma) text works too.",
       tmStep2T:"Pick options", tmStep2D:"Choose whether the first row is a header, the delimiter (auto, tab, comma) and the alignment (left, center, right) — the result updates instantly.",
-      tmStep3T:"Copy and use", tmStep3D:"Click ‘Copy’ to put the GitHub Markdown table on your clipboard. Any <code>|</code> inside a cell is escaped to <code>\\|</code> automatically."
+      tmStep3T:"Copy and use", tmStep3D:"Click ‘Copy’ to put the GitHub Markdown table on your clipboard. Any <code>|</code> inside a cell is escaped to <code>\\|</code> automatically.",
+      relTitle:"Related tools", navAddr:"Address Romanizer", navTx:"Text File Merge"
     },
     ja:{
       docTitle:"表 → Markdown 変換ツール — Grit Tools",
@@ -424,7 +465,8 @@
       tmHelpBtn:"使い方", tmHelpClose:"閉じる", tmGuideTitle:"表 → Markdown 変換ツールの使い方",
       tmStep1T:"表を貼り付け", tmStep1D:"Excel・Google スプレッドシート・Notion で表の範囲をコピーし、左の入力欄に貼り付けます。CSV（カンマ）テキストも使えます。",
       tmStep2T:"オプションを選択", tmStep2D:"1行目を見出しにするか、区切り文字（自動・タブ・カンマ）、配置（左・中央・右）を選ぶと結果がすぐ更新されます。",
-      tmStep3T:"コピーして使う", tmStep3D:"「コピー」を押すと GitHub の Markdown 表がクリップボードに入ります。セル内の <code>|</code> は自動的に <code>\\|</code> に処理されます。"
+      tmStep3T:"コピーして使う", tmStep3D:"「コピー」を押すと GitHub の Markdown 表がクリップボードに入ります。セル内の <code>|</code> は自動的に <code>\\|</code> に処理されます。",
+      relTitle:"関連ツール", navAddr:"住所ローマ字変換", navTx:"テキスト結合"
     },
     zh:{
       docTitle:"表格 → Markdown 转换器 — Grit Tools",
@@ -442,7 +484,103 @@
       tmHelpBtn:"使用方法", tmHelpClose:"关闭", tmGuideTitle:"表格 → Markdown 转换器使用方法",
       tmStep1T:"粘贴表格", tmStep1D:"在 Excel、Google 表格或 Notion 中复制表格区域，粘贴到左侧输入框。也支持 CSV（逗号）文本。",
       tmStep2T:"选择选项", tmStep2D:"选择是否将首行作为表头、分隔符（自动·制表符·逗号）和对齐方式（左·居中·右），结果会即时更新。",
-      tmStep3T:"复制使用", tmStep3D:"点击“复制”即可将 GitHub Markdown 表格复制到剪贴板。单元格中的 <code>|</code> 会自动转义为 <code>\\|</code>。"
+      tmStep3T:"复制使用", tmStep3D:"点击“复制”即可将 GitHub Markdown 表格复制到剪贴板。单元格中的 <code>|</code> 会自动转义为 <code>\\|</code>。",
+      relTitle:"相关工具", navAddr:"韩文地址转换", navTx:"文本文件合并"
+    },
+    es:{
+      docTitle:"Conversor de tabla a Markdown — Grit Tools",
+      tmTool:"Tabla → Markdown", tmAllTools:"← Todas las herramientas",
+      tmTitle:"Conversor de tabla a Markdown",
+      tmSub:"Pega una tabla de Excel, Google Sheets o Notion (o CSV) y obtén al instante una tabla en Markdown estilo GitHub.",
+      tmInputTitle:"Pegar tabla", tmOutputTitle:"Resultado",
+      tmPlaceholder:"Pega aquí una tabla de Excel, Google Sheets, Notion o un CSV…",
+      tmHeaderOpt:"La primera fila es el encabezado",
+      tmDelimLabel:"Delimitador", tmDelimAuto:"Detección automática", tmDelimTab:"Tabulación", tmDelimComma:"Coma",
+      tmAlignLabel:"Alineación", tmAlignLeft:"Izquierda", tmAlignCenter:"Centro", tmAlignRight:"Derecha",
+      tmMarkdownLabel:"Markdown", tmPreviewLabel:"Vista previa",
+      tmCopy:"Copiar", tmCopied:"¡Copiado!",
+      tmEmpty:"Pega una tabla y la vista previa aparecerá aquí.",
+      tmHelpBtn:"Cómo usar", tmHelpClose:"Cerrar", tmGuideTitle:"Cómo usar el conversor de tabla a Markdown",
+      tmStep1T:"Pega una tabla", tmStep1D:"Copia un rango de tabla desde Excel, Google Sheets o Notion y pégalo en el cuadro de la izquierda. También funciona texto CSV (coma).",
+      tmStep2T:"Elige opciones", tmStep2D:"Elige si la primera fila es el encabezado, el delimitador (automático, tabulación, coma) y la alineación (izquierda, centro, derecha): el resultado se actualiza al instante.",
+      tmStep3T:"Copia y usa", tmStep3D:"Pulsa ‘Copiar’ para poner la tabla Markdown de GitHub en el portapapeles. Cualquier <code>|</code> dentro de una celda se escapa automáticamente como <code>\\|</code>.",
+      relTitle:"Herramientas relacionadas", navAddr:"Romanizar dirección", navTx:"Unir archivos de texto"
+    },
+    fr:{
+      docTitle:"Convertisseur de tableau en Markdown — Grit Tools",
+      tmTool:"Tableau → Markdown", tmAllTools:"← Tous les outils",
+      tmTitle:"Convertisseur de tableau en Markdown",
+      tmSub:"Collez un tableau d'Excel, Google Sheets ou Notion (ou un CSV) pour obtenir instantanément un tableau Markdown façon GitHub.",
+      tmInputTitle:"Coller le tableau", tmOutputTitle:"Résultat",
+      tmPlaceholder:"Collez ici un tableau d'Excel, Google Sheets, Notion ou un CSV…",
+      tmHeaderOpt:"La première ligne est l'en-tête",
+      tmDelimLabel:"Délimiteur", tmDelimAuto:"Détection automatique", tmDelimTab:"Tabulation", tmDelimComma:"Virgule",
+      tmAlignLabel:"Alignement", tmAlignLeft:"Gauche", tmAlignCenter:"Centre", tmAlignRight:"Droite",
+      tmMarkdownLabel:"Markdown", tmPreviewLabel:"Aperçu",
+      tmCopy:"Copier", tmCopied:"Copié !",
+      tmEmpty:"Collez un tableau et l'aperçu apparaîtra ici.",
+      tmHelpBtn:"Mode d'emploi", tmHelpClose:"Fermer", tmGuideTitle:"Comment utiliser le convertisseur de tableau en Markdown",
+      tmStep1T:"Collez un tableau", tmStep1D:"Copiez une plage de tableau depuis Excel, Google Sheets ou Notion et collez-la dans le champ de gauche. Le texte CSV (virgule) fonctionne aussi.",
+      tmStep2T:"Choisissez les options", tmStep2D:"Choisissez si la première ligne est l'en-tête, le délimiteur (automatique, tabulation, virgule) et l'alignement (gauche, centre, droite) — le résultat se met à jour instantanément.",
+      tmStep3T:"Copiez et utilisez", tmStep3D:"Cliquez sur ‘Copier’ pour mettre le tableau Markdown GitHub dans le presse-papiers. Tout <code>|</code> dans une cellule est échappé automatiquement en <code>\\|</code>.",
+      relTitle:"Outils associés", navAddr:"Romaniser l'adresse", navTx:"Fusionner des fichiers texte"
+    },
+    de:{
+      docTitle:"Tabelle-zu-Markdown-Konverter — Grit Tools",
+      tmTool:"Tabelle → Markdown", tmAllTools:"← Alle Werkzeuge",
+      tmTitle:"Tabelle-zu-Markdown-Konverter",
+      tmSub:"Füge eine Tabelle aus Excel, Google Sheets oder Notion (oder CSV) ein und erhalte sofort eine Markdown-Tabelle im GitHub-Stil.",
+      tmInputTitle:"Tabelle einfügen", tmOutputTitle:"Ergebnis",
+      tmPlaceholder:"Hier eine Tabelle aus Excel, Google Sheets, Notion oder ein CSV einfügen…",
+      tmHeaderOpt:"Erste Zeile ist Kopfzeile",
+      tmDelimLabel:"Trennzeichen", tmDelimAuto:"Automatisch erkennen", tmDelimTab:"Tabulator", tmDelimComma:"Komma",
+      tmAlignLabel:"Ausrichtung", tmAlignLeft:"Links", tmAlignCenter:"Mitte", tmAlignRight:"Rechts",
+      tmMarkdownLabel:"Markdown", tmPreviewLabel:"Vorschau",
+      tmCopy:"Kopieren", tmCopied:"Kopiert!",
+      tmEmpty:"Füge eine Tabelle ein, dann erscheint hier die Vorschau.",
+      tmHelpBtn:"Anleitung", tmHelpClose:"Schließen", tmGuideTitle:"So nutzt du den Tabelle-zu-Markdown-Konverter",
+      tmStep1T:"Tabelle einfügen", tmStep1D:"Kopiere einen Tabellenbereich aus Excel, Google Sheets oder Notion und füge ihn in das linke Feld ein. Auch reiner CSV-Text (Komma) funktioniert.",
+      tmStep2T:"Optionen wählen", tmStep2D:"Wähle, ob die erste Zeile die Kopfzeile ist, das Trennzeichen (automatisch, Tabulator, Komma) und die Ausrichtung (links, Mitte, rechts) — das Ergebnis wird sofort aktualisiert.",
+      tmStep3T:"Kopieren und verwenden", tmStep3D:"Klicke auf ‘Kopieren’, um die GitHub-Markdown-Tabelle in die Zwischenablage zu legen. Jedes <code>|</code> in einer Zelle wird automatisch zu <code>\\|</code> maskiert.",
+      relTitle:"Verwandte Tools", navAddr:"Adresse romanisieren", navTx:"Textdateien zusammenführen"
+    },
+    pt:{
+      docTitle:"Conversor de tabela para Markdown — Grit Tools",
+      tmTool:"Tabela → Markdown", tmAllTools:"← Todas as ferramentas",
+      tmTitle:"Conversor de tabela para Markdown",
+      tmSub:"Cole uma tabela do Excel, Google Sheets ou Notion (ou CSV) para obter na hora uma tabela Markdown no estilo GitHub.",
+      tmInputTitle:"Colar tabela", tmOutputTitle:"Resultado",
+      tmPlaceholder:"Cole aqui uma tabela do Excel, Google Sheets, Notion ou um CSV…",
+      tmHeaderOpt:"Primeira linha é o cabeçalho",
+      tmDelimLabel:"Delimitador", tmDelimAuto:"Detecção automática", tmDelimTab:"Tabulação", tmDelimComma:"Vírgula",
+      tmAlignLabel:"Alinhamento", tmAlignLeft:"Esquerda", tmAlignCenter:"Centro", tmAlignRight:"Direita",
+      tmMarkdownLabel:"Markdown", tmPreviewLabel:"Pré-visualização",
+      tmCopy:"Copiar", tmCopied:"Copiado!",
+      tmEmpty:"Cole uma tabela e a pré-visualização aparecerá aqui.",
+      tmHelpBtn:"Como usar", tmHelpClose:"Fechar", tmGuideTitle:"Como usar o conversor de tabela para Markdown",
+      tmStep1T:"Cole uma tabela", tmStep1D:"Copie um intervalo de tabela do Excel, Google Sheets ou Notion e cole no campo à esquerda. Texto CSV (vírgula) também funciona.",
+      tmStep2T:"Escolha as opções", tmStep2D:"Escolha se a primeira linha é o cabeçalho, o delimitador (automático, tabulação, vírgula) e o alinhamento (esquerda, centro, direita) — o resultado é atualizado na hora.",
+      tmStep3T:"Copie e use", tmStep3D:"Clique em ‘Copiar’ para colocar a tabela Markdown do GitHub na área de transferência. Qualquer <code>|</code> dentro de uma célula é escapado automaticamente como <code>\\|</code>.",
+      relTitle:"Ferramentas relacionadas", navAddr:"Romanizar endereço", navTx:"Juntar arquivos de texto"
+    },
+    ru:{
+      docTitle:"Конвертер таблицы в Markdown — Grit Tools",
+      tmTool:"Таблица → Markdown", tmAllTools:"← Все инструменты",
+      tmTitle:"Конвертер таблицы в Markdown",
+      tmSub:"Вставьте таблицу из Excel, Google Таблиц или Notion (или CSV), чтобы мгновенно получить таблицу Markdown в стиле GitHub.",
+      tmInputTitle:"Вставить таблицу", tmOutputTitle:"Результат",
+      tmPlaceholder:"Вставьте сюда таблицу из Excel, Google Таблиц, Notion или CSV…",
+      tmHeaderOpt:"Первая строка — заголовок",
+      tmDelimLabel:"Разделитель", tmDelimAuto:"Автоопределение", tmDelimTab:"Табуляция", tmDelimComma:"Запятая",
+      tmAlignLabel:"Выравнивание", tmAlignLeft:"Слева", tmAlignCenter:"По центру", tmAlignRight:"Справа",
+      tmMarkdownLabel:"Markdown", tmPreviewLabel:"Предпросмотр",
+      tmCopy:"Копировать", tmCopied:"Скопировано!",
+      tmEmpty:"Вставьте таблицу, и предпросмотр появится здесь.",
+      tmHelpBtn:"Как пользоваться", tmHelpClose:"Закрыть", tmGuideTitle:"Как пользоваться конвертером таблицы в Markdown",
+      tmStep1T:"Вставьте таблицу", tmStep1D:"Скопируйте диапазон таблицы из Excel, Google Таблиц или Notion и вставьте в поле слева. Подходит и текст CSV (запятая).",
+      tmStep2T:"Выберите параметры", tmStep2D:"Выберите, является ли первая строка заголовком, разделитель (авто, табуляция, запятая) и выравнивание (слева, по центру, справа) — результат обновляется мгновенно.",
+      tmStep3T:"Скопируйте и используйте", tmStep3D:"Нажмите ‘Копировать’, чтобы поместить таблицу Markdown в стиле GitHub в буфер обмена. Любой символ <code>|</code> внутри ячейки автоматически экранируется как <code>\\|</code>.",
+      relTitle:"Похожие инструменты", navAddr:"Романизация адреса", navTx:"Объединить текстовые файлы"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: recompute });

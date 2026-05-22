@@ -7,11 +7,29 @@
 <meta name="description" content="이미지를 끌어다 놓고 마우스로 픽셀을 찍어 HEX·RGB·HSL 색상값을 바로 복사하는 스포이드 도구. 돋보기 미리보기와 최근 색상 팔레트 제공. 이미지는 서버로 전송되지 않습니다.">
 <meta name="keywords" content="색상 추출, 스포이드, 컬러 픽커, 이미지 색 추출, HEX, RGB, HSL, color picker, eyedropper, image color picker">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="#3ba6f1">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/tools/image/color-picker.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Grit Tools">
 <meta property="og:title" content="이미지 색상 추출 (스포이드) — Grit Tools">
 <meta property="og:description" content="이미지에서 픽셀을 찍어 HEX·RGB·HSL 값을 바로 복사. 돋보기와 최근 색상 팔레트 지원.">
+<meta property="og:url" content="https://grit-tools.com/tools/image/color-picker.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:locale:alternate" content="de_DE">
+<meta property="og:locale:alternate" content="pt_PT">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="이미지 색상 추출 (스포이드) — Grit Tools">
+<meta name="twitter:description" content="이미지에서 픽셀을 찍어 HEX·RGB·HSL 값을 바로 복사. 돋보기와 최근 색상 팔레트 지원.">
+<meta name="twitter:image" content="https://grit-tools.com/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -125,12 +143,29 @@
   "applicationCategory": "MultimediaApplication",
   "operatingSystem": "Web browser",
   "description": "이미지에서 픽셀을 찍어 HEX·RGB·HSL 색상값을 바로 복사하는 스포이드 도구. 돋보기 미리보기와 최근 색상 팔레트 제공. 이미지는 서버로 전송되지 않습니다.",
+  "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+ {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+ {"@type":"ListItem","position":2,"name":"이미지","item":"https://grit-tools.com/#image"},
+ {"@type":"ListItem","position":3,"name":"이미지 색상 추출","item":"https://grit-tools.com/tools/image/color-picker.html"}
+]}
+</script>
+<script type="application/ld+json">
+{ "@context":"https://schema.org","@type":"HowTo","name":"이미지 색상 추출 사용법",
+ "step":[
+  {"@type":"HowToStep","name":"이미지 열기","text":"‘이미지 열기’ 버튼으로 고르거나 이미지 파일을 화면에 끌어다 놓으세요. 이미지는 서버로 전송되지 않습니다."},
+  {"@type":"HowToStep","name":"올려서 미리보고 클릭해 추출","text":"이미지 위로 마우스를 움직이면 따라다니는 돋보기가 픽셀을 확대해 보여줍니다. 원하는 지점을 클릭하면 그 색이 추출됩니다."},
+  {"@type":"HowToStep","name":"값 복사 · 팔레트","text":"추출한 색의 HEX·RGB·HSL 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다."}
+]}
 </script>
 </head>
 <body>
 <div id="app">
+  <h1 data-i18n="cpTool" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">이미지 색상 추출</h1>
   <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="cpTool">이미지 색상 추출</span><button type="button" id="helpBtn" class="g-help" data-i18n="cpHelpBtn">사용법</button><span id="langMount"></span><a href="../../index.html" class="g-home" data-i18n="cpAllTools">← 모든 도구</a></div>
 
   <div id="sidebar">
@@ -213,6 +248,11 @@
         <p class="hs-d" data-i18n-html="cpStep3D">추출한 색의 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다.</p>
       </li>
     </ol>
+    <nav class="rel-tools" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;">
+      <span data-i18n="relTitle" style="color:var(--text-dim);">관련 도구</span>
+      <a href="pixel-coords.html" data-i18n="navPixel" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 좌표 추출기</a>
+      <a href="image-resize.html" data-i18n="navResize" style="color:var(--blue);text-decoration:none;margin-left:10px;">이미지 크기·용량 줄이기</a>
+    </nav>
   </div>
 </div>
 
@@ -486,7 +526,8 @@
       cpStep2T:"올려서 미리보고 클릭해 추출",
       cpStep2D:"이미지 위로 마우스를 움직이면 따라다니는 돋보기가 픽셀을 확대해 보여줍니다. 원하는 지점을 클릭하면 그 색이 추출됩니다.",
       cpStep3T:"값 복사 · 팔레트",
-      cpStep3D:"추출한 색의 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다."
+      cpStep3D:"추출한 색의 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다.",
+      relTitle:"관련 도구", navPixel:"이미지 좌표 추출기", navResize:"이미지 크기·용량 줄이기"
     },
     en:{
       docTitle:"Image Color Picker (Eyedropper) — Grit Tools",
@@ -513,7 +554,8 @@
       cpStep2T:"Hover to preview, click to pick",
       cpStep2D:"Move the mouse over the image and a loupe follows the cursor, zooming in pixel by pixel. Click any spot to pick that color.",
       cpStep3T:"Copy values · palette",
-      cpStep3D:"Copy the picked color’s <code>HEX</code>, <code>RGB</code> and <code>HSL</code> values with each ‘Copy’ button. Picked colors stack in the ‘Recent colors’ palette — click a swatch to re-select it."
+      cpStep3D:"Copy the picked color’s <code>HEX</code>, <code>RGB</code> and <code>HSL</code> values with each ‘Copy’ button. Picked colors stack in the ‘Recent colors’ palette — click a swatch to re-select it.",
+      relTitle:"Related tools", navPixel:"Image Coordinate Tool", navResize:"Image Resize & Compress"
     },
     ja:{
       docTitle:"画像カラーピッカー（スポイト） — Grit Tools",
@@ -540,7 +582,8 @@
       cpStep2T:"乗せてプレビュー、クリックで抽出",
       cpStep2D:"画像の上でマウスを動かすと、追従するルーペがピクセル単位で拡大表示します。好きな位置をクリックするとその色を抽出します。",
       cpStep3T:"値をコピー・パレット",
-      cpStep3D:"抽出した色の <code>HEX</code>・<code>RGB</code>・<code>HSL</code> 値を、それぞれの「コピー」ボタンでクリップボードへ。抽出した色は「最近の色」パレットに溜まり、スウォッチをクリックで再選択できます。"
+      cpStep3D:"抽出した色の <code>HEX</code>・<code>RGB</code>・<code>HSL</code> 値を、それぞれの「コピー」ボタンでクリップボードへ。抽出した色は「最近の色」パレットに溜まり、スウォッチをクリックで再選択できます。",
+      relTitle:"関連ツール", navPixel:"画像座標ツール", navResize:"画像リサイズ・圧縮"
     },
     zh:{
       docTitle:"图像取色器（吸管） — Grit Tools",
@@ -567,7 +610,148 @@
       cpStep2T:"悬停预览，点击提取",
       cpStep2D:"在图像上移动鼠标，跟随光标的放大镜会按像素放大显示。点击任意位置即可提取该处颜色。",
       cpStep3T:"复制数值·调色板",
-      cpStep3D:"用各自的“复制”按钮复制所提取颜色的 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 值。提取的颜色会累加到“最近颜色”调色板，点击色块可重新选择。"
+      cpStep3D:"用各自的“复制”按钮复制所提取颜色的 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 值。提取的颜色会累加到“最近颜色”调色板，点击色块可重新选择。",
+      relTitle:"相关工具", navPixel:"图像坐标工具", navResize:"图片缩放·压缩"
+    },
+    es:{
+      docTitle:"Selector de color de imagen (cuentagotas) — Grit Tools",
+      cpTool:"Selector de color de imagen", cpAllTools:"← Todas las herramientas",
+      cpSecImage:"Imagen", cpOpenImage:"Abrir imagen",
+      cpOpenImageTitle:"Elige un archivo de imagen (PNG, JPG, WEBP…)",
+      cpEmptyBig:"Arrastra y suelta una imagen", cpEmptySub:"o usa ‘Abrir imagen’ para seleccionarla",
+      cpLiveLabel:"Cursor",
+      cpSecPicked:"Color seleccionado", cpCopy:"Copiar",
+      cpPickHint:"Haz clic en la imagen para tomar un color",
+      cpSecRecent:"Colores recientes", cpClear:"Vaciar",
+      cpRecentEmpty:"Aún no has tomado ningún color. Haz clic en una muestra para volver a seleccionarla.",
+      cpSwatchTitle:"Haz clic para volver a seleccionar y copiar",
+      cpPrivacy:"Tu imagen nunca se sube. Todo se procesa en tu navegador.",
+      cpFit:"Ajustar", cpOne:"1:1",
+      cpHint:"| pasa el cursor para previsualizar un color, haz clic para tomarlo",
+      cpCopied:"Copiado", cpCopyFail:"Error al copiar",
+      cpPickFirst:"Toma primero un color de la imagen", cpPickFirst2:"",
+      cpNotImage:"No es un archivo de imagen", cpLoadFail:"No se pudo cargar la imagen",
+      cpHelpBtn:"Cómo usar", cpHelpClose:"Cerrar",
+      cpGuideTitle:"Cómo usar el selector de color de imagen",
+      cpStep1T:"Abre una imagen",
+      cpStep1D:"Elige un archivo con ‘Abrir imagen’ o arrastra y suelta una imagen en la página. Tu imagen nunca se sube.",
+      cpStep2T:"Pasa el cursor para previsualizar, haz clic para tomar",
+      cpStep2D:"Mueve el ratón sobre la imagen y una lupa sigue al cursor, ampliando píxel a píxel. Haz clic en cualquier punto para tomar ese color.",
+      cpStep3T:"Copiar valores · paleta",
+      cpStep3D:"Copia los valores <code>HEX</code>, <code>RGB</code> y <code>HSL</code> del color seleccionado con cada botón ‘Copiar’. Los colores tomados se acumulan en la paleta ‘Colores recientes’: haz clic en una muestra para volver a seleccionarla.",
+      relTitle:"Herramientas relacionadas", navPixel:"Coordenadas de imagen", navResize:"Redimensionar imagen"
+    },
+    fr:{
+      docTitle:"Pipette à couleurs d'image — Grit Tools",
+      cpTool:"Pipette à couleurs", cpAllTools:"← Tous les outils",
+      cpSecImage:"Image", cpOpenImage:"Ouvrir une image",
+      cpOpenImageTitle:"Choisissez un fichier image (PNG, JPG, WEBP…)",
+      cpEmptyBig:"Glissez-déposez une image", cpEmptySub:"ou utilisez ‘Ouvrir une image’ pour la sélectionner",
+      cpLiveLabel:"Curseur",
+      cpSecPicked:"Couleur prélevée", cpCopy:"Copier",
+      cpPickHint:"Cliquez sur l'image pour prélever une couleur",
+      cpSecRecent:"Couleurs récentes", cpClear:"Vider",
+      cpRecentEmpty:"Aucune couleur prélevée pour l'instant. Cliquez sur un échantillon pour le resélectionner.",
+      cpSwatchTitle:"Cliquez pour resélectionner et copier",
+      cpPrivacy:"Votre image n'est jamais envoyée. Tout est traité dans votre navigateur.",
+      cpFit:"Ajuster", cpOne:"1:1",
+      cpHint:"| survolez pour prévisualiser une couleur, cliquez pour la prélever",
+      cpCopied:"Copié", cpCopyFail:"Échec de la copie",
+      cpPickFirst:"Prélevez d'abord une couleur dans l'image", cpPickFirst2:"",
+      cpNotImage:"Ce n'est pas un fichier image", cpLoadFail:"Impossible de charger l'image",
+      cpHelpBtn:"Mode d'emploi", cpHelpClose:"Fermer",
+      cpGuideTitle:"Comment utiliser la pipette à couleurs",
+      cpStep1T:"Ouvrez une image",
+      cpStep1D:"Choisissez un fichier avec ‘Ouvrir une image’ ou glissez-déposez une image sur la page. Votre image n'est jamais envoyée.",
+      cpStep2T:"Survolez pour prévisualiser, cliquez pour prélever",
+      cpStep2D:"Déplacez la souris sur l'image : une loupe suit le curseur et agrandit pixel par pixel. Cliquez à un endroit pour en prélever la couleur.",
+      cpStep3T:"Copier les valeurs · palette",
+      cpStep3D:"Copiez les valeurs <code>HEX</code>, <code>RGB</code> et <code>HSL</code> de la couleur prélevée avec chaque bouton ‘Copier’. Les couleurs prélevées s'accumulent dans la palette ‘Couleurs récentes’ — cliquez sur un échantillon pour le resélectionner.",
+      relTitle:"Outils associés", navPixel:"Coordonnées d'image", navResize:"Redimensionner l'image"
+    },
+    de:{
+      docTitle:"Bild-Farbpipette — Grit Tools",
+      cpTool:"Bild-Farbpipette", cpAllTools:"← Alle Werkzeuge",
+      cpSecImage:"Bild", cpOpenImage:"Bild öffnen",
+      cpOpenImageTitle:"Bilddatei auswählen (PNG, JPG, WEBP …)",
+      cpEmptyBig:"Bild hierher ziehen", cpEmptySub:"oder über ‘Bild öffnen’ auswählen",
+      cpLiveLabel:"Cursor",
+      cpSecPicked:"Aufgenommene Farbe", cpCopy:"Kopieren",
+      cpPickHint:"Klicke auf das Bild, um eine Farbe aufzunehmen",
+      cpSecRecent:"Zuletzt verwendete Farben", cpClear:"Leeren",
+      cpRecentEmpty:"Noch keine Farbe aufgenommen. Klicke auf ein Farbfeld, um es erneut auszuwählen.",
+      cpSwatchTitle:"Klicken, um erneut auszuwählen und zu kopieren",
+      cpPrivacy:"Dein Bild wird nie hochgeladen. Alles läuft in deinem Browser.",
+      cpFit:"Anpassen", cpOne:"1:1",
+      cpHint:"| zum Vorschauen mit der Maus darüberfahren, zum Aufnehmen klicken",
+      cpCopied:"Kopiert", cpCopyFail:"Kopieren fehlgeschlagen",
+      cpPickFirst:"Nimm zuerst eine Farbe aus dem Bild auf", cpPickFirst2:"",
+      cpNotImage:"Keine Bilddatei", cpLoadFail:"Bild konnte nicht geladen werden",
+      cpHelpBtn:"Anleitung", cpHelpClose:"Schließen",
+      cpGuideTitle:"So nutzt du die Bild-Farbpipette",
+      cpStep1T:"Bild öffnen",
+      cpStep1D:"Wähle eine Datei über ‘Bild öffnen’ oder ziehe ein Bild auf die Seite. Dein Bild wird nie hochgeladen.",
+      cpStep2T:"Vorschau per Hover, Aufnahme per Klick",
+      cpStep2D:"Bewege die Maus über das Bild, eine Lupe folgt dem Cursor und vergrößert Pixel für Pixel. Klicke auf eine Stelle, um diese Farbe aufzunehmen.",
+      cpStep3T:"Werte kopieren · Palette",
+      cpStep3D:"Kopiere die <code>HEX</code>-, <code>RGB</code>- und <code>HSL</code>-Werte der aufgenommenen Farbe mit dem jeweiligen ‘Kopieren’-Button. Aufgenommene Farben sammeln sich in der Palette ‘Zuletzt verwendete Farben’ — klicke ein Farbfeld an, um es erneut auszuwählen.",
+      relTitle:"Verwandte Tools", navPixel:"Bildkoordinaten", navResize:"Bild verkleinern"
+    },
+    pt:{
+      docTitle:"Seletor de cor de imagem (conta-gotas) — Grit Tools",
+      cpTool:"Seletor de cor de imagem", cpAllTools:"← Todas as ferramentas",
+      cpSecImage:"Imagem", cpOpenImage:"Abrir imagem",
+      cpOpenImageTitle:"Escolha um arquivo de imagem (PNG, JPG, WEBP…)",
+      cpEmptyBig:"Arraste e solte uma imagem", cpEmptySub:"ou use ‘Abrir imagem’ para selecioná-la",
+      cpLiveLabel:"Cursor",
+      cpSecPicked:"Cor capturada", cpCopy:"Copiar",
+      cpPickHint:"Clique na imagem para capturar uma cor",
+      cpSecRecent:"Cores recentes", cpClear:"Limpar",
+      cpRecentEmpty:"Nenhuma cor capturada ainda. Clique numa amostra para selecioná-la novamente.",
+      cpSwatchTitle:"Clique para selecionar de novo e copiar",
+      cpPrivacy:"Sua imagem nunca é enviada. Tudo é processado no seu navegador.",
+      cpFit:"Ajustar", cpOne:"1:1",
+      cpHint:"| passe o cursor para pré-visualizar uma cor, clique para capturá-la",
+      cpCopied:"Copiado", cpCopyFail:"Falha ao copiar",
+      cpPickFirst:"Capture primeiro uma cor da imagem", cpPickFirst2:"",
+      cpNotImage:"Não é um arquivo de imagem", cpLoadFail:"Não foi possível carregar a imagem",
+      cpHelpBtn:"Como usar", cpHelpClose:"Fechar",
+      cpGuideTitle:"Como usar o seletor de cor de imagem",
+      cpStep1T:"Abra uma imagem",
+      cpStep1D:"Escolha um arquivo com ‘Abrir imagem’ ou arraste e solte uma imagem na página. Sua imagem nunca é enviada.",
+      cpStep2T:"Passe o cursor para pré-visualizar, clique para capturar",
+      cpStep2D:"Mova o mouse sobre a imagem e uma lupa acompanha o cursor, ampliando pixel a pixel. Clique em qualquer ponto para capturar aquela cor.",
+      cpStep3T:"Copiar valores · paleta",
+      cpStep3D:"Copie os valores <code>HEX</code>, <code>RGB</code> e <code>HSL</code> da cor capturada com cada botão ‘Copiar’. As cores capturadas se acumulam na paleta ‘Cores recentes’ — clique numa amostra para selecioná-la novamente.",
+      relTitle:"Ferramentas relacionadas", navPixel:"Coordenadas de imagem", navResize:"Redimensionar imagem"
+    },
+    ru:{
+      docTitle:"Пипетка цвета изображения — Grit Tools",
+      cpTool:"Пипетка цвета", cpAllTools:"← Все инструменты",
+      cpSecImage:"Изображение", cpOpenImage:"Открыть изображение",
+      cpOpenImageTitle:"Выберите файл изображения (PNG, JPG, WEBP…)",
+      cpEmptyBig:"Перетащите изображение сюда", cpEmptySub:"или нажмите «Открыть изображение»",
+      cpLiveLabel:"Курсор",
+      cpSecPicked:"Выбранный цвет", cpCopy:"Копировать",
+      cpPickHint:"Нажмите на изображение, чтобы взять цвет",
+      cpSecRecent:"Недавние цвета", cpClear:"Очистить",
+      cpRecentEmpty:"Цвета пока не выбраны. Нажмите на образец, чтобы выбрать его снова.",
+      cpSwatchTitle:"Нажмите, чтобы выбрать снова и скопировать",
+      cpPrivacy:"Ваше изображение никогда не загружается на сервер. Вся обработка идёт в браузере.",
+      cpFit:"Вписать", cpOne:"1:1",
+      cpHint:"| наведите для предпросмотра цвета, нажмите, чтобы взять его",
+      cpCopied:"Скопировано", cpCopyFail:"Не удалось скопировать",
+      cpPickFirst:"Сначала возьмите цвет с изображения", cpPickFirst2:"",
+      cpNotImage:"Это не файл изображения", cpLoadFail:"Не удалось загрузить изображение",
+      cpHelpBtn:"Как пользоваться", cpHelpClose:"Закрыть",
+      cpGuideTitle:"Как пользоваться пипеткой цвета",
+      cpStep1T:"Откройте изображение",
+      cpStep1D:"Выберите файл через «Открыть изображение» или перетащите изображение на страницу. Ваше изображение никогда не загружается на сервер.",
+      cpStep2T:"Наведите для предпросмотра, нажмите, чтобы взять",
+      cpStep2D:"Двигайте мышь по изображению — за курсором следует лупа, увеличивая попиксельно. Нажмите в любом месте, чтобы взять этот цвет.",
+      cpStep3T:"Копирование значений · палитра",
+      cpStep3D:"Копируйте значения <code>HEX</code>, <code>RGB</code> и <code>HSL</code> выбранного цвета соответствующими кнопками ‘Копировать’. Выбранные цвета накапливаются в палитре ‘Недавние цвета’ — нажмите на образец, чтобы выбрать его снова.",
+      relTitle:"Похожие инструменты", navPixel:"Координаты изображения", navResize:"Изменить размер изображения"
     }
   });
   GritI18n.init({ mount: document.getElementById("langMount"), onChange: function(){ renderRecent(); } });
