@@ -19,25 +19,31 @@
 ## 구조
 
 - `index.html` — 랜딩/허브 페이지. 사이드바 + 콘텐츠 2단 레이아웃:
-  - **좌측 사이드바**: 로고 + 테마 토글(해/달), 카테고리별 **도구 리스트**, 하단에 **언어 스위처**(`#langMount`, 버튼 나열형 `inline:true`).
+  - **좌측 사이드바**: 로고, 카테고리별 **도구 리스트**, 하단에 **언어 스위처**(`#langMount`, 버튼 나열형 `inline:true`). (다크 전용이라 테마 토글은 없음. 모바일은 `#menuToggle` 햄버거로 사이드바 토글.)
   - **콘텐츠**: 히어로 없이 곧장 카테고리별 **도구 카드 그리드**. 맨 위에 검색용 숨김 `<h1>`(`.visually-hidden`).
   - 광고 레일·하단 footer는 **현재 제거됨**(추후 필요 시 추가). 도구 페이지엔 광고를 넣지 않는다.
-- `tools/` — 모든 도구는 카테고리 하위 폴더에 위치.
-  - `tools/image/` · `tools/calc/` (그 외 `tools/text/`·`tools/file/`는 예정)
+- `tools/` — 모든 도구는 카테고리 하위 폴더에 위치. 5개 카테고리 모두 사용 중: `tools/calc/` · `tools/image/` · `tools/text/` · `tools/file/` · `tools/pdf/`.
   - `tools/image/pixel-coords.html` — 픽셀 좌표 추출기. 단일 파일 템플릿의 기준.
   - `tools/calc/compound-interest.html` · `tools/calc/simple-interest.html` — 복리·단리 계산기. 인라인 SVG 그래프 + 엑셀(`.xls` SpreadsheetML, 라이브러리 없음) 저장.
   - 도구 파일은 허브 기준 2단계 깊이 → 도구 내 링크는 `../../index.html`, `../../i18n.js`.
 - `i18n.js` — **모든 페이지가 공유하는 다국어 엔진**(루트). 아래 "다국어" 참고.
 - `DESIGN.md` — 디자인 시스템 원본(Seline "Crisp Data Canvas"). 색·폰트·간격·모양의 기준.
+- **SEO·배포 자산**(루트): `sitemap.xml`(전 페이지 등록) · `robots.txt`(sitemap 가리킴) · `og.png`(1200×630 소셜 카드) · `privacy.html`. `guide/`는 SEO용 가이드 콘텐츠 페이지. 배포는 `DEPLOY.md` 참고(GitHub `main` push → Cloudflare Pages 자동 재배포, 도메인 `grit-tools.com`). Google Search Console 등록 완료 — `index.html` `<head>`의 `google-site-verification` 메타태그는 **삭제 금지**.
 
-현재 살아있는 도구: **이미지 좌표 계산기**(파일명 `pixel-coords`), **복리 계산기**, **단리 계산기** (3개).
-모든 도구 상단 바엔 공통 **"사용법" 버튼 → 사용법 모달**이 있고, 페이지별 SEO(고유 title·description·JSON-LD)를 갖춘다.
+현재 살아있는 도구 **17개 / 5개 카테고리**:
+- **calc(5)**: compound-interest, simple-interest, currency, d-day, salary-net
+- **image(3)**: pixel-coords, color-picker, image-resize
+- **text(4)**: address-romanize, postal-code, table-to-markdown, text-merge
+- **file(2)**: excel-split, batch-rename
+- **pdf(3)**: pdf-merge, pdf-split, pdf-to-image
+
+모든 도구 상단 바엔 공통 **"사용법" 버튼 → 사용법 모달**이 있고, 페이지별 SEO(고유 title·description·canonical·og·JSON-LD `SoftwareApplication`)를 갖춘다.
 
 ## 디자인 시스템 (DESIGN.md 기준)
 
-- **라이트 기본 + 다크 토글.** `html[data-theme="dark"]`로 다크, `localStorage["theme"]`에 저장(기본 라이트).
-- **블루 앤 화이트, 단일 강조색.** 다른 채도 높은 색을 추가하지 않는다.
-  - 페이지 `#fafaf9` / 카드·표면 `#ffffff` / 텍스트 `#0c0a09` / 보조 `#524d48` / 강조 Chartwell Blue `#3ba6f1`.
+- **다크 전용.** `html { color-scheme: dark }` 고정 — 라이트 테마/토글은 없다(`data-theme`·`localStorage["theme"]` 미사용).
+- **블루 앤 다크, 단일 강조색.** 다른 채도 높은 색을 추가하지 않는다.
+  - 페이지 `#0f1115` / 표면 `--surface #171a21`·`--surface-2 #1e222b` / 텍스트 `#f2f4f7` / 보조 `--text-dim #9aa3b2` / 강조 블루 `#54b0f7`(`--blue-dark #7cc3fa`) / 경계 `--border #2b313c`.
   - 토큰은 `index.html`·도구 `<style>`의 `:root`에 정의(`--bg --surface --surface-2 --blue --text --text-dim --border …`).
 - **폰트**: UI/본문 **Inter**, 한글 **Pretendard**(둘 다 CDN), 제목은 `roobert`→Inter 폴백. 좌표/코드 등 고정폭은 `--font-mono`(Consolas 등 시스템). Inter 굵기 ≤600.
 - **아이콘은 이모지 금지 → 인라인 SVG 라인 아이콘**(`svg.ic`, stroke 기반). 카드 아이콘 타일은 솔리드 블루 배경 + 흰 아이콘.
@@ -47,7 +53,7 @@
 ## 다국어 (i18n.js / GritI18n)
 
 - 전역 객체 `GritI18n`: `register(dict)`, `init({mount,onChange})`, `t(key)`, `setLang(code)`.
-- 지원 언어 **ko·en·ja·zh**, 선택값은 `localStorage["gritLang"]`에 저장 → **홈·도구가 같은 키를 공유**(홈에서 바꾸면 도구에도 적용).
+- 지원 언어 **9개: ko·en·ja·zh·es·fr·de·pt·ru**(`i18n.js`의 `LANGS`), 선택값은 `localStorage["gritLang"]`에 저장 → **홈·도구가 같은 키를 공유**(홈에서 바꾸면 도구에도 적용).
 - 마크업 속성: `data-i18n`(textContent), `data-i18n-html`(innerHTML), `data-i18n-title`, `data-i18n-ph`. `docTitle` 키가 있으면 `<title>` 자동 반영.
 - JS 안 동적 문자열은 `GritI18n.t("key")`.
 - 스위처 색은 `--lang-*` CSS 변수로 테마에 맞춤. 스위처가 주입하는 🌐 글리프는 홈에선 CSS로 숨김(이모지 금지).
@@ -60,7 +66,7 @@
 - 도구 페이지 상단에 공통 `#grit-bar`(로고 / 도구명 / `#langMount` / "← 모든 도구"). `pixel-coords.html` 참고.
 - 도구 JS는 구형 브라우저 호환 **ES5 스타일** 유지(`var`, `keyCode`, `execCommand` 폴백 등).
 - 도구 페이지엔 광고를 넣지 않는다.
-- UI 기본 한국어, 단 모든 사용자 노출 문자열은 i18n 키로 4개 언어 제공.
+- UI 기본 한국어, 단 모든 사용자 노출 문자열은 i18n 키로 9개 언어 제공.
 
 ## 새 도구 추가 절차
 
@@ -69,3 +75,4 @@
 3. `index.html` **좌측 사이드바**의 해당 `.nav-group`에 `.nav-item`(아이콘 SVG + 이름 + `New` 배지) 추가, `href`를 `tools/<category>/<file>.html`로 연결.
 4. `index.html` **콘텐츠**의 해당 카테고리 `.tool-grid`에 `.tool-card` 추가(아이콘 SVG, `.badge-new`, 설명, 메타). 설명/메타는 `home*` i18n 키로 등록.
 5. 사이드바 `.gc`와 카테고리 헤더 `.cat-count` 숫자 갱신.
+6. **SEO**: 도구 `<head>`에 고유 title·description·canonical·og·JSON-LD(`SoftwareApplication`)를 채우고, 루트 `sitemap.xml`에 `<url>` 항목을 추가한다.
