@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>파일 이름 한 번에 바꾸는 방법 (일괄 변경) | Grit Tools</title>
+<meta name="description" content="여러 파일 이름을 찾기·바꾸기, 접두/접미사 추가, 연속 번호, 대소문자, 공백 규칙으로 일괄 변경하는 방법. 미리보기 확인 후 저장하거나 bat·ps1·sh 스크립트로 내보내기. 브라우저에서 바로 실행, 파일은 서버로 전송되지 않습니다.">
+<meta name="keywords" content="파일 이름 일괄 변경, 파일명 일괄 변경, 파일 이름 한번에 바꾸기, 배치 파일 이름 변경, 파일명 바꾸기, 연속 번호 파일명, 파일이름 바꾸기 프로그램, 브라우저 파일명 변경">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/guide/batch-rename.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="파일 이름 한 번에 바꾸는 방법 (일괄 변경)">
+<meta property="og:description" content="찾기·바꾸기, 접두/접미사, 연속 번호, 대소문자 규칙으로 파일명 일괄 변경. 미리보기 후 저장 또는 bat·ps1·sh 스크립트 내보내기. 파일은 서버로 전송되지 않습니다.">
+<meta property="og:url" content="https://grit-tools.com/guide/batch-rename.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; line-height:1.75; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-home { margin-left:auto; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  main { max-width:760px; margin:0 auto; padding:36px 22px 80px; }
+  .crumb { font-size:12px; color:var(--text-muted); margin-bottom:18px; }
+  .crumb a { color:var(--text-dim); text-decoration:none; }
+  .crumb a:hover { color:var(--blue); }
+  h1 { font-size:28px; font-weight:600; letter-spacing:-.01em; line-height:1.3; margin:0 0 14px; }
+  .lead { color:var(--text); font-size:16px; }
+  h2 { font-size:19px; font-weight:600; margin:40px 0 12px; padding-top:22px; border-top:1px solid var(--border); }
+  h3 { font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--text); }
+  p, li { color:var(--text-dim); font-size:15px; }
+  ul, ol { padding-left:22px; margin:12px 0; }
+  li { margin:7px 0; }
+  strong { color:var(--text); font-weight:600; }
+  code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  a { color:var(--blue); }
+
+  .steps { list-style:none; counter-reset:s; padding:0; margin:16px 0; }
+  .steps > li { counter-increment:s; position:relative; padding:0 0 4px 42px; margin:0 0 16px; }
+  .steps > li::before { content:counter(s); position:absolute; left:0; top:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:13px; font-weight:600; }
+  .steps .st { color:var(--text); font-weight:600; display:block; margin-bottom:2px; }
+
+  .cta { margin:28px 0; padding:20px; background:var(--surface); border:1px solid var(--border-lit); border-radius:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .cta .ctx { flex:1 1 220px; }
+  .cta .ctx b { color:var(--text); font-size:15px; }
+  .cta .ctx span { display:block; color:var(--text-muted); font-size:13px; margin-top:2px; }
+  .cta a.go { background:var(--blue); color:#fff; text-decoration:none; padding:11px 20px; border-radius:9999px; font-size:14px; font-weight:600; white-space:nowrap; transition:background .15s; }
+  .cta a.go:hover { background:var(--blue-dark); }
+
+  .faq { margin:10px 0; }
+  .faq .q { color:var(--text); font-weight:600; font-size:15px; margin:18px 0 4px; }
+  .faq .a { color:var(--text-dim); font-size:15px; margin:0; }
+
+  .related { margin-top:40px; padding-top:22px; border-top:1px solid var(--border); font-size:14px; }
+  .related a { color:var(--blue); text-decoration:none; margin-right:16px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+    {"@type":"ListItem","position":2,"name":"가이드","item":"https://grit-tools.com/guide/batch-rename.html"},
+    {"@type":"ListItem","position":3,"name":"파일 이름 한 번에 바꾸는 방법","item":"https://grit-tools.com/guide/batch-rename.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"HowTo",
+  "name":"파일 이름 한 번에 바꾸는 방법 (일괄 변경)",
+  "step":[
+    {"@type":"HowToStep","name":"파일 불러오기","text":"이름을 바꿀 파일들을 화면에 드래그&드롭하거나 선택해 불러옵니다."},
+    {"@type":"HowToStep","name":"규칙 설정","text":"찾기·바꾸기, 접두사/접미사 추가, 연속 번호, 대소문자 변환, 공백 처리 등 원하는 규칙을 설정합니다."},
+    {"@type":"HowToStep","name":"미리보기 확인","text":"현재 이름과 변경될 이름을 나란히 비교해 결과를 미리 확인합니다. 원본 파일은 건드리지 않습니다."},
+    {"@type":"HowToStep","name":"저장 또는 스크립트 내보내기","text":"새 이름으로 저장하거나, Windows bat·PowerShell ps1·Linux sh 스크립트로 내보내 실행할 수 있습니다."}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"어떤 변경 규칙을 사용할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"찾기·바꾸기(텍스트 및 정규식), 접두사·접미사 추가, 연속 번호 매기기(001, 002…), 대소문자 변환(대문자·소문자·타이틀케이스), 공백을 언더바나 하이픈으로 바꾸기 등 다양한 규칙을 사용할 수 있습니다."}},
+    {"@type":"Question","name":"연속 번호는 어떻게 매기나요?","acceptedAnswer":{"@type":"Answer","text":"규칙에서 번호 매기기를 선택하고 시작 번호와 자릿수(예: 001, 01, 1)를 지정합니다. 파일 목록 순서대로 번호가 붙습니다."}},
+    {"@type":"Question","name":"미리보기로 원본이 변경되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 미리보기는 결과 이름을 화면에 보여줄 뿐, 실제 파일은 전혀 건드리지 않습니다. '저장' 또는 '스크립트 내보내기'를 선택해야 변경이 적용됩니다."}},
+    {"@type":"Question","name":"스크립트(bat·ps1·sh)란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"브라우저는 직접 파일 이름을 바꿀 수 없습니다. 스크립트 내보내기를 사용하면 Windows 명령 프롬프트용 bat, PowerShell용 ps1, Mac·Linux용 sh 스크립트를 생성합니다. 이 파일을 실행하면 설정한 규칙대로 파일 이름이 일괄 변경됩니다."}},
+    {"@type":"Question","name":"파일이 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 파일 이름 목록을 읽고 변환 규칙을 적용하는 처리가 모두 브라우저 안에서만 이루어집니다. 파일 내용은 서버로 전송되지 않습니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+  <div id="grit-bar">
+    <a href="../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool">가이드</span>
+    <a href="../index.html" class="g-home">← 모든 도구</a>
+  </div>
+
+  <main>
+    <nav class="crumb"><a href="../index.html">Grit Tools</a> › 가이드 › 파일 이름 일괄 변경</nav>
+
+    <h1>파일 이름 한 번에 바꾸는 방법 (일괄 변경)</h1>
+    <p class="lead">사진 파일에 날짜·번호를 붙이거나, 공백을 언더바로 바꾸거나, 파일명에서 특정 단어를 일괄 치환해야 할 때 파일을 하나씩 이름 바꾸기 하면 시간이 오래 걸리고 실수도 납니다. 이 글에서는 <strong>설치·로그인 없이 브라우저에서</strong> 여러 파일 이름을 규칙으로 한 번에 바꾸는 방법을 단계별로 정리합니다.</p>
+
+    <div class="cta">
+      <div class="ctx"><b>파일 이름 일괄 변경 도구</b><span>브라우저에서 바로 실행 · 파일 업로드 없음</span></div>
+      <a class="go" href="../tools/file/batch-rename.html">도구 열기 →</a>
+    </div>
+
+    <h2>이런 분께 필요해요</h2>
+    <ul>
+      <li>사진·문서에 날짜나 프로젝트명을 접두사로 붙여야 할 때</li>
+      <li>파일명의 공백을 언더바(<code>_</code>)나 하이픈(<code>-</code>)으로 일괄 바꿔야 할 때</li>
+      <li>파일명에 포함된 특정 단어를 찾아 치환해야 할 때</li>
+      <li>여러 파일에 순서대로 번호(<code>001</code>, <code>002</code>…)를 붙여야 할 때</li>
+    </ul>
+
+    <h2>파일 이름을 일괄 변경하는 단계</h2>
+    <ol class="steps">
+      <li><span class="st">파일 불러오기</span>이름을 바꿀 파일들을 화면에 드래그&amp;드롭하거나 선택해 불러옵니다. 파일 내용은 읽지 않고 이름만 가져옵니다.</li>
+      <li><span class="st">규칙 설정</span>찾기·바꾸기, 접두사·접미사 추가, 연속 번호, 대소문자 변환, 공백 처리 등 원하는 규칙을 설정합니다. 여러 규칙을 조합해 적용할 수 있습니다.</li>
+      <li><span class="st">미리보기 확인</span>현재 파일명과 변경될 파일명을 나란히 비교해 결과를 미리 확인합니다. 이 단계에서 원본 파일은 전혀 건드리지 않습니다.</li>
+      <li><span class="st">저장 또는 스크립트 내보내기</span>결과가 맞으면 새 이름으로 저장하거나, Windows(<code>.bat</code>/<code>.ps1</code>)·Linux/Mac(<code>.sh</code>) 스크립트로 내보내 실행합니다.</li>
+    </ol>
+
+    <h2>사용할 수 있는 변경 규칙</h2>
+    <ul>
+      <li><strong>찾기·바꾸기</strong> — 파일명에서 특정 텍스트나 정규식 패턴을 찾아 치환합니다.</li>
+      <li><strong>접두사·접미사</strong> — 이름 앞이나 뒤에 고정 텍스트를 추가합니다. 예: <code>2024-</code> 접두사, <code>_final</code> 접미사.</li>
+      <li><strong>연속 번호</strong> — 파일 목록 순서대로 <code>001</code>, <code>002</code>… 형태의 번호를 붙입니다. 자릿수와 시작 번호를 지정할 수 있습니다.</li>
+      <li><strong>대소문자 변환</strong> — 전체 대문자, 전체 소문자, 단어 첫 글자만 대문자(타이틀케이스)로 바꿉니다.</li>
+      <li><strong>공백 처리</strong> — 공백을 <code>_</code> 또는 <code>-</code>로 바꾸거나 제거합니다.</li>
+    </ul>
+
+    <h2>스크립트 내보내기란</h2>
+    <p>브라우저는 보안 정책상 직접 파일 이름을 바꾸는 기능을 제공하지 않습니다. 대신 <strong>스크립트를 내보내</strong> 실행하면 같은 결과를 얻을 수 있습니다.</p>
+    <ul>
+      <li><code>.bat</code> — Windows 명령 프롬프트(cmd)에서 실행합니다.</li>
+      <li><code>.ps1</code> — Windows PowerShell에서 실행합니다.</li>
+      <li><code>.sh</code> — Mac 터미널이나 Linux bash에서 실행합니다.</li>
+    </ul>
+    <p>스크립트를 실행하기 전에 텍스트 편집기로 열어 내용을 확인하는 것을 권장합니다.</p>
+
+    <h2>원본 파일은 안전한가 — 미리보기와 보안</h2>
+    <p>도구는 파일 내용을 읽지 않고 <strong>파일명만</strong> 가져와 규칙을 적용합니다. 미리보기 단계에서 실제 파일은 전혀 수정되지 않으며, 저장 또는 스크립트 실행 후에야 이름이 바뀝니다. 모든 처리는 <strong>브라우저 안에서만</strong> 이루어지며, 파일 정보는 서버로 전송되지 않습니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <div class="faq">
+      <p class="q">어떤 변경 규칙을 사용할 수 있나요?</p>
+      <p class="a">찾기·바꾸기(텍스트 및 정규식), 접두사·접미사 추가, 연속 번호 매기기, 대소문자 변환, 공백을 언더바·하이픈으로 바꾸기 등 다양한 규칙을 사용할 수 있습니다.</p>
+      <p class="q">연속 번호는 어떻게 매기나요?</p>
+      <p class="a">규칙에서 번호 매기기를 선택하고 시작 번호와 자릿수(예: 001, 01, 1)를 지정합니다. 파일 목록 순서대로 번호가 붙습니다.</p>
+      <p class="q">미리보기로 원본이 변경되나요?</p>
+      <p class="a">아니요. 미리보기는 결과 이름을 화면에 보여줄 뿐, 실제 파일은 전혀 건드리지 않습니다. '저장' 또는 '스크립트 내보내기'를 선택해야 변경이 적용됩니다.</p>
+      <p class="q">스크립트(bat·ps1·sh)란 무엇인가요?</p>
+      <p class="a">브라우저는 직접 파일 이름을 바꿀 수 없으므로, 설정한 규칙대로 파일명을 일괄 변경하는 스크립트를 생성합니다. Windows는 bat·ps1, Mac·Linux는 sh 파일을 실행하면 됩니다.</p>
+      <p class="q">파일이 서버로 전송되나요?</p>
+      <p class="a">아니요. 파일 이름 목록을 읽고 변환 규칙을 적용하는 처리가 모두 브라우저 안에서만 이루어집니다. 파일 내용은 서버로 전송되지 않습니다.</p>
+    </div>
+
+    <div class="cta">
+      <div class="ctx"><b>지금 바로 이름 바꾸기</b><span>파일 이름 일괄 변경 도구</span></div>
+      <a class="go" href="../tools/file/batch-rename.html">도구 열기 →</a>
+    </div>
+
+    <nav class="related">
+      관련 도구 ·
+      <a href="text-merge.html">텍스트 파일 합치기</a>
+      <a href="excel-sheet-split.html">엑셀 시트별 나누기</a>
+      <a href="../tools/image/pixel-coords.html">이미지 좌표 추출</a>
+    </nav>
+  </main>
+</body>
+</html>

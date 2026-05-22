@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF 합치기 — 여러 PDF를 하나로 합치는 방법 | Grit Tools</title>
+<meta name="description" content="여러 개의 PDF 파일을 원하는 순서로 정렬해 하나의 PDF로 병합하는 방법. 설치·로그인 없이 브라우저에서 실행되며 파일은 서버로 전송되지 않습니다. 단계별 사용법과 자주 묻는 질문 정리.">
+<meta name="keywords" content="PDF 합치기, PDF 병합, 여러 PDF 하나로, PDF 파일 합치기, PDF 순서 변경, PDF 합치는 방법, PDF merge">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/guide/pdf-merge.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="PDF 합치기 — 여러 PDF를 하나로 합치는 방법">
+<meta property="og:description" content="여러 PDF를 원하는 순서로 정렬해 하나로 병합하는 방법. 단계별 사용법 + FAQ. 파일은 서버로 전송되지 않습니다.">
+<meta property="og:url" content="https://grit-tools.com/guide/pdf-merge.html">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; line-height:1.75; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-home { margin-left:auto; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  main { max-width:760px; margin:0 auto; padding:36px 22px 80px; }
+  .crumb { font-size:12px; color:var(--text-muted); margin-bottom:18px; }
+  .crumb a { color:var(--text-dim); text-decoration:none; }
+  .crumb a:hover { color:var(--blue); }
+  h1 { font-size:28px; font-weight:600; letter-spacing:-.01em; line-height:1.3; margin:0 0 14px; }
+  .lead { color:var(--text); font-size:16px; }
+  h2 { font-size:19px; font-weight:600; margin:40px 0 12px; padding-top:22px; border-top:1px solid var(--border); }
+  h3 { font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--text); }
+  p, li { color:var(--text-dim); font-size:15px; }
+  ul, ol { padding-left:22px; margin:12px 0; }
+  li { margin:7px 0; }
+  strong { color:var(--text); font-weight:600; }
+  code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  a { color:var(--blue); }
+
+  .steps { list-style:none; counter-reset:s; padding:0; margin:16px 0; }
+  .steps > li { counter-increment:s; position:relative; padding:0 0 4px 42px; margin:0 0 16px; }
+  .steps > li::before { content:counter(s); position:absolute; left:0; top:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:13px; font-weight:600; }
+  .steps .st { color:var(--text); font-weight:600; display:block; margin-bottom:2px; }
+
+  .cta { margin:28px 0; padding:20px; background:var(--surface); border:1px solid var(--border-lit); border-radius:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .cta .ctx { flex:1 1 220px; }
+  .cta .ctx b { color:var(--text); font-size:15px; }
+  .cta .ctx span { display:block; color:var(--text-muted); font-size:13px; margin-top:2px; }
+  .cta a.go { background:var(--blue); color:#fff; text-decoration:none; padding:11px 20px; border-radius:9999px; font-size:14px; font-weight:600; white-space:nowrap; transition:background .15s; }
+  .cta a.go:hover { background:var(--blue-dark); }
+
+  .faq { margin:10px 0; }
+  .faq .q { color:var(--text); font-weight:600; font-size:15px; margin:18px 0 4px; }
+  .faq .a { color:var(--text-dim); font-size:15px; margin:0; }
+
+  .related { margin-top:40px; padding-top:22px; border-top:1px solid var(--border); font-size:14px; }
+  .related a { color:var(--blue); text-decoration:none; margin-right:16px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+    {"@type":"ListItem","position":2,"name":"가이드","item":"https://grit-tools.com/guide/pdf-merge.html"},
+    {"@type":"ListItem","position":3,"name":"PDF 합치기 — 여러 PDF를 하나로 합치는 방법","item":"https://grit-tools.com/guide/pdf-merge.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"HowTo",
+  "name":"PDF 합치기 — 여러 PDF를 하나로 합치는 방법",
+  "step":[
+    {"@type":"HowToStep","name":"PDF 파일 여러 개 불러오기","text":"합칠 PDF 파일들을 드래그&드롭하거나 파일 선택 버튼으로 한 번에 불러옵니다."},
+    {"@type":"HowToStep","name":"드래그로 순서 변경","text":"파일 목록에서 각 PDF를 드래그해 원하는 순서로 정렬합니다."},
+    {"@type":"HowToStep","name":"합치기 실행","text":"'합치기' 버튼을 누르면 브라우저 안에서 PDF가 하나로 병합됩니다. 서버 업로드 없이 즉시 처리됩니다."},
+    {"@type":"HowToStep","name":"완성 파일 다운로드","text":"병합된 PDF 파일이 자동으로 다운로드됩니다."}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"PDF 파일이 서버로 업로드되나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 파일을 읽고 병합하는 모든 과정이 이용자의 브라우저 안에서만 처리되며, 서버로 전송되지 않습니다. 민감한 문서도 안전하게 처리할 수 있습니다."}},
+    {"@type":"Question","name":"합칠 PDF의 순서를 바꿀 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네. 파일 목록에서 각 항목을 드래그&드롭으로 원하는 순서로 정렬한 뒤 합칠 수 있습니다."}},
+    {"@type":"Question","name":"한 번에 합칠 수 있는 파일 개수 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"별도의 파일 개수 제한은 없습니다. 다만 파일 용량 합계가 매우 크면 브라우저 메모리 한도에 따라 처리 시간이 길어질 수 있습니다."}},
+    {"@type":"Question","name":"파일 용량이 크면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"용량이 클수록 처리 시간이 조금 더 걸릴 수 있습니다. 이미지가 많이 포함된 PDF는 특히 시간이 걸릴 수 있으니 잠시 기다려 주세요."}},
+    {"@type":"Question","name":"모바일에서도 사용할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"최신 크롬·사파리·엣지 등 최신 모바일 브라우저라면 운영체제와 관계없이 사용할 수 있습니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+  <div id="grit-bar">
+    <a href="../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool">가이드</span>
+    <a href="../index.html" class="g-home">← 모든 도구</a>
+  </div>
+
+  <main>
+    <nav class="crumb"><a href="../index.html">Grit Tools</a> › 가이드 › PDF 합치기</nav>
+
+    <h1>PDF 합치기 — 여러 PDF를 하나로 합치는 방법</h1>
+    <p class="lead">계약서·보고서·첨부 자료 등 여러 PDF 파일을 하나로 묶어야 할 때, 매번 별도 프로그램을 설치하거나 파일을 온라인 사이트에 올리는 건 번거럽습니다. 이 글에서는 <strong>설치·로그인 없이 브라우저에서</strong> 여러 PDF를 원하는 순서로 정렬해 하나의 파일로 병합하는 방법을 단계별로 정리합니다.</p>
+
+    <div class="cta">
+      <div class="ctx"><b>PDF 합치기 도구</b><span>브라우저에서 바로 실행 · 파일 업로드 없음</span></div>
+      <a class="go" href="../tools/pdf/pdf-merge.html">도구 열기 →</a>
+    </div>
+
+    <h2>이런 분께 필요해요</h2>
+    <ul>
+      <li>여러 장의 계약서·보고서·첨부 문서를 하나의 PDF로 묶어 전달해야 할 때</li>
+      <li>스캔본 여러 개를 한 파일로 합쳐야 할 때</li>
+      <li>순서를 바꾸거나 특정 파일만 골라 합쳐야 할 때</li>
+      <li>업무 문서를 외부 사이트에 올리기 꺼려질 때 — <strong>브라우저 안에서만 처리</strong>되므로 안전합니다</li>
+    </ul>
+
+    <h2>PDF를 하나로 합치는 단계</h2>
+    <ol class="steps">
+      <li><span class="st">PDF 파일 여러 개 불러오기</span>합칠 <code>.pdf</code> 파일들을 화면에 드래그&amp;드롭하거나, 파일 선택 버튼으로 한 번에 여러 파일을 불러옵니다.</li>
+      <li><span class="st">드래그로 순서 변경</span>파일 목록에서 각 항목을 드래그해 원하는 순서로 정렬합니다. 순서가 곧 병합 결과의 페이지 순서가 됩니다.</li>
+      <li><span class="st">합치기 실행</span>순서를 확인한 뒤 <strong>합치기</strong> 버튼을 누릅니다. 모든 처리는 브라우저 안에서 이뤄지며 서버로 전송되지 않습니다.</li>
+      <li><span class="st">완성 파일 다운로드</span>병합된 PDF 파일이 자동으로 다운로드됩니다. 파일명은 원하는 대로 변경할 수 있습니다.</li>
+    </ol>
+
+    <h2>PDF 합칠 때 주의할 점</h2>
+    <p>병합 전 확인해두면 좋은 사항들입니다.</p>
+    <ul>
+      <li><strong>파일 순서 확인</strong> — 목록에 표시된 순서대로 페이지가 이어집니다. 합치기 전 순서를 꼭 확인하세요.</li>
+      <li><strong>암호 설정된 PDF</strong> — 열람 암호가 걸린 PDF는 먼저 암호를 해제한 뒤 불러오세요.</li>
+      <li><strong>파일 용량</strong> — 이미지가 많거나 고해상도 PDF는 용량이 크므로 처리에 시간이 걸릴 수 있습니다.</li>
+    </ul>
+
+    <h2>왜 브라우저에서 처리할까 — 보안</h2>
+    <p>계약서·법률 문서·개인정보가 담긴 PDF를 외부 서버에 올리는 건 보안상 위험할 수 있습니다. Grit의 PDF 합치기 도구는 파일을 <strong>서버로 보내지 않고</strong> 이용자의 브라우저 안에서만 읽고 병합합니다. 작업이 끝나고 페이지를 닫으면 데이터는 남지 않습니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <div class="faq">
+      <p class="q">PDF 파일이 서버로 업로드되나요?</p>
+      <p class="a">아니요. 파일을 읽고 병합하는 모든 과정이 브라우저 안에서만 처리되며 서버로 전송되지 않습니다.</p>
+      <p class="q">합칠 PDF의 순서를 바꿀 수 있나요?</p>
+      <p class="a">네. 파일 목록에서 각 항목을 드래그&드롭으로 원하는 순서로 정렬한 뒤 합칠 수 있습니다.</p>
+      <p class="q">한 번에 합칠 수 있는 파일 개수 제한이 있나요?</p>
+      <p class="a">별도의 파일 개수 제한은 없습니다. 다만 파일 용량 합계가 매우 크면 처리 시간이 길어질 수 있습니다.</p>
+      <p class="q">파일 용량이 크면 어떻게 되나요?</p>
+      <p class="a">용량이 클수록 처리 시간이 조금 더 걸릴 수 있습니다. 이미지가 많이 포함된 PDF는 특히 시간이 걸릴 수 있으니 잠시 기다려 주세요.</p>
+      <p class="q">모바일에서도 사용할 수 있나요?</p>
+      <p class="a">최신 크롬·사파리·엣지 등 최신 모바일 브라우저라면 운영체제와 관계없이 사용할 수 있습니다.</p>
+    </div>
+
+    <div class="cta">
+      <div class="ctx"><b>지금 바로 합쳐보기</b><span>PDF 합치기 도구</span></div>
+      <a class="go" href="../tools/pdf/pdf-merge.html">도구 열기 →</a>
+    </div>
+
+    <nav class="related">
+      관련 도구 ·
+      <a href="pdf-split.html">PDF 나누기</a>
+      <a href="pdf-to-image.html">PDF를 이미지로</a>
+      <a href="excel-sheet-split.html">엑셀 시트별 나누기</a>
+    </nav>
+  </main>
+</body>
+</html>
