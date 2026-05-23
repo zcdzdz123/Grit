@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>만 나이 계산하는 법 — 생일 기준 정확한 만 나이 | Grit Tools</title>
+<meta name="description" content="만 나이 계산 방법을 공식과 예시로 정리합니다. 2023년 만나이 통일법 이후 달라진 점, 한국식·연 나이와의 차이, 병역·연금·복지 기준까지 정확히 확인하세요.">
+<meta name="keywords" content="만 나이 계산, 만 나이 계산하는 법, 만나이 통일법, 한국 나이 계산, 만나이 기준, 연 나이 차이">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/guide/korean-age">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="만 나이 계산하는 법 — 생일 기준 정확한 만 나이">
+<meta property="og:description" content="만 나이 공식과 예시, 한국식·연 나이 차이, 만나이 통일법 이후 달라진 기준을 정리합니다.">
+<meta property="og:url" content="https://grit-tools.com/guide/korean-age">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; line-height:1.75; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-home { margin-left:auto; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  main { max-width:760px; margin:0 auto; padding:36px 22px 80px; }
+  .crumb { font-size:12px; color:var(--text-muted); margin-bottom:18px; }
+  .crumb a { color:var(--text-dim); text-decoration:none; }
+  .crumb a:hover { color:var(--blue); }
+  h1 { font-size:28px; font-weight:600; letter-spacing:-.01em; line-height:1.3; margin:0 0 14px; }
+  .lead { color:var(--text); font-size:16px; }
+  h2 { font-size:19px; font-weight:600; margin:40px 0 12px; padding-top:22px; border-top:1px solid var(--border); }
+  h3 { font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--text); }
+  p, li { color:var(--text-dim); font-size:15px; }
+  ul, ol { padding-left:22px; margin:12px 0; }
+  li { margin:7px 0; }
+  strong { color:var(--text); font-weight:600; }
+  code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  a { color:var(--blue); }
+
+  .steps { list-style:none; counter-reset:s; padding:0; margin:16px 0; }
+  .steps > li { counter-increment:s; position:relative; padding:0 0 4px 42px; margin:0 0 16px; }
+  .steps > li::before { content:counter(s); position:absolute; left:0; top:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:var(--blue); color:#fff; border-radius:9999px; font-size:13px; font-weight:600; }
+  .steps .st { color:var(--text); font-weight:600; display:block; margin-bottom:2px; }
+
+  .cta { margin:28px 0; padding:20px; background:var(--surface); border:1px solid var(--border-lit); border-radius:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .cta .ctx { flex:1 1 220px; }
+  .cta .ctx b { color:var(--text); font-size:15px; }
+  .cta .ctx span { display:block; color:var(--text-muted); font-size:13px; margin-top:2px; }
+  .cta a.go { background:var(--blue); color:#fff; text-decoration:none; padding:11px 20px; border-radius:9999px; font-size:14px; font-weight:600; white-space:nowrap; transition:background .15s; }
+  .cta a.go:hover { background:var(--blue-dark); }
+
+  .faq { margin:10px 0; }
+  .faq .q { color:var(--text); font-weight:600; font-size:15px; margin:18px 0 4px; }
+  .faq .a { color:var(--text-dim); font-size:15px; margin:0; }
+
+  .related { margin-top:40px; padding-top:22px; border-top:1px solid var(--border); font-size:14px; }
+  .related a { color:var(--blue); text-decoration:none; margin-right:16px; }
+
+  table { border-collapse:collapse; width:100%; margin:14px 0; font-size:14px; }
+  th, td { text-align:left; padding:8px 12px; border:1px solid var(--border); color:var(--text-dim); }
+  th { background:var(--surface-2); color:var(--text); font-weight:600; }
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+    {"@type":"ListItem","position":2,"name":"가이드","item":"https://grit-tools.com/guide/korean-age"},
+    {"@type":"ListItem","position":3,"name":"만 나이 계산하는 법","item":"https://grit-tools.com/guide/korean-age"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"HowTo",
+  "name":"만 나이 계산하는 법",
+  "step":[
+    {"@type":"HowToStep","name":"생년월일 입력","text":"출생연도·월·일을 입력합니다. 주민등록증이나 여권에 적힌 날짜를 그대로 사용합니다."},
+    {"@type":"HowToStep","name":"기준일 설정","text":"기준일은 보통 오늘 날짜로 두면 됩니다. 특정 날짜 기준이 필요하면 직접 입력합니다."},
+    {"@type":"HowToStep","name":"결과 확인","text":"만 나이가 자동으로 계산됩니다. 올해 생일이 아직 안 지났다면 현재 연도 차이에서 1을 뺀 값이 맞습니다."},
+    {"@type":"HowToStep","name":"두 사람 나이 차 확인","text":"디데이 계산기에서 두 생년월일을 각각 입력하면 나이 차이도 바로 확인할 수 있습니다."}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"만 나이·한국식 나이·연 나이가 각각 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"만 나이는 생일을 기준으로 실제로 살아온 연수입니다. 한국식 나이(세는 나이)는 태어날 때 1살로 시작해 매년 1월 1일에 1살씩 더합니다. 연 나이는 현재 연도에서 출생연도를 뺀 값으로 생일 무관하게 계산됩니다."}},
+    {"@type":"Question","name":"생일 당일에는 몇 살인가요?","acceptedAnswer":{"@type":"Answer","text":"생일 당일부터 만 나이가 한 살 늘어납니다. 즉, 생일 전날까지는 이전 나이가 적용됩니다."}},
+    {"@type":"Question","name":"만나이 통일법으로 무엇이 바뀌었나요?","acceptedAnswer":{"@type":"Answer","text":"2023년 6월 28일부터 법령·행정 서류에서 나이를 표기할 때 별도 명시가 없으면 만 나이를 기본으로 사용합니다. 계약서·민원 서류·의료 기록 등에서 혼선이 줄었습니다."}},
+    {"@type":"Question","name":"병역·연금은 어느 나이 기준인가요?","acceptedAnswer":{"@type":"Answer","text":"병역법은 연 나이(출생연도 기준)를 별도 규정으로 사용하고, 국민연금 수급 개시 등 복지 혜택은 만 나이 기준이 적용됩니다. 각 제도별 법령을 확인하는 것이 정확합니다."}},
+    {"@type":"Question","name":"외국에서도 만 나이를 쓰나요?","acceptedAnswer":{"@type":"Answer","text":"네. 대부분의 국가에서 만 나이(국제 표준)를 사용합니다. 한국의 세는 나이는 동아시아 일부 지역에서 쓰이던 전통적인 표기 방식입니다."}}
+  ]
+}
+</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8318721273483716" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="grit-bar">
+    <a href="../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool">가이드</span>
+    <a href="../index.html" class="g-home">← 모든 도구</a>
+  </div>
+
+  <main>
+    <nav class="crumb"><a href="../index.html">Grit Tools</a> › 가이드 › 만 나이 계산하는 법</nav>
+
+    <h1>만 나이 계산하는 법 — 생일 기준 정확한 만 나이</h1>
+    <p class="lead">한국에서 나이를 묻고 답하다 보면 "만 나이"와 "한국 나이"가 뒤섞여 혼란스러울 때가 있습니다. 특히 <strong>2023년 6월 28일부터 만나이 통일법이 시행</strong>되면서 행정·계약 서류에서 만 나이가 공식 기준이 되었습니다. 이 글에서는 만 나이 계산 공식과 예시, 다른 나이 표기 방식과의 차이를 정리합니다.</p>
+
+    <div class="cta">
+      <div class="ctx"><b>디데이·나이 자동 계산기</b><span>생년월일 입력 한 번으로 만 나이 바로 확인</span></div>
+      <a class="go" href="../tools/calc/d-day.html">도구 열기 →</a>
+    </div>
+
+    <h2>만 나이란 무엇인가</h2>
+    <p>만 나이는 <strong>생일을 기준으로 실제로 살아온 햇수</strong>를 세는 방법입니다. 태어난 날 0살로 시작해, 생일이 지날 때마다 1살이 추가됩니다. 전 세계 대부분의 나라가 이 방식을 씁니다.</p>
+
+    <h2>만 나이 계산 공식</h2>
+    <p>계산 방법은 단순합니다.</p>
+    <ul>
+      <li>올해 생일이 <strong>이미 지났거나 오늘이 생일</strong>이면: <code>현재 연도 − 출생 연도</code></li>
+      <li>올해 생일이 <strong>아직 안 지났으면</strong>: <code>현재 연도 − 출생 연도 − 1</code></li>
+    </ul>
+    <h3>예시 1</h3>
+    <p>1990년 3월 5일생이 2026년 4월에 나이를 확인한다면, 생일(3월 5일)이 이미 지났으므로 <code>2026 − 1990 = 36살</code>입니다.</p>
+    <h3>예시 2</h3>
+    <p>1990년 11월 20일생이 2026년 5월에 나이를 확인한다면, 생일이 아직 안 지났으므로 <code>2026 − 1990 − 1 = 35살</code>입니다.</p>
+    <h3>예시 3</h3>
+    <p>오늘이 생일인 경우, 바로 1살이 추가됩니다. <code>2026 − 출생 연도</code>가 만 나이입니다.</p>
+
+    <h2>한국식 나이·연 나이와 차이</h2>
+    <table>
+      <tr><th>구분</th><th>계산 방식</th><th>예시 (1990년 11월생, 2026년 5월 기준)</th></tr>
+      <tr><td>만 나이</td><td>생일 기준, 태어날 때 0살</td><td>35살</td></tr>
+      <tr><td>한국식(세는 나이)</td><td>태어날 때 1살, 매년 1월 1일 +1살</td><td>37살</td></tr>
+      <tr><td>연 나이</td><td>현재 연도 − 출생 연도</td><td>36살</td></tr>
+    </table>
+    <p>생일이 연말에 가까울수록 세 방식 사이 차이가 최대 2살까지 벌어집니다.</p>
+
+    <h2>만나이 통일법 이후 어디서 쓰이나</h2>
+    <p>2023년 6월 28일 시행된 만나이 통일법에 따라 법령·행정·공문서에서 별도 표기가 없으면 <strong>만 나이를 기본</strong>으로 사용합니다. 실생활에서 영향을 받는 대표적인 영역은 다음과 같습니다.</p>
+    <ul>
+      <li><strong>계약·민원 서류</strong> — 나이 표기 혼선 방지. 만 나이로 통일.</li>
+      <li><strong>의료·복지</strong> — 노인복지서비스 수급 기준, 예방접종 안내 등은 만 나이 기준.</li>
+      <li><strong>국민연금</strong> — 수급 개시 나이(만 63세 등)는 만 나이 기준.</li>
+      <li><strong>병역</strong> — 입영 기준은 연 나이(출생연도 기준)를 별도 법령으로 유지. 만나이 통일법 적용 예외.</li>
+      <li><strong>술·담배 구매</strong> — 미성년자 기준은 만 19세 미만으로 변동 없음.</li>
+    </ul>
+
+    <h2>단계로 계산하기</h2>
+    <ol class="steps">
+      <li><span class="st">생년월일 입력</span>주민등록증·여권에 있는 출생연도·월·일을 입력합니다.</li>
+      <li><span class="st">기준일 설정</span>보통 오늘 날짜로 두면 됩니다. 특정 날짜(예: 계약일) 기준이 필요하면 직접 입력하세요.</li>
+      <li><span class="st">결과 확인</span>만 나이가 자동으로 계산됩니다. 올해 생일 전이라면 연도 차이보다 1 적게 표시됩니다.</li>
+      <li><span class="st">두 사람 나이 차 확인</span>두 생년월일을 각각 입력해 나이 차이를 한 번에 확인할 수도 있습니다.</li>
+    </ol>
+
+    <h2>자주 묻는 질문</h2>
+    <div class="faq">
+      <p class="q">만 나이, 한국식 나이, 연 나이가 각각 무엇인가요?</p>
+      <p class="a">만 나이는 생일 기준 실제 살아온 햇수(0살 시작). 한국식 나이(세는 나이)는 태어날 때 1살, 1월 1일마다 +1살. 연 나이는 현재 연도에서 출생연도를 뺀 값입니다.</p>
+      <p class="q">생일 당일에는 몇 살인가요?</p>
+      <p class="a">생일 당일부터 만 나이가 한 살 늘어납니다. 생일 전날까지는 이전 나이가 유지됩니다.</p>
+      <p class="q">만나이 통일법으로 무엇이 바뀌었나요?</p>
+      <p class="a">2023년 6월 28일부터 법령·행정 문서에서 나이 표기 시 별도 명시 없이는 만 나이가 기본입니다. 계약서·민원 서류 등에서 나이 관련 혼선이 줄었습니다.</p>
+      <p class="q">병역·연금 기준은 어느 나이를 쓰나요?</p>
+      <p class="a">국민연금 수급 개시 등 복지 혜택은 만 나이 기준입니다. 병역법은 연 나이(출생연도 기준)를 별도 규정으로 유지합니다. 제도마다 다를 수 있으니 해당 법령을 확인하세요.</p>
+      <p class="q">외국에서도 만 나이를 쓰나요?</p>
+      <p class="a">대부분의 국가에서 만 나이를 사용합니다. 한국의 세는 나이는 동아시아 일부 지역에서 쓰이던 전통 방식입니다.</p>
+    </div>
+
+    <div class="cta">
+      <div class="ctx"><b>만 나이 바로 계산하기</b><span>디데이·나이 계산기</span></div>
+      <a class="go" href="../tools/calc/d-day.html">도구 열기 →</a>
+    </div>
+
+    <nav class="related">
+      관련 도구 ·
+      <a href="d-day.html">디데이 계산기 가이드</a>
+      <a href="salary-net.html">연봉 실수령액 계산</a>
+      <a href="compound-interest.html">복리 계산기 가이드</a>
+    </nav>
+  </main>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>72 법칙 — 원금이 두 배 되는 기간을 5초 만에 | Grit Tools</title>
+<meta name="description" content="72 법칙 공식 72÷이율=햇수로 원금이 두 배 되는 기간을 암산합니다. 이율별 두 배 되는 기간 표, 왜 72인지 수학적 근거, 한계와 보정(70·69 법칙), 투자·인플레이션 활용법 정리.">
+<meta name="keywords" content="72 법칙, 원금 두 배 되는 기간, 투자 두배 법칙, 72의 법칙, 복리 두배, 투자 기간 계산">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0f1115">
+<link rel="canonical" href="https://grit-tools.com/guide/rule-of-72">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Grit Tools">
+<meta property="og:title" content="72 법칙 — 원금이 두 배 되는 기간을 5초 만에">
+<meta property="og:description" content="72÷이율=두 배 되는 햇수. 이율별 표, 수학적 근거, 70·69 법칙 보정, 투자·인플레이션 활용법까지 정리합니다.">
+<meta property="og:url" content="https://grit-tools.com/guide/rule-of-72">
+<meta property="og:image" content="https://grit-tools.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f1115; --surface:#171a21; --surface-2:#1e222b;
+    --blue:#54b0f7; --blue-dark:#7cc3fa; --blue-soft:rgba(84,176,247,.16);
+    --text:#f2f4f7; --text-dim:#9aa3b2; --text-muted:#646e7e;
+    --border:#2b313c; --border-lit:#3a4250;
+    --radius-pill:9999px;
+    --font-ui:'Inter','Pretendard',ui-sans-serif,system-ui,sans-serif;
+    --font-mono:'Consolas','JetBrains Mono',ui-monospace,monospace;
+  }
+  html { color-scheme:dark; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  body { padding-top:38px; line-height:1.75; }
+
+  #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
+  #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
+  #grit-bar .g-sep { color:var(--border-lit); font-size:14px; }
+  #grit-bar .g-tool { font-size:12px; color:var(--text-muted); }
+  #grit-bar .g-home { margin-left:auto; font-size:12px; color:var(--text-dim); text-decoration:none; transition:color .15s; }
+  #grit-bar .g-home:hover { color:var(--blue); }
+
+  main { max-width:760px; margin:0 auto; padding:36px 22px 80px; }
+  .crumb { font-size:12px; color:var(--text-muted); margin-bottom:18px; }
+  .crumb a { color:var(--text-dim); text-decoration:none; }
+  .crumb a:hover { color:var(--blue); }
+  h1 { font-size:28px; font-weight:600; letter-spacing:-.01em; line-height:1.3; margin:0 0 14px; }
+  .lead { color:var(--text); font-size:16px; }
+  h2 { font-size:19px; font-weight:600; margin:40px 0 12px; padding-top:22px; border-top:1px solid var(--border); }
+  h3 { font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--text); }
+  p, li { color:var(--text-dim); font-size:15px; }
+  ul, ol { padding-left:22px; margin:12px 0; }
+  li { margin:7px 0; }
+  strong { color:var(--text); font-weight:600; }
+  code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  a { color:var(--blue); }
+
+  .cta { margin:28px 0; padding:20px; background:var(--surface); border:1px solid var(--border-lit); border-radius:12px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .cta .ctx { flex:1 1 220px; }
+  .cta .ctx b { color:var(--text); font-size:15px; }
+  .cta .ctx span { display:block; color:var(--text-muted); font-size:13px; margin-top:2px; }
+  .cta a.go { background:var(--blue); color:#fff; text-decoration:none; padding:11px 20px; border-radius:9999px; font-size:14px; font-weight:600; white-space:nowrap; transition:background .15s; }
+  .cta a.go:hover { background:var(--blue-dark); }
+
+  .faq { margin:10px 0; }
+  .faq .q { color:var(--text); font-weight:600; font-size:15px; margin:18px 0 4px; }
+  .faq .a { color:var(--text-dim); font-size:15px; margin:0; }
+
+  .related { margin-top:40px; padding-top:22px; border-top:1px solid var(--border); font-size:14px; }
+  .related a { color:var(--blue); text-decoration:none; margin-right:16px; }
+
+  table { width:100%; border-collapse:collapse; font-size:14px; margin:16px 0; }
+  th { background:var(--surface-2); color:var(--text); font-weight:600; padding:9px 12px; text-align:left; border-bottom:1px solid var(--border-lit); }
+  td { padding:9px 12px; color:var(--text-dim); border-bottom:1px solid var(--border); }
+  tr:last-child td { border-bottom:none; }
+
+  .formula { background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:14px 18px; margin:14px 0; font-family:var(--font-mono); font-size:14px; color:var(--blue-dark); }
+
+  .highlight-box { background:var(--surface); border:1px solid var(--border-lit); border-radius:10px; padding:18px 22px; margin:20px 0; }
+  .highlight-box .big { font-size:28px; font-weight:600; color:var(--blue); letter-spacing:-.01em; }
+  .highlight-box .sub { font-size:14px; color:var(--text-muted); margin-top:4px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Grit Tools","item":"https://grit-tools.com/"},
+    {"@type":"ListItem","position":2,"name":"가이드","item":"https://grit-tools.com/guide/rule-of-72"},
+    {"@type":"ListItem","position":3,"name":"72 법칙","item":"https://grit-tools.com/guide/rule-of-72"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"72 법칙 — 원금이 두 배 되는 기간을 5초 만에",
+  "datePublished":"2026-05-23",
+  "author":{"@type":"Organization","name":"Grit Tools","url":"https://grit-tools.com/"},
+  "publisher":{"@type":"Organization","name":"Grit Tools","url":"https://grit-tools.com/"},
+  "description":"72 법칙 공식 72÷이율=햇수로 원금이 두 배 되는 기간을 암산합니다. 이율별 두 배 기간 표, 수학적 근거, 70·69 법칙 보정, 투자·인플레이션 실전 활용법."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"72 법칙은 정확한 계산식인가요?","acceptedAnswer":{"@type":"Answer","text":"72 법칙은 복리 기반 추정 공식으로, 이율이 낮은 구간(1~15%)에서는 실제 두 배 기간과 오차가 1년 미만으로 실용적으로 정확합니다. 정밀한 값이 필요하면 복리 계산기를 사용하세요."}},
+    {"@type":"Question","name":"이율이 높으면 오차가 커지나요?","acceptedAnswer":{"@type":"Answer","text":"네. 이율이 20% 이상이 되면 72 법칙의 오차가 커집니다. 이 경우 70이나 69를 사용하거나 복리 계산기로 정확한 기간을 확인하는 편이 낫습니다."}},
+    {"@type":"Question","name":"단리에도 72 법칙을 쓸 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"아니요. 72 법칙은 복리를 전제로 한 근사 공식입니다. 단리 구조에서 원금이 두 배 되는 기간은 단순히 100÷이율(%)로 구할 수 있습니다."}},
+    {"@type":"Question","name":"주식 수익률에도 72 법칙을 쓸 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 가능합니다. 장기 평균 수익률이 연 8%라면 72÷8=9, 즉 약 9년 만에 자산이 두 배가 됩니다. 다만 주식 수익률은 연도별로 크게 변동하므로 평균 수익률을 기반으로 한 추정임을 감안해야 합니다."}},
+    {"@type":"Question","name":"세금이나 물가를 반영하면 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"이자소득세(15.4%)를 감안하면 세후 수익률에 72 법칙을 적용해야 합니다. 인플레이션을 반영하려면 명목 이율 대신 실질 이율(명목 이율 - 물가상승률)로 계산하면 실질 구매력이 두 배 되는 기간을 추정할 수 있습니다."}}
+  ]
+}
+</script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8318721273483716" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="grit-bar">
+    <a href="../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool">가이드</span>
+    <a href="../index.html" class="g-home">← 모든 도구</a>
+  </div>
+
+  <main>
+    <nav class="crumb"><a href="../index.html">Grit Tools</a> › 가이드 › 72 법칙</nav>
+
+    <h1>72 법칙 — 원금이 두 배 되는 기간을 5초 만에</h1>
+    <p class="lead"><strong>72 법칙</strong>은 복리 투자에서 원금이 두 배가 되는 기간을 암산으로 추정하는 규칙입니다. 공식은 간단합니다: <code>72 ÷ 연 이율(%) = 두 배 되는 햇수</code>. 계산기 없이도 5초 안에 나옵니다. 연 6% 수익률이라면 72÷6=12, 즉 약 12년이 걸립니다.</p>
+
+    <div class="cta">
+      <div class="ctx"><b>복리 계산기</b><span>원금·이율·기간으로 정확한 복리 원리금 계산</span></div>
+      <a class="go" href="../tools/calc/compound-interest.html">복리 계산기 →</a>
+    </div>
+
+    <h2>공식과 사용법</h2>
+
+    <div class="highlight-box">
+      <div class="big">72 ÷ 이율(%) = 두 배 되는 햇수</div>
+      <div class="sub">예: 연 6% → 72÷6 = 12년 / 연 8% → 72÷8 = 9년 / 연 10% → 72÷10 = 7.2년</div>
+    </div>
+
+    <p>반대 방향으로도 사용할 수 있습니다. 몇 년 안에 두 배로 만들고 싶은지 목표를 정한 뒤 필요한 이율을 구하는 것입니다.</p>
+
+    <div class="formula">필요 이율(%) = 72 ÷ 목표 기간(년)</div>
+
+    <p>예: 10년 안에 두 배로 만들고 싶다면 → 72÷10 = 연 7.2% 수익률이 필요합니다.</p>
+
+    <h2>이율별 두 배 되는 기간</h2>
+
+    <table>
+      <tr><th>연 이율</th><th>72 법칙 추정(년)</th><th>실제 복리 계산(년)</th><th>오차</th></tr>
+      <tr><td>2%</td><td>36년</td><td>35.0년</td><td>약 1년</td></tr>
+      <tr><td>4%</td><td>18년</td><td>17.7년</td><td>약 0.3년</td></tr>
+      <tr><td>6%</td><td>12년</td><td>11.9년</td><td>약 0.1년</td></tr>
+      <tr><td>8%</td><td>9년</td><td>9.0년</td><td>거의 없음</td></tr>
+      <tr><td>10%</td><td>7.2년</td><td>7.3년</td><td>약 0.1년</td></tr>
+      <tr><td>12%</td><td>6년</td><td>6.1년</td><td>약 0.1년</td></tr>
+      <tr><td>20%</td><td>3.6년</td><td>3.8년</td><td>약 0.2년</td></tr>
+    </table>
+
+    <p>이율 4~12% 구간에서 오차가 가장 작습니다. 실제 예·적금이나 장기 투자 수익률 범위에서 72 법칙은 꽤 정확하게 작동합니다.</p>
+
+    <h2>왜 하필 72인가</h2>
+    <p>72라는 숫자는 수학적 근거를 가집니다. 복리 원리금이 2배가 되는 시점을 수식으로 구하면:</p>
+
+    <div class="formula">(1 + r)^n = 2  →  n = ln(2) / ln(1+r)  ≈  ln(2) / r  ≈  0.693 / r</div>
+
+    <p>여기서 <code>ln(2) ≈ 0.693</code>이고, 이율 <code>r</code>을 백분율 단위로 환산하면 <code>0.693 × 100 = 69.3</code>이 됩니다. 그런데 69.3은 약수가 적어 암산이 불편합니다. 약수가 많은 <strong>72</strong>(1·2·3·4·6·8·9·12·18·24·36·72)를 근사값으로 사용하면 머릿속 계산이 훨씬 쉬워집니다. 또 낮은 이율 구간에서 69.3보다 72가 실제 값에 더 근사하는 경향이 있어 관행으로 자리 잡았습니다.</p>
+
+    <h2>한계와 보정</h2>
+    <p>72 법칙은 이율이 낮은 구간(1~15%)에서 가장 정확하고, 이율이 높아질수록 오차가 커집니다.</p>
+
+    <h3>70 법칙</h3>
+    <p>연속 복리 또는 이율이 매우 낮은 구간(1~3%)에서는 <code>70 ÷ 이율</code>이 더 정확합니다. 일부 금융 교과서에서 70 법칙을 기준으로 사용하는 이유입니다.</p>
+
+    <h3>69 법칙(69.3 법칙)</h3>
+    <p>수학적으로 가장 정확한 근사값은 <code>69.3 ÷ 이율</code>입니다. 연속 복리 계산에서 쓰이며, 소수점 나눗셈이 번거롭기 때문에 실용적으로는 72를 선호합니다.</p>
+
+    <ul>
+      <li>이율이 낮을 때(1~5%): <strong>70 법칙</strong> 또는 72 법칙</li>
+      <li>이율이 중간일 때(5~15%): <strong>72 법칙</strong>이 가장 편리</li>
+      <li>이율이 높을 때(20% 이상): 복리 계산기를 사용하는 편이 낫습니다</li>
+    </ul>
+
+    <h2>실전 활용</h2>
+
+    <h3>투자 목표 설정</h3>
+    <p>자산을 두 배로 만들고 싶은 목표 기간을 정한 뒤, 필요한 연평균 수익률을 역산합니다. "15년 안에 두 배"라면 72÷15≈4.8%, 즉 연 약 5%의 수익률이 필요합니다.</p>
+
+    <h3>인플레이션의 위력 이해</h3>
+    <p>72 법칙은 물가상승률에도 적용됩니다. 연 인플레이션이 4%라면 72÷4=18, 즉 18년 후 화폐 구매력이 절반으로 줄어든다는 뜻입니다. 현금을 그냥 보유할 때의 실질 손실을 직관적으로 파악하는 데 유용합니다.</p>
+
+    <h3>대출 원금이 두 배 되는 기간</h3>
+    <p>반대로 연체된 대출이 연 18% 이자율로 불어나고 있다면 72÷18=4년, 4년 만에 빚이 두 배가 됩니다. 연체 이자의 무서움을 빠르게 파악하는 데 쓸 수 있습니다.</p>
+
+    <h2>자주 묻는 질문</h2>
+    <div class="faq">
+      <p class="q">72 법칙은 정확한 계산식인가요?</p>
+      <p class="a">72 법칙은 복리 기반 근사 공식으로, 이율이 낮은 구간(1~15%)에서는 실제 두 배 기간과 오차가 1년 미만입니다. 정밀한 값이 필요하면 복리 계산기를 사용하세요.</p>
+      <p class="q">이율이 높으면 오차가 커지나요?</p>
+      <p class="a">네. 이율이 20% 이상이 되면 오차가 커집니다. 이 경우 70이나 69를 사용하거나 복리 계산기로 정확한 기간을 확인하는 편이 낫습니다.</p>
+      <p class="q">단리에도 72 법칙을 쓸 수 있나요?</p>
+      <p class="a">아니요. 72 법칙은 복리를 전제로 한 공식입니다. 단리에서 두 배 되는 기간은 100÷이율(%)로 구할 수 있습니다.</p>
+      <p class="q">주식 수익률에도 72 법칙을 쓸 수 있나요?</p>
+      <p class="a">네, 가능합니다. 장기 평균 수익률이 연 8%라면 72÷8=9년, 약 9년 만에 자산이 두 배가 됩니다. 다만 주식 수익률은 연도별 변동이 크므로 평균 수익률 기반 추정임을 감안해야 합니다.</p>
+      <p class="q">세금이나 물가를 반영하면 어떻게 되나요?</p>
+      <p class="a">이자소득세(15.4%)를 감안하면 세후 수익률에 72 법칙을 적용해야 합니다. 인플레이션을 반영하려면 명목 이율 대신 실질 이율(명목 이율 - 물가상승률)로 계산하면 실질 구매력이 두 배 되는 기간을 추정할 수 있습니다.</p>
+    </div>
+
+    <div class="cta">
+      <div class="ctx"><b>정확한 복리 계산</b><span>원금·이율·기간 입력 → 연도별 복리 원리금 확인</span></div>
+      <a class="go" href="../tools/calc/compound-interest.html">복리 계산기 →</a>
+    </div>
+
+    <nav class="related">
+      관련 가이드 &amp; 도구 ·
+      <a href="compound-vs-simple.html">복리 vs 단리 차이</a>
+      <a href="compound-interest.html">복리 계산기 사용법</a>
+      <a href="simple-interest.html">단리 계산기 사용법</a>
+    </nav>
+  </main>
+</body>
+</html>
