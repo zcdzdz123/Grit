@@ -138,12 +138,142 @@ PDF·이미지·계산·텍스트 도구 17종을 단일 HTML 파일들로 정�
 
 ## 6. 어디에 올리면 좋은가 (참고)
 
-| 채널 | 추천 글 |
-|---|---|
-| **velog / tistory / 네이버 블로그** | 위 "긴 글" |
-| **GeekNews(news.hada.io)** | 위 "개발자 커뮤니티용" |
-| **클리앙 / 디씨 / 뽐뿌** | 위 "짧은 글" |
-| **트위터·스레드** | 위 "한 줄" |
-| **개인 SNS / 오픈카톡 / 디스코드** | "짧은 글" 또는 "한 줄" |
+| 채널 | 추천 글 | 어느 포맷 |
+|---|---|---|
+| **velog / tistory(마크다운 모드) / dev.to / brunch** | "긴 글" | 마크다운(1번) |
+| **네이버 블로그 / 티스토리(일반 에디터) / 다음 카페** | "긴 글" | **HTML(7번)** ※ 에디터 우측 상단 "HTML" 모드로 |
+| **GeekNews(news.hada.io)** | "개발자 커뮤니티용" | 마크다운(4번) |
+| **클리앙 / 디씨 / 뽐뿌 / 오픈카톡** | "짧은 글" | 텍스트(2번) 또는 텍스트만(8번) |
+| **트위터·스레드 / X** | "한 줄" | 한 줄(3번) |
 
 > 팁: 사이트 노출은 SEO보다 **사람들이 실제로 보는 채널에 직접 올리는 게 훨씬 빠릅니다.** 위 글들을 2~3개 채널에 올리면 첫 트래픽이 가장 빠르게 들어옵니다.
+> **⚠️ 마크다운(1번 글)을 네이버 블로그·일반 게시판에 그대로 붙이면 `[복리 계산기](https://...)` 같은 텍스트가 그대로 보입니다.** 그런 곳엔 아래 **7번(HTML)** 또는 **8번(순수 텍스트)** 을 쓰세요.
+
+---
+
+## 7. HTML 버전 (네이버 블로그·일반 에디터용)
+
+> 네이버 블로그·티스토리 일반 에디터·다음 카페 등 마크다운을 안 읽는 곳에선 이걸 쓰세요.
+> **네이버 블로그**: 글쓰기 화면 우측 상단 **"HTML"** 탭으로 전환 → 아래 내용 붙여넣기 → "기본" 탭으로 돌아오면 정상 렌더.
+> **티스토리 일반 에디터**: 글쓰기 화면 우측 상단 **"기본 모드"** 옆 드롭다운에서 **"HTML"** 선택 → 붙여넣기.
+
+```html
+<h2>브라우저에서 바로 쓰는 무료 도구 모음 — Grit Tools(그릿툴) 소개</h2>
+
+<p>설치 없이, 로그인 없이, <b>브라우저에서 바로</b> PDF 합치기·이미지 리사이즈·복리 계산·연봉 실수령액 같은 자잘한 작업을 끝낼 수 있는 도구 모음 사이트를 정리했습니다.</p>
+
+<p>👉 <a href="https://grit-tools.com" target="_blank">https://grit-tools.com</a></p>
+
+<h3>무엇이 다른가</h3>
+<ul>
+  <li><b>모든 처리는 내 브라우저 안에서 끝납니다.</b> 파일·이미지·PDF는 서버로 전송되지 않아요. 계약서·인사 자료 같이 민감한 파일도 마음 편히 쓸 수 있습니다.</li>
+  <li><b>설치·회원가입 없음, 광고 없음(도구 페이지 한정).</b> 페이지 열면 바로 사용.</li>
+  <li><b>무료.</b></li>
+  <li>한국어·영어·일본어·중국어 등 9개 언어 지원.</li>
+</ul>
+
+<h3>🧮 계산기</h3>
+<ul>
+  <li><a href="https://grit-tools.com/tools/calc/compound-interest" target="_blank">복리 계산기</a> — 원금·이율·기간으로 복리 이자 계산, 그래프와 엑셀 저장</li>
+  <li><a href="https://grit-tools.com/tools/calc/simple-interest" target="_blank">단리 계산기</a> — 단리 이자·총액 바로 계산</li>
+  <li><a href="https://grit-tools.com/tools/calc/currency" target="_blank">환율 계산기</a> — 달러·유로·엔 실시간 환율 변환</li>
+  <li><a href="https://grit-tools.com/tools/calc/d-day" target="_blank">디데이 계산기</a> — D-Day, 두 날짜 사이 일수, 날짜 더하기</li>
+  <li><a href="https://grit-tools.com/tools/calc/salary-net" target="_blank">연봉 실수령액 계산기</a> — 4대보험·세금 공제 후 월급 추정</li>
+</ul>
+
+<h3>🖼 이미지</h3>
+<ul>
+  <li><a href="https://grit-tools.com/tools/image/pixel-coords" target="_blank">이미지 좌표 추출기</a> — 클릭으로 픽셀 (x, y) 좌표 추출, HMI·임베디드용</li>
+  <li><a href="https://grit-tools.com/tools/image/color-picker" target="_blank">이미지 색상 추출 (스포이드)</a> — 픽셀 HEX·RGB·HSL 값 복사</li>
+  <li><a href="https://grit-tools.com/tools/image/image-resize" target="_blank">이미지 크기·용량 줄이기</a> — 사진 리사이즈·압축</li>
+</ul>
+
+<h3>📄 PDF</h3>
+<ul>
+  <li><a href="https://grit-tools.com/tools/pdf/pdf-merge" target="_blank">PDF 합치기</a> — 여러 PDF를 하나로</li>
+  <li><a href="https://grit-tools.com/tools/pdf/pdf-split" target="_blank">PDF 나누기</a> — 페이지 분리·범위 추출</li>
+  <li><a href="https://grit-tools.com/tools/pdf/pdf-to-image" target="_blank">PDF를 이미지로 변환</a> — PNG·JPG로 저장</li>
+</ul>
+
+<h3>📁 파일</h3>
+<ul>
+  <li><a href="https://grit-tools.com/tools/file/excel-split" target="_blank">엑셀 시트별 나누기</a> — 시트를 개별 XLSX·CSV로 분리</li>
+  <li><a href="https://grit-tools.com/tools/file/batch-rename" target="_blank">파일 이름 일괄 변경</a> — 여러 파일명 한 번에, .bat/.ps1/.sh 스크립트 내보내기도</li>
+</ul>
+
+<h3>📝 텍스트</h3>
+<ul>
+  <li><a href="https://grit-tools.com/tools/text/table-to-markdown" target="_blank">표를 마크다운으로 변환</a> — 엑셀·노션 표를 GitHub 마크다운 표로</li>
+  <li><a href="https://grit-tools.com/tools/text/address-romanize" target="_blank">한글 주소 영문 변환</a> — 해외직구·송장용</li>
+  <li><a href="https://grit-tools.com/tools/text/text-merge" target="_blank">텍스트 파일 합치기</a> — 여러 .txt 한 파일로</li>
+  <li><a href="https://grit-tools.com/tools/text/postal-code" target="_blank">우편번호 검색</a> — 도로명·지번으로 5자리 우편번호</li>
+</ul>
+
+<h3>자주 묻는 케이스별 가이드</h3>
+<ul>
+  <li><a href="https://grit-tools.com/guide/salary-5000" target="_blank">연봉 5000만원 실수령액은 얼마?</a></li>
+  <li><a href="https://grit-tools.com/guide/compound-vs-simple" target="_blank">복리 vs 단리, 어느 게 유리한가</a></li>
+  <li><a href="https://grit-tools.com/guide/rule-of-72" target="_blank">72 법칙 — 원금이 두 배 되는 기간을 5초 만에</a></li>
+  <li><a href="https://grit-tools.com/guide/korean-age" target="_blank">만 나이 계산하는 법 (만나이 통일법)</a></li>
+  <li><a href="https://grit-tools.com/guide/pdf-merge-scanned" target="_blank">스캔본 여러 장 PDF로 합치는 법</a></li>
+  <li><a href="https://grit-tools.com/guide/image-resize-kakao" target="_blank">카톡·이메일 첨부용 사진 용량 줄이는 법</a></li>
+  <li><a href="https://grit-tools.com/guide/address-overseas" target="_blank">해외직구 영문 주소 변환</a></li>
+</ul>
+
+<p>자잘하지만 반복되는 작업, 매번 검색해서 다른 사이트를 전전하기보다 <b>한 곳에서 브라우저로 끝</b>내고 싶을 때 쓸 만한 도구 모음입니다. 추가로 필요한 도구가 있으면 <a href="mailto:cmg5478@gmail.com">cmg5478@gmail.com</a> 으로 알려주세요.</p>
+
+<p>👉 <a href="https://grit-tools.com" target="_blank">https://grit-tools.com</a></p>
+```
+
+---
+
+## 8. 순수 텍스트 버전 (어디든 작동 — URL 자동 링크)
+
+> 마크다운도 HTML도 안 통하는 곳용. 대부분 게시판·메신저·이메일이 URL을 자동으로 링크로 만들어줍니다.
+
+```
+브라우저에서 바로 쓰는 무료 도구 모음 — Grit Tools(그릿툴)
+
+설치·로그인 없이 PDF 합치기, 이미지 리사이즈, 복리·연봉 계산, 표→마크다운 변환 등 17종.
+파일은 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.
+
+▶ 사이트: https://grit-tools.com
+
+▣ 계산기
+- 복리 계산기  https://grit-tools.com/tools/calc/compound-interest
+- 단리 계산기  https://grit-tools.com/tools/calc/simple-interest
+- 환율 계산기  https://grit-tools.com/tools/calc/currency
+- 디데이 계산기  https://grit-tools.com/tools/calc/d-day
+- 연봉 실수령액 계산기  https://grit-tools.com/tools/calc/salary-net
+
+▣ 이미지
+- 이미지 좌표 추출기  https://grit-tools.com/tools/image/pixel-coords
+- 이미지 색상 추출 (스포이드)  https://grit-tools.com/tools/image/color-picker
+- 이미지 크기·용량 줄이기  https://grit-tools.com/tools/image/image-resize
+
+▣ PDF
+- PDF 합치기  https://grit-tools.com/tools/pdf/pdf-merge
+- PDF 나누기  https://grit-tools.com/tools/pdf/pdf-split
+- PDF를 이미지로 변환  https://grit-tools.com/tools/pdf/pdf-to-image
+
+▣ 파일
+- 엑셀 시트별 나누기  https://grit-tools.com/tools/file/excel-split
+- 파일 이름 일괄 변경  https://grit-tools.com/tools/file/batch-rename
+
+▣ 텍스트
+- 표를 마크다운으로 변환  https://grit-tools.com/tools/text/table-to-markdown
+- 한글 주소 영문 변환  https://grit-tools.com/tools/text/address-romanize
+- 텍스트 파일 합치기  https://grit-tools.com/tools/text/text-merge
+- 우편번호 검색  https://grit-tools.com/tools/text/postal-code
+
+▣ 사용법 가이드(자주 묻는 케이스)
+- 연봉 5000만원 실수령액  https://grit-tools.com/guide/salary-5000
+- 복리 vs 단리 차이  https://grit-tools.com/guide/compound-vs-simple
+- 72 법칙(원금 두 배 되는 기간)  https://grit-tools.com/guide/rule-of-72
+- 만 나이 계산하는 법  https://grit-tools.com/guide/korean-age
+- 스캔본 PDF 합치기  https://grit-tools.com/guide/pdf-merge-scanned
+- 카톡·이메일 첨부용 사진 용량 줄이기  https://grit-tools.com/guide/image-resize-kakao
+- 해외직구 영문 주소 변환  https://grit-tools.com/guide/address-overseas
+
+문의·도구 제안: cmg5478@gmail.com
+```
