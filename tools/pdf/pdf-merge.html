@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -142,6 +142,22 @@
 
   #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:8px 16px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:600; max-width:80%; box-shadow:var(--shadow-card); }
   #toast.show { opacity:1; }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -250,6 +266,43 @@
 </div>
 
 <div id="toast"></div>
+
+<section class="tool-about">
+  <h2>여러 PDF를 하나로 합치는 PDF 합치기</h2>
+  <p>여러 개로 흩어진 PDF 파일을 <strong>원하는 순서대로 정렬해 하나의 PDF로 합쳐 주는</strong> 도구입니다. 파일을 끌어다 놓거나 클릭해서 추가하면 각 파일의 페이지 수를 자동으로 읽어 목록에 표시하고, 목록의 위·아래 화살표로 순서를 바꾼 뒤 ‘병합 후 내려받기’를 누르면 <code>merged.pdf</code> 한 파일로 저장됩니다. 계약서 본문과 별첨을 한 부로 묶거나, 여러 번에 걸쳐 스캔한 문서를 한 파일로 정리하거나, 견적서·명세서·증빙을 한꺼번에 제출용으로 모을 때처럼 “따로 온 PDF를 한 덩어리로 만들어야 하는” 상황을 빠르게 해결합니다.</p>
+
+  <h2>파일은 서버로 올라가지 않습니다</h2>
+  <p>이 도구는 병합 과정 전체를 <strong>여러분의 브라우저 안에서만</strong> 처리합니다. 화면에서 pdf-lib 라이브러리를 불러와 자바스크립트로 직접 페이지를 복사·결합하기 때문에, 선택한 PDF가 어떤 서버로도 <strong>업로드되지 않습니다.</strong> 계약서·인사 서류·의료 기록·재무 자료처럼 밖으로 새어 나가면 곤란한 문서도 안심하고 합칠 수 있습니다. 파일은 네트워크를 거치지 않고 메모리에서 처리된 뒤 완성된 결과만 다운로드되므로, 인터넷 연결이 끊긴 상태에서도(라이브러리를 한 번 불러온 뒤라면) 동작합니다.</p>
+
+  <h2>이렇게 쓰면 편합니다</h2>
+  <ul>
+    <li><strong>여러 개 한 번에 추가</strong> — 파일 여러 개를 한 번에 선택하거나 드래그해 담을 수 있고, 나중에 더 추가해도 목록 맨 아래에 이어 붙습니다.</li>
+    <li><strong>순서가 곧 결과</strong> — 목록에 보이는 위에서 아래 순서 그대로 페이지가 이어집니다. 표지를 맨 앞으로, 부록을 맨 뒤로 올리고 내리며 원하는 흐름을 만드세요.</li>
+    <li><strong>필요 없는 파일 제거</strong> — 잘못 넣은 파일은 ✕ 버튼으로 목록에서 바로 뺄 수 있고, ‘전체 비우기’로 처음부터 다시 시작할 수 있습니다.</li>
+    <li><strong>전체 페이지 미리 확인</strong> — 합쳐질 전체 페이지 수가 상단에 표시되어, 병합 전에 규모를 가늠할 수 있습니다.</li>
+  </ul>
+  <p>페이지 수나 파일 개수에 인위적인 제한은 두지 않았지만, 모든 처리가 브라우저 메모리에서 이뤄지므로 수백 페이지짜리 대용량 파일을 아주 많이 한꺼번에 합치면 기기 사양에 따라 느려질 수 있습니다. 그럴 때는 몇 개씩 나눠 합친 뒤 마지막에 다시 한 번 합치면 안정적입니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">암호가 걸린 PDF도 합쳐지나요?</p>
+    <p class="a">열람 제한이 걸린 일부 파일은 “열 수 없는 파일”로 표시되어 병합에서 제외됩니다. 먼저 암호를 해제한 PDF로 다시 시도해 주세요. 손상된 파일도 같은 방식으로 자동으로 건너뜁니다.</p>
+    <p class="q">합친 뒤 페이지 순서를 다시 바꿀 수 있나요?</p>
+    <p class="a">네. 다운로드 전이라면 목록의 화살표로 순서를 얼마든지 바꿔 다시 병합할 수 있습니다. 특정 페이지만 빼고 싶다면 <a href="pdf-split.html">PDF 나누기</a>로 필요한 부분만 추출한 뒤 합치는 방법을 추천합니다.</p>
+    <p class="q">글꼴이나 서식이 깨지지 않나요?</p>
+    <p class="a">원본 페이지를 그대로 복사해 이어 붙이므로 글꼴·이미지·서식이 그대로 유지됩니다. 재압축이나 변환을 하지 않아 화질 손상도 없습니다.</p>
+    <p class="q">완성된 파일 이름을 바꿀 수 있나요?</p>
+    <p class="a">결과 파일은 <code>merged.pdf</code>로 저장됩니다. 저장 후 파일 이름을 원하는 대로 바꿔 사용하시면 됩니다.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="pdf-split.html">PDF 나누기</a>
+    <a href="pdf-to-image.html">PDF를 이미지로 변환</a>
+    <a href="../../guide/pdf-merge.html">PDF 합치기 가이드 →</a>
+    <a href="../../guide/pdf-merge-scanned.html">스캔본 합치기 가이드 →</a>
+  </nav>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="../../i18n.js"></script>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>환율 계산기 — 달러·유로·엔 실시간 환율 변환 | Grit Tools</title>
-<meta name="description" content="유로화·달러·원·엔 등 실시간 환율을 무료로 변환하는 환율 계산기. ECB(유럽중앙은행) 기준 환율을 frankfurter.app에서 가져오며, 통화 코드만 전송하고 다른 정보는 보내지 않습니다.">
+<meta name="description" content="유로화·달러·원·엔 등 실시간 환율을 무료로 변환하는 환율 계산기. open.er-api.com에서 매일 갱신되는 환율을 가져오며, 통화 코드만 전송하고 다른 정보는 보내지 않습니다.">
 <meta name="keywords" content="환율 계산기, 환율 변환, 실시간 환율, currency converter, exchange rate">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://grit-tools.com/tools/calc/currency">
@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -139,6 +139,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -146,7 +162,7 @@
   "name": "환율 계산기",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Web browser",
-  "description": "ECB(유럽중앙은행) 기준 실시간 환율로 통화를 즉시 변환하는 무료 환율 계산기. frankfurter.app에서 환율을 가져오며 통화 코드만 전송합니다.",
+  "description": "실시간 환율로 통화를 즉시 변환하는 무료 환율 계산기. open.er-api.com에서 매일 갱신되는 환율을 가져오며 통화 코드만 전송합니다.",
   "inLanguage": ["ko","en","ja","zh","es","fr","de","pt","ru"],
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
@@ -214,7 +230,7 @@
         </div>
       </div>
 
-      <p class="formula" data-i18n="fxDisclaimer">환율은 frankfurter.app을 통한 ECB(유럽중앙은행) 기준 환율로, 참고용이며 실제 매매 호가가 아닙니다.</p>
+      <p class="formula" data-i18n="fxDisclaimer">환율은 open.er-api.com에서 매일 갱신되는 데이터로, 참고용이며 실제 매매 호가가 아닙니다.</p>
     </section>
 
     <section class="panel table-panel">
@@ -261,6 +277,45 @@
   </div>
 </div>
 
+<section class="tool-about">
+  <h2>환율 계산기로 무엇을 할 수 있나</h2>
+  <p>이 환율 계산기는 <strong>금액과 통화 두 개(기준·대상)</strong>를 고르면 실시간에 가까운 환율로 즉시 변환값을 보여줍니다. 달러(USD)·유로(EUR)·엔(JPY)·위안(CNY)·원(KRW)·파운드(GBP)는 물론 <strong>150여 개 통화</strong>를 지원하며, 환율은 <code>open.er-api.com</code>에서 <strong>매일 갱신</strong>됩니다. 오른쪽 <strong>빠른 환산표</strong>에는 같은 금액이 주요 통화로 얼마인지 한눈에 나오고, 가운데 <strong>⇄ 버튼</strong>을 누르면 기준↔대상 통화를 즉시 뒤집을 수 있습니다. 해외 결제 금액을 원화로 어림하거나, 여행 예산을 짜거나, 해외직구·구독료가 원화로 대략 얼마인지 가늠할 때 편합니다.</p>
+  <p>변환에 필요한 것은 통화 코드뿐이며, 입력한 <strong>금액은 서버로 전송되지 않고 브라우저에서 계산</strong>됩니다. 개인 결제 금액을 넣어도 외부로 나가지 않습니다. 환율 데이터를 한 번 불러오면 잠시 저장해 두므로, 통화를 이리저리 바꿔 가며 여러 조합을 비교해도 매번 새로 불러오지 않고 즉시 결과가 갱신됩니다.</p>
+
+  <h2>입력·사용 팁</h2>
+  <ul>
+    <li><strong>금액은 1로 두고 단위 환율만 확인</strong>해도 됩니다. 결과 아래에 <code>1 USD = 1,3xx.xx KRW</code> 형태로 1단위 환율과 기준일이 함께 표시됩니다.</li>
+    <li>통화 선택창은 <strong>코드로 검색</strong>됩니다. 드롭다운을 연 뒤 <code>USD</code>, <code>JPY</code>처럼 코드 앞글자를 입력하면 빠르게 찾을 수 있습니다.</li>
+    <li>네트워크가 끊겨 환율을 못 가져오면 <strong>‘수동 환율 입력’</strong> 칸이 나타납니다. 직접 아는 환율을 넣으면 <code>금액 × 환율</code>로 계산되므로 오프라인·사내망에서도 쓸 수 있습니다.</li>
+  </ul>
+
+  <h2>환율을 해석할 때 주의할 점</h2>
+  <p>여기 표시되는 환율은 <strong>시장 중간값(참고용)</strong>이며, 실제 은행·환전소에서 적용되는 값과 다릅니다. 은행은 <strong>매매기준율</strong>을 중심으로 현찰 살 때·팔 때 값에 <strong>스프레드(수수료)</strong>를 붙이므로, 실제로 살 때는 표시 환율보다 조금 더 비싸고 팔 때는 조금 더 쌉니다. 여행 경비를 잡을 때는 여기 값에 <strong>2~5% 정도 여유</strong>를 두는 것이 안전합니다. 또한 환율은 하루에도 변하지만 이 데이터는 하루 1회 갱신 기준이므로, 큰 금액을 실제로 환전·송금할 때는 거래 직전에 해당 금융기관 고시 환율을 다시 확인하세요.</p>
+  <p>실제 상황별로 어림하는 요령도 알아두면 좋습니다. <strong>해외 카드 결제</strong>는 보통 비자·마스터카드 같은 국제 브랜드 환율에 약 1% 안팎의 국제거래 수수료가 더해지므로, 여기 표시 환율보다 조금 높게 청구된다고 보면 됩니다. <strong>해외 직구</strong>는 결제 시점과 카드사 매입 시점의 환율이 달라 최종 청구액이 며칠 뒤 확정되는 경우가 많습니다. <strong>해외 송금</strong>은 환율 외에 송금 수수료·중계은행 수수료가 별도로 붙습니다. 이 계산기는 이런 개별 수수료까지 반영하지는 않으므로, “대략 원화로 얼마쯤인지”를 빠르게 잡는 용도로 쓰고 정확한 청구액은 카드사·송금 서비스의 안내를 따르는 것이 좋습니다. 여러 통화를 동시에 비교하고 싶을 때는 오른쪽 환산표를 보면 같은 금액이 주요 통화로 각각 얼마인지 한 번에 확인할 수 있어 편리합니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">환율은 얼마나 자주 갱신되나요?</p>
+    <p class="a">데이터 제공처(open.er-api.com) 기준 <strong>하루 1회</strong> 갱신됩니다. 결과 아래 기준일 표시로 언제 자료인지 확인할 수 있습니다. 초 단위로 바뀌는 실시간 트레이딩 호가는 아닙니다.</p>
+    <p class="q">지원하지 않는 통화가 있나요?</p>
+    <p class="a">제공처가 다루는 통화만 목록에 나옵니다. 목록에 없는 통화는 변환할 수 없지만, 대부분의 주요·신흥국 통화 150여 종이 포함되어 있습니다.</p>
+    <p class="q">인터넷이 안 될 때도 쓸 수 있나요?</p>
+    <p class="a">환율을 못 가져오면 자동으로 수동 입력 모드로 바뀝니다. 아는 환율을 직접 넣으면 계산은 그대로 됩니다. 다만 이때 값의 정확성은 입력한 환율에 달려 있습니다.</p>
+    <p class="q">이 값으로 바로 환전해도 되나요?</p>
+    <p class="a">아니요. 참고용 중간값이라 실제 환전·송금 시엔 수수료·스프레드가 더해집니다. 실제 거래 금액은 은행·환전소 고시 환율을 확인하세요.</p>
+  </div>
+
+  <p style="margin-top:24px;font-size:13px;color:var(--text-muted);">※ 표시 환율은 매일 갱신되는 참고용 중간값이며 실제 매매 호가가 아닙니다. 실거래 환율은 해당 금융기관에 확인하세요.</p>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="compound-interest.html">복리 계산기</a>
+    <a href="salary-net.html">연봉 실수령액</a>
+    <a href="d-day.html">디데이 계산기</a>
+    <a href="../../guide/currency.html">환율 계산 가이드 →</a>
+  </nav>
+</section>
+
 <script src="../../i18n.js"></script>
 <script>
 (function(){
@@ -269,7 +324,27 @@
   var $=function(id){ return document.getElementById(id); };
   var helpModal=$("helpModal");
   var QUICK=["USD","EUR","JPY","CNY","KRW","GBP"];
-  var API="https://api.frankfurter.app";
+  /* open.er-api.com: free, key-less, CORS-enabled. Per-base endpoint: /v6/latest/<BASE> */
+  var API="https://open.er-api.com/v6/latest";
+  /* Currency-name map for the codes open.er-api.com exposes. Keys lowercased on lookup is unnecessary; codes are uppercase. */
+  var CCY_NAMES={
+    USD:"United States Dollar", EUR:"Euro", JPY:"Japanese Yen", GBP:"British Pound",
+    KRW:"South Korean Won", CNY:"Chinese Yuan", HKD:"Hong Kong Dollar", TWD:"New Taiwan Dollar",
+    AUD:"Australian Dollar", NZD:"New Zealand Dollar", CAD:"Canadian Dollar",
+    CHF:"Swiss Franc", SEK:"Swedish Krona", NOK:"Norwegian Krone", DKK:"Danish Krone",
+    SGD:"Singapore Dollar", THB:"Thai Baht", VND:"Vietnamese Dong", IDR:"Indonesian Rupiah",
+    MYR:"Malaysian Ringgit", PHP:"Philippine Peso", INR:"Indian Rupee", PKR:"Pakistani Rupee",
+    BDT:"Bangladeshi Taka", LKR:"Sri Lankan Rupee", NPR:"Nepalese Rupee",
+    AED:"UAE Dirham", SAR:"Saudi Riyal", QAR:"Qatari Riyal", KWD:"Kuwaiti Dinar",
+    BHD:"Bahraini Dinar", OMR:"Omani Rial", ILS:"Israeli New Shekel", TRY:"Turkish Lira",
+    EGP:"Egyptian Pound", ZAR:"South African Rand", NGN:"Nigerian Naira", KES:"Kenyan Shilling",
+    MAD:"Moroccan Dirham", TND:"Tunisian Dinar",
+    RUB:"Russian Ruble", UAH:"Ukrainian Hryvnia", PLN:"Polish Zloty", CZK:"Czech Koruna",
+    HUF:"Hungarian Forint", RON:"Romanian Leu", BGN:"Bulgarian Lev",
+    BRL:"Brazilian Real", MXN:"Mexican Peso", ARS:"Argentine Peso", CLP:"Chilean Peso",
+    COP:"Colombian Peso", PEN:"Peruvian Sol", UYU:"Uruguayan Peso",
+    ISK:"Icelandic Krona"
+  };
 
   $("helpBtn").addEventListener("click", function(){ helpModal.classList.add("open"); });
   $("helpClose").addEventListener("click", function(){ helpModal.classList.remove("open"); });
@@ -335,12 +410,25 @@
     $("to").value   = currencies.KRW ? "KRW" : codes[Math.min(1,codes.length-1)];
   }
 
-  /* ---- 환율 조회 (base 기준 전체 rates 캐시) ---- */
+  /* ---- 환율 조회 (base 기준 전체 rates 캐시) ----
+     open.er-api.com /v6/latest/<BASE> →
+     { result:'success', base_code, time_last_update_utc, rates:{...} }
+     We adapt the response to the legacy { date, rates } shape. */
   function ensureRates(base, cb){
     if(rateCache[base]){ cb(rateCache[base]); return; }
-    getJSON(API+"/latest?from="+encodeURIComponent(base), function(data){
-      if(!data || !data.rates){ enterManual(); return; }
-      var pack={ date:data.date, rates:data.rates };
+    getJSON(API+"/"+encodeURIComponent(base), function(data){
+      if(!data || data.result!=="success" || !data.rates){ enterManual(); return; }
+      /* Derive YYYY-MM-DD from time_last_update_utc, fallback to today. */
+      var date="";
+      if(data.time_last_update_utc){
+        var d=new Date(data.time_last_update_utc);
+        if(!isNaN(d)){
+          date = d.getUTCFullYear()+"-"+
+                 String(d.getUTCMonth()+1).padStart(2,"0")+"-"+
+                 String(d.getUTCDate()).padStart(2,"0");
+        }
+      }
+      var pack={ date:date, rates:data.rates };
       pack.rates[base]=1; /* 자기 자신 */
       rateCache[base]=pack;
       cb(pack);
@@ -424,20 +512,41 @@
     recompute();
   });
 
-  /* ---- 부팅 ---- */
+  /* ---- 부팅 ----
+     open.er-api.com has no /currencies endpoint. Fetch /latest/USD instead,
+     take its `rates` keys as the supported-currency list, and label them via
+     the embedded CCY_NAMES map (codes without a name fall back to the code). */
   function boot(){
     setStatus("fxLoading", false);
-    getJSON(API+"/currencies", function(data){
-      if(!data || typeof data!=="object"){ bootFallback(); return; }
-      currencies=data;
+    getJSON(API+"/USD", function(data){
+      if(!data || data.result!=="success" || !data.rates){ bootFallback(); return; }
+      currencies={};
+      currencies.USD = CCY_NAMES.USD || "United States Dollar";
+      for(var code in data.rates){
+        if(!data.rates.hasOwnProperty(code)) continue;
+        currencies[code] = CCY_NAMES[code] || code;
+      }
+      /* Seed the USD rate cache from the same response so we don't refetch. */
+      var date="";
+      if(data.time_last_update_utc){
+        var d=new Date(data.time_last_update_utc);
+        if(!isNaN(d)){
+          date = d.getUTCFullYear()+"-"+
+                 String(d.getUTCMonth()+1).padStart(2,"0")+"-"+
+                 String(d.getUTCDate()).padStart(2,"0");
+        }
+      }
+      var seed={ date:date, rates:data.rates };
+      seed.rates.USD=1;
+      rateCache.USD=seed;
       fillSelects();
       recompute();
     }, function(){ bootFallback(); });
   }
-  /* /currencies 조차 실패 → 최소 통화 목록 + 수동 모드 */
+  /* /latest/USD 조차 실패 → 최소 통화 목록 + 수동 모드 */
   function bootFallback(){
     currencies={ USD:"United States Dollar", EUR:"Euro", JPY:"Japanese Yen",
-      CNY:"Chinese Renminbi", KRW:"South Korean Won", GBP:"British Pound" };
+      CNY:"Chinese Yuan", KRW:"South Korean Won", GBP:"British Pound" };
     fillSelects();
     enterManual();
   }
@@ -450,13 +559,13 @@
       fxSub:"금액과 통화를 선택하면 실시간 환율로 즉시 변환합니다.",
       fxInputTitle:"변환", fxAmount:"금액",
       fxFrom:"기준 통화", fxTo:"대상 통화", fxSwap:"통화 교환",
-      fxResult:"변환 결과", fxBasis:"ECB 기준",
+      fxResult:"변환 결과", fxBasis:"기준일",
       fxTableTitle:"빠른 환산표", fxColCcy:"통화", fxColAmount:"환산 금액",
       fxLoading:"환율을 불러오는 중…",
       fxErr:"환율을 불러오지 못했습니다. 네트워크를 확인하거나 아래에 환율을 직접 입력하세요.",
       fxManualLabel:"수동 환율 (1 기준 통화 = ? 대상 통화)",
       fxManualPh:"예: 1320.5",
-      fxDisclaimer:"환율은 frankfurter.app을 통한 ECB(유럽중앙은행) 기준 환율로, 참고용이며 실제 매매 호가가 아닙니다.",
+      fxDisclaimer:"환율은 open.er-api.com에서 매일 갱신되는 데이터로, 참고용이며 실제 매매 호가가 아닙니다.",
       fxHelpBtn:"사용법", fxHelpClose:"닫기", fxGuideTitle:"환율 계산기 사용법",
       fxStep1T:"금액·통화 선택", fxStep1D:"변환할 금액을 입력하고 기준 통화와 대상 통화를 선택하세요. ⇄ 버튼으로 두 통화를 바꿀 수 있습니다.",
       fxStep2T:"즉시 변환", fxStep2D:"입력하는 즉시 실시간 환율로 변환 결과와 단위 환율, 기준 일자가 표시됩니다. 오른쪽 표에는 주요 통화 환산값이 함께 나옵니다.",
@@ -476,7 +585,7 @@
       fxErr:"Couldn't load exchange rates. Check your connection or enter a rate manually below.",
       fxManualLabel:"Manual rate (1 from-currency = ? to-currency)",
       fxManualPh:"e.g. 1320.5",
-      fxDisclaimer:"Rates are ECB reference rates via frankfurter.app — for reference only, not a trading quote.",
+      fxDisclaimer:"Rates come from open.er-api.com (updated daily) — for reference only, not a trading quote.",
       fxHelpBtn:"How to use", fxHelpClose:"Close", fxGuideTitle:"How to use the currency converter",
       fxStep1T:"Pick amount & currencies", fxStep1D:"Enter the amount and choose the from- and to-currency. Use the ⇄ button to swap the two.",
       fxStep2T:"Instant conversion", fxStep2D:"As you type, the converted amount, unit rate and reference date update from live rates. The right-hand table shows major currencies too.",
@@ -496,7 +605,7 @@
       fxErr:"為替レートを取得できませんでした。接続を確認するか、下にレートを手動で入力してください。",
       fxManualLabel:"手動レート（1 基準通貨 = ? 対象通貨）",
       fxManualPh:"例: 1320.5",
-      fxDisclaimer:"レートは frankfurter.app 経由の ECB（欧州中央銀行）基準レートで、参考用であり実際の売買レートではありません。",
+      fxDisclaimer:"レートは open.er-api.com から毎日更新されるデータで、参考用であり実際の売買レートではありません。",
       fxHelpBtn:"使い方", fxHelpClose:"閉じる", fxGuideTitle:"為替計算機の使い方",
       fxStep1T:"金額・通貨を選択", fxStep1D:"換算する金額を入力し、基準通貨と対象通貨を選びます。⇄ ボタンで2つの通貨を入れ替えられます。",
       fxStep2T:"即時換算", fxStep2D:"入力するたびに、リアルタイムレートで換算結果・単位レート・基準日が更新されます。右の表には主要通貨の換算値も表示されます。",
@@ -516,7 +625,7 @@
       fxErr:"无法加载汇率。请检查网络，或在下方手动输入汇率。",
       fxManualLabel:"手动汇率（1 原币种 = ? 目标币种）",
       fxManualPh:"例如：1320.5",
-      fxDisclaimer:"汇率为通过 frankfurter.app 获取的 ECB（欧洲央行）基准汇率，仅供参考，并非实际交易报价。",
+      fxDisclaimer:"汇率来自 open.er-api.com，每日更新，仅供参考，并非实际交易报价。",
       fxHelpBtn:"使用方法", fxHelpClose:"关闭", fxGuideTitle:"汇率计算器使用方法",
       fxStep1T:"选择金额与币种", fxStep1D:"输入要换算的金额，并选择原币种和目标币种。用 ⇄ 按钮可互换两种币种。",
       fxStep2T:"即时换算", fxStep2D:"输入时即按实时汇率更新换算结果、单位汇率和基准日期。右侧表格还会显示主要币种的换算值。",
@@ -536,7 +645,7 @@
       fxErr:"No se pudieron cargar los tipos de cambio. Comprueba tu conexión o introduce un tipo manualmente abajo.",
       fxManualLabel:"Tipo manual (1 divisa de origen = ? divisa de destino)",
       fxManualPh:"p. ej. 1320.5",
-      fxDisclaimer:"Los tipos son tipos de referencia del BCE a través de frankfurter.app; son solo de referencia y no una cotización de mercado.",
+      fxDisclaimer:"Los tipos provienen de open.er-api.com (actualizados a diario); son solo de referencia y no una cotización de mercado.",
       fxHelpBtn:"Cómo usar", fxHelpClose:"Cerrar", fxGuideTitle:"Cómo usar el conversor de divisas",
       fxStep1T:"Elige importe y divisas", fxStep1D:"Introduce el importe y elige la divisa de origen y de destino. Usa el botón ⇄ para intercambiar ambas.",
       fxStep2T:"Conversión instantánea", fxStep2D:"Mientras escribes, el importe convertido, el tipo unitario y la fecha de referencia se actualizan con tipos en vivo. La tabla de la derecha también muestra las principales divisas.",
@@ -556,7 +665,7 @@
       fxErr:"Impossible de charger les taux de change. Vérifiez votre connexion ou saisissez un taux manuellement ci-dessous.",
       fxManualLabel:"Taux manuel (1 devise source = ? devise cible)",
       fxManualPh:"par ex. 1320.5",
-      fxDisclaimer:"Les taux sont les taux de référence de la BCE via frankfurter.app — à titre indicatif uniquement, ce n'est pas une cotation de marché.",
+      fxDisclaimer:"Les taux proviennent de open.er-api.com, mis à jour quotidiennement — à titre indicatif uniquement, ce n'est pas une cotation de marché.",
       fxHelpBtn:"Mode d'emploi", fxHelpClose:"Fermer", fxGuideTitle:"Comment utiliser le convertisseur de devises",
       fxStep1T:"Choisissez montant et devises", fxStep1D:"Saisissez le montant et choisissez la devise source et la devise cible. Utilisez le bouton ⇄ pour les permuter.",
       fxStep2T:"Conversion instantanée", fxStep2D:"Au fil de la saisie, le montant converti, le taux unitaire et la date de référence se mettent à jour avec les taux en direct. Le tableau de droite affiche aussi les principales devises.",
@@ -576,7 +685,7 @@
       fxErr:"Wechselkurse konnten nicht geladen werden. Prüfen Sie Ihre Verbindung oder geben Sie unten einen Kurs manuell ein.",
       fxManualLabel:"Manueller Kurs (1 Ausgangswährung = ? Zielwährung)",
       fxManualPh:"z. B. 1320.5",
-      fxDisclaimer:"Die Kurse sind EZB-Referenzkurse über frankfurter.app – nur als Referenz, keine Handelsnotierung.",
+      fxDisclaimer:"Die Kurse stammen von open.er-api.com (täglich aktualisiert) – nur als Referenz, keine Handelsnotierung.",
       fxHelpBtn:"Anleitung", fxHelpClose:"Schließen", fxGuideTitle:"So verwenden Sie den Währungsrechner",
       fxStep1T:"Betrag & Währungen wählen", fxStep1D:"Geben Sie den Betrag ein und wählen Sie Ausgangs- und Zielwährung. Mit der Schaltfläche ⇄ tauschen Sie beide.",
       fxStep2T:"Sofortige Umrechnung", fxStep2D:"Während der Eingabe werden umgerechneter Betrag, Einzelkurs und Referenzdatum mit aktuellen Kursen aktualisiert. Die Tabelle rechts zeigt auch die wichtigsten Währungen.",
@@ -596,7 +705,7 @@
       fxErr:"Não foi possível carregar as taxas de câmbio. Verifique a ligação ou introduza uma taxa manualmente abaixo.",
       fxManualLabel:"Taxa manual (1 moeda de origem = ? moeda de destino)",
       fxManualPh:"por ex. 1320.5",
-      fxDisclaimer:"As taxas são taxas de referência do BCE via frankfurter.app — apenas para referência, não constituem uma cotação de mercado.",
+      fxDisclaimer:"As taxas vêm de open.er-api.com (atualizadas diariamente) — apenas para referência, não constituem uma cotação de mercado.",
       fxHelpBtn:"Como usar", fxHelpClose:"Fechar", fxGuideTitle:"Como usar o conversor de moedas",
       fxStep1T:"Escolha montante e moedas", fxStep1D:"Introduza o montante e escolha a moeda de origem e de destino. Use o botão ⇄ para trocar as duas.",
       fxStep2T:"Conversão instantânea", fxStep2D:"À medida que escreve, o montante convertido, a taxa unitária e a data de referência atualizam-se com taxas em tempo real. A tabela à direita também mostra as principais moedas.",
@@ -616,7 +725,7 @@
       fxErr:"Не удалось загрузить курсы валют. Проверьте подключение или введите курс вручную ниже.",
       fxManualLabel:"Курс вручную (1 исходная валюта = ? целевая валюта)",
       fxManualPh:"например, 1320.5",
-      fxDisclaimer:"Курсы — справочные курсы ЕЦБ через frankfurter.app, только для справки, а не торговая котировка.",
+      fxDisclaimer:"Курсы предоставлены open.er-api.com (обновляются ежедневно), только для справки, а не торговая котировка.",
       fxHelpBtn:"Как пользоваться", fxHelpClose:"Закрыть", fxGuideTitle:"Как пользоваться конвертером валют",
       fxStep1T:"Выберите сумму и валюты", fxStep1D:"Введите сумму и выберите исходную и целевую валюту. Кнопка ⇄ меняет их местами.",
       fxStep2T:"Мгновенная конвертация", fxStep2D:"По мере ввода результат конвертации, курс за единицу и дата курса обновляются по актуальным курсам. В таблице справа также показаны основные валюты.",

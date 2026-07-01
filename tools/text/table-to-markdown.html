@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -130,6 +130,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -248,6 +264,49 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>표를 마크다운 표로 바꾸는 이유</h2>
+  <p>GitHub 이슈, README, 위키, 노션, 옵시디언, 디스코드처럼 마크다운을 쓰는 곳에서는 표를 <code>| 셀 | 셀 |</code> 형식으로 직접 손으로 그려야 합니다. 칸을 하나씩 파이프(<code>|</code>)로 막고 두 번째 줄에 구분선을 넣는 이 작업은 열이 조금만 많아져도 금세 지치고 정렬도 어긋나기 쉽습니다. 이 도구는 <strong>엑셀·구글 시트·노션에서 복사한 표</strong>나 CSV 텍스트를 왼쪽에 붙여넣기만 하면, 오른쪽에 바로 쓸 수 있는 GitHub 스타일 마크다운 표를 만들어 줍니다.</p>
+  <p>붙여넣은 표는 <strong>브라우저 안에서만 파싱</strong>되어 마크다운으로 바뀝니다. 서버로 올라가지 않으므로 사내 데이터가 담긴 표를 다뤄도 외부로 새어 나갈 걱정이 없습니다.</p>
+
+  <h2>어떤 형식을 붙여넣을 수 있나</h2>
+  <p>스프레드시트에서 셀 범위를 선택해 복사하면 셀 사이가 <strong>탭 문자</strong>로 구분된 채 클립보드에 담깁니다. 그래서 엑셀·구글 시트·노션 표를 그대로 붙여넣으면 됩니다. 쉼표로 구분된 <strong>CSV</strong> 텍스트도 인식합니다.</p>
+  <ul>
+    <li><strong>구분자</strong>는 기본이 <code>자동 감지</code>로, 붙여넣은 텍스트에 탭이 있으면 탭을, 없으면 쉼표를 구분자로 씁니다. 값 안에 쉼표가 섞여 결과가 어긋나면 <code>탭</code>이나 <code>쉼표</code>로 직접 고정하세요.</li>
+    <li><strong>첫 줄을 헤더로</strong> 옵션을 켜면 첫 행이 표 머리글이 됩니다. 헤더가 없는 데이터라면 꺼서 모든 줄을 본문으로 처리할 수 있습니다.</li>
+    <li><strong>정렬</strong>(왼쪽·가운데·오른쪽)은 구분선 줄의 콜론 위치(<code>:---</code>, <code>:---:</code>, <code>---:</code>)로 표현되어, 마크다운을 지원하는 곳에서 실제 열 정렬로 나타납니다.</li>
+  </ul>
+
+  <h2>깔끔한 결과를 얻는 요령</h2>
+  <p>행마다 열 개수가 다르면 가장 열이 많은 행에 맞춰 빈 칸이 자동으로 채워지므로 표가 깨지지 않습니다. 셀 안에 파이프 문자 <code>|</code>가 들어 있으면 표 문법과 충돌하는데, 이 도구는 이를 자동으로 <code>\|</code>로 이스케이프해 안전하게 처리합니다. 각 셀의 앞뒤 공백도 정리되어 값이 가지런히 정렬됩니다. 완성된 마크다운은 <strong>복사</strong> 버튼 한 번으로 클립보드에 담기고, 오른쪽 <strong>미리보기</strong>로 붙여넣기 전에 결과 모양을 미리 확인할 수 있습니다.</p>
+  <p>실제로 자주 쓰이는 상황은 이렇습니다. 스프레드시트로 관리하던 <strong>기능 명세·API 파라미터 목록</strong>을 그대로 개발 문서(README·위키)에 옮길 때, 여러 사람에게 받은 <strong>담당자·일정 표</strong>를 깃허브 이슈나 위키에 정리해 공유할 때, 데이터 분석 결과의 요약 표를 <strong>노션 문서나 블로그 글</strong>에 붙일 때처럼, 표를 한 번 만들어 두고 여러 마크다운 문서로 옮겨야 하는 경우입니다. 손으로 파이프를 그리는 대신 붙여넣기와 복사 두 번이면 끝나므로, 표가 크고 자주 바뀔수록 아끼는 시간이 커집니다.</p>
+
+  <h3>정렬을 활용하는 법</h3>
+  <p>숫자·금액이 담긴 열은 <strong>오른쪽 정렬</strong>로 두면 자릿수가 맞아 읽기 편하고, 짧은 상태값·기호는 <strong>가운데 정렬</strong>이 보기 좋습니다. 이 도구는 표 전체에 하나의 정렬을 적용하므로, 열마다 정렬을 다르게 하고 싶다면 변환한 뒤 구분선 줄(<code>| :--- | ---: |</code> 형태)에서 해당 열의 콜론 위치만 손으로 조정하면 됩니다.</p>
+
+  <h2>알아두면 좋은 한계</h2>
+  <p>마크다운 표 문법 자체가 <strong>셀 병합(colspan·rowspan)</strong>과 셀 안 줄바꿈을 지원하지 않습니다. 따라서 병합된 셀이 있는 복잡한 표는 병합이 풀린 단순 격자로 변환됩니다. 셀 안에서 줄을 바꾸고 싶다면 변환 후 해당 위치에 <code>&lt;br&gt;</code>를 직접 넣어야 합니다. 이미지·수식·서식(굵게·색)은 표 셀 텍스트로만 옮겨집니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">엑셀에서 복사한 표가 한 줄로 붙어요.</p>
+    <p class="a">붙여넣기가 서식 없이 텍스트로만 되었을 수 있습니다. 스프레드시트에서 셀 <strong>범위</strong>를 드래그해 복사한 뒤 입력칸에 붙여넣으면 탭 구분으로 들어옵니다. 그래도 안 되면 구분자를 <code>탭</code>으로 직접 지정해 보세요.</p>
+    <p class="q">헤더 없이 표만 만들 수 있나요?</p>
+    <p class="a">‘첫 줄을 헤더로’ 체크를 끄면 됩니다. 다만 마크다운 표 문법상 머리글 행은 비어 있더라도 존재해야 하므로, 헤더를 끄면 빈 헤더 줄이 자동으로 생성됩니다.</p>
+    <p class="q">변환한 데이터가 서버에 저장되나요?</p>
+    <p class="a">아니요. 파싱과 변환은 모두 브라우저 안 자바스크립트로 처리되며, 붙여넣은 내용은 어디에도 전송·저장되지 않습니다.</p>
+    <p class="q">셀 안에 파이프(|)가 있으면 표가 깨지지 않나요?</p>
+    <p class="a">깨지지 않습니다. 셀 안의 <code>|</code>는 자동으로 <code>\|</code>로 바뀌어 마크다운 표 문법과 충돌하지 않도록 처리됩니다.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="text-merge.html">텍스트 파일 합치기</a>
+    <a href="address-romanize.html">한글 주소 영문 변환</a>
+    <a href="../../guide/table-to-markdown.html">마크다운 표 가이드 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>

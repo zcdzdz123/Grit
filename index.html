@@ -348,8 +348,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
         { "@type": "ListItem", "position": 13, "name": "파일 이름 일괄 변경",    "url": "https://grit-tools.com/tools/file/batch-rename.html" },
         { "@type": "ListItem", "position": 14, "name": "표를 마크다운으로 변환", "url": "https://grit-tools.com/tools/text/table-to-markdown.html" },
         { "@type": "ListItem", "position": 15, "name": "한글 주소 영문 변환",    "url": "https://grit-tools.com/tools/text/address-romanize.html" },
-        { "@type": "ListItem", "position": 16, "name": "텍스트 파일 합치기",     "url": "https://grit-tools.com/tools/text/text-merge.html" },
-        { "@type": "ListItem", "position": 17, "name": "우편번호 검색",          "url": "https://grit-tools.com/tools/text/postal-code.html" }
+        { "@type": "ListItem", "position": 16, "name": "텍스트 파일 합치기",     "url": "https://grit-tools.com/tools/text/text-merge.html" }
       ]
     }
   ]
@@ -390,7 +389,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
         </a>
       </div>
       <div class="nav-group">
-        <div class="nav-group-title">Text <span class="gc">4</span></div>
+        <div class="nav-group-title">Text <span class="gc">3</span></div>
         <a class="nav-item" href="tools/text/table-to-markdown.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></span>
           <span data-i18n="navTm">표 → Markdown</span> <span class="ni-badge new">New</span>
@@ -402,10 +401,6 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
         <a class="nav-item" href="tools/text/text-merge.html">
           <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h9l5 5v11H5z"/><path d="M9 13h6M9 16h6M9 10h3"/></svg></span>
           <span data-i18n="navTx">텍스트 파일 병합</span> <span class="ni-badge new">New</span>
-        </a>
-        <a class="nav-item" href="tools/text/postal-code.html">
-          <span class="ni-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>
-          <span data-i18n="navPostal">우편번호 검색</span> <span class="ni-badge new">New</span>
         </a>
       </div>
       <div class="nav-group">
@@ -501,7 +496,7 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
 
       <!-- 텍스트 -->
       <section class="category" id="text">
-        <div class="cat-header"><h2 class="cat-name">Text</h2><span class="cat-count">4</span></div>
+        <div class="cat-header"><h2 class="cat-name">Text</h2><span class="cat-count">3</span></div>
         <div class="tool-grid">
           <a class="tool-card" href="tools/text/table-to-markdown.html">
             <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M9 6v12"/></svg></div>
@@ -520,12 +515,6 @@ svg.ic { fill: none; stroke: var(--blue); stroke-width: 1.7; stroke-linecap: rou
             <div class="tool-name"><span data-i18n="navTx">텍스트 파일 병합</span><span class="badge-new">NEW</span></div>
             <p class="tool-desc" data-i18n="homeTxDesc">여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원.</p>
             <div class="tool-meta"><span data-i18n="metaDragDrop">드래그&드롭</span><span data-i18n="metaDownload">다운로드</span></div>
-          </a>
-          <a class="tool-card" href="tools/text/postal-code.html">
-            <div class="tool-icon"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></div>
-            <div class="tool-name"><span data-i18n="navPostal">우편번호 검색</span><span class="badge-new">NEW</span></div>
-            <p class="tool-desc" data-i18n="homePostalDesc">도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사.</p>
-            <div class="tool-meta"><span data-i18n="metaInstant">즉시 변환</span><span data-i18n="metaCopy">복사</span></div>
           </a>
         </div>
       </section>
@@ -673,7 +662,7 @@ GritI18n.register({
     homeXsDesc:"엑셀 워크북을 시트별로 분리해 각 시트를 개별 XLSX 또는 CSV로 저장 (브라우저에서만 처리).",
     homeBrDesc:"찾기·바꾸기, 접두·접미, 연속 번호 규칙으로 파일명을 한 번에 바꾸고, 새 이름으로 다운로드하거나 .bat/.ps1/.sh 스크립트를 내보냅니다.",
     homeTxDesc:"여러 텍스트 파일을 끌어다 놓고 순서를 바꿔 하나로 병합. 구분자·파일명 헤더·BOM 옵션 지원.",
-    navPostal:"우편번호 검색", homePostalDesc:"도로명·지번 주소를 검색해 5자리 우편번호를 바로 찾고 복사.", footPrivacy:"개인정보처리방침"
+    footPrivacy:"개인정보처리방침"
   },
   en:{
     docTitle:"Grit Tools — Developer & calculator tools in your browser",
@@ -707,7 +696,7 @@ GritI18n.register({
     homeXsDesc:"Split an Excel workbook into per-sheet files and save each as a separate XLSX or CSV (processed in your browser).",
     homeBrDesc:"Rename many files at once with find & replace, prefix/suffix and numbering rules, then download them renamed or export a .bat/.ps1/.sh script.",
     homeTxDesc:"Drag, reorder and merge multiple text files into one — with separator, filename-header and BOM options.",
-    navPostal:"Postal Code Search (KR)", homePostalDesc:"Search a road or lot-number address to find and copy a 5-digit postal code.", footPrivacy:"Privacy Policy"
+    footPrivacy:"Privacy Policy"
   },
   ja:{
     docTitle:"Grit Tools — ブラウザーで使う開発・計算ツール",
@@ -741,7 +730,7 @@ GritI18n.register({
     homeXsDesc:"Excelワークブックをシートごとに分割し、各シートを個別のXLSXまたはCSVとして保存（ブラウザ内処理）。",
     homeBrDesc:"検索・置換、接頭辞・接尾辞、連番などのルールでファイル名を一括変更し、名前を変えてDLか .bat/.ps1/.sh スクリプトを書き出します。",
     homeTxDesc:"複数のテキストファイルをドラッグ＆並べ替えて1つに結合。区切り・ファイル名ヘッダー・BOMに対応。",
-    navPostal:"郵便番号検索（韓国）", homePostalDesc:"道路名・地番の住所から5桁の郵便番号をすぐに探してコピー。", footPrivacy:"プライバシーポリシー"
+    footPrivacy:"プライバシーポリシー"
   },
   zh:{
     docTitle:"Grit Tools — 浏览器里的开发与计算工具",
@@ -775,7 +764,7 @@ GritI18n.register({
     homeXsDesc:"将 Excel 工作簿按工作表拆分，并将每个工作表保存为单独的 XLSX 或 CSV（在浏览器中处理）。",
     homeBrDesc:"用查找替换、前缀后缀、连续编号等规则一次性重命名多个文件，并以新名称下载或导出 .bat/.ps1/.sh 脚本。",
     homeTxDesc:"拖入并排序多个文本文件合并为一个，支持分隔符、文件名标题与 BOM 选项。",
-    navPostal:"邮政编码查询（韩国）", homePostalDesc:"按道路名或地番地址查找并复制 5 位邮政编码。", footPrivacy:"隐私政策"
+    footPrivacy:"隐私政策"
   },
   es:{
     docTitle:"Grit Tools — Herramientas de desarrollo y cálculo en el navegador",
@@ -809,7 +798,7 @@ GritI18n.register({
     homeXsDesc:"Divide un libro de Excel en archivos por hoja y guarda cada uno como XLSX o CSV (procesado en tu navegador).",
     homeBrDesc:"Renombra muchos archivos a la vez con buscar y reemplazar, prefijo/sufijo y reglas de numeración; luego descárgalos renombrados o exporta un script .bat/.ps1/.sh.",
     homeTxDesc:"Arrastra, reordena y combina varios archivos de texto en uno, con opciones de separador, encabezado con nombre de archivo y BOM.",
-    navPostal:"Búsqueda de código postal (KR)", homePostalDesc:"Busca una dirección por vía o parcela y copia el código postal de 5 dígitos.", footPrivacy:"Política de privacidad"
+    footPrivacy:"Política de privacidad"
   },
   fr:{
     docTitle:"Grit Tools — Outils de développement et de calcul dans le navigateur",
@@ -843,7 +832,7 @@ GritI18n.register({
     homeXsDesc:"Divisez un classeur Excel en fichiers par feuille et enregistrez chacun en XLSX ou CSV (traité dans votre navigateur).",
     homeBrDesc:"Renommez plusieurs fichiers à la fois avec rechercher-remplacer, préfixe/suffixe et règles de numérotation, puis téléchargez-les renommés ou exportez un script .bat/.ps1/.sh.",
     homeTxDesc:"Glissez, réordonnez et fusionnez plusieurs fichiers texte en un seul, avec options de séparateur, d'en-tête de nom de fichier et de BOM.",
-    navPostal:"Recherche de code postal (KR)", homePostalDesc:"Trouvez et copiez un code postal à 5 chiffres à partir d'une adresse.", footPrivacy:"Politique de confidentialité"
+    footPrivacy:"Politique de confidentialité"
   },
   de:{
     docTitle:"Grit Tools — Entwickler- und Rechner-Tools im Browser",
@@ -877,7 +866,7 @@ GritI18n.register({
     homeXsDesc:"Teile eine Excel-Arbeitsmappe in Dateien pro Blatt und speichere jedes als eigene XLSX oder CSV (im Browser verarbeitet).",
     homeBrDesc:"Benenne viele Dateien auf einmal mit Suchen & Ersetzen, Präfix/Suffix und Nummerierungsregeln um, lade sie umbenannt herunter oder exportiere ein .bat/.ps1/.sh-Skript.",
     homeTxDesc:"Ziehe, ordne und führe mehrere Textdateien zu einer zusammen – mit Trennzeichen-, Dateinamen-Kopfzeilen- und BOM-Optionen.",
-    navPostal:"Postleitzahl-Suche (KR)", homePostalDesc:"PLZ über Straßen- oder Flurstückadresse finden und 5-stellig kopieren.", footPrivacy:"Datenschutzerklärung"
+    footPrivacy:"Datenschutzerklärung"
   },
   pt:{
     docTitle:"Grit Tools — Ferramentas de desenvolvimento e cálculo no navegador",
@@ -911,7 +900,7 @@ GritI18n.register({
     homeXsDesc:"Divida uma pasta de trabalho do Excel em arquivos por planilha e salve cada um como XLSX ou CSV (processado no seu navegador).",
     homeBrDesc:"Renomeie muitos arquivos de uma vez com localizar e substituir, prefixo/sufixo e regras de numeração; depois baixe-os renomeados ou exporte um script .bat/.ps1/.sh.",
     homeTxDesc:"Arraste, reordene e junte vários arquivos de texto em um só, com opções de separador, cabeçalho com nome do arquivo e BOM.",
-    navPostal:"Busca de CEP (KR)", homePostalDesc:"Busque um endereço por via ou lote e copie o CEP de 5 dígitos.", footPrivacy:"Política de Privacidade"
+    footPrivacy:"Política de Privacidade"
   },
   ru:{
     docTitle:"Grit Tools — Инструменты для разработки и расчётов в браузере",
@@ -945,7 +934,7 @@ GritI18n.register({
     homeXsDesc:"Разделите книгу Excel на файлы по листам и сохраните каждый как отдельный XLSX или CSV (обработка в браузере).",
     homeBrDesc:"Переименуйте сразу много файлов с помощью поиска и замены, префикса/суффикса и правил нумерации, затем скачайте их переименованными или экспортируйте скрипт .bat/.ps1/.sh.",
     homeTxDesc:"Перетаскивайте, меняйте порядок и объединяйте несколько текстовых файлов в один — с параметрами разделителя, заголовка с именем файла и BOM.",
-    navPostal:"Поиск почтового индекса (KR)", homePostalDesc:"Найдите по адресу и скопируйте 5-значный почтовый индекс.", footPrivacy:"Политика конфиденциальности"
+    footPrivacy:"Политика конфиденциальности"
   }
 });
 GritI18n.init({ mount: document.getElementById("langMount"), inline: true });

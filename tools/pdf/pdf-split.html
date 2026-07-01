@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -156,6 +156,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -296,6 +312,41 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>PDF를 원하는 단위로 나누기</h2>
+  <p>한 개의 PDF를 <strong>여러 개의 작은 PDF로 나눠 주는</strong> 도구입니다. 파일을 열면 총 페이지 수를 자동으로 읽어 알려 주고, 세 가지 분할 방식 중 하나를 골라 ‘분할하기’를 누르면 결과가 목록으로 만들어져 파일별로 또는 한 번에 내려받을 수 있습니다. 두꺼운 스캔 문서에서 특정 장(章)만 떼어 내거나, 여러 사람 몫이 섞인 서류를 각자 몫으로 쪼개거나, 이메일 용량 제한에 걸리는 큰 PDF를 여러 조각으로 나눌 때 유용합니다.</p>
+
+  <h2>세 가지 분할 방식</h2>
+  <ul>
+    <li><strong>페이지별 낱장 분할</strong> — 모든 페이지를 1장짜리 PDF로 각각 떼어 냅니다. 페이지마다 개별 파일이 필요할 때 씁니다.</li>
+    <li><strong>범위 지정</strong> — <code>1-3, 4, 5-8</code>처럼 쉼표로 구분해 여러 구간을 입력하면, 각 구간이 하나의 PDF가 됩니다. 목차·본문·부록처럼 의미 단위로 자를 때 편리하고, 페이지 수를 벗어난 범위를 넣으면 오류로 알려 줍니다.</li>
+    <li><strong>N장씩 분할</strong> — 지정한 페이지 수(N)마다 한 묶음으로 잘라 냅니다. 예를 들어 2를 넣으면 두 장씩 묶여 나뉩니다. 일정한 크기로 균등하게 쪼갤 때 좋습니다.</li>
+  </ul>
+  <p>결과 파일 이름은 원본 이름 뒤에 페이지 번호나 범위가 붙는 형태(<code>문서명_p03.pdf</code>, <code>문서명_5-8.pdf</code>)로 자동 생성되어, 나중에 어떤 부분인지 한눈에 알 수 있습니다.</p>
+
+  <h2>파일은 브라우저 밖으로 나가지 않습니다</h2>
+  <p>분할 작업은 전부 <strong>이 브라우저 안에서만</strong> 이뤄집니다. pdf-lib 라이브러리로 선택한 페이지만 복사해 새 PDF를 만들기 때문에, 원본 PDF가 어떤 <strong>서버로도 업로드되지 않습니다.</strong> 민감한 계약서나 개인정보가 담긴 스캔본을 나눌 때도 파일이 외부로 전송될 걱정이 없습니다. 낱장 분할처럼 결과가 여러 개일 때는 메모리 안정을 위해 한 파일씩 차례로 생성하며, ‘전체 다운로드’를 누르면 순서대로 이어서 저장됩니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">페이지 순서를 바꾸거나 거꾸로 저장할 수 있나요?</p>
+    <p class="a">이 도구는 원본 순서를 유지한 채 ‘나누는’ 데 초점을 둡니다. 순서를 바꾸거나 여러 파일을 다시 합치려면 <a href="pdf-merge.html">PDF 합치기</a>에서 원하는 순서로 재배열해 병합하세요.</p>
+    <p class="q">한 장도 빠짐없이 다 나눠지나요?</p>
+    <p class="a">낱장·N장씩 분할은 전체 페이지를 빠짐없이 처리합니다. 범위 지정은 입력한 구간만 추출하므로, 필요한 페이지를 모두 적었는지 확인하세요. 겹치는 구간을 넣으면 해당 페이지가 여러 결과 파일에 중복으로 들어갑니다.</p>
+    <p class="q">암호가 걸리거나 손상된 PDF는요?</p>
+    <p class="a">열람 제한이나 손상으로 읽을 수 없는 파일은 “읽지 못했습니다”라고 표시됩니다. 암호를 먼저 해제한 뒤 다시 시도해 주세요.</p>
+    <p class="q">한 페이지만 이미지로 뽑고 싶어요.</p>
+    <p class="a">그 경우엔 나누기 대신 <a href="pdf-to-image.html">PDF를 이미지로 변환</a>을 쓰면 원하는 페이지를 PNG·JPG로 바로 저장할 수 있습니다.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="pdf-merge.html">PDF 합치기</a>
+    <a href="pdf-to-image.html">PDF를 이미지로 변환</a>
+    <a href="../../guide/pdf-split.html">PDF 나누기 가이드 →</a>
+  </nav>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <script src="../../i18n.js"></script>

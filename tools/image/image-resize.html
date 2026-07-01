@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow:hidden; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
   body { padding-top:38px; }
   #app { display:flex; height:calc(100vh - 38px); }
 
@@ -151,6 +151,22 @@
   .hs-t { font-size:14px; font-weight:600; color:var(--text); }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -285,6 +301,45 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>이미지 크기·용량 줄이기란</h2>
+  <p>사진이나 스크린샷의 <strong>가로·세로 크기를 줄이거나 파일 용량을 압축</strong>해 곧바로 내려받는 도구입니다. 이미지를 끌어다 놓으면 원본 크기·용량이 카드로 정리되고, 설정을 바꾸는 즉시 결과 크기와 절감된 용량이 다시 계산돼 표시됩니다. 여러 장을 한 번에 올려 같은 설정으로 일괄 처리할 수 있어, 블로그·쇼핑몰에 올릴 사진을 한꺼번에 가볍게 만들 때 특히 편합니다.</p>
+  <p>모든 변환은 브라우저의 <code>canvas</code>에서 이뤄지며, <strong>이미지는 서버로 전송되지 않습니다.</strong> 개인 사진이나 업로드 전 자료를 다뤄도 파일이 밖으로 나가지 않으니 안심하고 쓸 수 있습니다.</p>
+
+  <h2>크기를 정하는 두 가지 방법</h2>
+  <ul>
+    <li><strong>최대 크기로 축소</strong> — 가로·세로 중 긴 변이 지정한 픽셀을 넘지 않도록 <strong>비율을 유지</strong>하며 줄입니다. 예를 들어 1920px로 두면 4000px짜리 사진은 긴 변이 1920px이 되도록 자동 축소되고, 원래 더 작은 이미지는 그대로 둡니다(업스케일하지 않음). 화면·웹 게시용으로 “너무 크지만 않게” 맞출 때 가장 무난합니다.</li>
+    <li><strong>너비/높이 직접 지정</strong> — 정확한 픽셀 크기가 필요할 때 씁니다. ‘비율 유지’를 켜면 한쪽만 입력해도 나머지가 자동 계산되고, 끄면 입력한 대로 늘리거나 눌러 원하는 규격에 딱 맞춥니다.</li>
+  </ul>
+  <p>두 옵션은 함께 켤 수 있으며, 직접 지정한 크기에도 최대 크기 제한이 다시 적용됩니다.</p>
+
+  <h2>형식과 품질로 용량 줄이기</h2>
+  <p>출력 형식은 <strong>원본 유지·JPEG·WebP·PNG</strong> 중에서 고릅니다. 용량을 줄이는 핵심은 형식과 품질입니다. <strong>JPEG</strong>는 사진에 강하고 호환성이 가장 넓으며, <strong>WebP</strong>는 같은 화질에서 더 작은 용량을 만들어 웹에 올리기 좋습니다. 둘 다 품질 슬라이더로 압축 강도를 조절할 수 있어, 80 안팎이면 눈에 띄는 화질 저하 없이 용량을 크게 줄이는 경우가 많습니다. 반면 <strong>PNG는 무손실</strong>이라 품질 값으로는 용량이 거의 줄지 않습니다. 투명 배경이 꼭 필요한 게 아니라면 PNG 사진은 JPEG나 WebP로 바꾸는 편이 용량 절감에 훨씬 효과적입니다.</p>
+
+  <h2>이런 데 씁니다</h2>
+  <p>카카오톡·메신저 프로필이나 배경처럼 <strong>권장 크기에 맞춰야 하는 이미지</strong>를 정확한 픽셀로 만들거나, 블로그·게시판의 업로드 용량 제한을 통과시키거나, 웹사이트 로딩을 빠르게 하려고 사진을 가볍게 만들 때 활용합니다. 결과 카드에는 원본 대비 절감량과 비율이 표시되고, 각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’로 파일을 저장합니다. 다만 이 도구는 크기·용량 조정에 집중하므로 자르기(크롭)나 회전 같은 편집은 제공하지 않습니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">이미지가 서버로 올라가나요?</p>
+    <p class="a">아니요. 크기 변경과 압축 모두 브라우저의 canvas에서 처리되며 파일이 네트워크로 전송되지 않습니다. 오프라인에서도 작동합니다.</p>
+    <p class="q">여러 장을 한 번에 처리할 수 있나요?</p>
+    <p class="a">네. 여러 이미지를 한꺼번에 올리면 같은 설정이 모두에 적용되고, ‘전체 다운로드’로 순차 저장됩니다.</p>
+    <p class="q">작은 이미지를 크게 키울 수도 있나요?</p>
+    <p class="a">‘최대 크기’ 옵션은 원본보다 키우지 않습니다. 확대가 필요하면 ‘너비/높이 직접 지정’에서 원본보다 큰 값을 넣으면 되지만, 없던 디테일이 생기지는 않아 다소 흐려질 수 있습니다.</p>
+    <p class="q">품질을 낮추면 화질이 많이 떨어지나요?</p>
+    <p class="a">JPEG·WebP는 품질 80 안팎이면 대부분 육안상 차이가 크지 않으면서 용량은 크게 줄어듭니다. 결과 카드의 용량을 보며 화질과 용량의 균형점을 찾아보세요.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="pixel-coords.html">이미지 좌표 추출기</a>
+    <a href="color-picker.html">이미지 색상 추출</a>
+    <a href="../../guide/image-resize.html">이미지 리사이즈 가이드 →</a>
+    <a href="../../guide/image-resize-kakao.html">카톡 이미지 크기 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>

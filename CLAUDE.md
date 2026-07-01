@@ -30,10 +30,10 @@
 - `DESIGN.md` — 디자인 시스템 원본(Seline "Crisp Data Canvas"). 색·폰트·간격·모양의 기준.
 - **SEO·배포 자산**(루트): `sitemap.xml`(전 페이지 등록) · `robots.txt`(sitemap 가리킴) · `og.png`(1200×630 소셜 카드) · `privacy.html`. `guide/`는 SEO용 가이드 콘텐츠 페이지. 배포는 `DEPLOY.md` 참고(GitHub `main` push → Cloudflare Pages 자동 재배포, 도메인 `grit-tools.com`). Google Search Console 등록 완료 — `index.html` `<head>`의 `google-site-verification` 메타태그는 **삭제 금지**.
 
-현재 살아있는 도구 **17개 / 5개 카테고리**:
+현재 살아있는 도구 **16개 / 5개 카테고리**:
 - **calc(5)**: compound-interest, simple-interest, currency, d-day, salary-net
 - **image(3)**: pixel-coords, color-picker, image-resize
-- **text(4)**: address-romanize, postal-code, table-to-markdown, text-merge
+- **text(3)**: address-romanize, table-to-markdown, text-merge
 - **file(2)**: excel-split, batch-rename
 - **pdf(3)**: pdf-merge, pdf-split, pdf-to-image
 

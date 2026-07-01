@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -154,6 +154,22 @@
 
   #toast { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); background:var(--blue); color:#fff; padding:8px 16px; border-radius:var(--radius-pill); font-size:13px; font-weight:500; opacity:0; transition:opacity .2s; pointer-events:none; z-index:600; box-shadow:var(--shadow-card); }
   #toast.show { opacity:1; }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -294,6 +310,49 @@
 </div>
 
 <div id="toast"></div>
+
+<section class="tool-about">
+  <h2>여러 텍스트 파일을 하나로 합치기</h2>
+  <p>나뉘어 저장된 로그, 챕터별로 쪼갠 원고, 부분별로 받은 CSV, 여러 개로 분할된 자막·메모 파일처럼 <strong>같은 성격의 텍스트가 여러 파일로 흩어져 있을 때</strong>, 이를 하나로 이어 붙이려면 보통 편집기에서 파일을 하나씩 열어 복사·붙여넣기를 반복해야 합니다. 이 도구는 파일을 <strong>끌어다 놓기만</strong> 하면 원하는 순서대로 이어 붙여 한 개의 텍스트 파일로 만들어 줍니다.</p>
+  <p>추가한 파일은 브라우저가 <strong>직접 읽어 합치기</strong>만 하며, 어떤 파일도 서버로 업로드되지 않습니다. 사내 로그나 개인 문서를 합쳐도 파일이 외부로 나가지 않아 안심할 수 있습니다.</p>
+
+  <h2>지원 파일과 순서 조정</h2>
+  <p><code>.txt</code>·<code>.md</code>·<code>.csv</code>·<code>.log</code>·<code>.json</code> 등 텍스트 파일을 <strong>UTF-8</strong>로 읽습니다. 드롭존에 여러 파일을 한꺼번에 끌어다 놓거나 클릭해 선택할 수 있고, 목록에서 각 파일을 <code>▲</code>·<code>▼</code>로 위아래 이동해 <strong>병합 순서</strong>를 정하며 <code>✕</code>로 뺄 수 있습니다. 합쳐지는 순서가 곧 결과 파일의 순서이므로, 챕터 번호나 날짜 순서에 맞게 정렬해 두면 됩니다.</p>
+
+  <h2>구분자·헤더·BOM 옵션</h2>
+  <ul>
+    <li><strong>파일 사이 구분자</strong>: 파일과 파일 사이에 아무것도 넣지 않거나(<code>없음</code>), 줄바꿈·빈 줄을 넣거나, 원하는 <code>사용자 지정</code> 텍스트(예: <code>----------</code>)를 넣어 경계를 눈에 띄게 할 수 있습니다.</li>
+    <li><strong>파일명 헤더</strong>: 각 파일 앞에 어느 파일에서 온 내용인지 표시하는 머리글을 자동으로 붙입니다. 형식 안의 <code>{name}</code>이 실제 파일명으로 치환되어, 여러 로그를 합칠 때 출처를 구분하기 좋습니다.</li>
+    <li><strong>UTF-8 BOM</strong>: 결과 파일 맨 앞에 BOM을 넣습니다. 일부 구형 프로그램(특히 윈도우 메모장·엑셀 CSV)에서 한글이 깨져 보일 때 켜면 인코딩을 올바로 인식시키는 데 도움이 됩니다.</li>
+    <li><strong>출력 파일 이름</strong>을 지정해 <code>merged.txt</code> 대신 원하는 이름으로 내려받을 수 있습니다.</li>
+  </ul>
+  <p>오른쪽 <strong>미리보기</strong>에서 합쳐진 결과를 바로 확인하고, 글자·줄 수 통계를 참고할 수 있습니다. 다 됐으면 <strong>복사</strong>로 클립보드에 담거나 <strong>병합 다운로드</strong>로 파일을 받으세요.</p>
+
+  <h3>실제 활용 예</h3>
+  <p>흔히 쓰이는 상황은 이렇습니다. 회차별·챕터별로 나눠 받은 <strong>번역 원고나 소설 초고</strong>를 최종 검토를 위해 한 파일로 이어 붙일 때, 서버가 날짜별로 쪼개 남긴 <strong>로그 파일</strong>을 하나로 합쳐 한 번에 검색·분석할 때, 여러 사람이 각자 작성한 <strong>연락처·참가자 명단</strong>을 취합해 정리할 때, 부분별로 내려받은 <strong>CSV 데이터</strong>를 한 파일로 모아 스프레드시트에 한 번에 불러올 때 특히 편합니다. 파일명 헤더를 켜 두면 합쳐진 뒤에도 각 구간이 어느 파일에서 왔는지 바로 알 수 있어, 나중에 문제를 되짚기도 쉽습니다.</p>
+
+  <h2>활용 예와 한계</h2>
+  <p>이 도구는 파일을 <strong>이어 붙이는</strong> 것이 목적이라, 줄 단위 중복 제거나 정렬 같은 가공은 하지 않습니다. 그런 정리가 필요하면 병합한 결과를 받아 별도로 처리하세요. 또한 텍스트 전용이므로 <code>.docx</code>·<code>.pdf</code>·<code>.hwp</code>처럼 자체 포맷을 가진 파일은 그대로 이어 붙이면 내부 구조가 깨져 정상적으로 열리지 않습니다. 인코딩은 UTF-8을 기준으로 읽으므로, EUC-KR 등 다른 인코딩으로 저장된 파일은 미리 UTF-8로 다시 저장해 두는 것이 좋습니다. 아주 큰 파일을 한꺼번에 여러 개 올리면 브라우저 메모리에 따라 처리가 느려질 수 있으니, 필요한 파일만 골라 합치는 것을 권합니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">파일이 서버로 업로드되나요?</p>
+    <p class="a">아니요. 파일 읽기와 병합은 모두 브라우저 안에서 처리되며, 어떤 파일도 서버로 전송되지 않습니다. 인터넷 연결 없이도 병합이 동작합니다.</p>
+    <p class="q">합치는 순서를 바꾸려면?</p>
+    <p class="a">파일 목록에서 각 항목의 <code>▲</code>·<code>▼</code> 버튼으로 위아래로 옮기면 됩니다. 위에 있는 파일부터 순서대로 이어 붙습니다.</p>
+    <p class="q">한글이 깨져서 다운로드돼요.</p>
+    <p class="a">받은 파일을 여는 프로그램이 인코딩을 잘못 잡는 경우입니다. ‘UTF-8 BOM 추가’ 옵션을 켜서 다시 내려받아 보세요. 원본 파일 자체가 EUC-KR이면 UTF-8로 저장한 뒤 합치는 것이 좋습니다.</p>
+    <p class="q">CSV 파일도 합칠 수 있나요?</p>
+    <p class="a">가능합니다. 다만 각 CSV에 머리글 행이 있다면, 파일을 이어 붙일 때 머리글이 중간중간 섞일 수 있으니 필요에 따라 병합 후 정리하세요.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="table-to-markdown.html">표를 마크다운으로 변환</a>
+    <a href="address-romanize.html">한글 주소 영문 변환</a>
+    <a href="../../guide/text-merge.html">텍스트 합치기 가이드 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>

@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -130,6 +130,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -297,6 +313,45 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>디데이·날짜 계산기로 할 수 있는 것</h2>
+  <p>이 도구는 상단 탭으로 <strong>세 가지 날짜 계산</strong>을 한 화면에서 처리합니다. 첫째, <strong>D-Day</strong>는 목표 날짜까지 며칠 남았는지를 <code>D-30</code>·<code>D-DAY</code>·<code>D+5</code> 형식으로 보여줍니다. 둘째, <strong>날짜 사이 일수</strong>는 두 날짜 간 정확한 일수를 총 일수·연월일·주 단위로 나눠 알려줍니다. 셋째, <strong>날짜 더하기·빼기</strong>는 기준 날짜에 일·주·개월·년을 더하거나 빼서 나오는 날짜와 요일을 계산합니다. 시험일·기념일·마감일까지 남은 날, 여행 일정, 계약·수습 만료일, 예정일 같은 것을 셀 때 두루 씁니다.</p>
+  <p>날짜 값은 모두 <strong>브라우저 안에서만 계산</strong>되며 어디로도 전송되지 않습니다. 처음 열면 세 탭 모두 오늘 날짜가 기본으로 들어가 있어 곧바로 쓸 수 있습니다. 별도의 앱 설치나 회원가입 없이 브라우저만 있으면 되고, 계산 결과는 새로고침해도 다시 입력할 필요 없이 오늘 기준으로 초기화되므로 매번 빠르게 확인할 수 있습니다.</p>
+
+  <h2>정확한 계산을 위한 입력 팁</h2>
+  <ul>
+    <li><strong>‘날짜 사이 일수’의 시작일 포함 옵션</strong>이 핵심입니다. 체크를 끄면 두 날짜의 <strong>간격(차이)</strong>을, 켜면 시작일까지 세는 <strong>기간(+1)</strong>을 계산합니다. 예를 들어 1일부터 3일까지, 옵션을 끄면 2일, 켜면 3일이 됩니다. 근무일·이용일처럼 첫날을 포함해 세야 할 때 켜세요.</li>
+    <li><strong>더하기·빼기에는 음수</strong>를 넣을 수 있습니다. <code>-30</code>을 넣으면 기준일에서 30 단위 전 날짜가 나옵니다.</li>
+    <li><strong>개월·년 단위</strong>는 달마다 날짜 수가 다른 점을 자동 보정합니다. 예를 들어 1월 31일에 1개월을 더하면 2월 말일로 맞춰집니다.</li>
+  </ul>
+
+  <h2>결과 읽는 법</h2>
+  <p>결과에는 <strong>요일</strong>이 함께 표시되어, 마감일이 주말·평일 중 언제인지 바로 알 수 있습니다. 날짜 계산은 여름·겨울 시간(DST)이나 시간대에 흔들리지 않도록 <strong><code>UTC</code> 자정 기준 일수</strong>로 처리되므로, 어느 지역에서 열어도 같은 결과가 나옵니다. ‘연·월·일’ 분해는 “몇 년 몇 개월 며칠”처럼 사람이 이해하기 쉬운 형태이고, ‘총 일수’는 순수한 하루 단위 합계라 D-Day나 이자·요금 일할 계산 같은 곳에 그대로 쓰기 좋습니다.</p>
+  <p>세 계산은 실제 상황에서 이렇게 나눠 씁니다. 시험·발표·여행처럼 <strong>다가오는 하루가 목표</strong>라면 D-Day 탭이 맞습니다. 프로젝트 기간이나 근속 일수처럼 <strong>두 날짜 사이가 궁금</strong>하면 ‘날짜 사이 일수’ 탭을 쓰고, 이때 근무일·이용일을 셀 때는 시작일 포함 옵션을 켜세요. 계약 만료일, 수습 종료일, 예정일처럼 <strong>기준일에서 며칠·몇 개월 뒤가 언제인지</strong> 알고 싶으면 ‘날짜 더하기·빼기’ 탭이 편합니다. 특히 “100일 뒤가 무슨 요일이지?” 같은 물음은 더하기 탭에 100일을 넣으면 날짜와 요일이 한 번에 나옵니다. 반대로 과거 어느 날이 궁금하면 음수를 넣으면 됩니다. 세 탭 모두 입력하는 즉시 결과가 갱신되므로 값을 바꿔 가며 여러 시나리오를 빠르게 비교할 수 있습니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">D-Day는 당일을 포함하나요?</p>
+    <p class="a">D-Day 탭은 <strong>오늘과 목표일의 간격</strong>을 셉니다. 목표일 당일이면 <code>D-DAY</code>, 하루 전이면 <code>D-1</code>로 표시됩니다. 시작일을 포함해 세고 싶다면 ‘날짜 사이 일수’ 탭의 시작일 포함 옵션을 쓰세요.</p>
+    <p class="q">과거 날짜도 계산되나요?</p>
+    <p class="a">네. 목표일이 지났다면 <code>D+5</code>처럼 며칠 지났는지 표시하고, 더하기·빼기에서도 과거·미래 어느 방향이든 계산합니다.</p>
+    <p class="q">근무일수(주말 제외)도 세나요?</p>
+    <p class="a">현재는 <strong>달력상 전체 일수</strong>만 셉니다. 주말·공휴일을 뺀 영업일 계산은 지원하지 않으니, 총 일수를 기준으로 별도 조정이 필요합니다.</p>
+    <p class="q">여러 지역에서 열어도 결과가 같나요?</p>
+    <p class="a">네. 모든 계산을 UTC 기준 일수로 처리하므로 시간대나 서머타임에 관계없이 동일한 일수가 나옵니다.</p>
+    <p class="q">100일, 200일 같은 기념일도 셀 수 있나요?</p>
+    <p class="a">네. ‘날짜 더하기·빼기’ 탭에서 시작한 날을 기준 날짜로 넣고 원하는 일수를 더하면 며칠째 되는 날의 날짜와 요일이 바로 나옵니다. 반대로 이미 지난 날짜라면 ‘날짜 사이 일수’ 탭으로 오늘까지 며칠 됐는지 확인할 수 있습니다.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="compound-interest.html">복리 계산기</a>
+    <a href="salary-net.html">연봉 실수령액</a>
+    <a href="currency.html">환율 계산기</a>
+    <a href="../../guide/d-day.html">날짜 계산 가이드 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>

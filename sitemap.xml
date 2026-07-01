@@ -103,12 +103,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://grit-tools.com/tools/text/postal-code</loc>
-    <lastmod>2026-05-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://grit-tools.com/guide/excel-sheet-split</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
@@ -200,12 +194,6 @@
   </url>
   <url>
     <loc>https://grit-tools.com/guide/batch-rename</loc>
-    <lastmod>2026-05-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://grit-tools.com/guide/postal-code</loc>
     <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

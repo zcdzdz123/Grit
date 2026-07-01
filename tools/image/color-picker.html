@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow:hidden; }
+  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
   body { padding-top:38px; }
   #app { display:flex; height:calc(100vh - 38px); }
 
@@ -134,6 +134,22 @@
     #sidebar { width:100%; min-width:0; border-right:none; border-bottom:1px solid var(--border); }
     #viewerWrap { min-height:60vh; }
   }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -255,6 +271,45 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>이미지 색상 추출기란</h2>
+  <p>디자인 시안, 사진, 스크린샷 어디에서든 “이 색이 정확히 무슨 값이지?”가 궁금할 때 쓰는 스포이드(색 추출) 도구입니다. 이미지를 불러온 뒤 원하는 지점을 클릭하면 그 픽셀의 색을 <strong>HEX·RGB·HSL</strong> 세 가지 형식으로 뽑아 주고, 각 값을 버튼 하나로 클립보드에 복사할 수 있습니다. 웹·앱 화면에 쓰인 브랜드 색을 그대로 따와 CSS에 붙이거나, 사진 속 특정 부분의 색조를 확인할 때 편리합니다.</p>
+  <p>불러온 이미지는 <strong>브라우저 안에서만</strong> 열려 픽셀을 읽으며, 어떤 서버로도 업로드되지 않습니다. 공개 전 시안이나 내부 자료의 색을 뽑아도 파일이 밖으로 나가지 않으니 안심하고 쓸 수 있습니다.</p>
+
+  <h2>이렇게 씁니다</h2>
+  <ul>
+    <li><strong>이미지 열기</strong> — ‘이미지 열기’로 파일을 고르거나 창 안으로 끌어다 놓습니다. PNG·JPG·WebP·GIF·BMP 등 브라우저가 여는 일반 이미지를 지원합니다.</li>
+    <li><strong>올려서 미리보기</strong> — 이미지 위로 마우스를 움직이면 커서를 따라다니는 돋보기가 픽셀 격자를 확대해 보여 주고, 사이드바 상단에는 커서 위치의 색이 실시간으로 표시됩니다. 1픽셀 단위로 원하는 색을 정확히 겨눌 수 있습니다.</li>
+    <li><strong>클릭해서 추출</strong> — 원하는 지점을 클릭하면 그 색이 큰 미리보기와 함께 <code>HEX</code>·<code>RGB</code>·<code>HSL</code> 값으로 나타나고, 각 행의 ‘복사’ 버튼으로 원하는 형식만 복사합니다.</li>
+    <li><strong>최근 색상 팔레트</strong> — 추출한 색은 자동으로 ‘최근 색상’에 쌓입니다. 스와치를 클릭하면 그 색을 다시 선택하면서 HEX가 바로 복사돼, 여러 색을 비교하거나 팔레트를 모을 때 유용합니다.</li>
+  </ul>
+
+  <h2>HEX·RGB·HSL, 무엇을 쓸까</h2>
+  <p><strong>HEX</strong>(<code>#54B0F7</code>)는 CSS·디자인 툴에서 가장 널리 쓰이는 표기로, 웹 색 지정에 그대로 붙여 넣기 좋습니다. <strong>RGB</strong>(<code>rgb(84, 176, 247)</code>)는 각 채널을 0~255 숫자로 다뤄 코드에서 색을 계산하거나 조정할 때 편하고, <strong>HSL</strong>(<code>hsl(205, 91%, 65%)</code>)은 색상·채도·명도로 나뉘어 “같은 색을 조금 더 밝게/연하게” 같은 조정을 직관적으로 하기 좋습니다. 같은 색이라도 목적에 맞는 형식을 골라 복사하면 이후 작업이 매끄럽습니다.</p>
+
+  <h2>알아두면 좋은 점과 한계</h2>
+  <p>추출값은 언제나 <strong>이미지 원본 픽셀 기준</strong>이라, 화면에서 확대·축소해 봐도 실제 파일의 정확한 색을 읽습니다. 다만 JPG처럼 손실 압축된 이미지는 원래 색 주변에 미세한 노이즈가 섞일 수 있으니, 단색 영역이라면 여러 지점을 찍어 값을 비교해 보는 것이 안전합니다. 반투명 픽셀은 알파를 제외한 RGB 값으로 읽힙니다. 색을 뽑는 데 특화된 도구라 이미지를 편집하거나 저장하지는 않으며, 위치 좌표가 필요하면 좌표 추출기, 크기 조정이 필요하면 이미지 리사이즈를 함께 쓰면 됩니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">이미지가 서버로 올라가나요?</p>
+    <p class="a">아니요. 파일은 브라우저 안에서만 열려 픽셀을 읽고, 네트워크로 전송되지 않습니다. 공개 전 디자인도 안전하게 다룰 수 있습니다.</p>
+    <p class="q">투명 배경(PNG)의 색도 추출되나요?</p>
+    <p class="a">네. 해당 픽셀의 RGB 값을 읽습니다. 완전 투명한 곳은 배경색이 비치지 않은 원본 채널 값이 나오므로, 실제로 보이는 색이 필요하면 색이 채워진 부분을 클릭하세요.</p>
+    <p class="q">여러 색을 한 번에 모을 수 있나요?</p>
+    <p class="a">클릭할 때마다 ‘최근 색상’ 팔레트에 자동으로 쌓입니다. 스와치를 클릭하면 다시 선택되며 HEX가 복사돼, 배색 후보를 모으기 좋습니다.</p>
+    <p class="q">복사한 값을 CSS에 바로 쓸 수 있나요?</p>
+    <p class="a">네. HEX·RGB·HSL 모두 CSS 표준 표기 그대로 복사되므로 <code>color</code>·<code>background</code> 등에 붙여 넣으면 됩니다.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="pixel-coords.html">이미지 좌표 추출기</a>
+    <a href="image-resize.html">이미지 크기·용량 줄이기</a>
+    <a href="../../guide/color-picker.html">색상 추출 가이드 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>

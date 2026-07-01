@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -147,6 +147,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style>
 <script type="application/ld+json">
 {
@@ -281,6 +297,41 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>PDF의 각 페이지를 이미지로 변환</h2>
+  <p>PDF 파일을 열면 <strong>모든 페이지를 이미지(PNG·JPEG)로 렌더링</strong>해 미리보기로 보여 주고, 페이지마다 ‘이미지 저장’으로 한 장씩, 또는 ‘모든 페이지 저장’으로 전체를 한꺼번에 내려받게 해 줍니다. PDF 한 쪽을 블로그·발표 슬라이드에 그림으로 넣거나, 텍스트 선택이 안 되는 이미지 형태로 공유하거나, 계약서 한 장을 캡처 대신 깔끔하게 이미지로 뽑을 때처럼 “PDF를 그림 파일로 바꿔야 하는” 순간에 씁니다.</p>
+
+  <h2>형식·해상도·품질 고르기</h2>
+  <ul>
+    <li><strong>출력 형식</strong> — 배경이 투명하거나 글자·선을 또렷하게 유지해야 하면 <code>PNG</code>, 사진이 많고 용량을 줄이고 싶으면 <code>JPEG</code>를 고릅니다.</li>
+    <li><strong>해상도(DPI)</strong> — 1x(72 DPI)부터 <strong>2x·고화질(150 DPI)</strong>, 3x(216 DPI), 인쇄용 <strong>300 DPI</strong>까지 선택할 수 있습니다. 해상도가 높을수록 이미지가 선명해지지만 파일 용량과 변환 시간도 함께 늘어납니다. 화면용은 2x, 인쇄나 확대가 필요하면 300 DPI가 무난합니다.</li>
+    <li><strong>JPEG 품질</strong> — JPEG를 고르면 품질 슬라이더(1~100)가 켜집니다. 값이 높을수록 화질이 좋아지고 용량이 커집니다. PNG는 무손실이라 이 슬라이더가 적용되지 않습니다.</li>
+  </ul>
+  <p>저장되는 파일 이름은 <code>원본이름_p01.png</code>처럼 원본 이름과 페이지 번호가 붙는 형태라, 여러 장을 받아도 순서가 뒤섞이지 않습니다.</p>
+
+  <h2>PDF는 서버로 전송되지 않습니다</h2>
+  <p>변환은 전부 <strong>브라우저 안에서만</strong> 처리됩니다. pdf.js가 각 페이지를 화면의 캔버스(canvas)에 그린 뒤 그 결과를 이미지로 뽑아내는 방식이라, 선택한 PDF가 어떤 <strong>서버로도 업로드되지 않습니다.</strong> 민감한 문서를 이미지로 바꿀 때도 파일이 외부로 새어 나갈 걱정이 없습니다. 페이지가 많은 문서는 미리보기를 만드는 데 시간이 걸릴 수 있고, 특히 300 DPI 같은 높은 해상도에서는 기기 성능에 따라 처리 속도가 달라집니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">PNG와 JPEG 중 무엇을 골라야 하나요?</p>
+    <p class="a">글자·표·도형이 많은 문서 페이지는 경계가 또렷한 <code>PNG</code>가 유리하고, 사진·그라데이션이 많은 페이지는 용량이 작은 <code>JPEG</code>가 실용적입니다. 인쇄물이나 배경 투명이 필요하면 PNG를 권합니다.</p>
+    <p class="q">특정 페이지만 이미지로 받을 수 있나요?</p>
+    <p class="a">네. 미리보기의 각 페이지 카드에 있는 ‘이미지 저장’ 버튼을 누르면 그 페이지만 개별로 저장됩니다. 전체가 필요하면 ‘모든 페이지 저장’을 쓰세요.</p>
+    <p class="q">이미지가 흐릿하게 나와요.</p>
+    <p class="a">해상도를 3x나 300 DPI로 올려 다시 저장해 보세요. 화면 캡처와 달리 원본 벡터를 다시 그려 내므로, 해상도만 높이면 확대해도 깨지지 않는 선명한 이미지를 얻을 수 있습니다.</p>
+    <p class="q">반대로 이미지를 PDF로 만들 수 있나요?</p>
+    <p class="a">이 도구는 PDF → 이미지 방향만 지원합니다. 여러 PDF를 하나로 묶으려면 <a href="pdf-merge.html">PDF 합치기</a>, 특정 페이지만 떼어 내려면 <a href="pdf-split.html">PDF 나누기</a>를 함께 활용하세요.</p>
+  </div>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="pdf-merge.html">PDF 합치기</a>
+    <a href="pdf-split.html">PDF 나누기</a>
+    <a href="../../guide/pdf-to-image.html">PDF 이미지 변환 가이드 →</a>
+  </nav>
+</section>
 
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="../../i18n.js"></script>

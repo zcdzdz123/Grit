@@ -48,7 +48,7 @@
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
   html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
-  body { padding-top:38px; overflow:hidden; }
+  body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
   #grit-bar .g-logo { font-size:14px; font-weight:600; color:var(--blue); letter-spacing:-.017em; text-decoration:none; }
@@ -134,6 +134,22 @@
   .hs-t { font-size:14px; font-weight:600; }
   .hs-d { margin:0; font-size:13px; color:var(--text-dim); line-height:1.6; }
   .hs-d code { font-family:var(--font-mono); color:var(--text-dim); }
+
+  /* 도구 하단 설명(콘텐츠) — 스크롤 시 노출, 작업 영역과 분리 */
+  .tool-about { max-width:800px; margin:0 auto; padding:44px 26px 84px; border-top:1px solid var(--border); line-height:1.75; }
+  .tool-about h2 { font-size:20px; font-weight:600; letter-spacing:-.01em; margin:34px 0 12px; }
+  .tool-about h2:first-of-type { margin-top:4px; }
+  .tool-about h3 { font-size:15px; font-weight:600; color:var(--text); margin:20px 0 6px; }
+  .tool-about p, .tool-about li { color:var(--text-dim); font-size:15px; }
+  .tool-about ul, .tool-about ol { padding-left:22px; margin:12px 0; }
+  .tool-about li { margin:7px 0; }
+  .tool-about strong { color:var(--text); font-weight:600; }
+  .tool-about code { font-family:var(--font-mono); font-size:13px; color:var(--blue-dark); background:var(--surface-2); padding:1px 6px; border-radius:5px; }
+  .tool-about a { color:var(--blue); }
+  .tool-about .about-faq .q { color:var(--text); font-weight:600; margin:18px 0 4px; }
+  .tool-about .about-faq .a { margin:0; }
+  .tool-about .about-rel { margin-top:34px; padding-top:20px; border-top:1px solid var(--border); font-size:14px; }
+  .tool-about .about-rel a { text-decoration:none; margin-right:16px; }
 </style><script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -251,6 +267,45 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about">
+  <h2>단리 계산기로 무엇을 할 수 있나</h2>
+  <p>단리 계산기는 <strong>원금·이율·기간(회차)</strong>을 넣으면 이자에 이자가 붙지 않는 단리 방식으로 총이자와 최종 금액을 즉시 계산합니다. 단리는 이자가 오직 처음 원금에만 붙는 구조라, 매 회차 붙는 이자가 항상 같습니다. 그래서 회차별 잔액을 그래프로 그리면 완만한 <strong>직선</strong>이 나옵니다. 이자가 점점 가속되는 복리 곡선과 달리 증가폭이 일정하다는 점이 단리의 핵심입니다. 만기까지 이자 총액을 미리 가늠하거나, 국공채·회사채처럼 단리로 이자를 주는 상품, 혹은 원리금 대출·연체이자처럼 단리로 계산되는 금액을 확인할 때 쓰기 좋습니다.</p>
+  <p>입력한 금액은 <strong>브라우저 안에서만 계산</strong>되고 서버로 전송되지 않으므로, 실제 예치 금액을 넣어도 외부에 남을 걱정이 없습니다. 원금·이율·기간 세 값만 바꾸면 결과와 표·그래프가 즉시 다시 그려지므로, 여러 조건을 빠르게 바꿔 보며 어느 쪽이 유리한지 비교하기에 좋습니다.</p>
+
+  <h2>입력·사용 팁</h2>
+  <ul>
+    <li><strong>이율은 한 회차당 비율</strong>입니다. 연 단위로 보고 싶으면 연이율을 그대로 넣고 기간을 연 수로, 월 단위로 보고 싶으면 월 이율(연이율 ÷ 12)을 넣고 기간을 개월 수로 맞추세요.</li>
+    <li><strong>기간에 소수를 넣을 수 있습니다.</strong> 예를 들어 <code>2.5</code>회를 넣으면 2년 6개월 시점까지의 단리 이자를 반영합니다. 단리는 기간에 정비례하므로 중간 시점 계산이 특히 깔끔합니다.</li>
+    <li>결과 표의 <strong>누적 이자</strong> 열을 보면 매 회차 같은 금액만큼 이자가 늘어나는 것을 확인할 수 있습니다. 회차별 표를 그대로 엑셀로 저장할 수 있어 상환 계획표나 보고 자료에 붙이기 편합니다.</li>
+  </ul>
+
+  <h2>결과를 활용하는 법</h2>
+  <p>상단 <strong>최종 금액</strong>은 원금과 단리 이자를 합친 세전 금액입니다. 실제 이자 수령 시에는 <strong>이자소득세 15.4%</strong>가 원천징수되므로, 손에 쥐는 이자는 표시값보다 적습니다. 대략적인 세후 이자는 “총이자 × 0.846”으로 어림할 수 있습니다. 같은 원금·이율·기간을 <a href="compound-interest.html">복리 계산기</a>에도 똑같이 넣어 두 최종 금액을 비교하면, 복리가 단리보다 얼마나 더 불어나는지 금액 차이로 바로 체감할 수 있습니다. 기간이 짧을수록 둘의 차이는 작고, 길수록 복리가 크게 앞섭니다.</p>
+  <p>단리가 실제로 쓰이는 곳은 생각보다 많습니다. 만기에 원금과 이자를 한 번에 받는 <strong>만기일시상환 이자</strong>, 갚아야 할 돈을 늦게 낼 때 붙는 <strong>연체이자·지연손해금</strong>, 일부 <strong>채권의 표면이자</strong> 계산이 단리 방식을 따릅니다. 이런 경우 이 계산기에 해당 이율과 기간을 넣어 예상 이자 총액을 미리 확인할 수 있습니다. 반대로 예금·적금 상품 대부분은 복리에 가깝게 이자를 굴리므로, 저축 상품을 비교할 때는 단리 결과를 “최소 기준선”으로 보고 실제 상품은 그보다 조금 더 유리하다고 생각하면 됩니다. 회차별 표의 잔액 열은 매 회차 정확히 같은 금액만큼 커지므로, 표만 봐도 이자가 원금에만 붙는 단리 구조를 직관적으로 이해할 수 있습니다.</p>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="about-faq">
+    <p class="q">단리와 복리는 어떻게 다른가요?</p>
+    <p class="a">단리는 이자가 <strong>처음 원금에만</strong> 붙어 매 회차 이자가 일정하고, 복리는 붙은 이자에 다시 이자가 붙어 갈수록 이자가 커집니다. 같은 조건이라면 기간이 길어질수록 복리 쪽 최종 금액이 더 큽니다.</p>
+    <p class="q">대출 이자 계산에도 쓸 수 있나요?</p>
+    <p class="a">이자만 단리로 계산되는 경우(예: 만기일시상환의 이자, 단순 연체이자)에는 참고용으로 쓸 수 있습니다. 다만 원리금균등·원금균등처럼 매달 원금이 줄어드는 상환 방식은 이 도구의 단순 단리 공식과 다르므로 은행 상환표를 따르세요.</p>
+    <p class="q">세금이나 물가는 반영되나요?</p>
+    <p class="a">아니요. 결과는 세전·명목 금액입니다. 실제 수령액은 이자소득세와 물가상승률을 고려하면 달라지므로 참고용 추정으로 보세요.</p>
+    <p class="q">계산식이 궁금합니다.</p>
+    <p class="a"><code>최종 금액 = 원금 × (1 + 이율 ÷ 100 × 기간)</code> 입니다. 이자는 <code>원금 × 이율 ÷ 100 × 기간</code>으로, 기간에 정비례합니다.</p>
+  </div>
+
+  <p style="margin-top:24px;font-size:13px;color:var(--text-muted);">※ 본 계산 결과는 참고용 추정값이며 특정 금융상품의 수익이나 상환액을 보장하지 않습니다. 정확한 조건은 해당 금융기관에 확인하세요.</p>
+
+  <nav class="about-rel">
+    <span style="color:var(--text-dim);">관련 도구</span>
+    <a href="compound-interest.html">복리 계산기</a>
+    <a href="salary-net.html">연봉 실수령액</a>
+    <a href="currency.html">환율 계산기</a>
+    <a href="../../guide/simple-interest.html">단리 개념 가이드 →</a>
+  </nav>
+</section>
 
 <script src="../../i18n.js"></script>
 <script>
