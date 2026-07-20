@@ -271,8 +271,26 @@
 <section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
   <h2 id="visual-manual-title">색 경계의 정확한 픽셀 좌표 찾기</h2>
   <figure>
-    <img src="../../assets/manual/pixel-coords/02-edge-coordinate.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면">
-    <figcaption>파란 아이콘과 검은 배경이 만나는 경계에 점을 맞춘 화면입니다. 확대 루페의 픽셀 격자로 경계를 확인하고 x·y 좌표를 목록에 기록합니다.</figcaption>
+    <div class="manual-shot">
+      <img src="../../assets/manual/pixel-coords/02-edge-coordinate.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면">
+      <span class="manual-mark" style="--x:30.5%;--y:23%;--w:9%;--h:17%;"><b>1</b></span>
+      <span class="manual-mark" style="--x:33%;--y:41%;--w:15%;--h:25%;"><b>2</b></span>
+      <span class="manual-mark" style="--x:.7%;--y:43%;--w:24%;--h:8%;"><b>3</b></span>
+    </div>
+    <figcaption><ol class="manual-notes"><li><b>1</b>파란 아이콘과 검은 배경이 만나는 지점을 클릭합니다.</li><li><b>2</b>루페의 픽셀 격자와 십자선으로 정확한 경계를 맞춥니다.</li><li><b>3</b>Enter로 확정하면 x·y 값과 파일명이 좌표 목록에 기록됩니다.</li></ol></figcaption>
+  </figure>
+  <h2>좌표를 원하는 코드 형식으로 복사하기</h2>
+  <figure>
+    <div class="manual-shot"><img src="../../assets/manual/pixel-coords/03-define-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="확정한 좌표를 define 매크로 형식으로 복사하는 화면"><span class="manual-mark" style="--x:4.5%;--y:69%;--w:5.5%;--h:6%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:75%;--w:23%;--h:11%;"><b>2</b></span><span class="manual-mark" style="--x:.7%;--y:43%;--w:24%;--h:8%;"><b>3</b></span></div>
+    <figcaption><ol class="manual-notes"><li><b>1</b><strong>#define</strong> 프리셋을 선택합니다.</li><li><b>2</b><code>{x}</code>와 <code>{y}</code>가 들어간 두 줄 템플릿과 미리보기를 확인합니다.</li><li><b>3</b>좌표 행을 클릭하면 실제 값이 들어간 매크로가 복사됩니다.</li></ol></figcaption>
+  </figure>
+  <figure>
+    <div class="manual-shot"><img src="../../assets/manual/pixel-coords/04-function-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="확정한 좌표를 함수 코드 형식으로 복사하는 화면"><span class="manual-mark" style="--x:10%;--y:69%;--w:4%;--h:6%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:75%;--w:23%;--h:12%;"><b>2</b></span><span class="manual-mark" style="--x:43%;--y:92%;--w:16%;--h:6%;"><b>3</b></span></div>
+    <figcaption><ol class="manual-notes"><li><b>1</b><strong>함수</strong> 프리셋을 선택합니다.</li><li><b>2</b>함수 이름과 본문을 프로젝트 코드에 맞게 편집합니다.</li><li><b>3</b>좌표 행을 클릭한 뒤 복사 완료 메시지로 결과를 확인합니다.</li></ol></figcaption>
+  </figure>
+  <figure>
+    <div class="manual-shot"><img src="../../assets/manual/pixel-coords/05-custom-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="사용자 템플릿으로 파일명 번호 x y 좌표를 조합해 복사하는 화면"><span class="manual-mark" style="--x:.8%;--y:74%;--w:23%;--h:10%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:91%;--w:23%;--h:7%;"><b>2</b></span><span class="manual-mark" style="--x:42%;--y:92%;--w:19%;--h:6%;"><b>3</b></span></div>
+    <figcaption><ol class="manual-notes"><li><b>1</b><code>{n}</code>, <code>{x}</code>, <code>{y}</code>, <code>{file}</code>을 조합해 원하는 포맷을 작성합니다.</li><li><b>2</b>미리보기에서 실제 치환 형태를 먼저 확인합니다.</li><li><b>3</b>좌표 행을 클릭하면 완성된 문자열이 즉시 복사됩니다.</li></ol></figcaption>
   </figure>
 </section>
 

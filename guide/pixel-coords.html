@@ -191,7 +191,7 @@
     <section class="screen-manual" aria-label="실제 화면 설명">
       <h2>색 경계 픽셀의 좌표 찾기</h2>
       <figure>
-        <img src="../assets/manual/pixel-coords/02-edge-coordinate.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면">
+        <div class="manual-shot"><img src="../assets/manual/pixel-coords/02-edge-coordinate.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면"><span class="manual-mark" style="--x:30.5%;--y:23%;--w:9%;--h:17%;"><b>1</b></span><span class="manual-mark" style="--x:33%;--y:41%;--w:15%;--h:25%;"><b>2</b></span><span class="manual-mark" style="--x:.7%;--y:43%;--w:24%;--h:8%;"><b>3</b></span></div>
         <figcaption>파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면</figcaption>
       </figure>
       <ol class="screen-points">
@@ -199,6 +199,28 @@
         <li>루페 중앙 십자선과 픽셀 격자를 보며 방향키로 1px씩 조정합니다.</li>
         <li>Enter로 확정한 x·y 좌표가 왼쪽 목록에 기록됐는지 확인합니다.</li>
       </ol>
+      <h2>복사 포맷 선택과 사용자 템플릿</h2>
+      <p>좌표를 확정한 뒤에는 왼쪽 <strong>복사 포맷 설정</strong>에서 출력 형태를 정합니다. 포맷을 선택하거나 직접 작성한 다음 좌표 목록의 행을 클릭하면 치환이 끝난 문자열이 클립보드에 복사됩니다.</p>
+      <figure>
+        <div class="manual-shot"><img src="../assets/manual/pixel-coords/03-define-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="좌표를 define 매크로 형식으로 복사하는 실제 화면"><span class="manual-mark" style="--x:4.5%;--y:69%;--w:5.5%;--h:6%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:75%;--w:23%;--h:11%;"><b>2</b></span><span class="manual-mark" style="--x:.7%;--y:43%;--w:24%;--h:8%;"><b>3</b></span></div>
+        <figcaption><ol class="manual-notes"><li><b>1</b><code>#define</code> 프리셋 선택</li><li><b>2</b>템플릿과 미리보기 확인</li><li><b>3</b>좌표 행을 클릭해 완성된 매크로 복사</li></ol></figcaption>
+      </figure>
+      <figure>
+        <div class="manual-shot"><img src="../assets/manual/pixel-coords/04-function-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="좌표를 여러 줄 함수 코드로 복사하는 실제 화면"><span class="manual-mark" style="--x:10%;--y:69%;--w:4%;--h:6%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:75%;--w:23%;--h:12%;"><b>2</b></span><span class="manual-mark" style="--x:43%;--y:92%;--w:16%;--h:6%;"><b>3</b></span></div>
+        <figcaption><ol class="manual-notes"><li><b>1</b>함수 프리셋 선택</li><li><b>2</b>함수 이름·본문과 좌표 치환 위치 편집</li><li><b>3</b>복사 완료 메시지 확인</li></ol></figcaption>
+      </figure>
+      <figure>
+        <div class="manual-shot"><img src="../assets/manual/pixel-coords/05-custom-copy.webp" width="1265" height="711" loading="lazy" decoding="async" alt="사용자가 직접 만든 좌표 복사 포맷의 실제 화면"><span class="manual-mark" style="--x:.8%;--y:74%;--w:23%;--h:10%;"><b>1</b></span><span class="manual-mark" style="--x:.8%;--y:91%;--w:23%;--h:7%;"><b>2</b></span><span class="manual-mark" style="--x:42%;--y:92%;--w:19%;--h:6%;"><b>3</b></span></div>
+        <figcaption><ol class="manual-notes"><li><b>1</b>치환자를 조합해 사용자 포맷 작성</li><li><b>2</b>미리보기에서 실제 결과 확인</li><li><b>3</b>좌표 행 클릭 후 클립보드 복사 결과 확인</li></ol></figcaption>
+      </figure>
+      <h3>사용할 수 있는 치환자</h3>
+      <ul>
+        <li><code>{x}</code> — 선택한 지점의 가로 좌표</li>
+        <li><code>{y}</code> — 선택한 지점의 세로 좌표</li>
+        <li><code>{n}</code> — 좌표 목록의 순번</li>
+        <li><code>{file}</code> — 좌표를 찍은 원본 파일명</li>
+      </ul>
+      <p>한 줄뿐 아니라 여러 줄 템플릿도 가능합니다. 예를 들어 <code>click({x}, {y});</code>, <code>{file}: [{x}, {y}]</code>, CSS용 <code>left:{x}px; top:{y}px;</code>처럼 작업에 맞는 형식을 만들어 둘 수 있습니다. 작성한 템플릿은 브라우저에 저장되어 다음 방문에도 유지됩니다.</p>
     </section>
   </main>
 </body>
