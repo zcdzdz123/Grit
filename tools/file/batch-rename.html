@@ -48,7 +48,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -200,6 +200,7 @@
  {"@type":"HowToStep","name":"다운로드 또는 스크립트","text":"브라우저는 디스크의 파일을 직접 이름 바꿀 수 없습니다. 그래서 두 가지 방법이 있습니다. (1) 실제 파일을 불러왔다면 이름 바꿔 다운로드로 새 이름의 파일을 받습니다. (2) 스크립트 내보내기로 .bat·.ps1·.sh를 받아 폴더에서 실행하면 제자리에서 이름이 바뀝니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="brTool">파일 이름 일괄 변경</span><button type="button" id="helpBtn" class="g-help" data-i18n="brHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/batch-rename.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="brAllTools">← 모든 도구</a></div>
@@ -340,6 +341,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">원래 이름과 새 이름을 나란히 검토하기</h2>
+  <figure>
+    <img src="../../assets/manual/batch-rename/01-before-after.webp" width="1265" height="711" loading="lazy" decoding="async" alt="IMG 파일명을 product 연속 번호로 일괄 변경한 미리보기">
+    <figcaption>IMG 파일명 다섯 개를 product 이름과 두 자리 연속 번호로 바꾼 예시입니다. 저장 전에 모든 새 이름과 충돌 여부를 표에서 검토합니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>파일 이름 일괄 변경이란</h2>

@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -198,6 +198,7 @@
  {"@type":"HowToStep","name":"복사·다운로드","text":"오른쪽 미리보기에서 결과를 확인하고 ‘복사’ 또는 ‘병합 다운로드’를 누르세요. 파일은 서버로 전송되지 않습니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="txTool">텍스트 파일 합치기</span><button type="button" id="helpBtn" class="g-help" data-i18n="txHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/text-merge.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="txAllTools">← 모든 도구</a></div>
@@ -310,6 +311,14 @@
 </div>
 
 <div id="toast"></div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">여러 문서를 순서대로 하나로 합치기</h2>
+  <figure>
+    <img src="../../assets/manual/text-merge/01-ordered-preview.webp" width="1265" height="711" loading="lazy" decoding="async" alt="세 개의 장별 텍스트 파일을 헤더와 함께 병합한 화면">
+    <figcaption>1장부터 3장까지의 텍스트 파일을 불러오고 파일명 헤더를 추가한 예시입니다. 왼쪽 순서가 오른쪽 병합 미리보기에 그대로 반영됩니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>여러 텍스트 파일을 하나로 합치기</h2>

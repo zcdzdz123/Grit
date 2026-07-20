@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
   body { padding-top:38px; }
   #app { display:flex; height:calc(100vh - 38px); }
 
@@ -194,6 +194,7 @@
   {"@type":"HowToStep","name":"다운로드","text":"각 카드의 ‘다운로드’ 또는 ‘전체 다운로드’를 누르면 결과 파일을 내려받습니다. 절감된 용량은 상단 요약에 표시됩니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="app">
@@ -301,6 +302,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">원본과 축소 결과의 크기·용량 비교</h2>
+  <figure>
+    <img src="../../assets/manual/image-resize/01-size-comparison.webp" width="1265" height="711" loading="lazy" decoding="async" alt="1200픽셀 이미지를 600픽셀로 축소한 크기와 용량 비교">
+    <figcaption>1200×630 이미지를 긴 변 600px로 축소한 결과입니다. 출력 해상도와 절감된 용량이 원본 옆에 표시되어 변환 효과를 바로 판단할 수 있습니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>이미지 크기·용량 줄이기란</h2>

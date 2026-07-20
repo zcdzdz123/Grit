@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -165,6 +165,7 @@
   {"@type":"HowToStep","name":"엑셀 저장 · 추정치 안내","text":"‘엑셀로 저장’을 누르면 공제 내역을 엑셀 파일로 내려받습니다. 소득세는 근로소득 간이세액표를 근사한 추정치이며 특별공제는 빠져 있어 실제와 다를 수 있습니다."}
  ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="snTool">연봉 실수령액 계산기</span><button type="button" id="helpBtn" class="g-help" data-i18n="snHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/salary-net.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="snAllTools">← 모든 도구</a></div>
@@ -247,6 +248,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">공제 항목에서 실수령액이 만들어지는 과정</h2>
+  <figure>
+    <img src="../../assets/manual/salary-net/01-deductions.webp" width="1265" height="711" loading="lazy" decoding="async" alt="연봉과 부양가족 조건에 따른 공제 내역과 월 실수령액">
+    <figcaption>연봉 5천만원, 비과세액 20만원, 부양가족 조건을 넣은 예시입니다. 국민연금·건강보험·소득세를 거쳐 월 실수령액이 계산되는 흐름이 핵심입니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>연봉 실수령액 계산기로 무엇을 알 수 있나</h2>

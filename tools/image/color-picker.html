@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
   body { padding-top:38px; }
   #app { display:flex; height:calc(100vh - 38px); }
 
@@ -178,6 +178,7 @@
   {"@type":"HowToStep","name":"값 복사 · 팔레트","text":"추출한 색의 HEX·RGB·HSL 값을 각각 ‘복사’ 버튼으로 클립보드에 담으세요. 추출한 색은 ‘최근 색상’ 팔레트에 쌓이고, 스와치를 클릭하면 다시 선택됩니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="app">
@@ -271,6 +272,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">색 경계에서 정확한 색상 읽기</h2>
+  <figure>
+    <img src="../../assets/manual/color-picker/01-blue-pixel.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란색과 검은색 경계에서 픽셀 색상을 추출한 화면">
+    <figcaption>파란 아이콘의 가장자리 픽셀을 확대해 선택했습니다. 루페에서 경계를 확인하고 선택한 파란색의 HEX·RGB·HSL 값을 동시에 얻습니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>이미지 색상 추출기란</h2>

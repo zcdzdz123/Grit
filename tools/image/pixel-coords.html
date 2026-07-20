@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); overflow-x:hidden; }
   body { padding-top:38px; }
   #app { display:flex; height:calc(100vh - 38px); }
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -177,6 +177,7 @@
   {"@type":"HowToStep","name":"코드로 복사","text":"좌표 행을 클릭하면 설정한 포맷(좌표·#define·함수)대로 클립보드에 자동 복사됩니다. 포맷은 왼쪽 ‘복사 포맷 설정’에서 바꿔요."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="app">
@@ -266,6 +267,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">색 경계의 정확한 픽셀 좌표 찾기</h2>
+  <figure>
+    <img src="../../assets/manual/pixel-coords/02-edge-coordinate.webp" width="1265" height="711" loading="lazy" decoding="async" alt="파란 아이콘과 검은 배경의 경계 픽셀 좌표를 추출하는 화면">
+    <figcaption>파란 아이콘과 검은 배경이 만나는 경계에 점을 맞춘 화면입니다. 확대 루페의 픽셀 격자로 경계를 확인하고 x·y 좌표를 목록에 기록합니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>이미지 좌표 추출기란</h2>

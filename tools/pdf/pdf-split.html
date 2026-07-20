@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -200,6 +200,7 @@
  {"@type":"HowToStep","name":"다운로드","text":"‘분할하기’를 누르면 결과 목록이 생깁니다. 파일별로, 또는 ‘전체 다운로드’로 한 번에 받으세요. 모든 처리는 브라우저에서만 이루어집니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="psTool">PDF 나누기</span><button type="button" id="helpBtn" class="g-help" data-i18n="psHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/pdf-split.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="psAllTools">← 모든 도구</a></div>
@@ -312,6 +313,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">페이지 범위별로 PDF 묶음 만들기</h2>
+  <figure>
+    <img src="../../assets/manual/pdf-split/01-range-results.webp" width="1265" height="711" loading="lazy" decoding="async" alt="6쪽 PDF를 두 쪽씩 세 개 범위로 분할한 결과">
+    <figcaption>6쪽 PDF를 1–2, 3–4, 5–6 범위로 나눈 예시입니다. 입력한 범위가 세 개의 2쪽짜리 결과 파일로 만들어지는 것을 확인할 수 있습니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>PDF를 원하는 단위로 나누기</h2>

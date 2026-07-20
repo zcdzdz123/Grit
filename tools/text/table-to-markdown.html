@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -173,6 +173,7 @@
  {"@type":"HowToStep","name":"복사해서 사용","text":"‘복사’를 누르면 GitHub 마크다운 표가 클립보드에 담깁니다. 셀 안의 | 는 자동으로 \\| 로 처리됩니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="tmTool">표를 마크다운으로 변환</span><button type="button" id="helpBtn" class="g-help" data-i18n="tmHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/table-to-markdown.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="tmAllTools">← 모든 도구</a></div>
@@ -264,6 +265,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">붙여넣은 표가 마크다운 표로 바뀌는 결과</h2>
+  <figure>
+    <img src="../../assets/manual/table-to-markdown/01-table-result.webp" width="1265" height="711" loading="lazy" decoding="async" alt="상품 표를 마크다운 코드와 미리보기로 변환한 화면">
+    <figcaption>상품·수량·가격 표를 탭으로 붙여 넣은 예시입니다. 오른쪽에서 마크다운 원문과 렌더링된 표를 동시에 확인할 수 있습니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>표를 마크다운 표로 바꾸는 이유</h2>

@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -177,6 +177,7 @@
   {"@type":"HowToStep","name":"엑셀로 저장","text":"‘엑셀로 저장’을 누르면 회차별 표(원금·이자·잔액)를 엑셀 파일로 내려받습니다. 계산식: 원금 × (1 + 이율 ÷ 100 × 기간)."}
  ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="siTool">단리 계산기</span><button type="button" id="helpBtn" class="g-help" data-i18n="siHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/simple-interest.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="siAllTools">← 모든 도구</a></div>
@@ -267,6 +268,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">단리의 직선 증가를 확인하기</h2>
+  <figure>
+    <img src="../../assets/manual/simple-interest/01-linear-growth.webp" width="1265" height="711" loading="lazy" decoding="async" alt="단리 계산기의 회차별 동일 이자와 직선형 잔액 그래프">
+    <figcaption>원금 500만원에 연 7%를 20회 적용한 실제 화면입니다. 매 회차 같은 금액의 이자가 더해져 잔액 그래프가 직선으로 증가하는 것이 단리의 핵심입니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>단리 계산기로 무엇을 할 수 있나</h2>

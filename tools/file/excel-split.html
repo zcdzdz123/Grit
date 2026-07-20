@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -188,6 +188,7 @@
  {"@type":"HowToStep","name":"시트별 저장","text":"시트마다 ‘저장’을 누르거나 ‘선택 시트 전체 다운로드’로 한 번에 받습니다. 파일 이름은 원본명__시트명 형식입니다."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="xsTool">엑셀 시트별 나누기</span><button type="button" id="helpBtn" class="g-help" data-i18n="xsHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/excel-sheet-split.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="xsAllTools">← 모든 도구</a></div>
@@ -277,6 +278,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">통합 문서에서 필요한 시트만 분리하기</h2>
+  <figure>
+    <img src="../../assets/manual/excel-split/01-sheet-selection.webp" width="1265" height="711" loading="lazy" decoding="async" alt="매출 비용 요약 시트를 각각 분리하도록 선택한 화면">
+    <figcaption>매출·비용·요약 시트가 들어 있는 통합 문서를 불러온 예시입니다. 시트별 행·열 크기를 확인하고 필요한 시트만 선택해 저장합니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>엑셀 시트별 나누기란</h2>

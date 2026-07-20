@@ -1,0 +1,6 @@
+.visual-manual { margin-top:34px; }
+.visual-manual h2 { margin-bottom:16px; }
+.visual-manual figure { margin:0; padding:18px; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+.visual-manual img { display:block; width:100%; height:auto; border:1px solid var(--border); border-radius:8px; background:var(--bg); }
+.visual-manual figcaption { margin-top:14px; color:var(--text-dim); font-size:14px; line-height:1.7; }
+@media (max-width:700px) { .visual-manual figure { padding:10px; } .visual-manual figcaption { font-size:13px; } }

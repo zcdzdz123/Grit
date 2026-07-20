@@ -47,7 +47,7 @@
   }
   html { color-scheme:dark; }
   * { box-sizing:border-box; }
-  html, body { margin:0; height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
+  html, body { margin:0; min-min-height:100%; font-family:var(--font-ui); background:var(--bg); color:var(--text); }
   body { padding-top:38px; overflow-x:hidden; }
 
   #grit-bar { position:fixed; top:0; left:0; right:0; height:38px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 14px; gap:12px; z-index:200; }
@@ -157,6 +157,7 @@
  {"@type":"HowToStep","name":"복사해서 사용","text":"‘복사’ 버튼으로 결과를 클립보드에 담아 배송 양식에 붙여넣으세요. 표기법 기반 참고용이며 공식 영문 주소는 juso.go.kr에서 확인하세요."}
 ]}
 </script>
+  <link rel="stylesheet" href="../../assets/manual/manual.css">
 </head>
 <body>
 <div id="grit-bar"><a href="../../index.html" class="g-logo">Grit</a><span class="g-sep">/</span><span class="g-tool" data-i18n="arTool">한글 주소 영문 변환</span><button type="button" id="helpBtn" class="g-help" data-i18n="arHelpBtn">사용법</button><span id="langMount"></span><a href="../../guide/address-romanize.html" class="g-home">사용법 가이드</a><a href="../../index.html" class="g-home" data-i18n="arAllTools">← 모든 도구</a></div>
@@ -220,6 +221,14 @@
     </nav>
   </div>
 </div>
+
+<section class="tool-about visual-manual" aria-labelledby="visual-manual-title">
+  <h2 id="visual-manual-title">주소 구성 요소가 영문 순서로 바뀌는 과정</h2>
+  <figure>
+    <img src="../../assets/manual/address-romanize/01-address-parts.webp" width="1265" height="711" loading="lazy" decoding="async" alt="테헤란로 주소를 영문 주소와 구성 요소로 변환한 화면">
+    <figcaption>서울특별시 강남구 테헤란로 152를 입력한 예시입니다. 전체 영문 주소뿐 아니라 Seoul, Gangnam-gu, Teheran-ro, 152처럼 구성 요소가 분리됩니다.</figcaption>
+  </figure>
+</section>
 
 <section class="tool-about">
   <h2>한글 주소를 영문으로 바꿔야 할 때</h2>
